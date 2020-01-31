@@ -3152,13 +3152,13 @@ typedef struct
 /*  Bit definition for EFM_UQID2 register  */
 #define EFM_UQID2                                      ((uint32_t)0xFFFFFFFFU)
 
-/*  Bit definition for EFM_HRCCFGR register  */
-#define EFM_HRCCFGR_HRCFREQS_POS                       (0U)
-#define EFM_HRCCFGR_HRCFREQS                           ((uint8_t)0x0FU)
-#define EFM_HRCCFGR_HRCFREQS_0                         ((uint8_t)0x01U)
-#define EFM_HRCCFGR_HRCFREQS_1                         ((uint8_t)0x02U)
-#define EFM_HRCCFGR_HRCFREQS_2                         ((uint8_t)0x04U)
-#define EFM_HRCCFGR_HRCFREQS_3                         ((uint8_t)0x08U)
+/*  Bit definition for CMU_HRCCFGR register  */
+#define CMU_HRCCFGR_HRCFREQS_POS                       (0U)
+#define CMU_HRCCFGR_HRCFREQS                           ((uint8_t)0x0FU)
+#define CMU_HRCCFGR_HRCFREQS_0                         ((uint8_t)0x01U)
+#define CMU_HRCCFGR_HRCFREQS_1                         ((uint8_t)0x02U)
+#define CMU_HRCCFGR_HRCFREQS_2                         ((uint8_t)0x04U)
+#define CMU_HRCCFGR_HRCFREQS_3                         ((uint8_t)0x08U)
 
 
 /*******************************************************************************
@@ -11458,7 +11458,7 @@ typedef struct
     __IO uint32_t HRCFREQS2;
     __IO uint32_t HRCFREQS3;
     uint32_t RESERVED0[4];
-} stc_efm_hrccfgr_bit_t;
+} stc_cmu_hrccfgr_bit_t;
 
 typedef struct
 {
@@ -16495,7 +16495,7 @@ typedef struct
     stc_efm_uqid1_bit_t                      UQID1_b;
     stc_efm_uqid2_bit_t                      UQID2_b;
     uint32_t                                 RESERVED2[4400];
-    stc_efm_hrccfgr_bit_t                    HRCCFGR_b;
+    stc_cmu_hrccfgr_bit_t                    HRCCFGR_b;
 } bM4_EFM_TypeDef;
 
 typedef struct

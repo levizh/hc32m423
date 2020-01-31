@@ -115,9 +115,10 @@ void SystemInit(void)
 uint32_t HrcUpdate(void)
 {
     uint32_t Hrc_value = 0ul;
-    uint8_t tmp = M0P_EFM->HRCCFGR & 0x07u;
+    uint8_t tmp = 0;//M0P_EFM->HRCCFGR & 0x07u;   //todo, levi 20200131
 
-    if(EFM_HRCCFGR_HRCFREQS_3 == (M0P_EFM->HRCCFGR & EFM_HRCCFGR_HRCFREQS_3))
+    //if(EFM_HRCCFGR_HRCFREQS_3 == (M0P_EFM->HRCCFGR & EFM_HRCCFGR_HRCFREQS_3))
+    if (1)      //todo, levi 20200131
     {
         switch(tmp)
         {
@@ -178,8 +179,8 @@ void SystemCoreClockUpdate(void)
 {
     uint8_t tmp;
     uint8_t div;
-    tmp = M0P_CMU->CKSWR & CMU_CKSWR_CKSW;
-    div = M0P_CMU->SCKDIVR & CMU_SCKDIVR_SCKDIV;
+//    tmp = M0P_CMU->CKSWR & CMU_CKSWR_CKSW;
+//    div = M0P_CMU->SCKDIVR & CMU_SCKDIVR_SCKDIV;//todo, levi 20200131
     switch(tmp)
     {
         case 0x00:  /* use internal high speed RC */

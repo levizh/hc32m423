@@ -1311,7 +1311,7 @@
         <debug>0</debug>
         <option>
           <name>CThirdPartyDriverDll</name>
-          <state>Browse to your third-party driver</state>
+          <state>Browse to your RDI driver</state>
         </option>
         <option>
           <name>CThirdPartyLogFileCheck</name>
