@@ -60,7 +60,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -134,7 +134,7 @@
     ((x) == ADC_OPA_2))
 
 #define IS_ADC_SAMPLE_TIME(x)                                                  \
-(   ((x) >= 5u))
+(   ((x) >= 5U))
 
 #define IS_ADC_TRIGGER_SRC(x)                                                  \
 (   ((x) == ADC_TRGSRC_EX_PIN)              ||                                 \
@@ -350,15 +350,15 @@ void ADC_DeInit(void)
     ADC_Stop();
 
     /* Configures the registers to default value. */
-    M0P_ADC->TRGSR    = 0x0u;
-    M0P_ADC->CHSELRA0 = 0x0u;
-    M0P_ADC->CHSELRB0 = 0x0u;
-    M0P_ADC->EXCHSELR = 0x0u;
-    M0P_ADC->ISR      = 0x0u;
-    M0P_ADC->ICR      = 0x0u;
-    M0P_ADC->AWDCR    = 0x0u;
-    M0P_ADC->AWDSR    = 0x0u;
-    M0P_ADC->OPACR    = 0x0u;
+    M0P_ADC->TRGSR    = 0x0U;
+    M0P_ADC->CHSELRA0 = 0x0U;
+    M0P_ADC->CHSELRB0 = 0x0U;
+    M0P_ADC->EXCHSELR = 0x0U;
+    M0P_ADC->ISR      = 0x0U;
+    M0P_ADC->ICR      = 0x0U;
+    M0P_ADC->AWDCR    = 0x0U;
+    M0P_ADC->AWDSR    = 0x0U;
+    M0P_ADC->OPACR    = 0x0U;
 }
 
 /**
@@ -379,7 +379,7 @@ en_result_t ADC_StructInit(stc_adc_init_t *pstcInit)
         pstcInit->u16Resolution   = ADC_RESOLUTION_10B;
         pstcInit->u16AutoClearCmd = ADC_AUTO_CLR_DISABLE;
         pstcInit->u16DataAlign    = ADC_DATA_ALIGN_RIGHT;
-        pstcInit->u8SampTime      = 20u;
+        pstcInit->u8SampTime      = 20U;
         pstcInit->u16RestrtFrom   = ADC_SA_RESTRT_FROM_INT_CH;
 
         enRet = Ok;
@@ -463,13 +463,13 @@ en_result_t ADC_ConfigTriggerSrc(uint8_t u8Seq, const stc_adc_trg_cfg_t *pstcTrg
 
         if (u8Seq == ADC_SEQ_A)
         {
-            u8Offset = 0u;
+            u8Offset = 0U;
             DDL_ASSERT(IS_ADC_SA_TRIGGER_EVT(pstcTrgCfg->enEvent0));
             DDL_ASSERT(IS_ADC_SA_TRIGGER_EVT(pstcTrgCfg->enEvent1));
         }
         else
         {
-            u8Offset = 8u;
+            u8Offset = 8U;
             DDL_ASSERT(IS_ADC_SB_TRIGGER_EVT(pstcTrgCfg->enEvent0));
             DDL_ASSERT(IS_ADC_SB_TRIGGER_EVT(pstcTrgCfg->enEvent1));
         }
@@ -594,7 +594,7 @@ en_flag_status_t ADC_GetEocFlag(uint8_t u8Flag)
 {
     en_flag_status_t enFlag = Reset;
 
-    if ((M0P_ADC->ISR & u8Flag) != 0u)
+    if ((M0P_ADC->ISR & u8Flag) != 0U)
     {
         enFlag = Set;
     }
@@ -633,19 +633,19 @@ en_result_t ADC_PollingSa(uint16_t *pu16Dest, uint8_t u8Length, uint32_t u32Time
     uint32_t      u32AdcTimeout;
     __IO uint32_t u32TimeCount;
 
-    if ((pu16Dest != NULL) && (u8Length != 0u) && (u32Timeout != 0u))
+    if ((pu16Dest != NULL) && (u8Length != 0U) && (u32Timeout != 0U))
     {
         /* 10 is the number of required instructions cycles for the below loop statement. */
-        u32AdcTimeout = u32Timeout * (SystemCoreClock / 10u / 1000u);
+        u32AdcTimeout = u32Timeout * (SystemCoreClock / 10U / 1000U);
 
         ADC_Start();
 
         /* Polling and check timeout. */
-        u32TimeCount = 0u;
+        u32TimeCount = 0U;
         enRet = ErrorTimeout;
         while (u32TimeCount < u32AdcTimeout)
         {
-            if (bM0P_ADC->ISR_b.EOCAF != 0u)
+            if (bM0P_ADC->ISR_b.EOCAF != 0U)
             {
                 if (u8Length >= ADC_CH_COUNT)
                 {
@@ -662,7 +662,7 @@ en_result_t ADC_PollingSa(uint16_t *pu16Dest, uint8_t u8Length, uint32_t u32Time
             u32TimeCount++;
         }
 
-        bM0P_ADC->ISCLRR_b.CLREOCAF = 1u;
+        bM0P_ADC->ISCLRR_b.CLREOCAF = 1U;
     }
 
     return enRet;
@@ -685,7 +685,7 @@ en_result_t ADC_GetAllData(uint16_t *pu16Dest, uint8_t u8Length)
 
     if ((pu16Dest != NULL) && (u8Length >= ADC_CH_COUNT))
     {
-        for (i = 0u; i < ADC_CH_COUNT; i++)
+        for (i = 0U; i < ADC_CH_COUNT; i++)
         {
             pu16Dest[i] = io16AdcDr[i];
         }
@@ -714,21 +714,21 @@ en_result_t ADC_GetChannelData(uint16_t u16Channel, uint16_t *pu16Dest, uint8_t 
     en_result_t enRet = ErrorInvalidParameter;
     __IO uint16_t *io16AdcDr = NULL;
 
-    if ((u16Channel != 0u) && (pu16Dest != NULL) && (u8Length != 0u))
+    if ((u16Channel != 0U) && (pu16Dest != NULL) && (u8Length != 0U))
     {
-        i = 0u;
-        j = 0u;
+        i = 0U;
+        j = 0U;
         io16AdcDr = &M0P_ADC->DR0;
         u16Channel &= ADC_CH_ALL;
         while (u16Channel && u8Length)
         {
-            if (u16Channel & 0x1u)
+            if (u16Channel & 0x1U)
             {
                 pu16Dest[j++] = io16AdcDr[i];
                 u8Length--;
             }
 
-            u16Channel >>= 1u;
+            u16Channel >>= 1U;
             i++;
         }
 
@@ -894,7 +894,7 @@ en_flag_status_t ADC_AwdGetFlag(uint8_t u8Flag)
 {
     en_flag_status_t enFlag = Reset;
 
-    if ((M0P_ADC->AWDSR & u8Flag) != 0u)
+    if ((M0P_ADC->AWDSR & u8Flag) != 0U)
     {
         enFlag = Set;
     }

@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -133,14 +133,14 @@ int32_t main(void)
     LED_G_OFF();
 
     /* SysTick configuration */
-    SysTick_Init(1000u);
+    SysTick_Init(1000U);
 
     while (1)
     {
         LED_R_TOGGLE();
-        SysTick_Delay(500u);
+        SysTick_Delay(500U);
         LED_G_TOGGLE();
-        SysTick_Delay(500u);
+        SysTick_Delay(500U);
     }
 }
 

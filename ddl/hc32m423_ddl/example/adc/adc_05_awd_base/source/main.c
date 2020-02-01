@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -75,23 +75,23 @@
 /* ADC channels definition for this example. */
 #define AWD0_PIN                    (ADC_ANI9)
 #define AWD1_PIN                    (ADC_ANI10)
-#define AWD0_CH                     ((uint16_t)(1ul << AWD0_PIN))
-#define AWD1_CH                     ((uint16_t)(1ul << AWD1_PIN))
+#define AWD0_CH                     ((uint16_t)(1UL << AWD0_PIN))
+#define AWD1_CH                     ((uint16_t)(1UL << AWD1_PIN))
 
 /* The channels of AWD0 and AWD1 can be configured in the same sequence.
    AWD0 and AWD1 can also be configured with the same channel. */
 #define ADC_SA_NORMAL_CHANNEL       (ADC_CH0)
 #define ADC_SA_AWD_CHANNEL          (AWD0_CH | AWD1_CH)
 #define ADC_SA_CHANNEL              (ADC_SA_NORMAL_CHANNEL | ADC_SA_AWD_CHANNEL)
-#define ADC_SA_CHANNEL_COUNT        (3u)
+#define ADC_SA_CHANNEL_COUNT        (3U)
 
 /* AWD definition for this example. */
-#define USE_AWD0                    (1u)
+#define USE_AWD0                    (1U)
 #define ADW0_MD                     (ADC_AWD_CMP_IN_RANGE)
 #define AWD0_DR0_LOWER              ((uint16_t)1500)
 #define AWD0_DR1_UPPER              ((uint16_t)2500)
 
-#define USE_AWD1                    (1u)
+#define USE_AWD1                    (1U)
 #define ADW1_MD                     (ADC_AWD_CMP_OUT_RANGE)
 #define AWD1_DR0_LOWER              ((uint16_t)500)
 #define AWD1_DR1_UPPER              ((uint16_t)3500)
@@ -107,14 +107,14 @@
 #define ADC_RESOLUTION              (ADC_RESOLUTION_12B)
 
 /* ADC accuracy. */
-#define ADC_ACCURACY                (1ul << 12u)
+#define ADC_ACCURACY                (1UL << 12U)
 
 /* ADC reference voltage. The voltage of pin VREFH. */
 #define ADC_VREF                    (3.3018f)
 
 /* ADC value definition. */
-#define awd0_val                    (m_au16AdcSaVal[1u])
-#define awd1_val                    (m_au16AdcSaVal[2u])
+#define awd0_val                    (m_au16AdcSaVal[1U])
+#define awd1_val                    (m_au16AdcSaVal[2U])
 
 /* Debug printing definition. */
 #if (DDL_PRINT_ENABLE == DDL_ON)
@@ -166,7 +166,7 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
         ADC_Start();
         /* Wait for the end of the conversion. */
@@ -176,7 +176,7 @@ int32_t main(void)
         }
 
         /* Get the data of all channels of sequence A. */
-        ADC_GetChannelData(ADC_SA_CHANNEL, (uint16_t *)&m_au16AdcSaVal[0u], ADC_SA_CHANNEL_COUNT);
+        ADC_GetChannelData(ADC_SA_CHANNEL, (uint16_t *)&m_au16AdcSaVal[0U], ADC_SA_CHANNEL_COUNT);
         ADC_ClrEocFlag(ADC_FLAG_EOCA);
         // TODO: Use the ADC data.
         DBG("\nAWD0: %d <= ADCValue <= %d.", AWD0_DR0_LOWER, AWD0_DR1_UPPER);
@@ -210,7 +210,7 @@ int32_t main(void)
         }
 #endif // #ifdef AWD_COMBINATION_MODE
 
-        DDL_Delay1ms(1000u);
+        DDL_Delay1ms(1000U);
     }
 }
 
@@ -312,17 +312,17 @@ static void AdcSetChannelPinAnalogMode(uint16_t u16Channel)
 {
     uint8_t u8PinNbr;
 
-    u8PinNbr    = 0u;
+    u8PinNbr    = 0U;
     u16Channel &= ADC_CH_ALL;
 
-    while (u16Channel != 0u)
+    while (u16Channel != 0U)
     {
-        if (u16Channel & 0x1u)
+        if (u16Channel & 0x1U)
         {
             AdcSetPinAnalogMode(u8PinNbr);
         }
 
-        u16Channel >>= 1u;
+        u16Channel >>= 1U;
         u8PinNbr++;
     }
 }
@@ -337,7 +337,7 @@ static void AdcSetPinAnalogMode(uint8_t u8PinNbr)
 {
     uint8_t u8Port = GPIO_PORT_2;
     uint8_t u8Pin  = GPIO_PIN_0;
-    uint8_t u8Flag = 1u;
+    uint8_t u8Flag = 1U;
 
     switch (u8PinNbr)
     {
@@ -402,11 +402,11 @@ static void AdcSetPinAnalogMode(uint8_t u8PinNbr)
         break;
 
     default:
-        u8Flag = 0u;
+        u8Flag = 0U;
         break;
     }
 
-    if (u8Flag != 0u)
+    if (u8Flag != 0U)
     {
         GPIO_SetFunc(u8Port, u8Pin, GPIO_FUNC_1_ANIN);
     }

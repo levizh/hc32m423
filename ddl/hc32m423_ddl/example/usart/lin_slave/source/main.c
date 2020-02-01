@@ -57,7 +57,7 @@
 #include "lin.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -161,7 +161,7 @@ int32_t main(void)
     static stc_lin_frame_t stcFrame;
     static stc_lin_hanlde_t stcLinHandle = {
         .stcLinInit = {
-            .u32Baudrate = 9600ul,
+            .u32Baudrate = 9600UL,
             .u32ClkMode = USART_INTCLK_NONE_OUTPUT,
             .u32ClkPrescaler = USART_CLK_PRESCALER_DIV4,
             .u32OversamplingBits = USART_OVERSAMPLING_BITS_8,

@@ -49,8 +49,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __SYSTEM_HC32M120_H__
-#define __SYSTEM_HC32M120_H__
+#ifndef __SYSTEM_HC32M423_H__
+#define __SYSTEM_HC32M423_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -77,15 +77,15 @@ extern "C"
  * Global pre-processor symbols/macros ('define')
  ******************************************************************************/
 /**
- * @addtogroup HC32m120_System_Global_Macros
+ * @addtogroup HC32M423_System_Global_Macros
  * @{
  */
 
 /**
  * @brief Clock setup macro definition
  */
-#define CLOCK_SETTING_NONE  0u  /*!< User provides own clock setting in application */
-#define CLOCK_SETTING_CMSIS 1u
+#define CLOCK_SETTING_NONE  0U  /*!< User provides own clock setting in application */
+#define CLOCK_SETTING_CMSIS 1U
 
 
 /**
@@ -153,7 +153,7 @@ extern void SystemCoreClockUpdate(void);  /*!< Update SystemCoreClock variable *
 }
 #endif
 
-#endif /* __SYSTEM_HC32M120_H__ */
+#endif /* __SYSTEM_HC32M423_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

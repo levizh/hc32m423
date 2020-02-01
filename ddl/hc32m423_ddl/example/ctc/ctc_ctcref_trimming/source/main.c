@@ -58,7 +58,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -95,10 +95,10 @@
 #define CTC_REFCLK_SOURCE               (CTC_REFCLK_CTCREF)
 
 /* CTC TRMVAL value */
-#define CTC_TRMVAL_VALUE                (0x21ul)       /* -31 */
+#define CTC_TRMVAL_VALUE                (0x21UL)       /* -31 */
 
 /* CTC reference clock freqency */
-#define CTC_TRIMMING_REFCLK_FREQ        (20000000ul)   /* 20MHz */
+#define CTC_TRIMMING_REFCLK_FREQ        (20000000UL)   /* 20MHz */
 
 /* Internal high speed RC freqency */
 #define CTC_TRIMMING_HRC_FREQ           (CTC_TRIMMING_HRC_48MHZ)
@@ -107,8 +107,8 @@
 #define FUNCTION_CLK_GATE               (CLK_FCG_CTC)
 
 /* Function clock gate definition  */
-#define FUNCTION_GENERATE_CTCREF_CLK    (0u)
-#define FUNCTION_TRIMMING_HRC_CLK       (1u)
+#define FUNCTION_GENERATE_CTCREF_CLK    (0U)
+#define FUNCTION_TRIMMING_HRC_CLK       (1U)
 
 #define PROJCET_FUNCTION                (FUNCTION_GENERATE_CTCREF_CLK)
 

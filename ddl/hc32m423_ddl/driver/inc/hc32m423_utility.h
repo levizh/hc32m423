@@ -49,8 +49,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_UTILITY_H__
-#define __HC32M120_UTILITY_H__
+#ifndef __HC32M423_UTILITY_H__
+#define __HC32M423_UTILITY_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -65,7 +65,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -117,7 +117,7 @@ void SysTick_Resume(void);
     /* Exported function */
     void DDL_AssertHandler(const uint8_t *file, int16_t line);
 #else
-    #define DDL_ASSERT(x)               ((void)0u)
+    #define DDL_ASSERT(x)               ((void)0U)
 #endif /* __DEBUG */
 
 #if (DDL_PRINT_ENABLE == DDL_ON)
@@ -144,7 +144,7 @@ en_result_t DDL_UartInit(void);
 }
 #endif
 
-#endif /* __HC32M120_UTILITY_H__ */
+#endif /* __HC32M423_UTILITY_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

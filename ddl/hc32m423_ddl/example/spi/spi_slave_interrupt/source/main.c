@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -73,8 +73,8 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* SPI pin group definition. */
-#define SPI_PIN_GROUP_A             (1u)
-#define SPI_PIN_GROUP_B             (2u)
+#define SPI_PIN_GROUP_A             (1U)
+#define SPI_PIN_GROUP_B             (2U)
 #define SPI_PIN_GROUP               (SPI_PIN_GROUP_A)
 
 #if (SPI_PIN_GROUP == SPI_PIN_GROUP_A)
@@ -100,8 +100,8 @@
 #endif // #if (SPI_PIN_GROUP == SPI_PIN_GROUP_A)
 
 /* SPI wire mode definition. */
-#define SPI_APP_3_WIRE              (3u)
-#define SPI_APP_4_WIRE              (4u)
+#define SPI_APP_3_WIRE              (3U)
+#define SPI_APP_4_WIRE              (4U)
 #define SPI_APP_X_WIRE              (SPI_APP_4_WIRE)
 
 #if (SPI_APP_X_WIRE == SPI_APP_4_WIRE)
@@ -120,12 +120,12 @@
 
 
 /* SPI data buffer size definition. */
-#define SPI_BUFFER_LENGTH           (8u)
-#define SPI_IDLE_TIME               (400u)              /*!< Customer definition. */
+#define SPI_BUFFER_LENGTH           (8U)
+#define SPI_IDLE_TIME               (400U)              /*!< Customer definition. */
 
 /* Command from the master. */
-#define SPI_WRITE_SLAVE             (0x51u)             /*!< Customer definition. */
-#define SPI_READ_SLAVE              (0x56u)             /*!< Customer definition. */
+#define SPI_WRITE_SLAVE             (0x51U)             /*!< Customer definition. */
+#define SPI_READ_SLAVE              (0x56U)             /*!< Customer definition. */
 #define SPI_DUMMY_DATA              (0xFFu)
 
 /* Share interrupt definition. */
@@ -145,10 +145,10 @@ static void SpiIrqConfig(void);
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static __IO uint32_t m_u32RxIdle    = 0u;
-static __IO uint8_t m_u8RxStart     = 0u;
-static __IO uint8_t m_u8RxDataCount = 0u;
-static __IO uint8_t m_u8TxDataCount = 0u;
+static __IO uint32_t m_u32RxIdle    = 0U;
+static __IO uint8_t m_u8RxStart     = 0U;
+static __IO uint8_t m_u8RxDataCount = 0U;
+static __IO uint8_t m_u8TxDataCount = 0U;
 static __IO uint8_t m_au8SpiRxBuf[SPI_BUFFER_LENGTH];   /*!< All of the data is valid. */
 static __IO uint8_t m_au8SpiTxBuf[SPI_BUFFER_LENGTH] =  /*!< Valid data starts at offset 0 and length is SPI_BUFFER_LENGTH-2. */
 {
@@ -178,32 +178,32 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
         if (m_u8RxStart)
         {
             if (++m_u32RxIdle >= SPI_IDLE_TIME)
             {
-                if (m_au8SpiRxBuf[0u] == SPI_WRITE_SLAVE)
+                if (m_au8SpiRxBuf[0U] == SPI_WRITE_SLAVE)
                 {
                     // TODO: Use the data from the master.
                 }
 
-                if (m_au8SpiRxBuf[0u] == SPI_READ_SLAVE)
+                if (m_au8SpiRxBuf[0U] == SPI_READ_SLAVE)
                 {
                     /* Prepare data that needs to be sent to the master.
                        Valid data starts at offset 0 and length is SPI_BUFFER_LENGTH-2. */
-                    m_au8SpiTxBuf[0u]++;
-                    m_au8SpiTxBuf[1u]++;
-                    m_au8SpiTxBuf[2u]++;
-                    m_au8SpiTxBuf[3u]++;
-                    m_au8SpiTxBuf[4u]++;
-                    m_au8SpiTxBuf[5u]++;
+                    m_au8SpiTxBuf[0U]++;
+                    m_au8SpiTxBuf[1U]++;
+                    m_au8SpiTxBuf[2U]++;
+                    m_au8SpiTxBuf[3U]++;
+                    m_au8SpiTxBuf[4U]++;
+                    m_au8SpiTxBuf[5U]++;
                 }
-                m_u32RxIdle = 0u;
-                m_u8RxStart = 0u;
-                m_u8RxDataCount = 0u;
-                m_u8TxDataCount = 0u;
+                m_u32RxIdle = 0U;
+                m_u8RxStart = 0U;
+                m_u8RxDataCount = 0U;
+                m_u8TxDataCount = 0U;
             }
         }
     }
@@ -337,8 +337,8 @@ void SpiRxEnd_IrqHandler(void)
 {
     if (SPI_GetFlag(SPI_FLAG_RX_BUFFER_FULL) == Set)
     {
-        m_u8RxStart = 1u;
-        m_u32RxIdle = 0u;
+        m_u8RxStart = 1U;
+        m_u32RxIdle = 0U;
         if (m_u8RxDataCount < SPI_BUFFER_LENGTH)
         {
             m_au8SpiRxBuf[m_u8RxDataCount] = (uint8_t)SPI_ReadDataReg();
@@ -359,7 +359,7 @@ void SpiTxEmpt_IrqHandler(void)
         SPI_WriteDataReg((uint32_t)(m_au8SpiTxBuf[m_u8TxDataCount++]));
         if (m_u8TxDataCount >= SPI_BUFFER_LENGTH)
         {
-            m_u8TxDataCount = 0u;
+            m_u8TxDataCount = 0U;
         }
     }
 }

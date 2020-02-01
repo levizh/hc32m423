@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -86,12 +86,12 @@
 #define TIMER0_IRQn     (Int014_IRQn)
 #define TIMER0_SOURCE   (INT_TMR0_GCMP)
 
-#define LRC_FRQ         (32768u)
+#define LRC_FRQ         (32768U)
 
 #define SW2_PORT        (GPIO_PORT_2)
 #define SW2_PIN         (GPIO_PIN_1)
 
-#define CAPTURE_CNT_MAX (2u)
+#define CAPTURE_CNT_MAX (2U)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -106,8 +106,8 @@ static void LedConfig(void);
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-__IO static uint16_t CaptureData[CAPTURE_CNT_MAX] = {0u};
-__IO static uint16_t CaptureCnt = 0u;
+__IO static uint16_t CaptureData[CAPTURE_CNT_MAX] = {0U};
+__IO static uint16_t CaptureCnt = 0U;
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')

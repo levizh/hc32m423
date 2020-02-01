@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_PWC_H__
-#define __HC32M120_PWC_H__
+#ifndef __HC32M423_PWC_H__
+#define __HC32M423_PWC_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -343,11 +343,11 @@ typedef struct
  * @defgroup PWC_REG_Write_Configuration PWC register write Configuration
  * @{
  */
-#define PWC_REG_WRITE_ENABLE()          (M0P_PWC->FPRC = 0xa502u)
-#define PWC_REG_WRITE_DISABLE()         (M0P_PWC->FPRC = 0xa500u)
+#define PWC_REG_WRITE_ENABLE()          (M0P_PWC->FPRC = 0xa502U)
+#define PWC_REG_WRITE_DISABLE()         (M0P_PWC->FPRC = 0xa500U)
 
-#define PWC_LVD_REG_WRITE_ENABLE()      (M0P_PWC->FPRC = 0xa508u)
-#define PWC_LVD_REG_WRITE_DISABLE()     (M0P_PWC->FPRC = 0xa500u)
+#define PWC_LVD_REG_WRITE_ENABLE()      (M0P_PWC->FPRC = 0xa508U)
+#define PWC_LVD_REG_WRITE_DISABLE()     (M0P_PWC->FPRC = 0xa500U)
 
 /**
  * @}
@@ -407,7 +407,7 @@ void PWC_DebugCmd(en_functional_state_t enNewState);
 }
 #endif
 
-#endif /* __HC32M120_PWC_H__ */
+#endif /* __HC32M423_PWC_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

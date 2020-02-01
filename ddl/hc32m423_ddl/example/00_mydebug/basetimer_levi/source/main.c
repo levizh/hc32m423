@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -87,7 +87,7 @@
 #define TIMER0_IRQn     (Int027_IRQn)
 #define TIMER0_SOURCE   (INT_TMR0_GCMP)
 
-#define LRC_FRQ         (32768u)
+#define LRC_FRQ         (32768U)
 
 #define SW2_PORT        (GPIO_PORT_2)
 #define SW2_PIN         (GPIO_PIN_1)
@@ -169,7 +169,7 @@ int32_t main(void)
     stcTimer0Ini.u32ClockSource = TIMER0_CLK_SRC_LRC; /* Chose clock source */
     stcTimer0Ini.u32Tmr0Fun = TIMER0_FUNC_CMP;        /* Timer0 compare mode */
     stcTimer0Ini.u32HwTrigFunc = TIMER0_BT_HWTRG_FUNC_STOP; /* Config Hardware trigger function */
-    stcTimer0Ini.u16CmpValue =  LRC_FRQ / 2u / 256u;     /* Set compara register data */
+    stcTimer0Ini.u16CmpValue =  LRC_FRQ / 2U / 256U;     /* Set compara register data */
     TIMER0_Init(&stcTimer0Ini);
 
     /* Set internal hardware capture source */

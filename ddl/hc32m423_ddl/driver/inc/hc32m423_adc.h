@@ -53,8 +53,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_ADC_H__
-#define __HC32M120_ADC_H__
+#ifndef __HC32M423_ADC_H__
+#define __HC32M423_ADC_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -69,7 +69,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -150,8 +150,8 @@ typedef struct
  * @defgroup ADC_Sequence ADC Sequence
  * @{
  */
-#define ADC_SEQ_A                   ((uint8_t)0u)
-#define ADC_SEQ_B                   ((uint8_t)1u)
+#define ADC_SEQ_A                   ((uint8_t)0U)
+#define ADC_SEQ_B                   ((uint8_t)1U)
 /**
  * @}
  */
@@ -160,8 +160,8 @@ typedef struct
  * @defgroup ADC_AWD_Number ADC AWD Number
  * @{
  */
-#define ADC_AWD_0                   ((uint8_t)0u)
-#define ADC_AWD_1                   ((uint8_t)1u)
+#define ADC_AWD_0                   ((uint8_t)0U)
+#define ADC_AWD_1                   ((uint8_t)1U)
 /**
  * @}
  */
@@ -180,7 +180,7 @@ typedef struct
  * @defgroup ADC_Data_Align ADC Data Align
  * @{
  */
-#define ADC_DATA_ALIGN_RIGHT        ((uint16_t)0x0u)
+#define ADC_DATA_ALIGN_RIGHT        ((uint16_t)0x0U)
 #define ADC_DATA_ALIGN_LEFT         (ADC_CR0_DFMT)
 /**
  * @}
@@ -190,7 +190,7 @@ typedef struct
  * @defgroup ADC_Data_Auto_Clear_Cmd ADC Data Auto Clear Command
  * @{
  */
-#define ADC_AUTO_CLR_DISABLE        ((uint16_t)0x0u)
+#define ADC_AUTO_CLR_DISABLE        ((uint16_t)0x0U)
 #define ADC_AUTO_CLR_ENABLE         (ADC_CR0_CLREN)     /*!< ADC data register is automatically
                                                              cleared after the data is read. */
 /**
@@ -202,7 +202,7 @@ typedef struct
  * @{
  */
 #define ADC_RESOLUTION_MASK         (ADC_CR0_ACCSEL)
-#define ADC_RESOLUTION_12B          ((uint16_t)0x0u)
+#define ADC_RESOLUTION_12B          ((uint16_t)0x0U)
 #define ADC_RESOLUTION_10B          (ADC_CR0_ACCSEL_0)
 #define ADC_RESOLUTION_8B           (ADC_CR0_ACCSEL_1)
 /**
@@ -214,7 +214,7 @@ typedef struct
  * @{
  */
 #define ADC_MODE_MASK                       (ADC_CR0_MS)
-#define ADC_MODE_SA_SINGLE                  ((uint16_t)0x0u)
+#define ADC_MODE_SA_SINGLE                  ((uint16_t)0x0U)
 #define ADC_MODE_SA_CONTINUOUS              (ADC_CR0_MS_0)
 #define ADC_MODE_SA_SB_SINGLE               (ADC_CR0_MS_1)
 #define ADC_MODE_SA_CONTINUOUS_SB_SINGLE    (ADC_CR0_MS_0 | ADC_CR0_MS_1)
@@ -226,7 +226,7 @@ typedef struct
  * @defgroup ADC_Restart_From ADC Restart From
  * @{
  */
-#define ADC_SA_RESTRT_FROM_INT_CH           ((uint16_t)0x0u)
+#define ADC_SA_RESTRT_FROM_INT_CH           ((uint16_t)0x0U)
 #define ADC_SA_RESTRT_FROM_FIRST_CH         (ADC_CR1_RSCHSEL)
 /**
  * @}
@@ -237,7 +237,7 @@ typedef struct
  * @{
  */
 #define ADC_TRGSRC_MASK             (ADC_TRGSR_TRGSELA)
-#define ADC_TRGSRC_EX_PIN           ((uint16_t)0x0u)
+#define ADC_TRGSRC_EX_PIN           ((uint16_t)0x0U)
 #define ADC_TRGSRC_IN_EVT0          (ADC_TRGSR_TRGSELA_0)
 #define ADC_TRGSRC_IN_EVT1          (ADC_TRGSR_TRGSELA_1)
 #define ADC_TRGSRC_IN_EVT0_EVT1     (ADC_TRGSR_TRGSELA_0 | ADC_TRGSR_TRGSELA_1)
@@ -270,18 +270,18 @@ typedef struct
  * @defgroup ADC_Pin_Number ADC Pin Number
  * @{
  */
-#define ADC_ANI0                    ((uint8_t)0u)       /*!< Pin P20 */
-#define ADC_ANI1                    ((uint8_t)1u)       /*!< Pin P21 */
-#define ADC_ANI2                    ((uint8_t)2u)       /*!< Pin P22 */
-#define ADC_ANI3                    ((uint8_t)3u)       /*!< Pin P23 */
-#define ADC_ANI4                    ((uint8_t)4u)       /*!< Pin P24 */
-#define ADC_ANI5                    ((uint8_t)5u)       /*!< Pin P25 */
-#define ADC_ANI6                    ((uint8_t)6u)       /*!< Pin P26 */
-#define ADC_ANI7                    ((uint8_t)7u)       /*!< Pin P27 */
-#define ADC_ANI8                    ((uint8_t)8u)       /*!< Pin P147 */
-#define ADC_ANI9                    ((uint8_t)9u)       /*!< Pin P00 */
-#define ADC_ANI10                   ((uint8_t)10u)      /*!< Pin P01 */
-#define ADC_ANI11                   ((uint8_t)11u)      /*!< Pin P120 */
+#define ADC_ANI0                    ((uint8_t)0U)       /*!< Pin P20 */
+#define ADC_ANI1                    ((uint8_t)1U)       /*!< Pin P21 */
+#define ADC_ANI2                    ((uint8_t)2U)       /*!< Pin P22 */
+#define ADC_ANI3                    ((uint8_t)3U)       /*!< Pin P23 */
+#define ADC_ANI4                    ((uint8_t)4U)       /*!< Pin P24 */
+#define ADC_ANI5                    ((uint8_t)5U)       /*!< Pin P25 */
+#define ADC_ANI6                    ((uint8_t)6U)       /*!< Pin P26 */
+#define ADC_ANI7                    ((uint8_t)7U)       /*!< Pin P27 */
+#define ADC_ANI8                    ((uint8_t)8U)       /*!< Pin P147 */
+#define ADC_ANI9                    ((uint8_t)9U)       /*!< Pin P00 */
+#define ADC_ANI10                   ((uint8_t)10U)      /*!< Pin P01 */
+#define ADC_ANI11                   ((uint8_t)11U)      /*!< Pin P120 */
 /**
  * @}
  */
@@ -290,7 +290,7 @@ typedef struct
  * @defgroup ADC_Channel_Count ADC Channel Count
  * @{
  */
-#define ADC_CH_COUNT                (12u)
+#define ADC_CH_COUNT                (12U)
 /**
  * @}
  */
@@ -299,18 +299,18 @@ typedef struct
  * @defgroup ADC_Channels ADC Common Channels
  * @{
  */
-#define ADC_CH0                     ((uint16_t)(0x1ul << ADC_ANI0))
-#define ADC_CH1                     ((uint16_t)(0x1ul << ADC_ANI1))
-#define ADC_CH2                     ((uint16_t)(0x1ul << ADC_ANI2))
-#define ADC_CH3                     ((uint16_t)(0x1ul << ADC_ANI3))
-#define ADC_CH4                     ((uint16_t)(0x1ul << ADC_ANI4))
-#define ADC_CH5                     ((uint16_t)(0x1ul << ADC_ANI5))
-#define ADC_CH6                     ((uint16_t)(0x1ul << ADC_ANI6))
-#define ADC_CH7                     ((uint16_t)(0x1ul << ADC_ANI7))
-#define ADC_CH8                     ((uint16_t)(0x1ul << ADC_ANI8))
-#define ADC_CH9                     ((uint16_t)(0x1ul << ADC_ANI9))
-#define ADC_CH10                    ((uint16_t)(0x1ul << ADC_ANI10))
-#define ADC_CH11                    ((uint16_t)(0x1ul << ADC_ANI11))
+#define ADC_CH0                     ((uint16_t)(0x1UL << ADC_ANI0))
+#define ADC_CH1                     ((uint16_t)(0x1UL << ADC_ANI1))
+#define ADC_CH2                     ((uint16_t)(0x1UL << ADC_ANI2))
+#define ADC_CH3                     ((uint16_t)(0x1UL << ADC_ANI3))
+#define ADC_CH4                     ((uint16_t)(0x1UL << ADC_ANI4))
+#define ADC_CH5                     ((uint16_t)(0x1UL << ADC_ANI5))
+#define ADC_CH6                     ((uint16_t)(0x1UL << ADC_ANI6))
+#define ADC_CH7                     ((uint16_t)(0x1UL << ADC_ANI7))
+#define ADC_CH8                     ((uint16_t)(0x1UL << ADC_ANI8))
+#define ADC_CH9                     ((uint16_t)(0x1UL << ADC_ANI9))
+#define ADC_CH10                    ((uint16_t)(0x1UL << ADC_ANI10))
+#define ADC_CH11                    ((uint16_t)(0x1UL << ADC_ANI11))
 #define ADC_CH_ALL                  ((uint16_t)0x0FFFu)
 /**
  * @}
@@ -320,8 +320,8 @@ typedef struct
  * @defgroup ADC_AWD_Comparison_Mode ADC AWD(Analog Watchdog) Comparison Mode
  * @{
  */
-#define ADC_AWD_CMP_OUT_RANGE       ((uint16_t)0x0u)
-#define ADC_AWD_CMP_IN_RANGE        ((uint16_t)0x1u)
+#define ADC_AWD_CMP_OUT_RANGE       ((uint16_t)0x0U)
+#define ADC_AWD_CMP_IN_RANGE        ((uint16_t)0x1U)
 /**
  * @}
  */
@@ -377,7 +377,7 @@ typedef struct
  */
 __STATIC_INLINE void ADC_Start(void)
 {
-    bM0P_ADC->STR_b.STRT = 0x1u;
+    bM0P_ADC->STR_b.STRT = 0x1U;
 }
 
 /**
@@ -387,7 +387,7 @@ __STATIC_INLINE void ADC_Start(void)
  */
 __STATIC_INLINE void ADC_Stop(void)
 {
-    bM0P_ADC->STR_b.STRT = 0x0u;
+    bM0P_ADC->STR_b.STRT = 0x0U;
 }
 
 /**
@@ -449,7 +449,7 @@ void ADC_OpaCmd(uint8_t u8OpaNbr, en_functional_state_t enNewState);
 }
 #endif
 
-#endif /* __HC32M120_ADC_H__ */
+#endif /* __HC32M423_ADC_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

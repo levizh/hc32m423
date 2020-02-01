@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_TIMER4_H__
-#define __HC32M120_TIMER4_H__
+#ifndef __HC32M423_TIMER4_H__
+#define __HC32M423_TIMER4_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -373,7 +373,7 @@ typedef struct
 /** @defgroup TIMER4_CNT_Clock_Division TIMER4 Count Clock Division
  * @{
  */
-#define TIMER4_CNT_CLK_DIV1                     ((uint16_t)0x0000u)         /*!< PCLK      */
+#define TIMER4_CNT_CLK_DIV1                     ((uint16_t)0x0000U)         /*!< PCLK      */
 #define TIMER4_CNT_CLK_DIV2                     (TMR4_CCSR_CKDIV_0)         /*!< PCLK/2    */
 #define TIMER4_CNT_CLK_DIV4                     (TMR4_CCSR_CKDIV_1)         /*!< PCLK/4    */
 #define TIMER4_CNT_CLK_DIV8                     (TMR4_CCSR_CKDIV_1 | \
@@ -399,7 +399,7 @@ typedef struct
  * @defgroup TIMER4_CNT_Mode Timer4 Count Mode
  * @{
  */
-#define TIMER4_CNT_MODE_SAWTOOTH_WAVE           ((uint16_t)0x0000u)
+#define TIMER4_CNT_MODE_SAWTOOTH_WAVE           ((uint16_t)0x0000U)
 #define TIMER4_CNT_MODE_TRIANGLE_WAVE           (TMR4_CCSR_MODE)
 /**
  * @}
@@ -429,7 +429,7 @@ typedef struct
  * @defgroup TIMER4_CNT_Clock_Source TIMER4 Count Clock Source
  * @{
  */
-#define TIMER4_CNT_PCLK                         ((uint16_t)0x0000u)
+#define TIMER4_CNT_PCLK                         ((uint16_t)0x0000U)
 #define TIMER4_CNT_EXTCLK                       (TMR4_CCSR_ECKEN)
 /**
  * @}
@@ -438,7 +438,7 @@ typedef struct
 /** @defgroup TIMER4_CNT_Interrupt_Mask_Times TIMER4 Count Interrupt Mask Times
  * @{
  */
-#define TIMER4_CNT_INT_MASK_0                   ((uint16_t)0x0000u)     /*!< CNT interrupt flag is always set(not masked) for every CNT count at "0x0000" */
+#define TIMER4_CNT_INT_MASK_0                   ((uint16_t)0x0000U)     /*!< CNT interrupt flag is always set(not masked) for every CNT count at "0x0000" */
 #define TIMER4_CNT_INT_MASK_1                   (TMR4_CVPR_ZIM_0)       /*!< CNT interrupt flag is set once for 2 every CNT counts at "0x0000" (skiping 1 count) */
 #define TIMER4_CNT_INT_MASK_2                   (TMR4_CVPR_ZIM_1)       /*!< CNT interrupt flag is set once for 3 every CNT counts at "0x0000" (skiping 2 count) */
 #define TIMER4_CNT_INT_MASK_3                   (TMR4_CVPR_ZIM_1 | \
@@ -484,12 +484,12 @@ typedef struct
 /** @defgroup TIMER4_OCO_Channel TIMER4 OCO Channel
  * @{
  */
-#define TIMER4_OCO_UH                           ((uint32_t)0ul)   /*!< Timer4 OCO channel:UH */
-#define TIMER4_OCO_UL                           ((uint32_t)1ul)   /*!< Timer4 OCO channel:UL */
-#define TIMER4_OCO_VH                           ((uint32_t)2ul)   /*!< Timer4 OCO channel:VH */
-#define TIMER4_OCO_VL                           ((uint32_t)3ul)   /*!< Timer4 OCO channel:VL */
-#define TIMER4_OCO_WH                           ((uint32_t)4ul)   /*!< Timer4 OCO channel:WH */
-#define TIMER4_OCO_WL                           ((uint32_t)5ul)   /*!< Timer4 OCO channel:WL */
+#define TIMER4_OCO_UH                           ((uint32_t)0UL)   /*!< Timer4 OCO channel:UH */
+#define TIMER4_OCO_UL                           ((uint32_t)1UL)   /*!< Timer4 OCO channel:UL */
+#define TIMER4_OCO_VH                           ((uint32_t)2UL)   /*!< Timer4 OCO channel:VH */
+#define TIMER4_OCO_VL                           ((uint32_t)3UL)   /*!< Timer4 OCO channel:VL */
+#define TIMER4_OCO_WH                           ((uint32_t)4UL)   /*!< Timer4 OCO channel:WH */
+#define TIMER4_OCO_WL                           ((uint32_t)5UL)   /*!< Timer4 OCO channel:WL */
 /**
  * @}
  */
@@ -499,7 +499,7 @@ typedef struct
  * @note TIM4_<t>_OxH/TIM4_<t>_OxL: _<t>_ is unit number, t = 1, x = U/V/W
  * @{
  */
-#define TIMER4_OCO_INVAILD_OP_LOW               ((uint16_t)0x0000u)             /*!< TIM4_<t>_OxH/TIM4_<t>_OxL output low level when OCO is invalid */
+#define TIMER4_OCO_INVAILD_OP_LOW               ((uint16_t)0x0000U)             /*!< TIM4_<t>_OxH/TIM4_<t>_OxL output low level when OCO is invalid */
 #define TIMER4_OCO_INVAILD_OP_HIGH              (!TIMER4_OCO_INVAILD_OP_LOW)    /*!< TIM4_<t>_OxH/TIM4_<t>_OxL output high level when OCO is invalid */
 /**
  * @}
@@ -508,7 +508,7 @@ typedef struct
 /** @defgroup TIMER4_OCO_OCCR_Buffer_Mode TIMER4 OCO OCCR Buffer Mode
  * @{
  */
-#define TIMER4_OCO_OCCR_BUF_DISABLE             ((uint16_t)0x0000u)                             /*!< Disable the register OCCR buffer function */
+#define TIMER4_OCO_OCCR_BUF_DISABLE             ((uint16_t)0x0000U)                             /*!< Disable the register OCCR buffer function */
 #define TIMER4_OCO_OCCR_BUF_CNT_ZERO            (TMR4_OCER_CHBUFEN_0 >> TMR4_OCER_CHBUFEN_POS)  /*!< Register OCCR buffer transfer when counter value is 0x0000 */
 #define TIMER4_OCO_OCCR_BUF_CNT_PEAK            (TMR4_OCER_CHBUFEN_1 >> TMR4_OCER_CHBUFEN_POS)  /*!< Register OCCR buffer transfer when counter value is CPSR */
 #define TIMER4_OCO_OCCR_BUF_CNT_ZERO_OR_PEAK    (TMR4_OCER_CHBUFEN >> TMR4_OCER_CHBUFEN_POS)    /*!< Register OCCR buffer transfer when the value is both 0 and CPSR */
@@ -519,7 +519,7 @@ typedef struct
 /** @defgroup TIMER4_OCO_OCMR_Buffer_Mode TIMER4 OCO OCMR Buffer Mode
  * @{
  */
-#define TIMER4_OCO_OCMR_BUF_DISABLE             ((uint16_t)0x0000u)                                         /*!< Disable the register OCCR buffer function */
+#define TIMER4_OCO_OCMR_BUF_DISABLE             ((uint16_t)0x0000U)                                         /*!< Disable the register OCCR buffer function */
 #define TIMER4_OCO_OCMR_BUF_CNT_ZERO            ((uint16_t)(TMR4_OCER_MHBUFEN_0 >> TMR4_OCER_MHBUFEN_POS))  /*!< Register OCMR buffer transfer when counter value is 0x0000 */
 #define TIMER4_OCO_OCMR_BUF_CNT_PEAK            ((uint16_t)(TMR4_OCER_MHBUFEN_1 >> TMR4_OCER_MHBUFEN_POS))  /*!< Register OCMR buffer transfer when counter value is CPSR */
 #define TIMER4_OCO_OCMR_BUF_CNT_ZERO_OR_PEAK    ((uint16_t)(TMR4_OCER_MHBUFEN >> TMR4_OCER_MHBUFEN_POS))    /*!< Register OCMR buffer transfer when the value is both 0 and CPSR */
@@ -530,7 +530,7 @@ typedef struct
 /** @defgroup TIMER4_OCO_Cnt_Match_OCF_State TIMER4 OCO Cnt Match OCF State
  * @{
  */
-#define TIMER4_OCO_OCF_HOLD                     ((uint16_t)0x0000u)     /*!< Hold OCF */
+#define TIMER4_OCO_OCF_HOLD                     ((uint16_t)0x0000U)     /*!< Hold OCF */
 #define TIMER4_OCO_OCF_SET                      (TMR4_OCMRH_OCFDCH)     /*!< Set OCF */
 /**
  * @}
@@ -539,7 +539,7 @@ typedef struct
 /** @defgroup TIMER4_OCO_Cnt_Match_Output_Polarity TIMER4 OCO Cnt Match Output Polarity
  * @{
  */
-#define TIMER4_OCO_OP_HOLD                      ((uint16_t)0x0000u)                           /*!< Hold output when the TIMER4 OCO count match */
+#define TIMER4_OCO_OP_HOLD                      ((uint16_t)0x0000U)                           /*!< Hold output when the TIMER4 OCO count match */
 #define TIMER4_OCO_OP_HIGH                      (TMR4_OCMRH_OPDCH_0 >> TMR4_OCMRH_OPDCH_POS)  /*!< Output high when the TIMER4 OCO count match */
 #define TIMER4_OCO_OP_LOW                       (TMR4_OCMRH_OPDCH_0 >> TMR4_OCMRH_OPDCH_POS)  /*!< Output low when the TIMER4 OCO count match */
 #define TIMER4_OCO_OP_INVERT                    (TMR4_OCMRH_OPDCH >> TMR4_OCMRH_OPDCH_POS)    /*!< Invert output when the TIMER4 OCO count match */
@@ -559,9 +559,9 @@ typedef struct
 /** @defgroup TIMER4_PWM_Channel TIMER4 PWM Channel
  * @{
  */
-#define TIMER4_PWM_U                            ((uint32_t)0u)   /*!< Timer4 PWM couple channel: U */
-#define TIMER4_PWM_V                            ((uint32_t)1u)   /*!< Timer4 PWM couple channel: V */
-#define TIMER4_PWM_W                            ((uint32_t)2u)   /*!< Timer4 PWM couple channel: W */
+#define TIMER4_PWM_U                            ((uint32_t)0U)   /*!< Timer4 PWM couple channel: U */
+#define TIMER4_PWM_V                            ((uint32_t)1U)   /*!< Timer4 PWM couple channel: V */
+#define TIMER4_PWM_W                            ((uint32_t)2U)   /*!< Timer4 PWM couple channel: W */
 /**
  * @}
  */
@@ -569,7 +569,7 @@ typedef struct
 /** @defgroup TIMER4_PWM_Clock_Division TIMER4 PWM Clock Division
  * @{
  */
-#define TIMER4_PWM_CLK_DIV1                     ((uint16_t)0x0000u)     /*!< PCLK     */
+#define TIMER4_PWM_CLK_DIV1                     ((uint16_t)0x0000U)     /*!< PCLK     */
 #define TIMER4_PWM_CLK_DIV2                     (TMR4_POCR_DIVCK_0)     /*!< PCLK/2   */
 #define TIMER4_PWM_CLK_DIV4                     (TMR4_POCR_DIVCK_1)     /*!< PCLK/4   */
 #define TIMER4_PWM_CLK_DIV8                     (TMR4_POCR_DIVCK_1 | \
@@ -588,7 +588,7 @@ typedef struct
  * @defgroup TIMER4_PWM_Mode Timer4 PWM Mode
  * @{
  */
-#define TIMER4_PWM_THROUGH_MODE                 ((uint16_t)0x0000u) /*!< Through mode */
+#define TIMER4_PWM_THROUGH_MODE                 ((uint16_t)0x0000U) /*!< Through mode */
 #define TIMER4_PWM_DEAD_TIMER_MODE              (TMR4_POCR_PWMMD_0) /*!< Dead timer mode */
 #define TIMER4_PWM_DEAD_TIMER_FILTER_MODE       (TMR4_POCR_PWMMD_1) /*!< Dead timer filter mode */
 /**
@@ -599,7 +599,7 @@ typedef struct
  * @defgroup TIMER4_PWM_Output_Polarity Timer4 PWM Output Polarity
  * @{
  */
-#define TIMER4_PWM_OP_OXH_HOLD_OXL_HOLD         ((uint16_t)0x0000u) /*!< Output PWML and PWMH signals without changing the level */
+#define TIMER4_PWM_OP_OXH_HOLD_OXL_HOLD         ((uint16_t)0x0000U) /*!< Output PWML and PWMH signals without changing the level */
 #define TIMER4_PWM_OP_OXH_INVERT_OXL_INVERT     (TMR4_POCR_LVLS_0)  /*!< Output both PWML and PWMH signals reversed */
 #define TIMER4_PWM_OP_OXH_INVERT_OXL_HOLD       (TMR4_POCR_LVLS_1)  /*!< Output the PWMH signal reversed, outputs the PWML signal without changing the level. */
 #define TIMER4_PWM_OP_OXH_HOLD_OXL_INVERT       (TMR4_POCR_LVLS)    /*!< Output the PWMH signal without changing the level, Outputs the PWML signal reversed. */
@@ -619,12 +619,12 @@ typedef struct
 /** @defgroup TIMER4_SEVT_Channel TIMER4 SEVT Channel
  * @{
  */
-#define TIMER4_SEVT_UH                          ((uint32_t)0ul)   /*!< Timer4 SEVT channel:UH */
-#define TIMER4_SEVT_UL                          ((uint32_t)1ul)   /*!< Timer4 SEVT channel:UL */
-#define TIMER4_SEVT_VH                          ((uint32_t)2ul)   /*!< Timer4 SEVT channel:VH */
-#define TIMER4_SEVT_VL                          ((uint32_t)3ul)   /*!< Timer4 SEVT channel:VL */
-#define TIMER4_SEVT_WH                          ((uint32_t)4ul)   /*!< Timer4 SEVT channel:WH */
-#define TIMER4_SEVT_WL                          ((uint32_t)5ul)   /*!< Timer4 SEVT channel:WL */
+#define TIMER4_SEVT_UH                          ((uint32_t)0UL)   /*!< Timer4 SEVT channel:UH */
+#define TIMER4_SEVT_UL                          ((uint32_t)1UL)   /*!< Timer4 SEVT channel:UL */
+#define TIMER4_SEVT_VH                          ((uint32_t)2UL)   /*!< Timer4 SEVT channel:VH */
+#define TIMER4_SEVT_VL                          ((uint32_t)3UL)   /*!< Timer4 SEVT channel:VL */
+#define TIMER4_SEVT_WH                          ((uint32_t)4UL)   /*!< Timer4 SEVT channel:WH */
+#define TIMER4_SEVT_WL                          ((uint32_t)5UL)   /*!< Timer4 SEVT channel:WL */
 /**
  * @}
  */
@@ -632,7 +632,7 @@ typedef struct
 /** @defgroup TIMER4_SEVT_Buffer_Mode TIMER4 SEVT Buffer Mode
  * @{
  */
-#define TIMER4_SEVT_BUF_DISABLE                 ((uint16_t)0x0000u) /*!< Disable the register SCCR&SCMR buffer function */
+#define TIMER4_SEVT_BUF_DISABLE                 ((uint16_t)0x0000U) /*!< Disable the register SCCR&SCMR buffer function */
 #define TIMER4_SEVT_BUF_CNT_ZERO                (TMR4_SCSR_BUFEN_0) /*!< Register SCCR&SCMR buffer transfer when counter value is 0x0000 */
 #define TIMER4_SEVT_BUF_CNT_PEAK                (TMR4_SCSR_BUFEN_1) /*!< Register SCCR&SCMR buffer transfer when counter value is CPSR */
 #define TIMER4_SEVT_BUF_CNT_ZERO_OR_PEAK        (TMR4_SCSR_BUFEN)   /*!< Register SCCR&SCMR buffer transfer when the value is both 0 and CPSR */
@@ -643,7 +643,7 @@ typedef struct
 /** @defgroup TIMER4_SEVT_Trigger_Event TIMER4 SEVT Trigger Event
  * @{
  */
-#define TIMER4_SEVT_TRIGGER_TMR4_SCMUH          ((uint16_t)0x0000u)     /*!< Timer4 Special-EVT trigger event: TMR4_SCMUH */
+#define TIMER4_SEVT_TRIGGER_TMR4_SCMUH          ((uint16_t)0x0000U)     /*!< Timer4 Special-EVT trigger event: TMR4_SCMUH */
 #define TIMER4_SEVT_TRIGGER_TMR4_SCMUL          (TMR4_SCSR_EVTOS_0)     /*!< Timer4 Special-EVT trigger event: TMR4_SCMUL */
 #define TIMER4_SEVT_TRIGGER_TMR4_SCMVH          (TMR4_SCSR_EVTOS_1)     /*!< Timer4 Special-EVT trigger event: TMR4_SCMVH */
 #define TIMER4_SEVT_TRIGGER_TMR4_SCMVL          (TMR4_SCSR_EVTOS_1 | \
@@ -658,7 +658,7 @@ typedef struct
 /** @defgroup TIMER4_SEVT_Mode TIMER4 SEVT Mode
  * @{
  */
-#define TIMER4_SEVT_MODE_COMPARE_TRIGGER        ((uint16_t)0x0000u) /*!< TIMER4 SEVT mode: OCCRxh */
+#define TIMER4_SEVT_MODE_COMPARE_TRIGGER        ((uint16_t)0x0000U) /*!< TIMER4 SEVT mode: OCCRxh */
 #define TIMER4_SEVT_MODE_DELAY_TRIGGER          (TMR4_SCSR_EVTMS)   /*!< TIMER4 SEVT mode: OCCRxl */
 /**
  * @}
@@ -667,7 +667,7 @@ typedef struct
 /** @defgroup TIMER4_SEVT_Delay_Object TIMER4 SEVT Delay Object
  * @{
  */
-#define TIMER4_SEVT_DELAY_OCCRXH                ((uint16_t)0x0000u) /*!< TIMER4 SEVT delay object: OCCRxh */
+#define TIMER4_SEVT_DELAY_OCCRXH                ((uint16_t)0x0000U) /*!< TIMER4 SEVT delay object: OCCRxh */
 #define TIMER4_SEVT_DELAY_OCCRXL                (TMR4_SCSR_EVTDS)   /*!< TIMER4 SEVT delay object: OCCRxl */
 /**
  * @}
@@ -676,7 +676,7 @@ typedef struct
 /** @defgroup TIMER4_SEVT_Mask_Times TIMER4 SEVT Mask Times
  * @{
  */
-#define TIMER4_SEVT_MASK_0                      ((uint16_t)0x0000u)     /*!< Mask 0 time */
+#define TIMER4_SEVT_MASK_0                      ((uint16_t)0x0000U)     /*!< Mask 0 time */
 #define TIMER4_SEVT_MASK_1                      (TMR4_SCMR_AMC_0)       /*!< Mask 1 times */
 #define TIMER4_SEVT_MASK_2                      (TMR4_SCMR_AMC_1)       /*!< Mask 2 times */
 #define TIMER4_SEVT_MASK_3                      (TMR4_SCMR_AMC_1 | \
@@ -722,7 +722,7 @@ typedef struct
 /** @defgroup TIMER4_EMB_Trigger_PWM_Output_Polarity TIMER4 EMB Trigger PWM Output Polarity
  * @{
  */
-#define TIMER4_EMB_TRIG_PWM_OP_NORMAL           ((uint32_t)0x0000ul)        /*!< PWM output signal normally when EMB signal occurs */
+#define TIMER4_EMB_TRIG_PWM_OP_NORMAL           ((uint32_t)0x0000UL)        /*!< PWM output signal normally when EMB signal occurs */
 #define TIMER4_EMB_TRIG_PWM_OP_HOLD             (TMR4_ECSR_EMBVAL_2)        /*!< Hold PWM output when EMB signal occurs */
 #define TIMER4_EMB_TRIG_PWM_OP_HIZ              (TMR4_ECSR_EMBVAL_0)        /*!< PWM output Hiz signal when EMB signal occurs */
 #define TIMER4_EMB_TRIG_PWM_OP_LOW              (TMR4_ECSR_EMBVAL_1)        /*!< PWM output low level signal when EMB signal occurs */
@@ -763,7 +763,7 @@ typedef struct
 __STATIC_INLINE void TIMER4_CNT_SetClock(uint16_t u16ClkSrc)
 {
     /* Set external clock enable bit */
-    bM0P_TMR4->CCSR_b.ECKEN = u16ClkSrc ? 1ul : 0ul;
+    bM0P_TMR4->CCSR_b.ECKEN = u16ClkSrc ? 1UL : 0UL;
 }
 
 /**
@@ -813,7 +813,7 @@ __STATIC_INLINE uint16_t TIMER4_CNT_GetMode(void)
  */
 __STATIC_INLINE void TIMER4_CNT_Start(void)
 {
-    bM0P_TMR4->CCSR_b.STOP = 0ul;
+    bM0P_TMR4->CCSR_b.STOP = 0UL;
 }
 
 /**
@@ -823,7 +823,7 @@ __STATIC_INLINE void TIMER4_CNT_Start(void)
  */
 __STATIC_INLINE void TIMER4_CNT_Stop(void)
 {
-    bM0P_TMR4->CCSR_b.STOP = 1ul;
+    bM0P_TMR4->CCSR_b.STOP = 1UL;
 }
 
 /**
@@ -882,7 +882,7 @@ __STATIC_INLINE uint16_t TIMER4_CNT_GetCycleVal(void)
  */
 __STATIC_INLINE void TIMER4_CNT_ClearCountVal(void)
 {
-    bM0P_TMR4->CCSR_b.CLEAR = 1ul;
+    bM0P_TMR4->CCSR_b.CLEAR = 1UL;
 }
 
 /**
@@ -1005,7 +1005,7 @@ uint32_t TIMER4_EMB_GetPwmPortPolarity(void);
 }
 #endif
 
-#endif /* __HC32M120_TIMER4_H__ */
+#endif /* __HC32M423_TIMER4_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

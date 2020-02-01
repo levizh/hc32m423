@@ -59,7 +59,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -178,7 +178,7 @@ static en_result_t SPI_Tx(const void *pvTxBuf, uint32_t u32Length);
  * @defgroup SPI_Local_Variables SPI Local Variables
  * @{
  */
-static uint32_t m_u32Timeout = 0u;
+static uint32_t m_u32Timeout = 0U;
 
 /**
  * @}
@@ -222,7 +222,7 @@ en_result_t SPI_Init(const stc_spi_init_t *pstcInit)
         DDL_ASSERT(IS_SPI_FIRST_BIT(pstcInit->u32FirstBit));
 
         u32Div = pstcInit->u32BaudRatePrescaler >> SPI_CFG2_MBR_POS;
-        m_u32Timeout  = (2ul << u32Div) * ((uint32_t)M0P_CMU->SCKDIVR) * 16ul;
+        m_u32Timeout  = (2UL << u32Div) * ((uint32_t)M0P_CMU->SCKDIVR) * 16UL;
 
         M0P_SPI->CR1  = pstcInit->u32WireMode          |   \
                         pstcInit->u32TransMode         |   \
@@ -253,10 +253,10 @@ void SPI_DeInit(void)
 {
     SPI_FunctionCmd(Disable);
 
-    M0P_SPI->CR1   = 0x0ul;
-    M0P_SPI->CFG1  = 0x0ul;
-    M0P_SPI->CFG2  = 0x0ul;
-    M0P_SPI->SR    = 0x0ul;
+    M0P_SPI->CR1   = 0x0UL;
+    M0P_SPI->CFG1  = 0x0UL;
+    M0P_SPI->CFG2  = 0x0UL;
+    M0P_SPI->SR    = 0x0UL;
 }
 
 /**
@@ -329,7 +329,7 @@ void SPI_IntCmd(uint32_t u32IntType, en_functional_state_t enNewState)
  * @retval An en_result_t enumeration value:
  *   @arg  Ok:                      No errors occurred
  *   @arg  ErrorTimeout:            SPI transmit timeout.
- *   @arg  ErrorInvalidParameter:   pvTxBuf == NULL or u32TxLength == 0u
+ *   @arg  ErrorInvalidParameter:   pvTxBuf == NULL or u32TxLength == 0U
  * @note   -No NSS pin active and inactive operation in 3-wire mode. Add operations of NSS pin depending on your application.
  *         -This function supports full duplex mode and send only mode.
  */
@@ -338,7 +338,7 @@ en_result_t SPI_Transmit(const void *pvTxBuf, uint32_t u32TxLength)
     uint32_t u32Flags;
     en_result_t enRet = ErrorInvalidParameter;
 
-    if ((pvTxBuf != NULL) && (u32TxLength != 0u))
+    if ((pvTxBuf != NULL) && (u32TxLength != 0U))
     {
         u32Flags = M0P_SPI->CR1 & SPI_SEND_ONLY;
         if (u32Flags == SPI_FULL_DUPLEX)
@@ -363,7 +363,7 @@ en_result_t SPI_Transmit(const void *pvTxBuf, uint32_t u32TxLength)
  * @retval An en_result_t enumeration value:
  *   @arg  Ok:                      No errors occurred
  *   @arg  ErrorTimeout:            SPI receive timeout.
- *   @arg  ErrorInvalidParameter:   pvRxBuf == NULL or u32RxLength == 0u
+ *   @arg  ErrorInvalidParameter:   pvRxBuf == NULL or u32RxLength == 0U
  * @note   -No NSS pin active and inactive operation in 3-wire mode. Add operations of NSS pin depending on your application.
  *         -This function only works in full duplex master mode.
  */
@@ -371,7 +371,7 @@ en_result_t SPI_Receive(void *pvRxBuf, uint32_t u32RxLength)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
-    if ((pvRxBuf != NULL) && (u32RxLength != 0u))
+    if ((pvRxBuf != NULL) && (u32RxLength != 0U))
     {
         /* Receives data in full duplex master mode. */
         enRet = SPI_TxRx(NULL, pvRxBuf, u32RxLength);
@@ -391,14 +391,14 @@ en_result_t SPI_Receive(void *pvRxBuf, uint32_t u32RxLength)
  * @retval An en_result_t enumeration value:
  *   @arg  Ok:                      No errors occurred
  *   @arg  ErrorTimeout:            SPI transmit and receive timeout.
- *   @arg  ErrorInvalidParameter:   pvRxBuf == NULL or pvRxBuf == NULL or u32Length == 0u
+ *   @arg  ErrorInvalidParameter:   pvRxBuf == NULL or pvRxBuf == NULL or u32Length == 0U
  * @note   SPI receives data while sending data. Only works in full duplex master mode.
  */
 en_result_t SPI_TransmitReceive(const void *pvTxBuf, void *pvRxBuf, uint32_t u32Length)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
-    if ((pvTxBuf != NULL) && (pvRxBuf != NULL) && (u32Length != 0u))
+    if ((pvTxBuf != NULL) && (pvRxBuf != NULL) && (u32Length != 0U))
     {
         /* Transmit and receive data in full duplex master mode. */
         enRet = SPI_TxRx(pvTxBuf, pvRxBuf, u32Length);
@@ -428,7 +428,7 @@ static en_result_t SPI_TxRx(const void *pvTxBuf, void *pvRxBuf, uint32_t u32Leng
 {
     uint32_t u32BitSize;
     uint32_t u32Timecount;
-    uint32_t u32Count = 0u;
+    uint32_t u32Count = 0U;
     en_result_t enRet = Ok;
 
     u32BitSize = M0P_SPI->CFG2 & SPI_DATA_SIZE_16BIT;
@@ -459,7 +459,7 @@ static en_result_t SPI_TxRx(const void *pvTxBuf, void *pvRxBuf, uint32_t u32Leng
                 break;
             }
             u32Timecount--;
-        } while (u32Timecount != 0u);
+        } while (u32Timecount != 0U);
 
         if (pvRxBuf != NULL)
         {
@@ -473,7 +473,7 @@ static en_result_t SPI_TxRx(const void *pvTxBuf, void *pvRxBuf, uint32_t u32Leng
             }
         }
 
-        if (u32Timecount == 0u)
+        if (u32Timecount == 0U)
         {
             enRet = ErrorTimeout;
             break;
@@ -495,7 +495,7 @@ static en_result_t SPI_TxRx(const void *pvTxBuf, void *pvRxBuf, uint32_t u32Leng
  */
 static en_result_t SPI_Tx(const void *pvTxBuf, uint32_t u32Length)
 {
-    uint32_t u32Count = 0u;
+    uint32_t u32Count = 0U;
     uint32_t u32Timecount;
     uint32_t u32BitSize;
     en_result_t enRet = Ok;
@@ -521,9 +521,9 @@ static en_result_t SPI_Tx(const void *pvTxBuf, uint32_t u32Length)
                 break;
             }
             u32Timecount--;
-        } while (u32Timecount != 0u);
+        } while (u32Timecount != 0U);
         
-        if (u32Timecount == 0u)
+        if (u32Timecount == 0U)
         {
             enRet = ErrorTimeout;
         }

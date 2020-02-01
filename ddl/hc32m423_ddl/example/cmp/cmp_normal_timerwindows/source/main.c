@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -96,8 +96,8 @@
 #define TIMERB_ODD_UNIT                 (M0P_TMRB1)
 #define TIMERB_ODD_UNIT_CMP_INT         (INT_TMRB_1_CMP)
 #define TIMERB_ODD_UNIT_CMP_IRQn        (Int022_IRQn)
-#define TIMERB_ODD_UNIT_PERIOD_VALUE    ((SystemCoreClock/512ul))
-#define TIMERB_ODD_UNIT_COMPARE_VALUE   ((TIMERB_ODD_UNIT_PERIOD_VALUE/2ul))
+#define TIMERB_ODD_UNIT_PERIOD_VALUE    ((SystemCoreClock/512UL))
+#define TIMERB_ODD_UNIT_COMPARE_VALUE   ((TIMERB_ODD_UNIT_PERIOD_VALUE/2UL))
 /* TIMERB TIMB_t_PWM1 Port/Pin definition */
 #define TIMERB_ODD_UNIT_PWM1_PORT       (GPIO_PORT_1)     /* P15: TIMB_1_PWM1_D */
 #define TIMERB_ODD_UNIT_PWM1_PIN        (GPIO_PIN_5)

@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -92,7 +92,7 @@
 /* TIMERA unit definition */
 #define TIMERA_UNIT1                    (M0P_TMRA)
 #define TIMERA_UNIT1_CLOCK              (CLK_FCG_TIMA)
-#define TIMERA_UNIT1_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/256u/100u))
+#define TIMERA_UNIT1_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/256U/100U))
 
 /* TIMERA channel 1 Port/Pin definition */
 #define TIMERA_UNIT1_CH1                (TIMERA_CHANNEL_CH1)
@@ -112,7 +112,7 @@
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static uint8_t u8Sw1IntFlag = 0u, u8Sw2IntFlag = 0u;
+static uint8_t u8Sw1IntFlag = 0U, u8Sw2IntFlag = 0U;
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
@@ -126,7 +126,7 @@ void EXINT02_Handler(void)
 {
     if (Set == EXINT_GetExIntSrc(EXINT_CH02))
     {
-        u8Sw1IntFlag = 1u;
+        u8Sw1IntFlag = 1U;
         EXINT_ClrExIntSrc(EXINT_CH02);
     }
 }
@@ -140,15 +140,15 @@ void EXINT01_Handler(void)
 {
     if (Set == EXINT_GetExIntSrc(EXINT_CH01))
     {
-        if (0u == u8Sw2IntFlag)
+        if (0U == u8Sw2IntFlag)
         {
-            u8Sw2IntFlag = 1u;
+            u8Sw2IntFlag = 1U;
             LED_R_ON();
             TIMERA_SetHwTriggerCondition(TIMERA_UNIT1, TIMERA_HWSTOP_SPECIFY_EVT);
         }
         else
         {
-            u8Sw2IntFlag = 0u;
+            u8Sw2IntFlag = 0U;
             LED_R_OFF();
             TIMERA_SetHwTriggerCondition(TIMERA_UNIT1, TIMERA_HWSTART_SPECIFY_EVT);
         }
@@ -282,7 +282,7 @@ static void Timera_Config(void)
     TIMERA_Init(TIMERA_UNIT1, &stcTimeraInit);
 
     /* Configuration timera 1 unit compare structure */
-    stcTimeraOCInit.u16CompareVal = 0u;
+    stcTimeraOCInit.u16CompareVal = 0U;
     stcTimeraOCInit.u16StartCountOutput = TIMERA_OC_STARTCOUNT_OUTPUT_LOW;
     stcTimeraOCInit.u16StopCountOutput = TIMERA_OC_STOPCOUNT_OUTPUT_LOW;
     stcTimeraOCInit.u16CompareMatchOutput = TIMERA_OC_CMPMATCH_OUTPUT_INVERTED;
@@ -322,18 +322,18 @@ int32_t main(void)
     /* Configure TimerA */
     Timera_Config();
 
-    u16CurrValue = 0u;
+    u16CurrValue = 0U;
     u16PeriodValue = TIMERA_GetPeriod(TIMERA_UNIT1);
 
     while (1)
     {
-        if (1u == u8Sw1IntFlag)
+        if (1U == u8Sw1IntFlag)
         {
-            u8Sw1IntFlag = 0u;
-            u16CurrValue += u16PeriodValue / 20u;
+            u8Sw1IntFlag = 0U;
+            u16CurrValue += u16PeriodValue / 20U;
             if (u16CurrValue > u16PeriodValue)
             {
-                u16CurrValue = 0u;
+                u16CurrValue = 0U;
             }
             TIMERA_OC_SetCompare(TIMERA_UNIT1, TIMERA_UNIT1_CH1_CACHE_CH, u16CurrValue);
         }

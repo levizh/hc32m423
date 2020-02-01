@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -85,7 +85,7 @@
 
 /* Timer4 PWM Channel && reload value definition */
 #define TIMER4_PWM_CH                   (TIMER4_PWM_U)
-#define TIMER4_PWM_RT_VAL               ((uint16_t)(SystemCoreClock/128ul/2ul))    /* 500 ms */
+#define TIMER4_PWM_RT_VAL               ((uint16_t)(SystemCoreClock/128UL/2UL))    /* 500 ms */
 
 /* Timer4 PWM get interrupt source number definition */
 #define TIMER4_PWM_RLO_INT_SRC(x)       ((en_int_src_t)((uint32_t)INT_TMR4_RLOU + \

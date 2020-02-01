@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -82,14 +82,14 @@
 #define FUNCTION_CLK_GATE               (CLK_FCG_TIM4)
 
 /* Timer4 Counter period value && interrupt number definition */
-#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/512ul))    /* 1000 ms */
+#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/512UL))    /* 1000 ms */
 #define TIMERB_CNT_UDF_INT              (INT_TMR4_GUDF)
 #define TIMERB_CNT_UDF_IRQn             (Int017_IRQn)
 
 /* Timer4 OCO Channel definition */
 #define TIMER4_OCO_HIGH_CH              (TIMER4_OCO_UH)    /* only TIMER4_OCO_UH  TIMER4_OCO_VH  TIMER4_OCO_WH */
 
-#define TIMER4_OCO_OCCR_BUF_SIZE        (3u)
+#define TIMER4_OCO_OCCR_BUF_SIZE        (3U)
 
 /* Timer4 PWM get channel by OCO high channel */
 #define TIMER4_PWM_CH(x)                (((x) == TIMER4_OCO_UH) ? TIMER4_PWM_U : \
@@ -107,7 +107,7 @@ static void SystemClockConfig(void);
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static uint16_t m_u16OccrValIdx = 0u;
+static uint16_t m_u16OccrValIdx = 0U;
 static uint16_t m_au16OccrVal[TIMER4_OCO_OCCR_BUF_SIZE];
 
 /*******************************************************************************
@@ -137,7 +137,7 @@ static void Timer4ZeroMatchIrqCb(void)
 
     if (++m_u16OccrValIdx >= TIMER4_OCO_OCCR_BUF_SIZE)
     {
-        m_u16OccrValIdx = 0u;
+        m_u16OccrValIdx = 0U;
     }
     else
     {
@@ -182,9 +182,9 @@ int32_t main(void)
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
 
     /* Initialize TIMER4 OCO high channel */
-    m_au16OccrVal[0] = 1u * (TIMER4_CNT_CYCLE_VAL / 4u);
-    m_au16OccrVal[1] = 2u * (TIMER4_CNT_CYCLE_VAL / 4u);
-    m_au16OccrVal[2] = 3u * (TIMER4_CNT_CYCLE_VAL / 4u);
+    m_au16OccrVal[0] = 1U * (TIMER4_CNT_CYCLE_VAL / 4U);
+    m_au16OccrVal[1] = 2U * (TIMER4_CNT_CYCLE_VAL / 4U);
+    m_au16OccrVal[2] = 3U * (TIMER4_CNT_CYCLE_VAL / 4U);
     TIMER4_OCO_StructInit(&stcTimer4OcoInit);
     stcTimer4OcoInit.enOcoCmd = Enable;
     stcTimer4OcoInit.enOcoIntCmd = Disable;
@@ -193,7 +193,7 @@ int32_t main(void)
     stcTimer4OcoInit.u16OccrVal = m_au16OccrVal[m_u16OccrValIdx++];
     TIMER4_OCO_Init(TIMER4_OCO_HIGH_CH, &stcTimer4OcoInit);
 
-    if (!(TIMER4_OCO_HIGH_CH % 2ul))
+    if (!(TIMER4_OCO_HIGH_CH % 2UL))
     {
         /* OCMR[15:0] = 0x0FFF = b 0000 1111 1111 1111 */
         stcHighChCmpMode.OCMRx_f.OCFDCH = TIMER4_OCO_OCF_SET;   /* bit[0] 1 */

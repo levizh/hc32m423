@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_CMP_H__
-#define __HC32M120_CMP_H__
+#ifndef __HC32M423_CMP_H__
+#define __HC32M423_CMP_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -142,7 +142,7 @@ typedef struct
 /** @defgroup CMP_Mode CMP compare mode
   * @{
   */
-#define CMP_MODE_NORMAL          0u
+#define CMP_MODE_NORMAL          0U
 #define CMP_MODE_WINDOW          (CMP_MDR_CWDE)
 /**
  * @}
@@ -152,7 +152,7 @@ typedef struct
   * @{
   */
 /* Don't input compare voltage */
-#define CMP1_CVSL_NONE           0u
+#define CMP1_CVSL_NONE           0U
 /* Select pin VCMP1_0 as compare voltage */
 #define CMP1_CVSL_VCMP1_0        (CMP_VSR_CVSL_0)
 /* Select pin VCMP1_1 as compare voltage */
@@ -167,7 +167,7 @@ typedef struct
   * @{
   */
 /* Don't input compare voltage */
-#define CMP2_CVSL_NONE           0u
+#define CMP2_CVSL_NONE           0U
 /* Select pin VCMP2_0 as compare voltage */
 #define CMP2_CVSL_VCMP2_0        (CMP_VSR_CVSL_0)
 /* Select pin VCMP2_1 as compare voltage */
@@ -182,7 +182,7 @@ typedef struct
   * @{
   */
 /* Don't input reference voltage */
-#define CMP1_RVSL_NONE           0u
+#define CMP1_RVSL_NONE           0U
 /* Select pin IVREF1 as reference voltage */
 #define CMP1_RVSL_IVREF1         (CMP_VSR_RVSL_0)
 /* Select internal reference voltage (Vref) as reference voltage */
@@ -195,7 +195,7 @@ typedef struct
   * @{
   */
 /* Don't input reference voltage */
-#define CMP2_RVSL_NONE           0u
+#define CMP2_RVSL_NONE           0U
 /* Select pin IVREF2 as reference voltage */
 #define CMP2_RVSL_IVREF2         (CMP_VSR_RVSL_0)
 /* Select internal reference voltage (Vref) as reference voltage */
@@ -210,7 +210,7 @@ typedef struct
   * @{
   */
 /* CMP output don't reverse */
-#define CMP_OUT_REVERSE_OFF          0u
+#define CMP_OUT_REVERSE_OFF          0U
 /* CMP output level reverse */
 #define CMP_OUT_REVERSE_ON           (CMP_OCR_COPS)
 /**
@@ -220,10 +220,10 @@ typedef struct
 /** @defgroup CMP_Out_Detect_Edge CMP output detect edge selection
   * @{
   */
-#define CMP_DETECT_EDGS_NONE        ((uint8_t)0ul)
-#define CMP_DETECT_EDGS_RISING      ((uint8_t)(1ul << CMP_FIR_EDGS_POS))
-#define CMP_DETECT_EDGS_FALLING     ((uint8_t)(2ul << CMP_FIR_EDGS_POS))
-#define CMP_DETECT_EDGS_BOTH        ((uint8_t)(3ul << CMP_FIR_EDGS_POS))
+#define CMP_DETECT_EDGS_NONE        ((uint8_t)0UL)
+#define CMP_DETECT_EDGS_RISING      ((uint8_t)(1UL << CMP_FIR_EDGS_POS))
+#define CMP_DETECT_EDGS_FALLING     ((uint8_t)(2UL << CMP_FIR_EDGS_POS))
+#define CMP_DETECT_EDGS_BOTH        ((uint8_t)(3UL << CMP_FIR_EDGS_POS))
 /**
  * @}
  */
@@ -231,10 +231,10 @@ typedef struct
 /** @defgroup CMP_Out_Filter CMP output filter configuration
   * @{
   */
-#define CMP_OUT_FILTER_NONE         0u
-#define CMP_OUT_FILTER_PCLK         1u
-#define CMP_OUT_FILTER_PCLKDIV8     2u
-#define CMP_OUT_FILTER_PCLKDIV32    3u
+#define CMP_OUT_FILTER_NONE         0U
+#define CMP_OUT_FILTER_PCLK         1U
+#define CMP_OUT_FILTER_PCLKDIV8     2U
+#define CMP_OUT_FILTER_PCLKDIV32    3U
 /**
  * @}
  */
@@ -242,7 +242,7 @@ typedef struct
 /** @defgroup CMP_TimerWin_func CMP timer window function configuration
   * @{
   */
-#define CMP_TIMERWIN_OFF            0u
+#define CMP_TIMERWIN_OFF            0U
 #define CMP_TIMERWIN_ON             (CMP_OCR_TWOE)
 /**
  * @}
@@ -281,7 +281,7 @@ typedef struct
 /** @defgroup CMP_TimerWin_Invalid_Level CMP output level when timer window invalid
   * @{
   */
-#define CMP_TIMERWIN_INVALID_LEVEL_LOW   0u
+#define CMP_TIMERWIN_INVALID_LEVEL_LOW   0U
 #define CMP_TIMERWIN_INVALID_LEVEL_HIGH  (CMP_OCR_TWOL)
 /**
  * @}
@@ -290,8 +290,8 @@ typedef struct
 /** @defgroup CMP_TimerWin_output_Level CMP output level in timer windows mode
   * @{
   */
-#define CMP_TIMERWIN_OUT_LEVEL_LOW       0u
-#define CMP_TIMERWIN_OUT_LEVEL_HIGH      1u
+#define CMP_TIMERWIN_OUT_LEVEL_LOW       0U
+#define CMP_TIMERWIN_OUT_LEVEL_HIGH      1U
 /**
  * @}
  */
@@ -345,7 +345,7 @@ en_result_t CMP_ResultGet(M0P_CMP_TypeDef *CMPx, en_flag_status_t* penFunSta);
 }
 #endif
 
-#endif /* __HC32M120_CMP_H__ */
+#endif /* __HC32M423_CMP_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

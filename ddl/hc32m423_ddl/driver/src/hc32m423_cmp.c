@@ -58,7 +58,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -491,7 +491,7 @@ en_result_t CMP_NormalModeInit(M0P_CMP_TypeDef *CMPx,
         }
 
         /* Stop CMP compare */
-        WRITE_REG(CMPx->MDR, 0x00u);
+        WRITE_REG(CMPx->MDR, 0x00U);
 
         /* Set compare voltage and reference voltage */
         WRITE_REG(CMPx->VSR,
@@ -550,8 +550,8 @@ en_result_t CMP_WindowModeInit(const stc_cmp_init_t* pstcCMP_InitStruct)
         DDL_ASSERT(IS_CMP2_RVSL(pstcCMP_InitStruct->u8WinVolHigh));
 
         /* Stop CMP compare */
-        WRITE_REG(M0P_CMP1->MDR, 0x00u);
-        WRITE_REG(M0P_CMP2->MDR, 0x00u);
+        WRITE_REG(M0P_CMP1->MDR, 0x00U);
+        WRITE_REG(M0P_CMP2->MDR, 0x00U);
 
         /* Set compare voltage and reference voltage */
         WRITE_REG(M0P_CMP1->VSR,
@@ -593,12 +593,12 @@ en_result_t CMP_DeInit(M0P_CMP_TypeDef *CMPx)
     }
     else
     {
-        CMPx->MDR = 0x00u;
-        CMPx->FIR = 0x00u;
-        CMPx->OCR = 0x00u;
-        CMPx->VSR = 0x00u;
-        CMPx->TWR1 = 0x00u;
-        CMPx->TWR2 = 0x00u;
+        CMPx->MDR = 0x00U;
+        CMPx->FIR = 0x00U;
+        CMPx->OCR = 0x00U;
+        CMPx->VSR = 0x00U;
+        CMPx->TWR1 = 0x00U;
+        CMPx->TWR2 = 0x00U;
     }
     return enRet;
 }
@@ -642,7 +642,7 @@ en_result_t CMP_StructInit(stc_cmp_init_t* pstcCMP_InitStruct)
  */
 static void CMP_Delay300ns(void)
 {
-    for(uint32_t i=0ul; i<(SystemCoreClock/3333333ul + 1ul); i++)
+    for(uint32_t i=0UL; i<(SystemCoreClock/3333333UL + 1UL); i++)
     {
         __NOP();
     }

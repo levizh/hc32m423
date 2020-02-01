@@ -118,8 +118,8 @@ typedef void (*func_ptr_arg1_t)(uint8_t);
  */
 typedef enum
 {
-    Disable = 0u,
-    Enable  = 1u,
+    Disable = 0U,
+    Enable  = 1U,
 } en_functional_state_t;
 
 /* Check if it is a functional state */
@@ -130,8 +130,8 @@ typedef enum
  */
 typedef enum
 {
-    Reset = 0u,
-    Set   = 1u,
+    Reset = 0U,
+    Set   = 1U,
 } en_flag_status_t, en_int_status_t;
 
 /**
@@ -139,18 +139,18 @@ typedef enum
  */
 typedef enum
 {
-    Ok                       = 0u,   /*!< No error */
-    Error                    = 1u,   /*!< Non-specific error code */
-    ErrorAddressAlignment    = 2u,   /*!< Address alignment does not match */
-    ErrorAccessRights        = 3u,   /*!< Wrong mode (e.g. user/system) mode is set */
-    ErrorInvalidParameter    = 4u,   /*!< Provided parameter is not valid */
-    ErrorOperationInProgress = 5u,   /*!< A conflicting or requested operation is still in progress */
-    ErrorInvalidMode         = 6u,   /*!< Operation not allowed in current mode */
-    ErrorUninitialized       = 7u,   /*!< Module (or part of it) was not initialized properly */
-    ErrorBufferFull          = 8u,   /*!< Circular buffer can not be written because the buffer is full */
-    ErrorTimeout             = 9u,   /*!< Time Out error occurred (e.g. I2C arbitration lost, Flash time-out, etc.) */
-    ErrorNotReady            = 10u,  /*!< A requested final state is not reached */
-    OperationInProgress      = 11u,  /*!< Indicator for operation in progress (e.g. ADC conversion not finished, DMA channel used, etc.) */
+    Ok                       = 0U,   /*!< No error */
+    Error                    = 1U,   /*!< Non-specific error code */
+    ErrorAddressAlignment    = 2U,   /*!< Address alignment does not match */
+    ErrorAccessRights        = 3U,   /*!< Wrong mode (e.g. user/system) mode is set */
+    ErrorInvalidParameter    = 4U,   /*!< Provided parameter is not valid */
+    ErrorOperationInProgress = 5U,   /*!< A conflicting or requested operation is still in progress */
+    ErrorInvalidMode         = 6U,   /*!< Operation not allowed in current mode */
+    ErrorUninitialized       = 7U,   /*!< Module (or part of it) was not initialized properly */
+    ErrorBufferFull          = 8U,   /*!< Circular buffer can not be written because the buffer is full */
+    ErrorTimeout             = 9U,   /*!< Time Out error occurred (e.g. I2C arbitration lost, Flash time-out, etc.) */
+    ErrorNotReady            = 10U,  /*!< A requested final state is not reached */
+    OperationInProgress      = 11U,  /*!< Indicator for operation in progress (e.g. ADC conversion not finished, DMA channel used, etc.) */
 } en_result_t;
 
 /**
@@ -214,10 +214,10 @@ typedef enum
  * @{
  */
 /* Decimal to BCD */
-#define DEC2BCD(x)                      ((((x) / 10u) << 4u) + ((x) % 10u))
+#define DEC2BCD(x)                      ((((x) / 10U) << 4U) + ((x) % 10U))
 
 /* BCD to decimal */
-#define BCD2DEC(x)                      ((((x) >> 4u) * 10u) + ((x) & 0x0Fu))
+#define BCD2DEC(x)                      ((((x) >> 4U) * 10U) + ((x) & 0x0Fu))
 
 /* Returns the dimension of an array */
 #define ARRAY_SZ(X)                     (sizeof(X) / sizeof((X)[0]))
@@ -259,9 +259,9 @@ typedef enum
 #define READ_REG32_BIT(REG, BIT)        ((REG) & ((uint32_t)(BIT)))
 
 /* Specificed register bit width */
-#define CLEAR_REG8(REG)                 ((REG) = ((uint8_t)(0u)))
-#define CLEAR_REG16(REG)                ((REG) = ((uint16_t)(0u)))
-#define CLEAR_REG32(REG)                ((REG) = ((uint32_t)(0ul)))
+#define CLEAR_REG8(REG)                 ((REG) = ((uint8_t)(0U)))
+#define CLEAR_REG16(REG)                ((REG) = ((uint16_t)(0U)))
+#define CLEAR_REG32(REG)                ((REG) = ((uint32_t)(0UL)))
 
 /* Specificed register bit width */
 #define WRITE_REG8(REG, VAL)            ((REG) = ((uint8_t)(VAL)))

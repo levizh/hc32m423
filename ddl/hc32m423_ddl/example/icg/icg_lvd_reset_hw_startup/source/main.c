@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -81,8 +81,8 @@
 #define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
 
 /* Reset source definition */
-#define RESET_SOURCE_LVD                (0u)
-#define RESET_SOURCE_OTHER              (1u)
+#define RESET_SOURCE_LVD                (0U)
+#define RESET_SOURCE_OTHER              (1U)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -152,7 +152,7 @@ int32_t main(void)
         if (RESET_SOURCE_OTHER == u8ResetSource)
         {
             LED_R_TOGGLE();
-            DDL_Delay1ms(1000u);
+            DDL_Delay1ms(1000U);
         }
     }
 }

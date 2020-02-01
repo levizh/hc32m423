@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_EMB_H__
-#define __HC32M120_EMB_H__
+#ifndef __HC32M423_EMB_H__
+#define __HC32M423_EMB_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -148,7 +148,7 @@ typedef struct
 /** @defgroup EMB_Port_Filter_Clock_Division EMB Port Filter Clock Division
  * @{
  */
-#define EMB_PORT_FILTER_NONE                    (0x00ul)                            /*!< Disable filter */
+#define EMB_PORT_FILTER_NONE                    (0x00UL)                            /*!< Disable filter */
 #define EMB_PORT_FILTER_CLK_DIV1                (EMB_CTL_NFEN)                      /*!< PCLK           */
 #define EMB_PORT_FILTER_CLK_DIV8                (EMB_CTL_NFEN | EMB_CTL_NFSEL_0)    /*!< PCLK/8         */
 #define EMB_PORT_FILTER_CLK_DIV32               (EMB_CTL_NFEN | EMB_CTL_NFSEL_1)    /*!< PCLK/32        */
@@ -161,7 +161,7 @@ typedef struct
  * @defgroup EMB_Port_Level EMB Port Level
  * @{
  */
-#define EMB_PORT_LEVEL_HIGH                     (0x00ul)
+#define EMB_PORT_LEVEL_HIGH                     (0x00UL)
 #define EMB_PORT_LEVEL_LOW                      (EMB_CTL_INVSEL)
 /**
  * @}
@@ -291,7 +291,7 @@ stc_emb_timer4_pwm_level_t EMB_GetDetectPwmLevel(void);
 }
 #endif
 
-#endif /* __HC32M120_EMB_H__ */
+#endif /* __HC32M423_EMB_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

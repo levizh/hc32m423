@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -84,7 +84,7 @@
 #define FUNCTION_CLK_GATE               (CLK_FCG_TIM4)
 
 /* Timer4 Counter period value && interrupt number definition */
-#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/512ul))    /* 1000 ms */
+#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/512UL))    /* 1000 ms */
 
 /* Timer4 OCO Channel definition */
 #define TIMER4_OCO_HIGH_CH              (TIMER4_OCO_UH)    /* only TIMER4_OCO_UH  TIMER4_OCO_VH  TIMER4_OCO_WH */
@@ -157,7 +157,7 @@ static void Timer4OcoMatchIrqCb(void)
     }
 
     TIMER4_OCO_ClearFlag(TIMER4_OCO_LOW_CH);
-    TIMER4_OCO_ClearFlag(TIMER4_OCO_LOW_CH - 1ul);
+    TIMER4_OCO_ClearFlag(TIMER4_OCO_LOW_CH - 1UL);
 }
 
 /**
@@ -195,14 +195,14 @@ int32_t main(void)
     stcTimer4OcoInit.u16OcoInvalidOp = TIMER4_OCO_INVAILD_OP_LOW;
 
     /* Initialize TIMER4 OCO high channel */
-    stcTimer4OcoInit.u16OccrVal = TIMER4_CNT_CYCLE_VAL/4u;
+    stcTimer4OcoInit.u16OccrVal = TIMER4_CNT_CYCLE_VAL/4U;
     TIMER4_OCO_Init(TIMER4_OCO_HIGH_CH, &stcTimer4OcoInit);
 
     /* Initialize TIMER4 OCO low channel */
-    stcTimer4OcoInit.u16OccrVal = (TIMER4_CNT_CYCLE_VAL / 4u) * 3u;
+    stcTimer4OcoInit.u16OccrVal = (TIMER4_CNT_CYCLE_VAL / 4U) * 3U;
     TIMER4_OCO_Init(TIMER4_OCO_LOW_CH, &stcTimer4OcoInit);
 
-    if (!(TIMER4_OCO_HIGH_CH%2ul))
+    if (!(TIMER4_OCO_HIGH_CH%2UL))
     {
         /* OCMR[15:0] = 0x000F = b 0000 0000 0000 1111 */
         stcHighChCmpMode.OCMRx_f.OCFDCH = TIMER4_OCO_OCF_SET;   /* bit[0] 1 */
@@ -222,7 +222,7 @@ int32_t main(void)
         TIMER4_OCO_SetHighChCompareMode(TIMER4_OCO_HIGH_CH, &stcHighChCmpMode);  /* Set OCO high channel compare mode */
     }
 
-    if (TIMER4_OCO_LOW_CH % 2ul)
+    if (TIMER4_OCO_LOW_CH % 2UL)
     {
         /* OCMR[31:0] Ox FFFF 0FFF = b 1111 1111 1111 1111   0000 1111 1111 1111 */
         stcLowChCmpMode.OCMRx_f.OCFDCL = TIMER4_OCO_OCF_SET;    /* bit[0] 1 */

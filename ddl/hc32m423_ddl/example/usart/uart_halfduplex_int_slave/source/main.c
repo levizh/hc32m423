@@ -59,7 +59,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -115,7 +115,7 @@ static void UartSlaveUnitErrIrqCallback(void);
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static uint8_t m_u8UartSlaveRxData = 0u;
+static uint8_t m_u8UartSlaveRxData = 0U;
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')

@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_INTERRUPTS_H__
-#define __HC32M120_INTERRUPTS_H__
+#ifndef __HC32M423_INTERRUPTS_H__
+#define __HC32M423_INTERRUPTS_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -135,7 +135,7 @@ typedef struct
  * Possible values are 0 (high priority) to 3 (low priority)
  * @{
  */
-#define DDL_IRQ_PRIORITY_DEFAULT    (3u)
+#define DDL_IRQ_PRIORITY_DEFAULT    (3U)
 /**
  * @}
  */
@@ -144,10 +144,10 @@ typedef struct
  * @defgroup INTC_Priority_Sel Interrupt priority level 00 ~ 03
  * @{
  */
-#define DDL_IRQ_PRIORITY_00         (0u)
-#define DDL_IRQ_PRIORITY_01         (1u)
-#define DDL_IRQ_PRIORITY_02         (2u)
-#define DDL_IRQ_PRIORITY_03         (3u)
+#define DDL_IRQ_PRIORITY_00         (0U)
+#define DDL_IRQ_PRIORITY_01         (1U)
+#define DDL_IRQ_PRIORITY_02         (2U)
+#define DDL_IRQ_PRIORITY_03         (3U)
 /**
  * @}
  */
@@ -156,38 +156,38 @@ typedef struct
  * @defgroup INTC_Bit_mask definition Bit Mask
  * @{
  */
-#define     BIT_MASK_00             (uint32_t)(1ul << 0u)
-#define     BIT_MASK_01             (uint32_t)(1ul << 1u)
-#define     BIT_MASK_02             (uint32_t)(1ul << 2u)
-#define     BIT_MASK_03             (uint32_t)(1ul << 3u)
-#define     BIT_MASK_04             (uint32_t)(1ul << 4u)
-#define     BIT_MASK_05             (uint32_t)(1ul << 5u)
-#define     BIT_MASK_06             (uint32_t)(1ul << 6u)
-#define     BIT_MASK_07             (uint32_t)(1ul << 7u)
-#define     BIT_MASK_08             (uint32_t)(1ul << 8u)
-#define     BIT_MASK_09             (uint32_t)(1ul << 9u)
-#define     BIT_MASK_10             (uint32_t)(1ul << 10u)
-#define     BIT_MASK_11             (uint32_t)(1ul << 11u)
-#define     BIT_MASK_12             (uint32_t)(1ul << 12u)
-#define     BIT_MASK_13             (uint32_t)(1ul << 13u)
-#define     BIT_MASK_14             (uint32_t)(1ul << 14u)
-#define     BIT_MASK_15             (uint32_t)(1ul << 15u)
-#define     BIT_MASK_16             (uint32_t)(1ul << 16u)
-#define     BIT_MASK_17             (uint32_t)(1ul << 17u)
-#define     BIT_MASK_18             (uint32_t)(1ul << 18u)
-#define     BIT_MASK_19             (uint32_t)(1ul << 19u)
-#define     BIT_MASK_20             (uint32_t)(1ul << 20u)
-#define     BIT_MASK_21             (uint32_t)(1ul << 21u)
-#define     BIT_MASK_22             (uint32_t)(1ul << 22u)
-#define     BIT_MASK_23             (uint32_t)(1ul << 23u)
-#define     BIT_MASK_24             (uint32_t)(1ul << 24u)
-#define     BIT_MASK_25             (uint32_t)(1ul << 25u)
-#define     BIT_MASK_26             (uint32_t)(1ul << 26u)
-#define     BIT_MASK_27             (uint32_t)(1ul << 27u)
-#define     BIT_MASK_28             (uint32_t)(1ul << 28u)
-#define     BIT_MASK_29             (uint32_t)(1ul << 29u)
-#define     BIT_MASK_30             (uint32_t)(1ul << 30u)
-#define     BIT_MASK_31             (uint32_t)(1ul << 31u)
+#define     BIT_MASK_00             (uint32_t)(1UL << 0U)
+#define     BIT_MASK_01             (uint32_t)(1UL << 1U)
+#define     BIT_MASK_02             (uint32_t)(1UL << 2U)
+#define     BIT_MASK_03             (uint32_t)(1UL << 3U)
+#define     BIT_MASK_04             (uint32_t)(1UL << 4U)
+#define     BIT_MASK_05             (uint32_t)(1UL << 5U)
+#define     BIT_MASK_06             (uint32_t)(1UL << 6U)
+#define     BIT_MASK_07             (uint32_t)(1UL << 7U)
+#define     BIT_MASK_08             (uint32_t)(1UL << 8U)
+#define     BIT_MASK_09             (uint32_t)(1UL << 9U)
+#define     BIT_MASK_10             (uint32_t)(1UL << 10U)
+#define     BIT_MASK_11             (uint32_t)(1UL << 11U)
+#define     BIT_MASK_12             (uint32_t)(1UL << 12U)
+#define     BIT_MASK_13             (uint32_t)(1UL << 13U)
+#define     BIT_MASK_14             (uint32_t)(1UL << 14U)
+#define     BIT_MASK_15             (uint32_t)(1UL << 15U)
+#define     BIT_MASK_16             (uint32_t)(1UL << 16U)
+#define     BIT_MASK_17             (uint32_t)(1UL << 17U)
+#define     BIT_MASK_18             (uint32_t)(1UL << 18U)
+#define     BIT_MASK_19             (uint32_t)(1UL << 19U)
+#define     BIT_MASK_20             (uint32_t)(1UL << 20U)
+#define     BIT_MASK_21             (uint32_t)(1UL << 21U)
+#define     BIT_MASK_22             (uint32_t)(1UL << 22U)
+#define     BIT_MASK_23             (uint32_t)(1UL << 23U)
+#define     BIT_MASK_24             (uint32_t)(1UL << 24U)
+#define     BIT_MASK_25             (uint32_t)(1UL << 25U)
+#define     BIT_MASK_26             (uint32_t)(1UL << 26U)
+#define     BIT_MASK_27             (uint32_t)(1UL << 27U)
+#define     BIT_MASK_28             (uint32_t)(1UL << 28U)
+#define     BIT_MASK_29             (uint32_t)(1UL << 29U)
+#define     BIT_MASK_30             (uint32_t)(1UL << 30U)
+#define     BIT_MASK_31             (uint32_t)(1UL << 31U)
 /**
  * @}
  */
@@ -196,8 +196,8 @@ typedef struct
  * @defgroup INTC_Register_Protect INTC Registers Protect Code
  * @{
  */
-#define INTC_REG_UNPROTECT          ((uint8_t)0xA5u)
-#define INTC_REG_PROTECT            ((uint8_t)0x00u)
+#define INTC_REG_UNPROTECT          ((uint8_t)0xA5U)
+#define INTC_REG_PROTECT            ((uint8_t)0x00U)
 /**
  * @}
  */
@@ -206,8 +206,8 @@ typedef struct
  * @defgroup NMI_FilterClock_Sel NMI pin filter selection
  * @{
  */
-#define NMI_FILTER_OFF              (uint8_t)(0u << INTC_NMICR_NMIFEN_POS)
-#define NMI_FILTER_ON               (uint8_t)(1u << INTC_NMICR_NMIFEN_POS)
+#define NMI_FILTER_OFF              (uint8_t)(0U << INTC_NMICR_NMIFEN_POS)
+#define NMI_FILTER_ON               (uint8_t)(1U << INTC_NMICR_NMIFEN_POS)
 /**
  * @}
  */
@@ -216,10 +216,10 @@ typedef struct
  * @defgroup NMI_FilterClock_Div NMI pin filter sampling clock division selection
  * @{
  */
-#define NMI_FCLK_HCLK_DIV1          (uint8_t)(0u << INTC_NMICR_NMIFCLK_POS)
-#define NMI_FCLK_HCLK_DIV8          (uint8_t)(1u << INTC_NMICR_NMIFCLK_POS)
-#define NMI_FCLK_HCLK_DIV32         (uint8_t)(2u << INTC_NMICR_NMIFCLK_POS)
-#define NMI_FCLK_HCLK_DIV64         (uint8_t)(3u << INTC_NMICR_NMIFCLK_POS)
+#define NMI_FCLK_HCLK_DIV1          (uint8_t)(0U << INTC_NMICR_NMIFCLK_POS)
+#define NMI_FCLK_HCLK_DIV8          (uint8_t)(1U << INTC_NMICR_NMIFCLK_POS)
+#define NMI_FCLK_HCLK_DIV32         (uint8_t)(2U << INTC_NMICR_NMIFCLK_POS)
+#define NMI_FCLK_HCLK_DIV64         (uint8_t)(3U << INTC_NMICR_NMIFCLK_POS)
 /**
  * @}
  */
@@ -228,8 +228,8 @@ typedef struct
  * @defgroup NMI_Trigger_Sel NMI pin trigger method selection
  * @{
  */
-#define NMI_TRIGGER_FALLING         (uint8_t)(0u << INTC_NMICR_NMITRG_POS)
-#define NMI_TRIGGER_RISING          (uint8_t)(1u << INTC_NMICR_NMITRG_POS)
+#define NMI_TRIGGER_FALLING         (uint8_t)(0U << INTC_NMICR_NMITRG_POS)
+#define NMI_TRIGGER_RISING          (uint8_t)(1U << INTC_NMICR_NMITRG_POS)
 /**
  * @}
  */
@@ -238,10 +238,10 @@ typedef struct
  * @defgroup NMI_TriggerSrc_Sel NMI trigger source selection
  * @{
  */
-#define NMI_SRC_NMI_PIN             (uint8_t)(1u << INTC_NMIER_NMIEN_POS)
-#define NMI_SRC_XTAL_STP            (uint8_t)(1u << INTC_NMIER_XTALSTPEN_POS)
-#define NMI_SRC_SWDT                (uint8_t)(1u << INTC_NMIER_SWDTEN_POS)
-#define NMI_SRC_LVD                 (uint8_t)(1u << INTC_NMIER_PVDEN_POS)
+#define NMI_SRC_NMI_PIN             (uint8_t)(1U << INTC_NMIER_NMIEN_POS)
+#define NMI_SRC_XTAL_STP            (uint8_t)(1U << INTC_NMIER_XTALSTPEN_POS)
+#define NMI_SRC_SWDT                (uint8_t)(1U << INTC_NMIER_SWDTEN_POS)
+#define NMI_SRC_LVD                 (uint8_t)(1U << INTC_NMIER_PVDEN_POS)
 #define NMI_SRC_MASK                (NMI_SRC_NMI_PIN | NMI_SRC_XTAL_STP |       \
                                     NMI_SRC_SWDT | NMI_SRC_LVD)
 /**
@@ -268,16 +268,16 @@ typedef struct
  * @defgroup EXINT_Channel_Sel External interrupt channel selection
  * @{
  */
-#define EXINT_CH00                  (uint16_t)(1ul << 0u)
-#define EXINT_CH01                  (uint16_t)(1ul << 1u)
-#define EXINT_CH02                  (uint16_t)(1ul << 2u)
-#define EXINT_CH03                  (uint16_t)(1ul << 3u)
-#define EXINT_CH04                  (uint16_t)(1ul << 4u)
-#define EXINT_CH05                  (uint16_t)(1ul << 5u)
-#define EXINT_CH06                  (uint16_t)(1ul << 6u)
-#define EXINT_CH07                  (uint16_t)(1ul << 7u)
-#define EXINT_CH08                  (uint16_t)(1ul << 8u)
-#define EXINT_CH09                  (uint16_t)(1ul << 9u)
+#define EXINT_CH00                  (uint16_t)(1UL << 0U)
+#define EXINT_CH01                  (uint16_t)(1UL << 1U)
+#define EXINT_CH02                  (uint16_t)(1UL << 2U)
+#define EXINT_CH03                  (uint16_t)(1UL << 3U)
+#define EXINT_CH04                  (uint16_t)(1UL << 4U)
+#define EXINT_CH05                  (uint16_t)(1UL << 5U)
+#define EXINT_CH06                  (uint16_t)(1UL << 6U)
+#define EXINT_CH07                  (uint16_t)(1UL << 7U)
+#define EXINT_CH08                  (uint16_t)(1UL << 8U)
+#define EXINT_CH09                  (uint16_t)(1UL << 9U)
 #define EXINT_CH_MASK   (EXINT_CH00 | EXINT_CH01 | EXINT_CH02 | EXINT_CH03 |    \
                          EXINT_CH04 | EXINT_CH05 | EXINT_CH06 | EXINT_CH07 |    \
                          EXINT_CH08 | EXINT_CH09)
@@ -289,8 +289,8 @@ typedef struct
  * @defgroup EXINT_FilterClock_Sel External interrupt filter function selection
  * @{
  */
-#define EXINT_FILTER_OFF            (uint8_t)(0u << INTC_EIRQCR_EIRQFEN_POS)
-#define EXINT_FILTER_ON             (uint8_t)(1u << INTC_EIRQCR_EIRQFEN_POS)
+#define EXINT_FILTER_OFF            (uint8_t)(0U << INTC_EIRQCR_EIRQFEN_POS)
+#define EXINT_FILTER_ON             (uint8_t)(1U << INTC_EIRQCR_EIRQFEN_POS)
 /**
  * @}
  */
@@ -299,10 +299,10 @@ typedef struct
  * @defgroup EXINT_FilterClock_Div External interrupt filtersampling  clock division selection
  * @{
  */
-#define EXINT_FCLK_HCLK_DIV1        (uint8_t)(0u << INTC_EIRQCR_EIRQFCLK_POS)
-#define EXINT_FCLK_HCLK_DIV8        (uint8_t)(1u << INTC_EIRQCR_EIRQFCLK_POS)
-#define EXINT_FCLK_HCLK_DIV32       (uint8_t)(2u << INTC_EIRQCR_EIRQFCLK_POS)
-#define EXINT_FCLK_HCLK_DIV64       (uint8_t)(3u << INTC_EIRQCR_EIRQFCLK_POS)
+#define EXINT_FCLK_HCLK_DIV1        (uint8_t)(0U << INTC_EIRQCR_EIRQFCLK_POS)
+#define EXINT_FCLK_HCLK_DIV8        (uint8_t)(1U << INTC_EIRQCR_EIRQFCLK_POS)
+#define EXINT_FCLK_HCLK_DIV32       (uint8_t)(2U << INTC_EIRQCR_EIRQFCLK_POS)
+#define EXINT_FCLK_HCLK_DIV64       (uint8_t)(3U << INTC_EIRQCR_EIRQFCLK_POS)
 /**
  * @}
  */
@@ -311,10 +311,10 @@ typedef struct
  * @defgroup EXINT_Trigger_Sel External interrupt trigger method selection
  * @{
  */
-#define EXINT_TRIGGER_LOW           (uint8_t)(0u << INTC_EIRQCR_EIRQTRG_POS)
-#define EXINT_TRIGGER_RISING        (uint8_t)(1u << INTC_EIRQCR_EIRQTRG_POS)
-#define EXINT_TRIGGER_FALLING       (uint8_t)(2u << INTC_EIRQCR_EIRQTRG_POS)
-#define EXINT_TRIGGER_BOTH          (uint8_t)(3u << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_LOW           (uint8_t)(0U << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_RISING        (uint8_t)(1U << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_FALLING       (uint8_t)(2U << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_BOTH          (uint8_t)(3U << INTC_EIRQCR_EIRQTRG_POS)
 /**
  * @}
  */
@@ -333,12 +333,12 @@ typedef struct
  * @defgroup INTC_EKEY_Channel INTC EKEY channel selection
  * @{
  */
-#define INTC_EKEY0                  (uint8_t)(1u << INTC_EKEYCR_EKEY0EN_POS)
-#define INTC_EKEY1                  (uint8_t)(1u << INTC_EKEYCR_EKEY1EN_POS)
-#define INTC_EKEY2                  (uint8_t)(1u << INTC_EKEYCR_EKEY2EN_POS)
-#define INTC_EKEY3                  (uint8_t)(1u << INTC_EKEYCR_EKEY3EN_POS)
-#define INTC_EKEY4                  (uint8_t)(1u << INTC_EKEYCR_EKEY4EN_POS)
-#define INTC_EKEY5                  (uint8_t)(1u << INTC_EKEYCR_EKEY5EN_POS)
+#define INTC_EKEY0                  (uint8_t)(1U << INTC_EKEYCR_EKEY0EN_POS)
+#define INTC_EKEY1                  (uint8_t)(1U << INTC_EKEYCR_EKEY1EN_POS)
+#define INTC_EKEY2                  (uint8_t)(1U << INTC_EKEYCR_EKEY2EN_POS)
+#define INTC_EKEY3                  (uint8_t)(1U << INTC_EKEYCR_EKEY3EN_POS)
+#define INTC_EKEY4                  (uint8_t)(1U << INTC_EKEYCR_EKEY4EN_POS)
+#define INTC_EKEY5                  (uint8_t)(1U << INTC_EKEYCR_EKEY5EN_POS)
 #define INTC_EKEY_MASK              (INTC_EKEY0 | INTC_EKEY1 | INTC_EKEY2 |     \
                                      INTC_EKEY3 | INTC_EKEY4 | INTC_EKEY5)
 /**
@@ -521,7 +521,7 @@ __WEAKDEF void Lvd_IrqHandler(void);
 }
 #endif
 
-#endif /* __HC32M120_INTERRUPTS_H__ */
+#endif /* __HC32M423_INTERRUPTS_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

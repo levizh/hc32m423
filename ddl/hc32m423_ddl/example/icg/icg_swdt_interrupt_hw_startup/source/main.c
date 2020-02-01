@@ -51,7 +51,7 @@
  */
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -103,7 +103,7 @@
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static uint8_t u8ExIntCnt = 0u;
+static uint8_t u8ExIntCnt = 0U;
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
@@ -123,12 +123,12 @@ static void SWDT_IrqCallback(void)
     {
         SWDT_ClearFlag(SWDT_FLAG_COUNT_UNDERFLOW);
         /* Normal mode */
-        if (0u == u8ExIntCnt)
+        if (0U == u8ExIntCnt)
         {
             LED_R_TOGGLE();
         }
         /* Sleep mode */
-        else if (1u == u8ExIntCnt)
+        else if (1U == u8ExIntCnt)
         {
             LED_G_TOGGLE();
         }
@@ -151,9 +151,9 @@ void EXINT02_Handler(void)
     if (Set == EXINT_GetExIntSrc(EXINT_CH02))
     {
         u8ExIntCnt++;
-        if (u8ExIntCnt >= 3u)
+        if (u8ExIntCnt >= 3U)
         {
-            u8ExIntCnt = 0u;
+            u8ExIntCnt = 0U;
         }
         LED_R_OFF();
         LED_G_OFF();
@@ -272,12 +272,12 @@ int32_t main(void)
     while (1)
     {
         /* Sleep mode */
-        if (1u == u8ExIntCnt)
+        if (1U == u8ExIntCnt)
         {
              PWC_EnterSleepMode();
         }
         /* Stop mode */
-        else if (2u == u8ExIntCnt)
+        else if (2U == u8ExIntCnt)
         {
              PWC_EnterStopMode();
         }

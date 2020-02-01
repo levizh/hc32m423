@@ -58,7 +58,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -96,8 +96,8 @@
  * @defgroup SWDT_Refresh_Key SWDT Refresh Key
  * @{
  */
-#define SWDT_REFRESH_KEY_START          ((uint16_t)0x0123u)
-#define SWDT_REFRESH_KEY_END            ((uint16_t)0x3210u)
+#define SWDT_REFRESH_KEY_START          ((uint16_t)0x0123U)
+#define SWDT_REFRESH_KEY_END            ((uint16_t)0x3210U)
 /**
  * @}
  */
@@ -263,14 +263,14 @@ en_flag_status_t SWDT_GetFlag(uint32_t u32Flag)
  */
 en_result_t SWDT_ClearFlag(uint32_t u32Flag)
 {
-    uint32_t u32Timeout, u32TimeCnt = 0ul;
+    uint32_t u32Timeout, u32TimeCnt = 0UL;
     en_result_t enRet = Ok;
 
     /* Check parameters */
     DDL_ASSERT(IS_SWDT_FLAG(u32Flag));
 
     /* Waiting for FLAG bit clear */
-    u32Timeout = SystemCoreClock >> 8u;
+    u32Timeout = SystemCoreClock >> 8U;
     do
     {
         CLEAR_BIT(M0P_SWDT->SR, u32Flag);

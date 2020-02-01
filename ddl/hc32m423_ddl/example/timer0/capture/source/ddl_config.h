@@ -70,8 +70,8 @@ extern "C"
  * Global pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Chip module on-off define */
-#define DDL_ON                                      (1u)
-#define DDL_OFF                                     (0u)
+#define DDL_ON                                      (1U)
+#define DDL_OFF                                     (0U)
 
 /**
  * @brief This is the list of modules to be used in the Device Driver Library.
@@ -109,8 +109,8 @@ extern "C"
 #define DDL_USART_ENABLE                            (DDL_OFF)
 
 /* Midware module on-off define */
-#define MW_ON                                       (1u)
-#define MW_OFF                                      (0u)
+#define MW_ON                                       (1U)
+#define MW_OFF                                      (0U)
 
 /**
  * @brief This is the list of midware modules to be used.

@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -81,12 +81,12 @@
 #define TIMERB_ODD_UNIT                 (M0P_TMRB1)
 #define TIMERB_ODD_UNIT_OVF_INT         (INT_TMRB_1_OVF)
 #define TIMERB_ODD_UNIT_OVF_IRQn        (Int020_IRQn)
-#define TIMERB_ODD_UNIT_PERIOD_VALUE    (SystemCoreClock/512ul/TIMERB_EVEN_UNIT_PERIOD_VALUE)
+#define TIMERB_ODD_UNIT_PERIOD_VALUE    (SystemCoreClock/512UL/TIMERB_EVEN_UNIT_PERIOD_VALUE)
 
 #define TIMERB_EVEN_UNIT                (M0P_TMRB2)
 #define TIMERB_EVEN_UNIT_OVF_INT        (INT_TMRB_2_OVF)
 #define TIMERB_EVEN_UNIT_OVF_IRQn       (Int022_IRQn)
-#define TIMERB_EVEN_UNIT_PERIOD_VALUE   (100u)
+#define TIMERB_EVEN_UNIT_PERIOD_VALUE   (100U)
 
 /* Function clock gate definition */
 #define FUNCTION_CLK_GATE               (CLK_FCG_TIMB1 | CLK_FCG_TIMB2)

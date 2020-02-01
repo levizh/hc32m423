@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -152,7 +152,7 @@ int32_t main(void)
     /* Configure clock output */
     Clock_OutputConfig();
     /* Init system tick */
-    SysTick_Init(1u);    /* 1S */
+    SysTick_Init(1U);    /* 1S */
 
     while (1)
     {

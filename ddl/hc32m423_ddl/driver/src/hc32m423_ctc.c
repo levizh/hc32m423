@@ -57,7 +57,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -168,11 +168,11 @@
 en_result_t CTC_Init(const stc_ctc_init_t *pstcInit)
 {
     float f32OffsetVal = 0.0f;
-    uint32_t u32ReloadVal = 0ul;
-    uint32_t u32OffsetVal = 0ul;
-    uint32_t u32RefclkDiv = 0ul;
-    uint32_t u32Multiplier = 0ul;
-    uint64_t u64InterRefclk = 0ul;
+    uint32_t u32ReloadVal = 0UL;
+    uint32_t u32OffsetVal = 0UL;
+    uint32_t u32RefclkDiv = 0UL;
+    uint32_t u32Multiplier = 0UL;
+    uint64_t u64InterRefclk = 0UL;
     en_result_t enRet = ErrorNotReady;
 
     /* Check CTC status */
@@ -193,11 +193,11 @@ en_result_t CTC_Init(const stc_ctc_init_t *pstcInit)
 
             if (pstcInit->u32RefclkPrescaler < CTC_REFCLK_PRESCALER_DIV128)
             {
-                u32RefclkDiv = (8ul << (2ul * pstcInit->u32RefclkPrescaler));
+                u32RefclkDiv = (8UL << (2UL * pstcInit->u32RefclkPrescaler));
             }
             else
             {
-                u32RefclkDiv = (32ul << pstcInit->u32RefclkPrescaler);
+                u32RefclkDiv = (32UL << pstcInit->u32RefclkPrescaler);
             }
             u64InterRefclk = ((uint64_t)(pstcInit->u32Fhrc)) * ((uint64_t)(u32RefclkDiv));
             u32Multiplier = (uint32_t)(u64InterRefclk / pstcInit->u32Fref);
@@ -241,8 +241,8 @@ en_result_t CTC_StructInit(stc_ctc_init_t *pstcInit)
     /* Check parameters */
     if (NULL != pstcInit)
     {
-        pstcInit->u32Fhrc = 0ul;
-        pstcInit->u32Fref = 0ul;
+        pstcInit->u32Fhrc = 0UL;
+        pstcInit->u32Fref = 0UL;
         pstcInit->u32RefClkSel = CTC_REFCLK_CTCREF;
         pstcInit->f32ToleranceBias = CTC_DEFAULT_TOLERANCE_BIAS;
         pstcInit->u32RefclkPrescaler = CTC_REFCLK_PRESCALER_DIV8;
@@ -267,8 +267,8 @@ en_result_t CTC_DeInit(void)
     if (!(READ_REG32_BIT(M0P_CTC->STR, CTC_FLAG_BUSY)))
     {
         /* Configures the registers to reset value. */
-        WRITE_REG32(M0P_CTC->CR1, 0x80000000ul);
-        WRITE_REG32(M0P_CTC->CR2, 0x00000000ul);
+        WRITE_REG32(M0P_CTC->CR1, 0x80000000UL);
+        WRITE_REG32(M0P_CTC->CR2, 0x00000000UL);
         enRet = Ok;
     }
 

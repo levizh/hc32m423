@@ -58,7 +58,7 @@
 #include "hc32m423_icg.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 

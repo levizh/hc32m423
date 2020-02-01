@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -107,8 +107,8 @@ typedef struct
 
 /* TIMERB output compare unit & counter period/compare value definition */
 #define TIMERB_OC_UNIT                      (M0P_TMRB3)
-#define TIMERB_OC_UNIT_PERIOD_VALUE         (SystemCoreClock/512ul)
-#define TIMERB_OC_UNIT_COMPARE_VALUE        (TIMERB_OC_UNIT_PERIOD_VALUE/2ul)
+#define TIMERB_OC_UNIT_PERIOD_VALUE         (SystemCoreClock/512UL)
+#define TIMERB_OC_UNIT_COMPARE_VALUE        (TIMERB_OC_UNIT_PERIOD_VALUE/2UL)
 
 /* TIMERB TIMB_t_PWM1 Port/Pin definition */
 #define TIMERB_IC_ODD_UNIT_PWM1_PORT        (GPIO_PORT_1)     /* P15: TIMB_1_PWM1 */
@@ -127,7 +127,7 @@ typedef struct
 #define FUNCTION_CLK_GATE                   (CLK_FCG_TIMB1 | CLK_FCG_TIMB2 | CLK_FCG_TIMB3 | CLK_FCG_AOS)
 
 /* Buffer size definition */
-#define TIMERB_IC_CMPBUF_SIZE               (50u)
+#define TIMERB_IC_CMPBUF_SIZE               (50U)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -166,7 +166,7 @@ static stc_timerb_init_t m_stcTimerbInit = {
 static void TimerbOcConfig(void)
 {
     stc_timerb_oc_init_t stcTimerbOcInit = {
-        .u16CompareVal = 0u,
+        .u16CompareVal = 0U,
         .u16PortOutputState = TIMERB_OC_PORT_OUTPUT_ENABLE,
         .u16StartCntOutput = TIMERB_OC_STARTCNT_OUTPUT_HIGH,
         .u16StopCntOutput = TIMERB_OC_STOPCNT_OUTPUT_HIGH,
@@ -219,7 +219,7 @@ static void LedConfig(void)
 static void TimerbIcOddUnitCmpIrqCallback(void)
 {
     static stc_buffer_t m_stcOddUnitCmpBuf = {
-        .u16Index = 0u,
+        .u16Index = 0U,
         .u16Capacity = TIMERB_IC_CMPBUF_SIZE,
     };
 
@@ -235,7 +235,7 @@ static void TimerbIcOddUnitCmpIrqCallback(void)
 static void TimerbIcEvenUnitCmpIrqCallback(void)
 {
     static stc_buffer_t m_stcEvenUnitCmpBuf= {
-        .u16Index = 0u,
+        .u16Index = 0U,
         .u16Capacity = TIMERB_IC_CMPBUF_SIZE,
     };
 
@@ -267,7 +267,7 @@ static void BufferWrite(stc_buffer_t *pstcBuffer, uint16_t u16Data)
 {
     if (pstcBuffer->u16Index >= pstcBuffer->u16Capacity)
     {
-        pstcBuffer->u16Index = 0u;
+        pstcBuffer->u16Index = 0U;
     }
 
     pstcBuffer->au16Buf[pstcBuffer->u16Index++] = u16Data;

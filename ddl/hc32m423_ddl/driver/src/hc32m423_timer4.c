@@ -58,7 +58,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -268,10 +268,10 @@
  * @brief Get the specified OCO register address of the specified Timer4 unit
  * @{
  */
-#define TMR4_OCCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCCRUH)) + ((uint32_t)(__CH__))*4ul))
-#define TMR4_OCMRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCMRHUH)) + ((uint32_t)(__CH__))*4ul))
-#define TMR4_OCERx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCERU)) + (((uint32_t)(__CH__))/2ul)*4ul))
-#define TMR4_OCSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCSRU)) + (((uint32_t)(__CH__))/2ul)*4ul))
+#define TMR4_OCCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCCRUH)) + ((uint32_t)(__CH__))*4UL))
+#define TMR4_OCMRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCMRHUH)) + ((uint32_t)(__CH__))*4UL))
+#define TMR4_OCERx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCERU)) + (((uint32_t)(__CH__))/2UL)*4UL))
+#define TMR4_OCSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCSRU)) + (((uint32_t)(__CH__))/2UL)*4UL))
 /**
  * @}
  */
@@ -282,10 +282,10 @@
  * @{
  */
 #define TMR4_RCSRx(__TMR4x__)               ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->RCSR))))
-#define TMR4_POCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->POCRU)) + ((uint32_t)(__CH__))*4ul))
-#define TMR4_PDARx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PDARU)) + ((uint32_t)(__CH__))*8ul))
-#define TMR4_PDBRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PDBRU)) + ((uint32_t)(__CH__))*8ul))
-#define TMR4_PFSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PFSRU)) + ((uint32_t)(__CH__))*8ul))
+#define TMR4_POCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->POCRU)) + ((uint32_t)(__CH__))*4UL))
+#define TMR4_PDARx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PDARU)) + ((uint32_t)(__CH__))*8UL))
+#define TMR4_PDBRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PDBRU)) + ((uint32_t)(__CH__))*8UL))
+#define TMR4_PFSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PFSRU)) + ((uint32_t)(__CH__))*8UL))
 /**
  * @}
  */
@@ -296,10 +296,10 @@
  * @{
  */
 #define TMR4_RCSR_RTIDx(__CH__)             ((uint16_t)(TMR4_RCSR_RTIDU << (__CH__)))
-#define TMR4_RCSR_RTIFx(__CH__)             ((uint16_t)(TMR4_RCSR_RTIFU << ((__CH__)*4u)))
-#define TMR4_RCSR_RTICx(__CH__)             ((uint16_t)(TMR4_RCSR_RTICU <<((__CH__)*4u)))
-#define TMR4_RCSR_RTEx(__CH__)              ((uint16_t)(TMR4_RCSR_RTEU << ((__CH__)*4u)))
-#define TMR4_RCSR_RTSx(__CH__)              ((uint16_t)(TMR4_RCSR_RTSU << ((__CH__)*4u)))
+#define TMR4_RCSR_RTIFx(__CH__)             ((uint16_t)(TMR4_RCSR_RTIFU << ((__CH__)*4U)))
+#define TMR4_RCSR_RTICx(__CH__)             ((uint16_t)(TMR4_RCSR_RTICU <<((__CH__)*4U)))
+#define TMR4_RCSR_RTEx(__CH__)              ((uint16_t)(TMR4_RCSR_RTEU << ((__CH__)*4U)))
+#define TMR4_RCSR_RTSx(__CH__)              ((uint16_t)(TMR4_RCSR_RTSU << ((__CH__)*4U)))
 /**
  * @}
  */
@@ -309,9 +309,9 @@
  * @brief Get the specified SEVT register address of the specified Timer4 unit
  * @{
  */
-#define TMR4_SCCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCCRUH)) + ((uint32_t)(__CH__))*4ul))
-#define TMR4_SCSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCSRUH)) + ((uint32_t)(__CH__))*4ul))
-#define TMR4_SCMRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCMRUH)) + ((uint32_t)(__CH__))*4ul))
+#define TMR4_SCCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCCRUH)) + ((uint32_t)(__CH__))*4UL))
+#define TMR4_SCSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCSRUH)) + ((uint32_t)(__CH__))*4UL))
+#define TMR4_SCMRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCMRUH)) + ((uint32_t)(__CH__))*4UL))
 /**
  * @}
  */
@@ -381,8 +381,8 @@ en_result_t TIMER4_CNT_Init(const stc_timer4_cnt_init_t *pstcInit)
         DDL_ASSERT(IS_VALID_TIMER4_CNT_INT_MSK(pstcInit->u16PeakIntMask));
 
         /* Set default value */
-        WRITE_REG16(M0P_TMR4->CCSR, 0x0050u);
-        WRITE_REG16(M0P_TMR4->CVPR, 0x0000u);
+        WRITE_REG16(M0P_TMR4->CCSR, 0x0050U);
+        WRITE_REG16(M0P_TMR4->CVPR, 0x0000U);
 
         /* Set count clock div && cnt mode && buffer enable bit && external clock enable bit && interrupt enable bit */
         WRITE_REG16(M0P_TMR4->CCSR, \
@@ -442,9 +442,9 @@ en_result_t TIMER4_CNT_StructInit(stc_timer4_cnt_init_t *pstcInit)
 en_result_t TIMER4_CNT_DeInit(void)
 {
     /* Configures the registers to reset value. */
-    WRITE_REG16(M0P_TMR4->CCSR, 0x0050u);
+    WRITE_REG16(M0P_TMR4->CCSR, 0x0050U);
     WRITE_REG16(M0P_TMR4->CPSR, 0xFFFFu);
-    WRITE_REG16(M0P_TMR4->CVPR, 0x0000u);
+    WRITE_REG16(M0P_TMR4->CVPR, 0x0000U);
 
     return Ok;
 }
@@ -1358,7 +1358,7 @@ en_result_t TIMER4_OCO_IntCmd(uint32_t u32Ch,
  */
 en_flag_status_t TIMER4_OCO_GetFlag(uint32_t u32Ch)
 {
-    uint16_t u16Flag = 0u;
+    uint16_t u16Flag = 0U;
     __IO uint16_t *TMR4_OCSR;
 
     /* Get pointer of current channel OCO register address */
@@ -2060,8 +2060,8 @@ en_result_t TIMER4_SEVT_Init(uint32_t u32Ch,
         TMR4_SCMR = TMR4_SCMRx(M0P_TMR4, u32Ch);
 
         /* Configure default parameter */
-        WRITE_REG16(*TMR4_SCSR, 0x0000u);
-        WRITE_REG16(*TMR4_SCMR, 0xFF00u);
+        WRITE_REG16(*TMR4_SCSR, 0x0000U);
+        WRITE_REG16(*TMR4_SCMR, 0xFF00U);
 
         /* Set SCSR register */
         WRITE_REG16(*TMR4_SCSR,             \
@@ -2102,7 +2102,7 @@ en_result_t TIMER4_SEVT_StructInit(stc_timer4_sevt_init_t *pstcInit)
     /* Check structure pointer */
     if (NULL != pstcInit)
     {
-        pstcInit->u16SccrVal = 0u;
+        pstcInit->u16SccrVal = 0U;
         pstcInit->u16Mode = TIMER4_SEVT_MODE_COMPARE_TRIGGER;
         pstcInit->u16TrigEvt = TIMER4_SEVT_TRIGGER_TMR4_SCMUH;
         pstcInit->u16BufMode = TIMER4_SEVT_BUF_DISABLE;
@@ -2150,9 +2150,9 @@ en_result_t TIMER4_SEVT_DeInit(uint32_t u32Ch)
         TMR4_SCMR = TMR4_SCMRx(M0P_TMR4, u32Ch);
 
         /* Configure default parameter */
-        WRITE_REG16(*TMR4_SCCR, 0x0u);
-        WRITE_REG16(*TMR4_SCSR, 0x0000u);
-        WRITE_REG16(*TMR4_SCMR, 0xFF00u);
+        WRITE_REG16(*TMR4_SCCR, 0x0U);
+        WRITE_REG16(*TMR4_SCSR, 0x0000U);
+        WRITE_REG16(*TMR4_SCMR, 0xFF00U);
         enRet = Ok;
     }
 

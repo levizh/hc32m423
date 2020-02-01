@@ -59,7 +59,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -87,7 +87,7 @@
 #define FUNCTION_CLK_GATE               (CLK_FCG_ADC | CLK_FCG_AOS | CLK_FCG_TIM4)
 
 /* Timer4 Counter period value && interrupt number definition */
-#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/512ul))    /* 1000 ms */
+#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/512UL))    /* 1000 ms */
 
 /* Timer4 SEVT channel definition */
 #define TIMER4_SEVT_CH                  (TIMER4_SEVT_UH)
@@ -96,7 +96,7 @@
 #define ADC_SB_CHANNEL                  (ADC_CH2)
 
 /* ADC channel sampling time. */
-#define ADC_SAMPLE_TIME                 (10u)
+#define ADC_SAMPLE_TIME                 (10U)
 
 /* ADC resolution definition. */
 #define ADC_RESOLUTION                  (ADC_RESOLUTION_12B)
@@ -136,7 +136,7 @@ int32_t main(void)
 {
     stc_timer4_cnt_init_t stcTimer4CntInit;
     stc_timer4_sevt_init_t stcTimer4SevtInit;
-    static uint16_t m_u16AdcSbVal = 0u;
+    static uint16_t m_u16AdcSbVal = 0U;
 
     /* Configure system clock. */
     SystemClockConfig();
@@ -159,7 +159,7 @@ int32_t main(void)
 
     /* Initialize TIMER4 SEVT. */
     TIMER4_SEVT_StructInit(&stcTimer4SevtInit);
-    stcTimer4SevtInit.u16SccrVal = TIMER4_CNT_CYCLE_VAL/2u;
+    stcTimer4SevtInit.u16SccrVal = TIMER4_CNT_CYCLE_VAL/2U;
     stcTimer4SevtInit.stcTriggerCond.enUpMatchCmd = Enable;
     stcTimer4SevtInit.u16TrigEvt = TIMER4_SEVT_TRIGGER_TMR4_SCMWL;
     TIMER4_SEVT_Init(TIMER4_SEVT_CH, &stcTimer4SevtInit);
@@ -167,11 +167,11 @@ int32_t main(void)
     /* Start TIMER4 counter. */
     TIMER4_CNT_Start();
 
-    while (1u)
+    while (1U)
     {
         if (ADC_GetEocFlag(ADC_FLAG_EOCB) == Set)
         {
-            ADC_GetChannelData(ADC_SB_CHANNEL, &m_u16AdcSbVal, 1u);
+            ADC_GetChannelData(ADC_SB_CHANNEL, &m_u16AdcSbVal, 1U);
             ADC_ClrEocFlag(ADC_FLAG_EOCB);
             WAVE_IO_TOGGLE();
         }
@@ -298,17 +298,17 @@ static void AdcSetChannelPinAnalogMode(uint16_t u16Channel)
 {
     uint8_t u8PinNbr;
 
-    u8PinNbr    = 0u;
+    u8PinNbr    = 0U;
     u16Channel &= ADC_CH_ALL;
 
-    while (u16Channel != 0u)
+    while (u16Channel != 0U)
     {
-        if (u16Channel & 0x1u)
+        if (u16Channel & 0x1U)
         {
             AdcSetPinAnalogMode(u8PinNbr);
         }
 
-        u16Channel >>= 1u;
+        u16Channel >>= 1U;
         u8PinNbr++;
     }
 }

@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_EFM_H__
-#define __HC32M120_EFM_H__
+#ifndef __HC32M423_EFM_H__
+#define __HC32M423_EFM_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -136,13 +136,13 @@ typedef struct
  * @defgroup EFM_Global_Macros EFM Global Macros
  * @{
  */
-#define EFM_TIMEOUT                 (0x1000u)
+#define EFM_TIMEOUT                 (0x1000U)
 
 /**
  * @defgroup EFM_Address EFM address area
  * @{
  */
-#define EFM_START_ADDR              (0x00000000ul)
+#define EFM_START_ADDR              (0x00000000UL)
 #define EFM_END_ADDR                (0x0000FFFFul)
 /**
  * @}
@@ -152,70 +152,70 @@ typedef struct
  * @defgroup EFM_Sector_Address EFM Sector Address
  * @{
  */
-#define EFM_SECTOR0_ADRR            (0x00000000ul)
-#define EFM_SECTOR1_ADRR            (0x00000200ul)
-#define EFM_SECTOR2_ADRR            (0x00000400ul)
-#define EFM_SECTOR3_ADRR            (0x00000600ul)
-#define EFM_SECTOR4_ADRR            (0x00000800ul)
-#define EFM_SECTOR5_ADRR            (0x00000A00ul)
-#define EFM_SECTOR6_ADRR            (0x00000C00ul)
-#define EFM_SECTOR7_ADRR            (0x00000E00ul)
-#define EFM_SECTOR8_ADRR            (0x00001000ul)
-#define EFM_SECTOR9_ADRR            (0x00001200ul)
-#define EFM_SECTOR10_ADRR           (0x00001400ul)
-#define EFM_SECTOR11_ADRR           (0x00001600ul)
-#define EFM_SECTOR12_ADRR           (0x00001800ul)
-#define EFM_SECTOR13_ADRR           (0x00001A00ul)
-#define EFM_SECTOR14_ADRR           (0x00001C00ul)
-#define EFM_SECTOR15_ADRR           (0x00001E00ul)
-#define EFM_SECTOR16_ADRR           (0x00002000ul)
-#define EFM_SECTOR17_ADRR           (0x00002200ul)
-#define EFM_SECTOR18_ADRR           (0x00002400ul)
-#define EFM_SECTOR19_ADRR           (0x00002600ul)
-#define EFM_SECTOR20_ADRR           (0x00002800ul)
-#define EFM_SECTOR21_ADRR           (0x00002A00ul)
-#define EFM_SECTOR22_ADRR           (0x00002C00ul)
-#define EFM_SECTOR23_ADRR           (0x00002E00ul)
-#define EFM_SECTOR24_ADRR           (0x00003000ul)
-#define EFM_SECTOR25_ADRR           (0x00003200ul)
-#define EFM_SECTOR26_ADRR           (0x00003400ul)
-#define EFM_SECTOR27_ADRR           (0x00003600ul)
-#define EFM_SECTOR28_ADRR           (0x00003800ul)
-#define EFM_SECTOR29_ADRR           (0x00003A00ul)
-#define EFM_SECTOR30_ADRR           (0x00003C00ul)
-#define EFM_SECTOR31_ADRR           (0x00003E00ul)
-#define EFM_SECTOR32_ADRR           (0x00004000ul)
-#define EFM_SECTOR33_ADRR           (0x00004200ul)
-#define EFM_SECTOR34_ADRR           (0x00004400ul)
-#define EFM_SECTOR35_ADRR           (0x00004600ul)
-#define EFM_SECTOR36_ADRR           (0x00004800ul)
-#define EFM_SECTOR37_ADRR           (0x00004A00ul)
-#define EFM_SECTOR38_ADRR           (0x00004C00ul)
-#define EFM_SECTOR39_ADRR           (0x00004E00ul)
-#define EFM_SECTOR40_ADRR           (0x00005000ul)
-#define EFM_SECTOR41_ADRR           (0x00005200ul)
-#define EFM_SECTOR42_ADRR           (0x00005400ul)
-#define EFM_SECTOR43_ADRR           (0x00005600ul)
-#define EFM_SECTOR44_ADRR           (0x00005800ul)
-#define EFM_SECTOR45_ADRR           (0x00005A00ul)
-#define EFM_SECTOR46_ADRR           (0x00005C00ul)
-#define EFM_SECTOR47_ADRR           (0x00005E00ul)
-#define EFM_SECTOR48_ADRR           (0x00006000ul)
-#define EFM_SECTOR49_ADRR           (0x00006200ul)
-#define EFM_SECTOR50_ADRR           (0x00006400ul)
-#define EFM_SECTOR51_ADRR           (0x00006600ul)
-#define EFM_SECTOR52_ADRR           (0x00006800ul)
-#define EFM_SECTOR53_ADRR           (0x00006A00ul)
-#define EFM_SECTOR54_ADRR           (0x00006C00ul)
-#define EFM_SECTOR55_ADRR           (0x00006E00ul)
-#define EFM_SECTOR56_ADRR           (0x00007000ul)
-#define EFM_SECTOR57_ADRR           (0x00007200ul)
-#define EFM_SECTOR58_ADRR           (0x00007400ul)
-#define EFM_SECTOR59_ADRR           (0x00007600ul)
-#define EFM_SECTOR60_ADRR           (0x00007800ul)
-#define EFM_SECTOR61_ADRR           (0x00007A00ul)
-#define EFM_SECTOR62_ADRR           (0x00007C00ul)
-#define EFM_SECTOR63_ADRR           (0x00007E00ul)
+#define EFM_SECTOR0_ADRR            (0x00000000UL)
+#define EFM_SECTOR1_ADRR            (0x00000200UL)
+#define EFM_SECTOR2_ADRR            (0x00000400UL)
+#define EFM_SECTOR3_ADRR            (0x00000600UL)
+#define EFM_SECTOR4_ADRR            (0x00000800UL)
+#define EFM_SECTOR5_ADRR            (0x00000A00UL)
+#define EFM_SECTOR6_ADRR            (0x00000C00UL)
+#define EFM_SECTOR7_ADRR            (0x00000E00UL)
+#define EFM_SECTOR8_ADRR            (0x00001000UL)
+#define EFM_SECTOR9_ADRR            (0x00001200UL)
+#define EFM_SECTOR10_ADRR           (0x00001400UL)
+#define EFM_SECTOR11_ADRR           (0x00001600UL)
+#define EFM_SECTOR12_ADRR           (0x00001800UL)
+#define EFM_SECTOR13_ADRR           (0x00001A00UL)
+#define EFM_SECTOR14_ADRR           (0x00001C00UL)
+#define EFM_SECTOR15_ADRR           (0x00001E00UL)
+#define EFM_SECTOR16_ADRR           (0x00002000UL)
+#define EFM_SECTOR17_ADRR           (0x00002200UL)
+#define EFM_SECTOR18_ADRR           (0x00002400UL)
+#define EFM_SECTOR19_ADRR           (0x00002600UL)
+#define EFM_SECTOR20_ADRR           (0x00002800UL)
+#define EFM_SECTOR21_ADRR           (0x00002A00UL)
+#define EFM_SECTOR22_ADRR           (0x00002C00UL)
+#define EFM_SECTOR23_ADRR           (0x00002E00UL)
+#define EFM_SECTOR24_ADRR           (0x00003000UL)
+#define EFM_SECTOR25_ADRR           (0x00003200UL)
+#define EFM_SECTOR26_ADRR           (0x00003400UL)
+#define EFM_SECTOR27_ADRR           (0x00003600UL)
+#define EFM_SECTOR28_ADRR           (0x00003800UL)
+#define EFM_SECTOR29_ADRR           (0x00003A00UL)
+#define EFM_SECTOR30_ADRR           (0x00003C00UL)
+#define EFM_SECTOR31_ADRR           (0x00003E00UL)
+#define EFM_SECTOR32_ADRR           (0x00004000UL)
+#define EFM_SECTOR33_ADRR           (0x00004200UL)
+#define EFM_SECTOR34_ADRR           (0x00004400UL)
+#define EFM_SECTOR35_ADRR           (0x00004600UL)
+#define EFM_SECTOR36_ADRR           (0x00004800UL)
+#define EFM_SECTOR37_ADRR           (0x00004A00UL)
+#define EFM_SECTOR38_ADRR           (0x00004C00UL)
+#define EFM_SECTOR39_ADRR           (0x00004E00UL)
+#define EFM_SECTOR40_ADRR           (0x00005000UL)
+#define EFM_SECTOR41_ADRR           (0x00005200UL)
+#define EFM_SECTOR42_ADRR           (0x00005400UL)
+#define EFM_SECTOR43_ADRR           (0x00005600UL)
+#define EFM_SECTOR44_ADRR           (0x00005800UL)
+#define EFM_SECTOR45_ADRR           (0x00005A00UL)
+#define EFM_SECTOR46_ADRR           (0x00005C00UL)
+#define EFM_SECTOR47_ADRR           (0x00005E00UL)
+#define EFM_SECTOR48_ADRR           (0x00006000UL)
+#define EFM_SECTOR49_ADRR           (0x00006200UL)
+#define EFM_SECTOR50_ADRR           (0x00006400UL)
+#define EFM_SECTOR51_ADRR           (0x00006600UL)
+#define EFM_SECTOR52_ADRR           (0x00006800UL)
+#define EFM_SECTOR53_ADRR           (0x00006A00UL)
+#define EFM_SECTOR54_ADRR           (0x00006C00UL)
+#define EFM_SECTOR55_ADRR           (0x00006E00UL)
+#define EFM_SECTOR56_ADRR           (0x00007000UL)
+#define EFM_SECTOR57_ADRR           (0x00007200UL)
+#define EFM_SECTOR58_ADRR           (0x00007400UL)
+#define EFM_SECTOR59_ADRR           (0x00007600UL)
+#define EFM_SECTOR60_ADRR           (0x00007800UL)
+#define EFM_SECTOR61_ADRR           (0x00007A00UL)
+#define EFM_SECTOR62_ADRR           (0x00007C00UL)
+#define EFM_SECTOR63_ADRR           (0x00007E00UL)
 /**
  * @}
  */
@@ -224,7 +224,7 @@ typedef struct
  * @defgroup EFM_State EFM State
  * @{
  */
-#define EFM_ON                      (0x00000000ul)
+#define EFM_ON                      (0x00000000UL)
 #define EFM_OFF                     (EFM_FSTP_FSTP)
 /**
  * @}
@@ -234,8 +234,8 @@ typedef struct
  * @defgroup EFM_Latency EFM latency value
  * @{
  */
-#define EFM_LATENCY_0               (0x00000000ul)
-#define EFM_LATENCY_1               (0x00000001ul)
+#define EFM_LATENCY_0               (0x00000000UL)
+#define EFM_LATENCY_1               (0x00000001UL)
 /**
  * @}
  */
@@ -245,7 +245,7 @@ typedef struct
  * @{
  */
 #define EFM_CACHERST_ON             (EFM_FRMC_CRST0)
-#define EFM_CACHERST_OFF            (0x00000000ul)
+#define EFM_CACHERST_OFF            (0x00000000UL)
 /**
  * @}
  */
@@ -255,7 +255,7 @@ typedef struct
  * @{
  */
 #define EFM_INSCACHE_ON             (EFM_FRMC_PREFETE)
-#define EFM_INSCACHE_OFF            (0x00000000ul)
+#define EFM_INSCACHE_OFF            (0x00000000UL)
 /**
  * @}
  */
@@ -265,7 +265,7 @@ typedef struct
  * @{
  */
 #define EFM_CACHEEN_ON              (EFM_FRMC_CACHE)
-#define EFM_CACHEEN_OFF             (0x00000000ul)
+#define EFM_CACHEEN_OFF             (0x00000000UL)
 /**
  * @}
  */
@@ -274,7 +274,7 @@ typedef struct
  * @defgroup EFM_Bus_State EFM Bus state while flash program or erase
  * @{
  */
-#define EFM_BUS_BUSY                (0x00000000ul)
+#define EFM_BUS_BUSY                (0x00000000UL)
 #define EFM_BUS_RELEASE             (EFM_FWMC_BUSHLDCTL)
 /**
  * @}
@@ -284,14 +284,14 @@ typedef struct
  * @defgroup EFM_Mode_definition EFM program or erase mode definition
  * @{
  */
-#define EFM_MODE_PROGRAMSINGLE      (0x00000010ul)         /*!< Program single at a specified address          */
-#define EFM_MODE_PROGRAMREADBACK    (0x00000020ul)         /*!< Program and read back at a specified address   */
-#define EFM_MODE_PROGRAMSEQUENCE    (0x00000030ul)         /*!< Program sequence at sequence address           */
-#define EFM_MODE_ERASESECTOR        (0x00000040ul)         /*!< Sector erase                                   */
-#define EFM_MODE_ERASECHIP          (0x00000050ul)         /*!< Chip erase                                     */
-#define EFM_MODE_READONLY           (0x00000000ul)         /*!< Read only                                      */
-#define EFM_MODE_READONLY1          (0x00000060ul)         /*!< Read only                                      */
-#define EFM_MODE_READONLY2          (0x00000070ul)         /*!< Read only                                      */
+#define EFM_MODE_PROGRAMSINGLE      (0x00000010UL)         /*!< Program single at a specified address          */
+#define EFM_MODE_PROGRAMREADBACK    (0x00000020UL)         /*!< Program and read back at a specified address   */
+#define EFM_MODE_PROGRAMSEQUENCE    (0x00000030UL)         /*!< Program sequence at sequence address           */
+#define EFM_MODE_ERASESECTOR        (0x00000040UL)         /*!< Sector erase                                   */
+#define EFM_MODE_ERASECHIP          (0x00000050UL)         /*!< Chip erase                                     */
+#define EFM_MODE_READONLY           (0x00000000UL)         /*!< Read only                                      */
+#define EFM_MODE_READONLY1          (0x00000060UL)         /*!< Read only                                      */
+#define EFM_MODE_READONLY2          (0x00000070UL)         /*!< Read only                                      */
 /**
  * @}
  */
@@ -332,8 +332,8 @@ typedef struct
  * @defgroup EFM_Keys EFM Keys
  * @{
  */
-#define EFM_KEY1                    (0x00000123ul)
-#define EFM_KEY2                    (0x00003210ul)
+#define EFM_KEY1                    (0x00000123UL)
+#define EFM_KEY2                    (0x00003210UL)
 /**
  * @}
  */
@@ -342,8 +342,8 @@ typedef struct
  * @defgroup EFM_State EFM State
  * @{
  */
-#define EFM_LOCK                    (0x00000000ul)
-#define EFM_UNLOCK                  (0x00000001ul)
+#define EFM_LOCK                    (0x00000000UL)
+#define EFM_UNLOCK                  (0x00000001UL)
 /**
  * @}
  */
@@ -411,7 +411,7 @@ stc_efm_unique_id_t EFM_ReadUID(void);
 }
 #endif
 
-#endif /* __HC32M120_EFM_H__ */
+#endif /* __HC32M423_EFM_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

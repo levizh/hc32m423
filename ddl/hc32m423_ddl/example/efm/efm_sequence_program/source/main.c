@@ -57,7 +57,7 @@
 #include "string.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -91,8 +91,8 @@
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
  ******************************************************************************/
-uint8_t u8CmpRet1 = 1u;
-uint8_t u8CmpRet2 = 1u;
+uint8_t u8CmpRet1 = 1U;
+uint8_t u8CmpRet2 = 1U;
 /*******************************************************************************
  * Local function prototypes ('static')
  ******************************************************************************/
@@ -101,8 +101,8 @@ uint8_t u8CmpRet2 = 1u;
  * Local variable definitions ('static')
  ******************************************************************************/
 uint32_t u32ExpectBuf[] = {0xFFFFFFFFu, 0xFFFFFFFFu, 0xFFFFFFFFu, 0xFFFFFFFFu, 0xFFFFFFFFu};
-uint32_t u32ExpectBuf1[] = {0x04030201u, 0x08070605u, 0x0C0B0A09u, 0x100F0E0Du, 0xFFFFFF11u};
-uint32_t u32ExpectBuf2[] = {0x04030201u, 0x08070605u, 0x0C0B0A09u, 0x100F0E0Du, 0xFF131211u};
+uint32_t u32ExpectBuf1[] = {0x04030201U, 0x08070605U, 0x0C0B0A09U, 0x100F0E0Du, 0xFFFFFF11U};
+uint32_t u32ExpectBuf2[] = {0x04030201U, 0x08070605U, 0x0C0B0A09U, 0x100F0E0Du, 0xFF131211U};
 uint32_t u32ReadBuf1[5];
 uint32_t u32ReadBuf2[5];
 /*******************************************************************************
@@ -138,8 +138,8 @@ static void Led_Init(void)
 int32_t main(void)
 {
     uint8_t u8TestBuf[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
-    uint32_t u32Len = 17u;
-    uint32_t u32Addr = 0ul;
+    uint32_t u32Len = 17U;
+    uint32_t u32Addr = 0UL;
 
     /* Led Init */
     Led_Init();
@@ -159,22 +159,22 @@ int32_t main(void)
     EFM_SectorErase(EFM_SECTOR11_ADRR);
 
     u32Addr = EFM_SECTOR10_ADRR;
-    for(uint8_t i = 0u; i < 5; i++)
+    for(uint8_t i = 0U; i < 5; i++)
     {
          u32ReadBuf1[i] = *((volatile unsigned int*)(u32Addr));
-         u32Addr += 4ul;
+         u32Addr += 4UL;
     }
 
     u32Addr = EFM_SECTOR11_ADRR;
-    for(uint8_t i = 0u; i < 5u; i++)
+    for(uint8_t i = 0U; i < 5U; i++)
     {
          u32ReadBuf2[i] = *((volatile unsigned int*)(u32Addr));
-         u32Addr += 4ul;
+         u32Addr += 4UL;
     }
 
     u8CmpRet1 = (uint8_t)memcmp(u32ReadBuf1, u32ExpectBuf, sizeof(u32ReadBuf1));
     u8CmpRet2 = (uint8_t)memcmp(u32ReadBuf2, u32ExpectBuf, sizeof(u32ReadBuf2));
-    if(1u == (u8CmpRet1 || u8CmpRet2))
+    if(1U == (u8CmpRet1 || u8CmpRet2))
     {
          LED_R_ON();        /* Don't meet the expected */
     }
@@ -187,27 +187,27 @@ int32_t main(void)
     EFM_SequenceProgram(EFM_SECTOR10_ADRR, u32Len, u8TestBuf);
 
     /* Sequence program. */
-    EFM_SequenceProgram(EFM_SECTOR11_ADRR, u32Len + 2u, u8TestBuf);
+    EFM_SequenceProgram(EFM_SECTOR11_ADRR, u32Len + 2U, u8TestBuf);
 
     u32Addr = EFM_SECTOR10_ADRR;
-    for(uint8_t i = 0u; i < 5u; i++)
+    for(uint8_t i = 0U; i < 5U; i++)
     {
          u32ReadBuf1[i] = *((volatile unsigned int*)(u32Addr));
-         u32Addr += 4ul;
+         u32Addr += 4UL;
     }
 
     u32Addr = EFM_SECTOR11_ADRR;
-    for(uint8_t i = 0u; i < 5u; i++)
+    for(uint8_t i = 0U; i < 5U; i++)
     {
          u32ReadBuf2[i] = *((volatile unsigned int*)(u32Addr));
-         u32Addr += 4ul;
+         u32Addr += 4UL;
     }
 
     LED_RG_OFF();
 
     u8CmpRet1 = (uint8_t)memcmp(u32ReadBuf1, u32ExpectBuf1, sizeof(u32ReadBuf1));
     u8CmpRet2 = (uint8_t)memcmp(u32ReadBuf2, u32ExpectBuf2, sizeof(u32ReadBuf2));
-    if(1u == (u8CmpRet1 || u8CmpRet2))
+    if(1U == (u8CmpRet1 || u8CmpRet2))
     {
          LED_R_ON();        /* Don't meet the expected */
     }
@@ -219,24 +219,24 @@ int32_t main(void)
     EFM_ChipErase();
 
     u32Addr = EFM_SECTOR10_ADRR;
-    for(uint8_t i = 0u; i < 5u; i++)
+    for(uint8_t i = 0U; i < 5U; i++)
     {
          u32ReadBuf1[i] = *((volatile unsigned int*)(u32Addr));
-         u32Addr += 4ul;
+         u32Addr += 4UL;
     }
 
     u32Addr = EFM_SECTOR11_ADRR;
-    for(uint8_t i = 0u; i < 5u; i++)
+    for(uint8_t i = 0U; i < 5U; i++)
     {
          u32ReadBuf2[i] = *((volatile unsigned int*)(u32Addr));
-         u32Addr += 4ul;
+         u32Addr += 4UL;
     }
 
     LED_RG_OFF();
 
     u8CmpRet1 = (uint8_t)memcmp(u32ReadBuf1, u32ExpectBuf, sizeof(u32ReadBuf1));
     u8CmpRet2 = (uint8_t)memcmp(u32ReadBuf2, u32ExpectBuf, sizeof(u32ReadBuf2));
-    if(1u == (u8CmpRet1 || u8CmpRet2))
+    if(1U == (u8CmpRet1 || u8CmpRet2))
     {
          LED_R_ON();        /* Don't meet the expected */
     }

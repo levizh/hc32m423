@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -73,14 +73,14 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* If use interrupt. */
-#define TIMER2_USE_INTERRUPT        (1u)
+#define TIMER2_USE_INTERRUPT        (1U)
 
 /* USE_TIMER2_INTERRUPT definition. */
-#define SHARE_INTERRUPT             (1u)
+#define SHARE_INTERRUPT             (1U)
 
 /* System clock definition. */
-#define CLK_HRC_32M                 (0u)
-#define CLK_XTAL                    (1u)    /*!< 4MHz ~ 20MHz can be used. 20MHz for this example. */
+#define CLK_HRC_32M                 (0U)
+#define CLK_XTAL                    (1U)    /*!< 4MHz ~ 20MHz can be used. 20MHz for this example. */
 #define SYSTEM_CLOCK                (CLK_XTAL)
 
 /* Compare value definition. */
@@ -89,21 +89,21 @@
    Set TIMER2 clock prescaler is TIMER2_CLK_PRESCALER_16, then TIMER2 clock is 32/16 = 2MHz.
    CompareVal = TimerPeriod(us) * TIMER2ClockFrequency(MHz).
    In this example:
-   TimerPeriod(1ms) = 1000us;
+   TimerPeriod(1ms) = 1000Us;
    TIMER2ClockFrequency = HCLK(32MHz) / Timer2ClockPrescaler(16) = 2MHz;
    CompareVal = 1000 * 2 = 2000. */
 #define TIMER2_CLK_PRESCALER        (TIMER2_CLK_PRESCALER_16)
-#define TIMER2_COMPARE_VALUE        (2000u)
+#define TIMER2_COMPARE_VALUE        (2000U)
 #elif (SYSTEM_CLOCK == CLK_XTAL)
 /* Set HCLK as TIMER2 clock source and HCLK is same as system clock(XTAL 20MHz).
    Set TIMER2 clock prescaler is TIMER2_CLK_PRESCALER_8, then TIMER2 clock is 20/8 = 2.5MHz.
    CompareVal = TimerPeriod(us) * TIMER2ClockFrequency(MHz).
    In this example:
-   TimerPeriod(1ms) = 1000us;
+   TimerPeriod(1ms) = 1000Us;
    TIMER2ClockFrequency = HCLK(20MHz) / Timer2ClockPrescaler(8) = 2.5MHz;
    CompareVal = 1000 * 2.5 = 2500. */
 #define TIMER2_CLK_PRESCALER        (TIMER2_CLK_PRESCALER_8)
-#define TIMER2_COMPARE_VALUE        (2500u)
+#define TIMER2_COMPARE_VALUE        (2500U)
 #else
 #warning "If you use the other clock, calculate the comparison value yourself."
 #endif
@@ -158,7 +158,7 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
 #if TIMER2_USE_INTERRUPT
         /* See Timer2GCmp_IrqHandler in this file. */

@@ -58,7 +58,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -81,7 +81,7 @@
  * @defgroup DMA_Local_Macros DMA Local Macros
  * @{
  */
-#define DMA_CH_REG(reg_base, ch)    (*(volatile uint32_t *)((uint32_t)(&(reg_base)) + ((ch) * 0x40ul)))
+#define DMA_CH_REG(reg_base, ch)    (*(volatile uint32_t *)((uint32_t)(&(reg_base)) + ((ch) * 0x40UL)))
 
 /**
  * @defgroup DMA_Check_Parameters_Validity DMA Check Parameters Validity
@@ -202,7 +202,7 @@ void DMA_ChannelEnable(uint8_t u8Ch)
 {
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
 
-    M0P_DMA->CHEN = 1ul << u8Ch;
+    M0P_DMA->CHEN = 1UL << u8Ch;
 }
 
 /**
@@ -215,7 +215,7 @@ void DMA_ChannelDisable(uint8_t u8Ch)
 {
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
 
-    M0P_DMA->CHENCLR = 1ul << u8Ch;
+    M0P_DMA->CHENCLR = 1UL << u8Ch;
 }
 
 /**
@@ -376,7 +376,7 @@ void DMA_LlpInit(uint8_t u8Ch, uint32_t u32LlpRun, uint32_t u32Llp)
     /* Set llp mode & next descriptor address, and enable llp transfer */
     MODIFY_REG(DMA_CH_REG(M0P_DMA->CH0CTL0, u8Ch),
                DMA_LLP_ENABLE | DMA_CH0CTL0_LLPRUN | DMA_CH0CTL0_LLP,
-               DMA_LLP_ENABLE | u32LlpRun | u32Llp << (DMA_CH0CTL0_LLP_POS - 2ul));
+               DMA_LLP_ENABLE | u32LlpRun | u32Llp << (DMA_CH0CTL0_LLP_POS - 2UL));
 }
 
 /**
@@ -481,7 +481,7 @@ en_flag_status_t DMA_GetErrFlag(uint8_t u8Ch, uint32_t u32Flag)
 
     u32FlagState = M0P_DMA->INTSTAT0 & (u32Flag << (uint32_t)u8Ch);
 
-    return ((u32FlagState == 0ul) ? Reset : Set);
+    return ((u32FlagState == 0UL) ? Reset : Set);
 }
 
 /**
@@ -502,7 +502,7 @@ en_flag_status_t DMA_GetCplFlag(uint8_t u8Ch, uint32_t u32Flag)
 
     u32FlagState = M0P_DMA->INTSTAT1 & (u32Flag << (uint32_t)u8Ch);
 
-    return ((u32FlagState == 0ul) ? Reset : Set);
+    return ((u32FlagState == 0UL) ? Reset : Set);
 }
 
 /**
@@ -555,7 +555,7 @@ en_flag_status_t DMA_GetStatus(uint32_t u32Status)
 
     u32Stat = M0P_DMA->CHSTAT & (u32Status);
 
-    return ((u32Stat == 0ul) ? Reset : Set);
+    return ((u32Stat == 0UL) ? Reset : Set);
 }
 
 

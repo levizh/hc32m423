@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -97,7 +97,7 @@
 #define TIMERA_UNIT1_UDF_INT            (TIMERA_INT_UDF)
 #define TIMERA_UNIT1_UDF_INTn           (INT_TMRA_UDF)
 #define TIMERA_UNIT1_UDF_IRQn           (Int017_IRQn)
-#define TIMERA_UNIT1_PERIOD_VALUE       (1000u)
+#define TIMERA_UNIT1_PERIOD_VALUE       (1000U)
 
 /* TIMERA CLKA Port/Pin definition */
 #define TIMERA_UNIT1_CLKA_PORT          (GPIO_PORT_7)

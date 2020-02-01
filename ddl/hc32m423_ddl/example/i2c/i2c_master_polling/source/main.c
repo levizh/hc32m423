@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -73,7 +73,7 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Define slave device address for example */
-#define DEVICE_ADDRESS                  0x06u
+#define DEVICE_ADDRESS                  0x06U
 /* Define port and pin for SDA and SCL */
 #define I2C_SCL_PORT                    (GPIO_PORT_6)
 #define I2C_SCL_PIN                     (GPIO_PIN_0)
@@ -82,19 +82,19 @@
 
 #define TIMEOUT                         ((uint32_t)0x10000)
 
-#define I2C_RET_OK                      0u
-#define I2C_RET_ERROR                   1u
+#define I2C_RET_OK                      0U
+#define I2C_RET_ERROR                   1U
 
-#define GENERATE_START                  0x00u
-#define GENERATE_RESTART                0x01u
+#define GENERATE_START                  0x00U
+#define GENERATE_RESTART                0x01U
 
-#define ADDRESS_W                       0x00u
-#define ADDRESS_R                       0x01u
+#define ADDRESS_W                       0x00U
+#define ADDRESS_R                       0x01U
 
 /* Define Write and read data length for the example */
-#define TEST_DATA_LEN                   128u
+#define TEST_DATA_LEN                   128U
 /* Define i2c baudrate */
-#define I2C_BAUDRATE                    400000ul
+#define I2C_BAUDRATE                    400000UL
 
 /* Define for RGB LED */
 #define LED_R_PORT                      (GPIO_PORT_12)
@@ -150,13 +150,13 @@ int32_t main(void)
     SystemClockConfig();
 
     /* Test buffer initialize */
-    for(i=0u; i<TEST_DATA_LEN; i++)
+    for(i=0U; i<TEST_DATA_LEN; i++)
     {
-        u8TxBuf[i] = (uint8_t)(i+1u);
+        u8TxBuf[i] = (uint8_t)(i+1U);
     }
-    for(i=0u; i<TEST_DATA_LEN; i++)
+    for(i=0U; i<TEST_DATA_LEN; i++)
     {
-        u8RxBuf[i] = 0u;
+        u8RxBuf[i] = 0U;
     }
 
     /* Initialize I2C port*/
@@ -178,7 +178,7 @@ int32_t main(void)
     /* I2C master data write*/
     u8Ret = Master_StartOrRestart(GENERATE_START);
     JudgeResult(u8Ret);
-    u8Ret = Master_SendAdr(((uint8_t)DEVICE_ADDRESS<<1u)|ADDRESS_W);
+    u8Ret = Master_SendAdr(((uint8_t)DEVICE_ADDRESS<<1U)|ADDRESS_W);
     JudgeResult(u8Ret);
     u8Ret = Master_WriteData(u8TxBuf, TEST_DATA_LEN);
     JudgeResult(u8Ret);
@@ -186,12 +186,12 @@ int32_t main(void)
     JudgeResult(u8Ret);
 
     /* 5mS delay for device*/
-    DDL_Delay1ms(1u);
+    DDL_Delay1ms(1U);
 
     /* I2C master data read*/
     u8Ret = Master_StartOrRestart(GENERATE_START);
     JudgeResult(u8Ret);
-    u8Ret = Master_SendAdr(((uint8_t)DEVICE_ADDRESS<<1u)|ADDRESS_R);
+    u8Ret = Master_SendAdr(((uint8_t)DEVICE_ADDRESS<<1U)|ADDRESS_R);
     JudgeResult(u8Ret);
     u8Ret = Master_RevData(u8RxBuf, TEST_DATA_LEN);
     JudgeResult(u8Ret);
@@ -199,7 +199,7 @@ int32_t main(void)
     JudgeResult(u8Ret);
 
     /* Compare the data */
-    for(i=0u; i<TEST_DATA_LEN; i++)
+    for(i=0U; i<TEST_DATA_LEN; i++)
     {
         if(u8TxBuf[i] != u8RxBuf[i])
         {
@@ -207,7 +207,7 @@ int32_t main(void)
             while(1)
             {
                 LED_R_TOGGLE();
-                DDL_Delay1ms(500u);
+                DDL_Delay1ms(500U);
             }
         }
     }
@@ -216,7 +216,7 @@ int32_t main(void)
     while(1)
     {
         LED_G_TOGGLE();
-        DDL_Delay1ms(500u);
+        DDL_Delay1ms(500U);
     }
 
 }
@@ -233,21 +233,21 @@ static void WaitSw2_ShortPress(void)
     {
         ;
     }
-    DDL_Delay1ms(5u);
+    DDL_Delay1ms(5U);
 
     /* Wait key down */
     while(Pin_Reset != GPIO_ReadInputPortPin(GPIO_PORT_2, GPIO_PIN_1))
     {
         ;
     }
-    DDL_Delay1ms(5u);
+    DDL_Delay1ms(5U);
 
     /* Wait key up */
     while(Pin_Set != GPIO_ReadInputPortPin(GPIO_PORT_2, GPIO_PIN_1))
     {
         ;
     }
-    DDL_Delay1ms(5u);
+    DDL_Delay1ms(5U);
 }
 
 /**
@@ -284,12 +284,12 @@ static uint8_t Master_StartOrRestart(uint8_t u8Start)
         enBusyFlag = I2C_GetStatus(I2C_SR_BUSY);
         enStartFlag = I2C_GetStatus(I2C_SR_STARTF);
         u32TimeOut--;
-        if(((Set == enBusyFlag) && (Set == enStartFlag))||(0u == u32TimeOut))
+        if(((Set == enBusyFlag) && (Set == enStartFlag))||(0U == u32TimeOut))
         {
             break;
         }
     }
-    if(0u == u32TimeOut)
+    if(0U == u32TimeOut)
     {
         u8Ret = I2C_RET_ERROR;
     }
@@ -311,7 +311,7 @@ static uint8_t Master_SendAdr(uint8_t u8Adr)
     /* Wait tx buffer empty */
     while(Reset == I2C_GetStatus(I2C_SR_TEMPTYF))
     {
-        if(0u == (u32TimeOut--))
+        if(0U == (u32TimeOut--))
         {
             return I2C_RET_ERROR;
         }
@@ -320,13 +320,13 @@ static uint8_t Master_SendAdr(uint8_t u8Adr)
     /* Send I2C address */
     I2C_SendData(u8Adr);
 
-    if(ADDRESS_W == (u8Adr & 0x01u))
+    if(ADDRESS_W == (u8Adr & 0x01U))
     {
         /* If in master transfer process, Need wait transfer end*/
         uint32_t u32TimeOut = TIMEOUT;
         while(Reset == I2C_GetStatus(I2C_SR_TENDF))
         {
-            if(0u == (u32TimeOut--))
+            if(0U == (u32TimeOut--))
             {
                 return I2C_RET_ERROR;
             }
@@ -336,7 +336,7 @@ static uint8_t Master_SendAdr(uint8_t u8Adr)
     u32TimeOut = TIMEOUT;
     while(Set == I2C_GetStatus(I2C_SR_ACKRF))
     {
-        if(0u == (u32TimeOut--))
+        if(0U == (u32TimeOut--))
         {
             return I2C_RET_ERROR;
         }
@@ -363,7 +363,7 @@ static uint8_t Master_WriteData(uint8_t *pTxData, uint32_t u32Size)
         u32TimeOut = TIMEOUT;
         while(Reset == I2C_GetStatus(I2C_SR_TEMPTYF))
         {
-            if(0u == (u32TimeOut--))
+            if(0U == (u32TimeOut--))
             {
                 return I2C_RET_ERROR;
             }
@@ -376,7 +376,7 @@ static uint8_t Master_WriteData(uint8_t *pTxData, uint32_t u32Size)
         u32TimeOut = TIMEOUT;
         while(Reset == I2C_GetStatus(I2C_SR_TENDF))
         {
-            if(0u == (u32TimeOut--))
+            if(0U == (u32TimeOut--))
             {
                 return I2C_RET_ERROR;
             }
@@ -386,7 +386,7 @@ static uint8_t Master_WriteData(uint8_t *pTxData, uint32_t u32Size)
         u32TimeOut = TIMEOUT;
         while(Set == I2C_GetStatus(I2C_SR_ACKRF))
         {
-            if(0u == (u32TimeOut--))
+            if(0U == (u32TimeOut--))
             {
                 return I2C_RET_ERROR;
             }
@@ -408,10 +408,10 @@ static uint8_t Master_RevData(uint8_t *pRxData, uint32_t u32Size)
 {
     uint32_t u32TimeOut = TIMEOUT;
 
-    for(uint32_t i=0u; i<u32Size; i++)
+    for(uint32_t i=0U; i<u32Size; i++)
     {
         /* if the last byte receive, need config NACK*/
-        if(i == (u32Size - 1u))
+        if(i == (u32Size - 1U))
         {
             I2C_NackConfig(Enable);
         }
@@ -420,7 +420,7 @@ static uint8_t Master_RevData(uint8_t *pRxData, uint32_t u32Size)
         u32TimeOut = TIMEOUT;
         while(Reset == I2C_GetStatus(I2C_SR_RFULLF))
         {
-            if(0u == (u32TimeOut--))
+            if(0U == (u32TimeOut--))
             {
                 return I2C_RET_ERROR;
             }
@@ -455,7 +455,7 @@ uint8_t Master_Stop(void)
     u32TimeOut = TIMEOUT;
     while(Reset == I2C_GetStatus(I2C_SR_STOPF))
     {
-        if(0u == (u32TimeOut--))
+        if(0U == (u32TimeOut--))
         {
             return I2C_RET_ERROR;
         }
@@ -479,7 +479,7 @@ uint8_t Master_Initialize(void)
 
     I2C_StructInit(&stcI2cInit);
     stcI2cInit.u32Baudrate = I2C_BAUDRATE;
-    stcI2cInit.u32SclTime = 5u;
+    stcI2cInit.u32SclTime = 5U;
     stcI2cInit.u32I2cClkDiv = I2C_CLK_DIV1;
     I2C_Init(&stcI2cInit, &fErr);
 
@@ -523,7 +523,7 @@ static void JudgeResult(uint8_t u8Result)
         while(1)
         {
             LED_R_TOGGLE();
-            DDL_Delay1ms(500u);
+            DDL_Delay1ms(500U);
         }
     }
 }
@@ -535,7 +535,7 @@ static void JudgeResult(uint8_t u8Result)
  */
 static void LedConfig(void)
 {
-    stc_gpio_init_t stcGpioInit = {0u};
+    stc_gpio_init_t stcGpioInit = {0U};
 
     stcGpioInit.u16PinMode = PIN_MODE_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;

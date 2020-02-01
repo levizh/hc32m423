@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -113,12 +113,12 @@ typedef struct
 #define FUNCTION_CLK_GATE               (CLK_FCG_UART3)
 
 /* UART multiple processor ID definition */
-#define UART_MASTER_STATION_ID          (0x20u)
-#define UART_SLAVE_STATION_ID           (0x21u)
+#define UART_MASTER_STATION_ID          (0x20U)
+#define UART_SLAVE_STATION_ID           (0x21U)
 
 /* Ring buffer size */
-#define RING_BUFFER_SIZE                (50u)
-#define IS_RING_BUFFER_EMPYT(x)         (0u == ((x)->u16UsedSize))
+#define RING_BUFFER_SIZE                (50U)
+#define IS_RING_BUFFER_EMPYT(x)         (0U == ((x)->u16UsedSize))
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -183,7 +183,7 @@ static void SystemClockConfig(void)
  */
 static void UartTxIrqCallback(void)
 {
-    uint8_t u8Data = 0u;
+    uint8_t u8Data = 0U;
     en_flag_status_t enFlag = USART_GetFlag(UART_UNIT, USART_FLAG_TXE);
     en_functional_state_t enState = USART_GetFuncState(UART_UNIT, USART_INT_TXE);
 
@@ -236,7 +236,7 @@ static void UartTcIrqCallback(void)
  */
 static void UartRxIrqCallback(void)
 {
-    uint8_t u8RxData = 0u;
+    uint8_t u8RxData = 0U;
     en_flag_status_t enFlag = USART_GetFlag(UART_UNIT, USART_FLAG_RXNE);
     en_functional_state_t enState = USART_GetFuncState(UART_UNIT, USART_INT_RX);
 
@@ -354,7 +354,7 @@ int32_t main(void)
 {
     stc_irq_regi_config_t stcIrqRegiConf;
     const stc_uart_multiprocessor_init_t stcUartMultiProcessorInit = {
-        .u32Baudrate = 9600ul,
+        .u32Baudrate = 9600UL,
         .u32BitDirection = USART_LSB,
         .u32StopBit = USART_STOP_BITS_1,
         .u32DataWidth = USART_DATA_WIDTH_BITS_8,

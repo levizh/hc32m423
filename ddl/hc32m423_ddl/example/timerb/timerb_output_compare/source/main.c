@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -76,14 +76,14 @@
 #define TIMERB_ODD_UNIT                 (M0P_TMRB1)
 #define TIMERB_ODD_UNIT_CMP_INT         (INT_TMRB_1_CMP)
 #define TIMERB_ODD_UNIT_CMP_IRQn        (Int022_IRQn)
-#define TIMERB_ODD_UNIT_PERIOD_VALUE    (SystemCoreClock/512ul)
-#define TIMERB_ODD_UNIT_COMPARE_VALUE   (TIMERB_ODD_UNIT_PERIOD_VALUE/2ul)
+#define TIMERB_ODD_UNIT_PERIOD_VALUE    (SystemCoreClock/512UL)
+#define TIMERB_ODD_UNIT_COMPARE_VALUE   (TIMERB_ODD_UNIT_PERIOD_VALUE/2UL)
 
 #define TIMERB_EVEN_UNIT                (M0P_TMRB2)
 #define TIMERB_EVEN_UNIT_CMP_INT        (INT_TMRB_2_CMP)
 #define TIMERB_EVEN_UNIT_CMP_IRQn       (Int020_IRQn)
 #define TIMERB_EVEN_UNIT_PERIOD_VALUE   (TIMERB_ODD_UNIT_PERIOD_VALUE)
-#define TIMERB_EVEN_UNIT_COMPARE_VALUE  (TIMERB_EVEN_UNIT_PERIOD_VALUE/2ul)
+#define TIMERB_EVEN_UNIT_COMPARE_VALUE  (TIMERB_EVEN_UNIT_PERIOD_VALUE/2UL)
 
 /* TIMERB TIMB_t_PWM1 Port/Pin definition */
 #define TIMERB_ODD_UNIT_PWM1_PORT       (GPIO_PORT_1)     /* P15: TIMB_1_PWM1 */
@@ -157,7 +157,7 @@ int32_t main(void)
     stc_irq_regi_config_t stcIrqRegiConf;
     stc_timerb_init_t stcTimerbInit;
     stc_timerb_oc_init_t stcTimerbOddUnitOcInit = {
-        .u16CompareVal = 0u,
+        .u16CompareVal = 0U,
         .u16PortOutputState = TIMERB_OC_PORT_OUTPUT_ENABLE,
         .u16StartCntOutput = TIMERB_OC_STARTCNT_OUTPUT_HIGH,
         .u16StopCntOutput = TIMERB_OC_STOPCNT_OUTPUT_HIGH,
@@ -166,7 +166,7 @@ int32_t main(void)
     };
 
     stc_timerb_oc_init_t stcTimerbEvenUnitOcInit = {
-        .u16CompareVal = 0u,
+        .u16CompareVal = 0U,
         .u16PortOutputState = TIMERB_OC_PORT_OUTPUT_ENABLE,
         .u16StartCntOutput = TIMERB_OC_STARTCNT_OUTPUT_HIGH,
         .u16StopCntOutput = TIMERB_OC_STOPCNT_OUTPUT_HIGH,

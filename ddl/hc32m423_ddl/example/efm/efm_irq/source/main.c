@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -75,8 +75,8 @@
  ******************************************************************************/
 #define EFM_IRQn                (Int024_IRQn)
 
-#define EFM_WIN_START_ADDR      (0x000002810u)
-#define EFM_WIN_END_ADDR        (0x000002910u)
+#define EFM_WIN_START_ADDR      (0x000002810U)
+#define EFM_WIN_END_ADDR        (0x000002910U)
 
 #define LED_R_PORT              (GPIO_PORT_12)
 #define LED_G_PORT              (GPIO_PORT_7)
@@ -192,7 +192,7 @@ int32_t main(void)
     NVIC_EnableIRQ(EFM_IRQn);
 
      /* program between windows address. */
-    u32Addr = EFM_WIN_START_ADDR + 4ul;
+    u32Addr = EFM_WIN_START_ADDR + 4UL;
     EFM_ProgramWord(u32Addr,u32TestData);
 
     /* SW2 */
@@ -202,7 +202,7 @@ int32_t main(void)
     }
 
     /* program out of windows address. */
-    u32Addr = EFM_WIN_START_ADDR - 4ul;
+    u32Addr = EFM_WIN_START_ADDR - 4UL;
     EFM_ProgramWord(u32Addr,u32TestData);
 
     /* Lock EFM. */

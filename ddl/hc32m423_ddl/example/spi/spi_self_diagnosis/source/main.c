@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -73,8 +73,8 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* SPI pin group definition. */
-#define SPI_PIN_GROUP_A             (1u)
-#define SPI_PIN_GROUP_B             (2u)
+#define SPI_PIN_GROUP_A             (1U)
+#define SPI_PIN_GROUP_B             (2U)
 #define SPI_PIN_GROUP               (SPI_PIN_GROUP_B)
 
 #if (SPI_PIN_GROUP == SPI_PIN_GROUP_A)
@@ -100,7 +100,7 @@
 #endif // #if (SPI_PIN_GROUP == SPI_PIN_GROUP_A)
 
 /* Interrupt flag bit mask. */
-#define SPI_IRQ_PARITY_ERROR_OCCURRED   (1ul << 0u)
+#define SPI_IRQ_PARITY_ERROR_OCCURRED   (1UL << 0U)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -116,7 +116,7 @@ static void SpiParityTx(uint8_t u8TxData);
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static uint32_t u32SpiIrqFlag = 0u;
+static uint32_t u32SpiIrqFlag = 0U;
 static stc_spi_init_t m_stcInit;
 
 /*******************************************************************************
@@ -139,25 +139,25 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
         m_stcInit.u32Pate = SPI_PATE_ENABLE;
         SpiConfig();
-        SpiParityTx(0x56u);
+        SpiParityTx(0x56U);
         if (u32SpiIrqFlag & SPI_IRQ_PARITY_ERROR_OCCURRED)
         {
             // !!!SPI parity check function exception.
-            while (1u)
+            while (1U)
             {
                 ;
             }
         }
 
-        SpiParityTx(0x57u);
+        SpiParityTx(0x57U);
         if ((u32SpiIrqFlag & SPI_IRQ_PARITY_ERROR_OCCURRED) == 0U)
         {
             // !!!SPI parity check function exception.
-            while (1u)
+            while (1U)
             {
                 ;
             }
@@ -166,28 +166,28 @@ int32_t main(void)
         /* Disable parity check self diagnosis. */
         m_stcInit.u32Pate = SPI_PATE_DISABLE;
         SpiConfig();
-        SpiParityTx(0x56u);
+        SpiParityTx(0x56U);
         if (u32SpiIrqFlag & SPI_IRQ_PARITY_ERROR_OCCURRED)
         {
             // !!!SPI parity check function exception.
-            while (1u)
+            while (1U)
             {
                 ;
             }
         }
 
         u8Temp = (uint8_t)SPI_ReadDataReg();
-        if (u8Temp == (uint8_t)0x57u)
+        if (u8Temp == (uint8_t)0x57U)
         {
             // !!!SPI parity check function exception.
-            while (1u)
+            while (1U)
             {
                 ;
             }
         }
 
         /* Parity check is success. The following statement is only used for breakpoint. */
-        SpiParityTx(0x56u);
+        SpiParityTx(0x56U);
     }
 }
 
@@ -265,8 +265,8 @@ static void SpiIrqConfig(void)
  */
 static void SpiParityTx(uint8_t u8TxData)
 {
-    u32SpiIrqFlag = 0u;
-    SPI_Transmit(&u8TxData, 1u);
+    u32SpiIrqFlag = 0U;
+    SPI_Transmit(&u8TxData, 1U);
 }
 
 /**

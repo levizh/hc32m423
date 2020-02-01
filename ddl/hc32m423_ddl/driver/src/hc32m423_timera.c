@@ -57,7 +57,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -85,7 +85,7 @@
  * @defgroup TIMERA_Private_Parameter TIMERA Private Parameter
  * @{
  */
-#define TIMERA_PWM_CHANNEL_NUMBER           ((uint8_t)0x02u)         /*!< TIMERA PWM channel number */
+#define TIMERA_PWM_CHANNEL_NUMBER           ((uint8_t)0x02U)         /*!< TIMERA PWM channel number */
 /**
  * @}
  */
@@ -131,10 +131,10 @@
  * @brief Get the specified Compare/Capture register address of the TimerA unit
  * @{
  */
-#define TMRA_CMPARx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->CMPAR1)) + ((uint32_t)(__CH__))*4u)
-#define TMRA_BCONRx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->BCONR))  + ((uint32_t)(__CH__))*4u)
-#define TMRA_CCONRx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->CCONR1)) + ((uint32_t)(__CH__))*4u)
-#define TMRA_PCONRx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->PCONR1)) + ((uint32_t)(__CH__))*4u)
+#define TMRA_CMPARx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->CMPAR1)) + ((uint32_t)(__CH__))*4U)
+#define TMRA_BCONRx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->BCONR))  + ((uint32_t)(__CH__))*4U)
+#define TMRA_CCONRx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->CCONR1)) + ((uint32_t)(__CH__))*4U)
+#define TMRA_PCONRx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->PCONR1)) + ((uint32_t)(__CH__))*4U)
 /**
  * @}
  */
@@ -289,15 +289,15 @@
 
 #define IS_TIMERA_CLEAR_FLAG(x)                                                \
 (   (!((x) & ((uint16_t)(~TIMERA_FALG_MASK))))              &&                 \
-    (0u != (x)))
+    (0U != (x)))
 
 #define IS_TIMERA_INT(x)                                                       \
 (   (!((x) & ((uint16_t)(~TIMERA_INT_MASK))))               &&                 \
-    (0u != (x)))
+    (0U != (x)))
 
 #define IS_TIMERA_EVENT(x)                                                     \
 (   (!((x) & ((uint16_t)(~TIMERA_EVENT_MASK))))             &&                 \
-    (0u != (x)))
+    (0U != (x)))
 
 /**
  * @}
@@ -353,30 +353,30 @@ en_result_t TIMERA_DeInit(M0P_TMRA_TypeDef *TMRAx)
     else
     {
         /* Configures the registers to reset value. */
-        WRITE_REG16(TMRAx->BCSTR, 0x0002u);
-        WRITE_REG16(TMRAx->ICONR, 0x0000u);
-        WRITE_REG16(TMRAx->ECONR, 0x0000u);
-        WRITE_REG16(TMRAx->CNTER, 0x0000u);
+        WRITE_REG16(TMRAx->BCSTR, 0x0002U);
+        WRITE_REG16(TMRAx->ICONR, 0x0000U);
+        WRITE_REG16(TMRAx->ECONR, 0x0000U);
+        WRITE_REG16(TMRAx->CNTER, 0x0000U);
         WRITE_REG16(TMRAx->PERAR, 0xFFFFu);
-        WRITE_REG16(TMRAx->FCONR, 0x0000u);
-        WRITE_REG16(TMRAx->STFLR, 0x0000u);
-        WRITE_REG16(TMRAx->HCONR, 0x0000u);
-        WRITE_REG16(TMRAx->HCUPR, 0x0000u);
-        WRITE_REG16(TMRAx->HCDOR, 0x0000u);
+        WRITE_REG16(TMRAx->FCONR, 0x0000U);
+        WRITE_REG16(TMRAx->STFLR, 0x0000U);
+        WRITE_REG16(TMRAx->HCONR, 0x0000U);
+        WRITE_REG16(TMRAx->HCUPR, 0x0000U);
+        WRITE_REG16(TMRAx->HCDOR, 0x0000U);
 
-        for (u8Cnt = 0u; u8Cnt < TIMERA_PWM_CHANNEL_NUMBER; u8Cnt++)
+        for (u8Cnt = 0U; u8Cnt < TIMERA_PWM_CHANNEL_NUMBER; u8Cnt++)
         {
             TMRA_CMPAR = (__IO uint16_t *)TMRA_CMPARx(TMRAx, u8Cnt);
             WRITE_REG16(*TMRA_CMPAR, 0xFFFFu);
             TMRA_CCONR = (__IO uint16_t *)TMRA_CCONRx(TMRAx, u8Cnt);
-            WRITE_REG16(*TMRA_CCONR, 0x0000u);
+            WRITE_REG16(*TMRA_CCONR, 0x0000U);
             TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, u8Cnt);
-            WRITE_REG16(*TMRA_PCONR, 0x0000u);
+            WRITE_REG16(*TMRA_PCONR, 0x0000U);
 
-            if ((u8Cnt % 2u) == 0u)
+            if ((u8Cnt % 2U) == 0U)
             {
                 TMRA_BCONR = (__IO uint16_t *)TMRA_BCONRx(TMRAx, u8Cnt);
-                WRITE_REG16(*TMRA_BCONR, 0x0000u);
+                WRITE_REG16(*TMRA_BCONR, 0x0000U);
             }
         }
         WRITE_REG16(M0P_AOS->TMRA_HTSSR, TIMERA_TRIG_SRC_MASK);
@@ -408,7 +408,7 @@ en_result_t TIMERA_Init(M0P_TMRA_TypeDef *TMRAx,
     else
     {
         /* Check parameters */
-        DDL_ASSERT(0u != pstcInit->u16PeriodVal);
+        DDL_ASSERT(0U != pstcInit->u16PeriodVal);
         DDL_ASSERT(IS_TIMERA_COUNT_MODE(pstcInit->u16CountMode));
         DDL_ASSERT(IS_TIMERA_COUNT_DIRECTION(pstcInit->u16CountDir));
         DDL_ASSERT(IS_TIMERA_CLK_DIV(pstcInit->u16ClkDiv));
@@ -425,7 +425,7 @@ en_result_t TIMERA_Init(M0P_TMRA_TypeDef *TMRAx,
         DDL_ASSERT(IS_TIMERA_CLKB_PORT_FILTER_STATE(pstcInit->u16ClkBFilterState));
         DDL_ASSERT(IS_TIMERA_CLKB_PORT_FILTER_CLKDIV(pstcInit->u16ClkBFilterClkDiv));
 
-        WRITE_REG16(TMRAx->CNTER, 0u);
+        WRITE_REG16(TMRAx->CNTER, 0U);
         WRITE_REG16(TMRAx->PERAR, pstcInit->u16PeriodVal);
         MODIFY_REG16(TMRAx->BCSTR,
                      (TMRA_BCSTR_DIR | TMRA_BCSTR_MODE | TMRA_BCSTR_OVSTP | TMRA_BCSTR_CKDIV),
@@ -1033,10 +1033,10 @@ en_result_t TIMERA_IC_DeInit(M0P_TMRA_TypeDef *TMRAx,
         TMRA_CCONR = (__IO uint16_t *)TMRA_CCONRx(TMRAx, u8Channel);
         WRITE_REG16(*TMRA_CCONR, TIMERA_INPUT_CAPTURE);
 
-        if ((u8Channel % 2u) == 0u)
+        if ((u8Channel % 2U) == 0U)
         {
             TMRA_BCONR = (__IO uint16_t *)TMRA_BCONRx(TMRAx, u8Channel);
-            WRITE_REG16(*TMRA_BCONR, 0x0000u);
+            WRITE_REG16(*TMRA_BCONR, 0x0000U);
         }
     }
 
@@ -1271,12 +1271,12 @@ en_result_t TIMERA_OC_DeInit(M0P_TMRA_TypeDef *TMRAx,
         TMRA_CCONR = (__IO uint16_t *)TMRA_CCONRx(TMRAx, u8Channel);
         WRITE_REG16(*TMRA_CCONR, TIMERA_OUTPUT_COMPARE);
         TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, u8Channel);
-        WRITE_REG16(*TMRA_PCONR, 0x0000u);
+        WRITE_REG16(*TMRA_PCONR, 0x0000U);
 
-        if ((u8Channel % 2u) == 0u)
+        if ((u8Channel % 2U) == 0U)
         {
             TMRA_BCONR = (__IO uint16_t *)TMRA_BCONRx(TMRAx, u8Channel);
-            WRITE_REG16(*TMRA_BCONR, 0x0000u);
+            WRITE_REG16(*TMRA_BCONR, 0x0000U);
         }
     }
 
@@ -1337,7 +1337,7 @@ en_result_t TIMERA_OC_Init(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
                       pstcOcInit->u16CompareMatchOutput | pstcOcInit->u16PeriodMatchOutput |
                       pstcOcInit->u16PortOutputState));
 
-        if ((u8Channel % 2u) == 0u)
+        if ((u8Channel % 2U) == 0U)
         {
             TMRA_BCONR = (__IO uint16_t *)TMRA_BCONRx(TMRAx, u8Channel);
             WRITE_REG16(*TMRA_BCONR, (pstcOcInit->u16CacheState | pstcOcInit->u16CacheTransmitCondition));
@@ -1614,7 +1614,7 @@ en_result_t TIMERA_OC_CacheCmd(M0P_TMRA_TypeDef *TMRAx,
     en_result_t enRet = Ok;
 
     /* Check channel validity */
-    if ((u8Channel % 2u) != 0u)
+    if ((u8Channel % 2U) != 0U)
     {
         enRet = ErrorInvalidParameter;
     }
@@ -1664,7 +1664,7 @@ en_result_t TIMERA_OC_SetCacheTransmitCondition(M0P_TMRA_TypeDef *TMRAx,
     en_result_t enRet = Ok;
 
     /* Check channel validity */
-    if ((u8Channel % 2u) != 0u)
+    if ((u8Channel % 2U) != 0U)
     {
         enRet = ErrorInvalidParameter;
     }
@@ -1744,15 +1744,15 @@ void TIMERA_ClearFlag(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Flag)
     DDL_ASSERT(IS_TIMERA_CLEAR_FLAG(u16Flag));
 
     /* OVF and UDF flag */
-    u16Tmp = u16Flag & 0xFF00u;
-    if (0u != u16Tmp)
+    u16Tmp = u16Flag & 0xFF00U;
+    if (0U != u16Tmp)
     {
         CLEAR_REG16_BIT(TMRAx->BCSTR, u16Tmp);
     }
 
     /* Count match flag */
     u16Tmp = u16Flag & 0x00FFu;
-    if (0u != u16Tmp)
+    if (0U != u16Tmp)
     {
         CLEAR_REG16_BIT(TMRAx->STFLR, u16Tmp);
     }
@@ -1785,8 +1785,8 @@ void TIMERA_IntCmd(M0P_TMRA_TypeDef *TMRAx,
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
     /* OVF and UDF interrupt */
-    u16Tmp = u16IntSource & 0xFF00u;
-    if (0u != u16Tmp)
+    u16Tmp = u16IntSource & 0xFF00U;
+    if (0U != u16Tmp)
     {
         if (Enable == enNewSta)
         {
@@ -1800,7 +1800,7 @@ void TIMERA_IntCmd(M0P_TMRA_TypeDef *TMRAx,
 
     /* Count match interrupt */
     u16Tmp = u16IntSource & 0x00FFu;
-    if (0u != u16Tmp)
+    if (0U != u16Tmp)
     {
         if (Enable == enNewSta)
         {

@@ -58,7 +58,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -119,7 +119,7 @@
 en_result_t RMU_GetResetCause(stc_rmu_rstcause_t *pstcData)
 {
     en_result_t enRet = Ok;
-    uint16_t u16RstReg = 0u;
+    uint16_t u16RstReg = 0U;
 
     if(NULL == pstcData)
     {
@@ -152,8 +152,8 @@ en_result_t RMU_GetResetCause(stc_rmu_rstcause_t *pstcData)
 en_result_t RMU_ClrResetFlag(void)
 {
     en_result_t enRet = Ok;
-    uint16_t u16status = 0u;
-    uint32_t u32timeout = 0u;
+    uint16_t u16status = 0U;
+    uint32_t u32timeout = 0U;
 
     /* Enable RMU register write */
     RMU_REG_WRITE_ENABLE();
@@ -161,7 +161,7 @@ en_result_t RMU_ClrResetFlag(void)
     do
     {
         u32timeout++;
-        bM0P_RMU->RSTF0_b.CLRF = 1u;
+        bM0P_RMU->RSTF0_b.CLRF = 1U;
         /* Wait for register clear */
         __NOP();
         __NOP();

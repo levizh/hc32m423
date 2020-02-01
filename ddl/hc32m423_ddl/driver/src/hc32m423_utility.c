@@ -57,7 +57,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -97,8 +97,8 @@ static en_result_t SetUartBaudrate(M0P_USART_TypeDef *USARTx,
  * @{
  */
 
-static uint32_t u32TickStep = 0ul;
-__IO static uint32_t u32TickCount = 0ul;
+static uint32_t u32TickStep = 0UL;
+__IO static uint32_t u32TickCount = 0UL;
 
 /**
  * @}
@@ -119,15 +119,15 @@ __IO static uint32_t u32TickCount = 0ul;
  */
 void DDL_Delay1ms(uint32_t u32Cnt)
 {
-    __IO uint32_t i = 0ul;
-    uint32_t u32Cyc = 0ul;
+    __IO uint32_t i = 0UL;
+    uint32_t u32Cyc = 0UL;
 
     u32Cyc = SystemCoreClock;
-    u32Cyc = u32Cyc / 10000ul;
-    while (u32Cnt-- > 0ul)
+    u32Cyc = u32Cyc / 10000UL;
+    while (u32Cnt-- > 0UL)
     {
         i = u32Cyc;
-        while (i-- > 0ul)
+        while (i-- > 0UL)
         {
             ;
         }
@@ -147,9 +147,9 @@ __WEAKDEF en_result_t SysTick_Init(uint32_t u32Freq)
 
     if (u32Freq)
     {
-        u32TickStep = 1000ul / u32Freq;
+        u32TickStep = 1000UL / u32Freq;
         /* Configure the SysTick interrupt */
-        if (0ul == SysTick_Config(SystemCoreClock / u32Freq))
+        if (0UL == SysTick_Config(SystemCoreClock / u32Freq))
         {
             enRet = Ok;
         }
@@ -291,14 +291,14 @@ en_result_t DDL_UartInit(void)
     en_result_t enRet = Error;
 
     /* Configure USART TX pin. */
-    WRITE_REG16(M0P_PORT->PWPR, 0xA501u);  /* Unlock */
-    MODIFY_REG16(M0P_PORT->PCR12, PORT_PCR_FSEL, (0x05ul << PORT_PCR_FSEL_POS));  /* P12: USART2_TX */
-    WRITE_REG16(M0P_PORT->PWPR, 0xA500u);  /* Lock */
+    WRITE_REG16(M0P_PORT->PWPR, 0xA501U);  /* Unlock */
+    MODIFY_REG16(M0P_PORT->PCR12, PORT_PCR_FSEL, (0x05UL << PORT_PCR_FSEL_POS));  /* P12: USART2_TX */
+    WRITE_REG16(M0P_PORT->PWPR, 0xA500U);  /* Lock */
 
     /* Enable USART1 function clock gate */
-    WRITE_REG16(M0P_PWC->FPRC, 0xA501u);  /* Unlock */
+    WRITE_REG16(M0P_PWC->FPRC, 0xA501U);  /* Unlock */
     CLEAR_REG32_BIT(M0P_CMU->FCG, CMU_FCG_UART2);
-    WRITE_REG16(M0P_PWC->FPRC, 0xA500u);  /* Lock */
+    WRITE_REG16(M0P_PWC->FPRC, 0xA500U);  /* Lock */
 
     /* Disbale TX/RX && clear interrupt flag */
     CLEAR_REG32_BIT(M0P_USART2->CR1, (USART_CR1_TE | USART_CR1_RE));
@@ -322,13 +322,13 @@ en_result_t DDL_UartInit(void)
                  USART_CR1_OVER8);
 
     /* Set CR2: reset value */
-    WRITE_REG32(M0P_USART2->CR2, 0x00ul);
+    WRITE_REG32(M0P_USART2->CR2, 0x00UL);
 
     /* Set CR3: reset value */
-    WRITE_REG32(M0P_USART2->CR3, 0x00ul);
+    WRITE_REG32(M0P_USART2->CR3, 0x00UL);
 
     /* Set baudrate */
-    if (Ok == SetUartBaudrate(M0P_USART2, 115200u))
+    if (Ok == SetUartBaudrate(M0P_USART2, 115200U))
     {
         /* Enable TX function */
         SET_REG32_BIT(M0P_USART2->CR1, USART_CR1_TE);
@@ -354,12 +354,12 @@ en_result_t DDL_UartInit(void)
 static en_result_t SetUartBaudrate(M0P_USART_TypeDef *USARTx,
                                         uint32_t u32Baudrate)
 {
-    uint32_t B = 0ul;
-    uint32_t C = 0ul;
-    uint32_t OVER8 = 0ul;
-    uint32_t DIV_Integer = 0ul;
-    uint32_t u32Prescaler = 0ul;
-    uint32_t u32CR1 = 0ul;
+    uint32_t B = 0UL;
+    uint32_t C = 0UL;
+    uint32_t OVER8 = 0UL;
+    uint32_t DIV_Integer = 0UL;
+    uint32_t u32Prescaler = 0UL;
+    uint32_t u32CR1 = 0UL;
     en_result_t enRet = ErrorInvalidParameter;
 
     if (u32Baudrate)
@@ -369,32 +369,32 @@ static en_result_t SetUartBaudrate(M0P_USART_TypeDef *USARTx,
         if (!(u32CR1 & USART_CR1_MS))
         {
             B = u32Baudrate;
-            OVER8 = (u32CR1 & USART_CR1_OVER8) ? 1ul : 0ul;
+            OVER8 = (u32CR1 & USART_CR1_OVER8) ? 1UL : 0UL;
 
-            for (u32Prescaler = 0ul; u32Prescaler <= USART_PR_PSC; u32Prescaler++)
+            for (u32Prescaler = 0UL; u32Prescaler <= USART_PR_PSC; u32Prescaler++)
             {
-                C = (SystemCoreClock / (1ul << (u32Prescaler * 2ul)));
+                C = (SystemCoreClock / (1UL << (u32Prescaler * 2UL)));
 
                 /* UART Mode Calculation Formula */
                 /* B = C / (8 * (2 - OVER8) * (DIV_Integer + 1)) */
-                DIV_Integer = (C * 10ul) / (B * 8ul * (2ul - OVER8));
+                DIV_Integer = (C * 10UL) / (B * 8UL * (2UL - OVER8));
 
                 /* Calibrate rounding error */
-                if (DIV_Integer % 10ul < 5ul)
+                if (DIV_Integer % 10UL < 5UL)
                 {
-                    DIV_Integer -= 10ul;
+                    DIV_Integer -= 10UL;
                 }
 
-                if (DIV_Integer <= 2550ul)    /* 2550 = 0xFF * 10 */
+                if (DIV_Integer <= 2550UL)    /* 2550 = 0xFF * 10 */
                 {
                     break;
                 }
             }
 
             /* Check validation : DIV_Integer */
-            if (DIV_Integer <= 2550ul)         /* 2550 = 0xFF * 10 */
+            if (DIV_Integer <= 2550UL)         /* 2550 = 0xFF * 10 */
             {
-                DIV_Integer /= 10ul;
+                DIV_Integer /= 10UL;
                 /* Set clock prescaler */
                 WRITE_REG32(USARTx->PR, u32Prescaler);
 

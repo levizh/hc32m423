@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -90,9 +90,9 @@
 #define LED_R_OFF()     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
 #define LED_G_OFF()     (GPIO_SetPins(LED_G_PORT, LED_G_PIN))
 
-#define ByteCnt1        (1u)
-#define ByteCnt2        (2u)
-#define ByteCnt4        (4u)
+#define ByteCnt1        (1U)
+#define ByteCnt2        (2U)
+#define ByteCnt4        (4U)
 
 #define CRC16_InitVal                 (0xFFFFu)
 #define CRC32_InitVal                 (0xFFFFFFFFul)
@@ -140,9 +140,9 @@ static void Led_Init(void)
  */
 int32_t main(void)
 {
-    uint8_t  au8SrcData [3u] = {0x12u,0x21u,0u};
-    uint16_t au16SrcData[3u] = {0x1234u,0x4321u,0u};
-    uint32_t au32SrcData[3u] = {0x12345678u,0x87654321u,0u}; 
+    uint8_t  au8SrcData [3U] = {0x12U,0x21U,0U};
+    uint16_t au16SrcData[3U] = {0x1234U,0x4321U,0U};
+    uint32_t au32SrcData[3U] = {0x12345678U,0x87654321U,0U}; 
     uint32_t u16Checksum;
     uint32_t u32Checksum;
     uint32_t u32CRC16Data;
@@ -159,15 +159,15 @@ int32_t main(void)
     while (1)
     {
         /* Calculates byte data's CRC16 checksum and CRC32 checksum. */
-        u32CRC16Data    = CalaCRC16((uint8_t *)&au8SrcData, CRC16_InitVal, ByteCnt1, 3u);
-        u16Checksum     = (uint16_t)CRC_Calculate(CRC_CRC16, (uint8_t *)&au8SrcData, CRC16_InitVal, 3u, CRC_BW_8);
+        u32CRC16Data    = CalaCRC16((uint8_t *)&au8SrcData, CRC16_InitVal, ByteCnt1, 3U);
+        u16Checksum     = (uint16_t)CRC_Calculate(CRC_CRC16, (uint8_t *)&au8SrcData, CRC16_InitVal, 3U, CRC_BW_8);
         if(u32CRC16Data != u16Checksum)
         {
             LED_R_ON();
             LED_G_OFF();   
         }
-        u32CRC32Data    = CalaCRC32((uint8_t *)&au8SrcData, CRC32_InitVal, ByteCnt1, 3u);
-        u32Checksum     = CRC_Calculate(CRC_CRC32, (uint8_t *)&au8SrcData, CRC32_InitVal, 3u, CRC_BW_8);
+        u32CRC32Data    = CalaCRC32((uint8_t *)&au8SrcData, CRC32_InitVal, ByteCnt1, 3U);
+        u32Checksum     = CRC_Calculate(CRC_CRC32, (uint8_t *)&au8SrcData, CRC32_InitVal, 3U, CRC_BW_8);
         if(u32CRC32Data != u32Checksum)
         {
             LED_R_ON();
@@ -175,15 +175,15 @@ int32_t main(void)
         }
 
         /* Calculates half word data's CRC16 checksum and CRC32 checksum. */
-        u32CRC16Data    = CalaCRC16((uint8_t *)&au16SrcData, CRC16_InitVal, ByteCnt2, 3u);
-        u16Checksum     = (uint16_t)CRC_Calculate(CRC_CRC16, (uint16_t *)&au16SrcData, CRC16_InitVal, 3u, CRC_BW_16);
+        u32CRC16Data    = CalaCRC16((uint8_t *)&au16SrcData, CRC16_InitVal, ByteCnt2, 3U);
+        u16Checksum     = (uint16_t)CRC_Calculate(CRC_CRC16, (uint16_t *)&au16SrcData, CRC16_InitVal, 3U, CRC_BW_16);
         if(u32CRC16Data != u16Checksum)
         {
             LED_R_ON();
             LED_G_OFF();
         }
-        u32CRC32Data    = CalaCRC32((uint8_t *)&au16SrcData, CRC32_InitVal, ByteCnt2, 3u);
-        u32Checksum     = CRC_Calculate(CRC_CRC32, (uint16_t *)&au16SrcData, CRC32_InitVal, 3u, CRC_BW_16);
+        u32CRC32Data    = CalaCRC32((uint8_t *)&au16SrcData, CRC32_InitVal, ByteCnt2, 3U);
+        u32Checksum     = CRC_Calculate(CRC_CRC32, (uint16_t *)&au16SrcData, CRC32_InitVal, 3U, CRC_BW_16);
         if(u32CRC32Data != u32Checksum)
         {
             LED_R_ON();
@@ -191,15 +191,15 @@ int32_t main(void)
         }
               
         /* Calculates word data's CRC16 checksum and CRC32 checksum. */
-        u32CRC16Data    = CalaCRC16((uint8_t *)&au32SrcData, CRC16_InitVal, ByteCnt4, 3u);        
-        u16Checksum     = (uint16_t)CRC_Calculate(CRC_CRC16, (uint32_t *)&au32SrcData, CRC16_InitVal, 3u, CRC_BW_32);
+        u32CRC16Data    = CalaCRC16((uint8_t *)&au32SrcData, CRC16_InitVal, ByteCnt4, 3U);        
+        u16Checksum     = (uint16_t)CRC_Calculate(CRC_CRC16, (uint32_t *)&au32SrcData, CRC16_InitVal, 3U, CRC_BW_32);
         if(u32CRC16Data != u16Checksum)
         {
             LED_R_ON();
             LED_G_OFF();
         }
-        u32CRC32Data    = CalaCRC32((uint8_t *)&au32SrcData, CRC32_InitVal,ByteCnt4, 3u);
-        u32Checksum     = CRC_Calculate(CRC_CRC32, (uint32_t *)&au32SrcData, CRC32_InitVal, 3u, CRC_BW_32);
+        u32CRC32Data    = CalaCRC32((uint8_t *)&au32SrcData, CRC32_InitVal,ByteCnt4, 3U);
+        u32Checksum     = CRC_Calculate(CRC_CRC32, (uint32_t *)&au32SrcData, CRC32_InitVal, 3U, CRC_BW_32);
         if(u32CRC32Data != u32Checksum)
         {
             LED_R_ON();
@@ -230,7 +230,7 @@ static void CrcConfig(void)
 
 uint16_t CalaCRC16(const uint8_t *pu8Data, uint32_t u32InitVal, uint8_t u8ByteWidth, uint32_t u32Length)
 { 
-    uint32_t i = 0u,j = 0u;
+    uint32_t i = 0U,j = 0U;
     uint16_t crc = (uint16_t)u32InitVal;       /*  Initial value */ 
 
     while(u32Length--) 
@@ -239,16 +239,16 @@ uint16_t CalaCRC16(const uint8_t *pu8Data, uint32_t u32InitVal, uint8_t u8ByteWi
         while(i--)
         {
             crc ^= (*pu8Data++);   
-            for (j = 0u; j < 8u; j++)  
+            for (j = 0U; j < 8U; j++)  
             {     
-                if (crc & 0x1u)    
+                if (crc & 0x1U)    
                 {   
-                    crc >>= 1u;
-                    crc ^= 0x8408u;  /* 0x8408 = reverse 0x1021 */ 
+                    crc >>= 1U;
+                    crc ^= 0x8408U;  /* 0x8408 = reverse 0x1021 */ 
                 }   
                 else
                 {
-                    crc >>= 1u;
+                    crc >>= 1U;
                 }
             } 
        }  
@@ -272,7 +272,7 @@ uint16_t CalaCRC16(const uint8_t *pu8Data, uint32_t u32InitVal, uint8_t u8ByteWi
  */
 uint32_t CalaCRC32(const uint8_t *pu8Data, uint32_t u32InitVal, uint8_t u8ByteWidth, uint32_t u32Length)  
 {  
-    uint32_t i = 0u, j = 0u;
+    uint32_t i = 0U, j = 0U;
     uint32_t crc = u32InitVal;     /*  Initial value */ 
 
     while(u32Length--) 
@@ -281,15 +281,15 @@ uint32_t CalaCRC32(const uint8_t *pu8Data, uint32_t u32InitVal, uint8_t u8ByteWi
         while(i--)
         {
             crc ^= (*pu8Data++);         
-            for (j = 0u; j < 8u; j++)  
+            for (j = 0U; j < 8U; j++)  
             {  
-                if (crc & 0x1u) 
+                if (crc & 0x1U) 
                 {
-                    crc = (crc >> 1u) ^ 0xEDB88320ul; /*0xEDB88320= reverse 0x04C11DB7*/ 
+                    crc = (crc >> 1U) ^ 0xEDB88320UL; /*0xEDB88320= reverse 0x04C11DB7*/ 
                 }
                 else
                 {
-                crc = (crc >> 1u);  
+                crc = (crc >> 1U);  
                 }
             } 
         }

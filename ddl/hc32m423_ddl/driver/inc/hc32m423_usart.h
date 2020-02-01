@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_USART_H__
-#define __HC32M120_USART_H__
+#ifndef __HC32M423_USART_H__
+#define __HC32M423_USART_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -238,7 +238,7 @@ typedef struct
  * @{
  */
 #define USART_TRANSMISSION_ID                   (USART_DR_MPID)
-#define USART_TRANSMISSION_DATA                 ((uint32_t)0x00000000ul)
+#define USART_TRANSMISSION_DATA                 ((uint32_t)0x00000000UL)
 /**
  * @}
  */
@@ -283,7 +283,7 @@ typedef struct
  * @{
  */
 #define USART_UART_SILENCE_MODE                 (USART_CR1_SLME)          /*!< UART silence mode */
-#define USART_UART_NORMAL_MODE                  ((uint32_t)0x00000000ul)  /*!< UART normal mode */
+#define USART_UART_NORMAL_MODE                  ((uint32_t)0x00000000UL)  /*!< UART normal mode */
 /**
  * @}
  */
@@ -292,7 +292,7 @@ typedef struct
  * @defgroup USART_Parity_Control USART Parity Control
  * @{
  */
-#define USART_PARITY_NONE                       ((uint32_t)0x00000000ul)        /*!< Parity control disabled */
+#define USART_PARITY_NONE                       ((uint32_t)0x00000000UL)        /*!< Parity control disabled */
 #define USART_PARITY_EVEN                       (USART_CR1_PCE)                 /*!< Parity control enabled and Even Parity is selected */
 #define USART_PARITY_ODD                        (USART_CR1_PCE | USART_CR1_PS)  /*!< Parity control enabled and Odd Parity is selected */
 /**
@@ -304,7 +304,7 @@ typedef struct
  * @{
  */
 #define USART_DATA_WIDTH_BITS_9                 (USART_CR1_M)           /*!< 9 bits word length : Start bit, 9 data bits, n stop bits */
-#define USART_DATA_WIDTH_BITS_8                 ((uint32_t)0x00000000ul)/*!< 8 bits word length : Start bit, 8 data bits, n stop bits */
+#define USART_DATA_WIDTH_BITS_8                 ((uint32_t)0x00000000UL)/*!< 8 bits word length : Start bit, 8 data bits, n stop bits */
 /**
  * @}
  */
@@ -314,7 +314,7 @@ typedef struct
  * @{
  */
 #define USART_OVERSAMPLING_BITS_8                (USART_CR1_OVER8)        /*!< Oversampling by 8 bits */
-#define USART_OVERSAMPLING_BITS_16               ((uint32_t)0x00000000ul) /*!< Oversampling by 16 bits */
+#define USART_OVERSAMPLING_BITS_16               ((uint32_t)0x00000000UL) /*!< Oversampling by 16 bits */
 /**
  * @}
  */
@@ -323,7 +323,7 @@ typedef struct
  * @defgroup USART_Mode_Selection USART Mode Selection
  * @{
  */
-#define USART_MODE_UART                          ((uint32_t)0x00000000ul) /*!< UART mode */
+#define USART_MODE_UART                          ((uint32_t)0x00000000UL) /*!< UART mode */
 #define USART_MODE_CLKSYNC                       (USART_CR1_MS)           /*!< Clock synchronization */
 /**
  * @}
@@ -334,7 +334,7 @@ typedef struct
  * @{
  */
 #define USART_MSB                               (USART_CR1_ML)            /*!< MSB(Most Significant Bit) */
-#define USART_LSB                               ((uint32_t)0x00000000ul)  /*!< LSB(Least Significant Bit) */
+#define USART_LSB                               ((uint32_t)0x00000000UL)  /*!< LSB(Least Significant Bit) */
 /**
  * @}
  */
@@ -344,7 +344,7 @@ typedef struct
  * @{
  */
 #define USART_NOISE_FILTER_ENABLE               (USART_CR1_NFE)           /*!< Enable noise filter */
-#define USART_NOISE_FILTER_DISABLE              ((uint32_t)0x00000000ul)  /*!< Disable noise filter */
+#define USART_NOISE_FILTER_DISABLE              ((uint32_t)0x00000000UL)  /*!< Disable noise filter */
 /**
  * @}
  */
@@ -354,7 +354,7 @@ typedef struct
  * @{
  */
 #define USART_SB_DETECT_FALLING                 (USART_CR1_SBS)           /*!< Detect RX pin falling edge */
-#define USART_SB_DETECT_LOW                     ((uint32_t)0x00000000ul)  /*!< Detect RX pin low level */
+#define USART_SB_DETECT_LOW                     ((uint32_t)0x00000000UL)  /*!< Detect RX pin low level */
 /**
  * @}
  */
@@ -364,7 +364,7 @@ typedef struct
  * @{
  */
 #define USART_MULTIPLE_PROCESSOR_ENABLE         (USART_CR2_MPE)           /*!< Enable multiple processor function */
-#define USART_MULTIPLE_PROCESSOR_DISABLE        ((uint32_t)0x00000000ul)  /*!< Disable multiple processor function */
+#define USART_MULTIPLE_PROCESSOR_DISABLE        ((uint32_t)0x00000000UL)  /*!< Disable multiple processor function */
 /**
  * @}
  */
@@ -375,7 +375,7 @@ typedef struct
  */
 #define USART_EXTCLK                            (USART_CR2_CLKC_1)        /*!< Select external clock source. */
 #define USART_INTCLK_OUTPUT                     (USART_CR2_CLKC_0)        /*!< Select internal clock source and output clock. */
-#define USART_INTCLK_NONE_OUTPUT                ((uint32_t)0x00000000ul)  /*!< Select internal clock source and don't output clock */
+#define USART_INTCLK_NONE_OUTPUT                ((uint32_t)0x00000000UL)  /*!< Select internal clock source and don't output clock */
 /**
  * @}
  */
@@ -385,7 +385,7 @@ typedef struct
  * @{
  */
 #define USART_STOP_BITS_2                       (USART_CR2_STOP)          /*!< 2 stop bit */
-#define USART_STOP_BITS_1                       ((uint32_t)0x00000000ul)  /*!< 1 stop bit */
+#define USART_STOP_BITS_1                       ((uint32_t)0x00000000UL)  /*!< 1 stop bit */
 /**
  * @}
  */
@@ -395,7 +395,7 @@ typedef struct
  * @{
  */
 #define USART_LIN_MODE_ENABLE                   (USART_CR2_LINEN)         /*!< Enable LIN mode */
-#define USART_LIN_MODE_DISABLE                  ((uint32_t)0x00000000ul)  /*!< Disable LIN mode */
+#define USART_LIN_MODE_DISABLE                  ((uint32_t)0x00000000UL)  /*!< Disable LIN mode */
 /**
  * @}
  */
@@ -405,7 +405,7 @@ typedef struct
  * @{
  */
 #define USART_HALFDUPLEX_MODE                   (USART_CR3_HDSEL)         /*!< USART half-duplex mode */
-#define USART_FULLDUPLEX_MODE                   ((uint32_t)0x00000000ul)  /*!< USART full-duplex mode */
+#define USART_FULLDUPLEX_MODE                   ((uint32_t)0x00000000UL)  /*!< USART full-duplex mode */
 /**
  * @}
  */
@@ -415,7 +415,7 @@ typedef struct
  * @{
  */
 #define USART_HWFLOWCTRL_CTS                    (USART_CR3_CTSE)          /*!< UART hardware flow control CTS mode */
-#define USART_HWFLOWCTRL_RTS                    ((uint32_t)0x00000000ul)  /*!< UART hardware flow control RTS mode */
+#define USART_HWFLOWCTRL_RTS                    ((uint32_t)0x00000000UL)  /*!< UART hardware flow control RTS mode */
 /**
  * @}
  */
@@ -424,7 +424,7 @@ typedef struct
  * @defgroup USART_Clock_Prescaler_Division USART Clock Prescaler Division
  * @{
  */
-#define USART_CLK_PRESCALER_DIV1                ((uint32_t)0x00000000ul)  /*!< PCLK */
+#define USART_CLK_PRESCALER_DIV1                ((uint32_t)0x00000000UL)  /*!< PCLK */
 #define USART_CLK_PRESCALER_DIV4                (USART_PR_PSC_0)          /*!< PCLK/4 */
 #define USART_CLK_PRESCALER_DIV16               (USART_PR_PSC_1)          /*!< PCLK/16 */
 #define USART_CLK_PRESCALER_DIV64               (USART_PR_PSC)            /*!< PCLK/64 */
@@ -659,7 +659,7 @@ en_result_t USART_SetBaudrate(M0P_USART_TypeDef *USARTx,
 }
 #endif
 
-#endif /* __HC32M120_USART_H__ */
+#endif /* __HC32M423_USART_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

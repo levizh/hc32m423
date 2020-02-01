@@ -57,7 +57,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -194,7 +194,7 @@ void PWC_EnterSleepMode(void)
 {
     PWC_REG_WRITE_ENABLE();
 
-    bM0P_PWC->STPMCR_b.STOP = 0u;
+    bM0P_PWC->STPMCR_b.STOP = 0U;
 
     PWC_REG_WRITE_DISABLE();
 
@@ -315,7 +315,7 @@ en_result_t PWC_PwrMonInit(const stc_pwc_pwrmon_init_t* pstcPwrMonInit)
 
         if(PWC_PWRMON_OFF == pstcPwrMonInit->u8PwrMonEn)
         {
-            bM0P_PWC->PWRC_b.PWMONE = 0u;
+            bM0P_PWC->PWRC_b.PWMONE = 0U;
         }
         else
         {
@@ -340,7 +340,7 @@ void PWC_HighSpeedToLowSpeed(void)
 
     MODIFY_REG8(M0P_PWC->PWRC, PWC_PWRC_PWDRV , PWC_DRV_LOW);
 
-    DDL_Delay1ms(1u);
+    DDL_Delay1ms(1U);
 
     PWC_REG_WRITE_DISABLE();
 }
@@ -356,7 +356,7 @@ void PWC_LowSpeedToHighSpeed(void)
 
     MODIFY_REG8(M0P_PWC->PWRC, PWC_PWRC_PWDRV , PWC_DRV_HIGH);
 
-    DDL_Delay1ms(1u);
+    DDL_Delay1ms(1U);
 
     PWC_REG_WRITE_DISABLE();
 }
@@ -456,11 +456,11 @@ void PWC_LvdCmd(en_functional_state_t enNewState)
 
     if(Enable == enNewState)
     {
-        bM0P_EFM->LVDICGCR_b.LVDDIS = 0u;
+        bM0P_EFM->LVDICGCR_b.LVDDIS = 0U;
     }
     else
     {
-        bM0P_EFM->LVDICGCR_b.LVDDIS = 1u;
+        bM0P_EFM->LVDICGCR_b.LVDDIS = 1U;
     }
 
     PWC_LVD_REG_WRITE_DISABLE();
@@ -519,7 +519,7 @@ en_flag_status_t PWC_GetLvdFlag(uint8_t u8Flag)
     /* Parameter valid check */
     DDL_ASSERT(IS_VALID_PWC_LVD_FLAG(u8Flag));
 
-    return ((0u == (M0P_PWC->LVDCSR & u8Flag)) ? Reset :Set);
+    return ((0U == (M0P_PWC->LVDCSR & u8Flag)) ? Reset :Set);
 }
 
 /**
@@ -531,7 +531,7 @@ void PWC_ClearLvdDetFlag(void)
 {
     PWC_LVD_REG_WRITE_ENABLE();
 
-    bM0P_PWC->LVDCSR_b.DETF = 0u;
+    bM0P_PWC->LVDCSR_b.DETF = 0U;
 
     PWC_LVD_REG_WRITE_DISABLE();
 }
@@ -606,7 +606,7 @@ en_result_t PWC_RamInit(const stc_pwc_ram_init_t *pstcRamInit)
  */
 en_flag_status_t PWC_GetRamFlag(void)
 {
-    return ((0u == (M0P_PWC->RAMCR & PWC_RAMCR_RPEF)) ? Reset :Set);
+    return ((0U == (M0P_PWC->RAMCR & PWC_RAMCR_RPEF)) ? Reset :Set);
 }
 
 /**

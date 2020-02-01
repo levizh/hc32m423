@@ -60,7 +60,7 @@
 #include "w25qxx.h"
 
 /**
- * @addtogroup HC32M120_DDL_Midware
+ * @addtogroup HC32M423_DDL_Midware
  * @{
  */
 
@@ -83,22 +83,22 @@
  * @defgroup W25QXX_Local_Macros W25QXX Local Macros
  * @{
  */
-#define W25Q_BIT_0                  (1ul << 0)
-#define W25Q_BIT_1                  (1ul << 1)
-#define W25Q_BIT_2                  (1ul << 2)
-#define W25Q_BIT_3                  (1ul << 3)
-#define W25Q_BIT_4                  (1ul << 4)
-#define W25Q_BIT_5                  (1ul << 5)
-#define W25Q_BIT_6                  (1ul << 6)
-#define W25Q_BIT_7                  (1ul << 7)
-#define W25Q_BIT_8                  (1ul << 8)
-#define W25Q_BIT_9                  (1ul << 9)
-#define W25Q_BIT_10                 (1ul << 10)
-#define W25Q_BIT_11                 (1ul << 11)
-#define W25Q_BIT_12                 (1ul << 12)
-#define W25Q_BIT_13                 (1ul << 13)
-#define W25Q_BIT_14                 (1ul << 14)
-#define W25Q_BIT_15                 (1ul << 15)
+#define W25Q_BIT_0                  (1UL << 0)
+#define W25Q_BIT_1                  (1UL << 1)
+#define W25Q_BIT_2                  (1UL << 2)
+#define W25Q_BIT_3                  (1UL << 3)
+#define W25Q_BIT_4                  (1UL << 4)
+#define W25Q_BIT_5                  (1UL << 5)
+#define W25Q_BIT_6                  (1UL << 6)
+#define W25Q_BIT_7                  (1UL << 7)
+#define W25Q_BIT_8                  (1UL << 8)
+#define W25Q_BIT_9                  (1UL << 9)
+#define W25Q_BIT_10                 (1UL << 10)
+#define W25Q_BIT_11                 (1UL << 11)
+#define W25Q_BIT_12                 (1UL << 12)
+#define W25Q_BIT_13                 (1UL << 13)
+#define W25Q_BIT_14                 (1UL << 14)
+#define W25Q_BIT_15                 (1UL << 15)
 
 
 #define W25_CS_PORT                 (GPIO_PORT_1)
@@ -111,17 +111,17 @@
 #define W25_MISO_PIN                (GPIO_PIN_2)
 
 #define LOAD_CMD(a, cmd, addr)  do  {                                       \
-                                        (a)[0u] = (cmd);                    \
-                                        (a)[1u] = (uint8_t)((addr) >> 16u); \
-                                        (a)[2u] = (uint8_t)((addr) >> 8u);  \
-                                        (a)[3u] = (uint8_t)(addr);          \
-                                    } while (0u)
+                                        (a)[0U] = (cmd);                    \
+                                        (a)[1U] = (uint8_t)((addr) >> 16U); \
+                                        (a)[2U] = (uint8_t)((addr) >> 8U);  \
+                                        (a)[3U] = (uint8_t)(addr);          \
+                                    } while (0U)
 
 
-#define W25Q_SIZE_1K                (1024u)                 /*!< 1KB */
-#define W25Q_SIZE_PAGE              (256u)                  /*!< 256B/page */
-#define W25Q_SIZE_SECTOR            (W25Q_SIZE_1K * 4u)     /*!< 4KB/sector */
-#define W25Q_SIZE_BLOCK             (W25Q_SIZE_1K * 64u)    /*!< 64KB/block */
+#define W25Q_SIZE_1K                (1024U)                 /*!< 1KB */
+#define W25Q_SIZE_PAGE              (256U)                  /*!< 256B/page */
+#define W25Q_SIZE_SECTOR            (W25Q_SIZE_1K * 4U)     /*!< 4KB/sector */
+#define W25Q_SIZE_BLOCK             (W25Q_SIZE_1K * 64U)    /*!< 64KB/block */
 
 
 #define W25Q_ST_BUSY                ((uint16_t)W25Q_BIT_0)
@@ -211,10 +211,10 @@ void W25Q_Init(stc_w25qxx_t *pstcW25qxx)
         switch (pstcW25qxx->u16ManId)
         {
             case W25Q64:
-                pstcW25qxx->u32PageCount       = 32768u;    /* W25Q64 contains 32768 pages. */
+                pstcW25qxx->u32PageCount       = 32768U;    /* W25Q64 contains 32768 pages. */
                 pstcW25qxx->u32SectorCount     = 2048U;     /* W25Q64 contains 2048 sectors. */
-                pstcW25qxx->u32BlockCount32k   = 0u;        /* DO NOT support 32K block. */
-                pstcW25qxx->u32BlockCount64k   = 128u;
+                pstcW25qxx->u32BlockCount32k   = 0U;        /* DO NOT support 32K block. */
+                pstcW25qxx->u32BlockCount64k   = 128U;
                 pstcW25qxx->u32CapacityInBytes = pstcW25qxx->u32PageCount * W25Q_SIZE_PAGE;
                 pstcW25qxx->u32CapacityInKB    = pstcW25qxx->u32CapacityInBytes * W25Q_SIZE_1K;
                 break;
@@ -232,14 +232,14 @@ void W25Q_Init(stc_w25qxx_t *pstcW25qxx)
  */
 uint16_t W25Q_ReadManDeviceId(void)
 {
-    uint8_t au8TempId[2u];
-    uint8_t au8Dummy[3u] = {0};
+    uint8_t au8TempId[2U];
+    uint8_t au8Dummy[3U] = {0};
     uint16_t u16ManID;
 
-    W25Q_ReadCmd(W25Q_MANUFACTURER_DEVICE_ID, au8Dummy, 3u, au8TempId, 2u);
+    W25Q_ReadCmd(W25Q_MANUFACTURER_DEVICE_ID, au8Dummy, 3U, au8TempId, 2U);
 
-    u16ManID = (uint16_t)au8TempId[0] << 8u;
-    u16ManID |= au8TempId[1u];
+    u16ManID = (uint16_t)au8TempId[0] << 8U;
+    u16ManID |= au8TempId[1U];
 
     return u16ManID;
 }
@@ -251,9 +251,9 @@ uint16_t W25Q_ReadManDeviceId(void)
  */
 void W25Q_ReadUniqueId(uint8_t *pu8UniqueId)
 {
-    uint8_t au8Dummy[4u] = {0};
+    uint8_t au8Dummy[4U] = {0};
 
-    W25Q_ReadCmd(W25Q_READ_UNIQUE_ID, au8Dummy, 4u, pu8UniqueId, 8u);
+    W25Q_ReadCmd(W25Q_READ_UNIQUE_ID, au8Dummy, 4U, pu8UniqueId, 8U);
 }
 
 /**
@@ -266,13 +266,13 @@ uint16_t W25Q_ReadStatus(void)
     uint8_t  u8TempStatus;
     uint16_t u16RetStatus;
 
-    W25Q_ReadCmd(W25Q_READ_STATUS_REG_2, NULL, 0u, &u8TempStatus, 1u);
+    W25Q_ReadCmd(W25Q_READ_STATUS_REG_2, NULL, 0U, &u8TempStatus, 1U);
 
     u16RetStatus = u8TempStatus;
 
-    W25Q_ReadCmd(W25Q_READ_STATUS_REG_1, NULL, 0u, &u8TempStatus, 1u);
+    W25Q_ReadCmd(W25Q_READ_STATUS_REG_1, NULL, 0U, &u8TempStatus, 1U);
 
-    u16RetStatus <<= 8u;
+    u16RetStatus <<= 8U;
     u16RetStatus |= u8TempStatus;
 
     return u16RetStatus;
@@ -285,12 +285,12 @@ uint16_t W25Q_ReadStatus(void)
  */
 void W25Q_WriteStatus(uint16_t u16Status)
 {
-    uint8_t au8Data[2u];
+    uint8_t au8Data[2U];
 
-    au8Data[0u] = (uint8_t)u16Status;
-    au8Data[1u] = (uint8_t)(u16Status >> 8u);
+    au8Data[0U] = (uint8_t)u16Status;
+    au8Data[1U] = (uint8_t)(u16Status >> 8U);
 
-    W25Q_WriteCmd(W25Q_WRITE_STATUS_REG, au8Data, 2u);
+    W25Q_WriteCmd(W25Q_WRITE_STATUS_REG, au8Data, 2U);
 }
 
 /**
@@ -300,9 +300,9 @@ void W25Q_WriteStatus(uint16_t u16Status)
  */
 void W25Q_PowerDown(void)
 {
-    W25Q_WriteCmd(W25Q_POWER_DOWN, NULL, 0u);
+    W25Q_WriteCmd(W25Q_POWER_DOWN, NULL, 0U);
 
-    W25Q_DELAY_MS(1u);
+    W25Q_DELAY_MS(1U);
 }
 
 /**
@@ -312,9 +312,9 @@ void W25Q_PowerDown(void)
  */
 void W25Q_ReleasePowerDown(void)
 {
-    W25Q_WriteCmd(W25Q_RELEASE_POWER_DOWN, NULL, 0u);
+    W25Q_WriteCmd(W25Q_RELEASE_POWER_DOWN, NULL, 0U);
 
-    W25Q_DELAY_MS(1u);
+    W25Q_DELAY_MS(1U);
 }
 
 /**
@@ -326,7 +326,7 @@ void W25Q_EraseChip(void)
 {
     W25Q_WriteEnable();
     W25Q_WaitBusy();
-    W25Q_WriteCmd(W25Q_CHIP_ERASE, NULL, 0u);
+    W25Q_WriteCmd(W25Q_CHIP_ERASE, NULL, 0U);
     W25Q_WaitBusy();
 }
 
@@ -342,7 +342,7 @@ void W25Q_EraseSector(uint32_t u32SectorAddress)
     W25Q_WriteEnable();
     W25Q_WaitBusy();
 
-    W25Q_Wt(W25Q_SECTOR_ERASE, u32SectorAddress, NULL, 0u);
+    W25Q_Wt(W25Q_SECTOR_ERASE, u32SectorAddress, NULL, 0U);
 
     W25Q_WaitBusy();
     W25Q_WriteDisable();
@@ -355,7 +355,7 @@ void W25Q_EraseSector(uint32_t u32SectorAddress)
  */
 void W25Q_EraseBlock(uint32_t u32BlockAddress)
 {
-    W25Q_Wt(W25Q_BLOCK_ERASE_64K, u32BlockAddress, NULL, 0u);
+    W25Q_Wt(W25Q_BLOCK_ERASE_64K, u32BlockAddress, NULL, 0U);
 }
 
 /**
@@ -454,7 +454,7 @@ static void W25InitCsPin(void)
 static void W25Q_WriteCmd(uint8_t u8Cmd, const uint8_t *pu8CmdData, uint32_t u32CmdDataLength)
 {
     W25Q_CS_ACTIVE();
-    SPI_Transmit(&u8Cmd, 1u);
+    SPI_Transmit(&u8Cmd, 1U);
     SPI_Transmit(pu8CmdData, u32CmdDataLength);
     W25Q_CS_INACTIVE();
 }
@@ -472,7 +472,7 @@ static void W25Q_ReadCmd(uint8_t u8Cmd, uint8_t *pu8CmdData, uint32_t u32CmdData
                          uint8_t *pu8Info, uint8_t u8InfoLength)
 {
     W25Q_CS_ACTIVE();
-    SPI_Transmit(&u8Cmd, 1u);
+    SPI_Transmit(&u8Cmd, 1U);
     SPI_Transmit(pu8CmdData, u32CmdDataLength);
     SPI_Receive(pu8Info, (uint32_t)u8InfoLength);
     W25Q_CS_INACTIVE();
@@ -488,12 +488,12 @@ static void W25Q_ReadCmd(uint8_t u8Cmd, uint8_t *pu8CmdData, uint32_t u32CmdData
  */
 static void W25Q_Wt(uint8_t u8Cmd, uint32_t u32Address, const uint8_t *pu8Data, uint32_t u32DataLength)
 {
-    uint8_t au8Cmd[4u];
+    uint8_t au8Cmd[4U];
 
     LOAD_CMD(au8Cmd, u8Cmd, u32Address);
 
     W25Q_CS_ACTIVE();
-    SPI_Transmit(au8Cmd, 4u);
+    SPI_Transmit(au8Cmd, 4U);
     SPI_Transmit(pu8Data, u32DataLength);
     W25Q_CS_INACTIVE();
 }
@@ -508,12 +508,12 @@ static void W25Q_Wt(uint8_t u8Cmd, uint32_t u32Address, const uint8_t *pu8Data, 
  */
 static void W25Q_Rd(uint8_t u8Cmd, uint32_t u32Address, uint8_t *pu8Data, uint32_t u32DataLength)
 {
-    uint8_t au8Cmd[4u];
+    uint8_t au8Cmd[4U];
 
     LOAD_CMD(au8Cmd, u8Cmd, u32Address);
 
     W25Q_CS_ACTIVE();
-    SPI_Transmit(au8Cmd, 4u);
+    SPI_Transmit(au8Cmd, 4U);
     SPI_Receive(pu8Data, u32DataLength);
     W25Q_CS_INACTIVE();
 }
@@ -525,7 +525,7 @@ static void W25Q_Rd(uint8_t u8Cmd, uint32_t u32Address, uint8_t *pu8Data, uint32
  */
 static void W25Q_WriteEnable(void)
 {
-    W25Q_WriteCmd(W25Q_WRITE_ENABLE, NULL, 0u);
+    W25Q_WriteCmd(W25Q_WRITE_ENABLE, NULL, 0U);
 }
 
 /**
@@ -535,7 +535,7 @@ static void W25Q_WriteEnable(void)
  */
 static void W25Q_WriteDisable(void)
 {
-    W25Q_WriteCmd(W25Q_WRITE_DISABLE, NULL, 0u);
+    W25Q_WriteCmd(W25Q_WRITE_DISABLE, NULL, 0U);
 }
 
 /**

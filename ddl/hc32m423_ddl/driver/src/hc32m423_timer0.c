@@ -59,7 +59,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -83,7 +83,7 @@
  * @{
  */
 /* Delay count for time out */
-#define TIMER0_TMOUT 0x2000ul
+#define TIMER0_TMOUT 0x2000UL
 
 /**
  * @defgroup TIMER0_Check_Parameters_Validity TIMER0 Check Parameters Validity
@@ -170,7 +170,7 @@ static void AsyncDelay(void)
     uint32_t i;
     if(TIMER0_CLK_SRC_LRC == TIMER0_GetClkMode())
     {
-        for(i=0u; i<SystemCoreClock/10000u; i++)
+        for(i=0U; i<SystemCoreClock/10000U; i++)
         {
             __NOP();
         }
@@ -222,7 +222,7 @@ en_result_t TIMER0_StructInit(stc_tim0_init_t* pstcInitStruct)
 en_result_t TIMER0_Init(const stc_tim0_init_t* pstcTmr0Init)
 {
     en_result_t enRet = ErrorInvalidParameter;
-    uint32_t u32TimeOut = 0ul;
+    uint32_t u32TimeOut = 0UL;
     if (pstcTmr0Init != NULL)
     {
         enRet = Ok;
@@ -234,7 +234,7 @@ en_result_t TIMER0_Init(const stc_tim0_init_t* pstcTmr0Init)
         /* Configure register to default value, TIMER0 enter synchronous mode */
         TIMER0_DeInit();
         AsyncDelay();
-        while(0x00000000ul != M0P_TMR0->BCONR)
+        while(0x00000000UL != M0P_TMR0->BCONR)
         {
             if(u32TimeOut++ > TIMER0_TMOUT)
             {
@@ -255,10 +255,10 @@ en_result_t TIMER0_Init(const stc_tim0_init_t* pstcTmr0Init)
         /* Configure clock source and clock mode*/
         if(TIMER0_CLK_SRC_LRC == pstcTmr0Init->u32ClockSource)
         {
-            bM0P_TMR0->BCONR_b.SYNSA = 1u;
+            bM0P_TMR0->BCONR_b.SYNSA = 1U;
             AsyncDelay();
-            u32TimeOut = 0ul;
-            while(1u != bM0P_TMR0->BCONR_b.SYNSA)
+            u32TimeOut = 0UL;
+            while(1U != bM0P_TMR0->BCONR_b.SYNSA)
             {
                 if(u32TimeOut++ > TIMER0_TMOUT)
                 {
@@ -270,10 +270,10 @@ en_result_t TIMER0_Init(const stc_tim0_init_t* pstcTmr0Init)
         else
         {
             MODIFY_REG32(M0P_TMR0->BCONR, TMR0_BCONR_SYNCLKA, pstcTmr0Init->u32ClockSource);
-            bM0P_TMR0->BCONR_b.SYNSA = 0u;
+            bM0P_TMR0->BCONR_b.SYNSA = 0U;
             AsyncDelay();
-            u32TimeOut = 0ul;
-            while(1u != bM0P_TMR0->BCONR_b.SYNSA)
+            u32TimeOut = 0UL;
+            while(1U != bM0P_TMR0->BCONR_b.SYNSA)
             {
                 if(u32TimeOut++ > TIMER0_TMOUT)
                 {
@@ -311,10 +311,10 @@ en_flag_status_t TIMER0_GetFlag(void)
 en_result_t TIMER0_ClearFlag(void)
 {
     en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0ul;
-    bM0P_TMR0->STFLR_b.CMFA = 0u;
+    uint32_t u32TimeOut = 0UL;
+    bM0P_TMR0->STFLR_b.CMFA = 0U;
     AsyncDelay();
-    while(0u != bM0P_TMR0->STFLR_b.CMFA)
+    while(0U != bM0P_TMR0->STFLR_b.CMFA)
     {
         if(u32TimeOut++ > TIMER0_TMOUT)
         {
@@ -335,7 +335,7 @@ en_result_t TIMER0_ClearFlag(void)
 en_result_t TIMER0_Cmd(en_functional_state_t enNewState)
 {
     en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0ul;
+    uint32_t u32TimeOut = 0UL;
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
     bM0P_TMR0->BCONR_b.CSTA = enNewState;
@@ -361,7 +361,7 @@ en_result_t TIMER0_Cmd(en_functional_state_t enNewState)
 en_result_t TIMER0_IntCmd(en_functional_state_t enNewState)
 {
     en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0ul;
+    uint32_t u32TimeOut = 0UL;
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
     bM0P_TMR0->BCONR_b.INTENA = enNewState;
@@ -399,7 +399,7 @@ uint16_t TIMER0_GetCntReg(void)
 en_result_t TIMER0_WriteCntReg(uint16_t u16Cnt)
 {
     en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0ul;
+    uint32_t u32TimeOut = 0UL;
     M0P_TMR0->CNTAR = (uint32_t)u16Cnt;
     AsyncDelay();
     while((uint32_t)u16Cnt != M0P_TMR0->CNTAR)
@@ -435,7 +435,7 @@ uint16_t TIMER0_GetCmpReg(void)
 en_result_t TIMER0_WriteCmpReg(uint16_t u16Cnt)
 {
     en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0ul;
+    uint32_t u32TimeOut = 0UL;
     M0P_TMR0->CMPAR = (uint32_t)u16Cnt;
     AsyncDelay();
     while((uint32_t)u16Cnt != M0P_TMR0->CMPAR)
@@ -459,10 +459,10 @@ en_result_t TIMER0_WriteCmpReg(uint16_t u16Cnt)
 en_result_t TIMER0_DeInit(void)
 {
     en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0ul;
-    M0P_TMR0->BCONR = 0x00000000ul;
+    uint32_t u32TimeOut = 0UL;
+    M0P_TMR0->BCONR = 0x00000000UL;
     AsyncDelay();
-    while(0x00000000ul != M0P_TMR0->BCONR)
+    while(0x00000000UL != M0P_TMR0->BCONR)
     {
         if(u32TimeOut++ > TIMER0_TMOUT)
         {
@@ -471,8 +471,8 @@ en_result_t TIMER0_DeInit(void)
         }
     }
     M0P_TMR0->CMPAR = 0x0000FFFFul;
-    M0P_TMR0->CNTAR = 0x00000000ul;
-    M0P_TMR0->STFLR = 0x00000000ul;
+    M0P_TMR0->CNTAR = 0x00000000UL;
+    M0P_TMR0->STFLR = 0x00000000UL;
     return enRet;
 }
 

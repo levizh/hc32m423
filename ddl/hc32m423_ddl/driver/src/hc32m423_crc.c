@@ -58,7 +58,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -176,11 +176,11 @@ uint32_t CRC_Calculate(uint32_t u32CrcProtocol,
                        uint32_t u32Length,
                        uint8_t u8BitWidth)
 {
-    uint32_t u32CheckSum = 0u;
+    uint32_t u32CheckSum = 0U;
 
     DDL_ASSERT(IS_CRC_PROCOTOL(u32CrcProtocol));
 
-    if ((pvData != NULL) && (u32Length != 0u) &&
+    if ((pvData != NULL) && (u32Length != 0U) &&
         ((u8BitWidth == CRC_BW_8) || (u8BitWidth == CRC_BW_16) || (u8BitWidth == CRC_BW_32)))
     {
          bM0P_CRC->CR_b.CR = u32CrcProtocol;
@@ -248,7 +248,7 @@ en_flag_status_t CRC_Check(uint32_t u32CrcProtocol,
     en_flag_status_t enFlag = Reset;
     DDL_ASSERT(IS_CRC_PROCOTOL(u32CrcProtocol));
 
-    if ((pvData != NULL) && (u32Length != 0u) &&
+    if ((pvData != NULL) && (u32Length != 0U) &&
         ((u8BitWidth == CRC_BW_8) || (u8BitWidth == CRC_BW_16) || (u8BitWidth == CRC_BW_32)))
     {
         bM0P_CRC->CR_b.CR = u32CrcProtocol;
@@ -284,7 +284,7 @@ en_flag_status_t CRC_Check(uint32_t u32CrcProtocol,
             CRC16_DAT_REG = (uint16_t)u32CheckSum;
         }
 
-        if ((M0P_CRC->CR & CRC_FLAG_MASK) != 0u)
+        if ((M0P_CRC->CR & CRC_FLAG_MASK) != 0U)
         {
             enFlag = Set;
         }
@@ -314,7 +314,7 @@ static void CRC_8BitWrite(const void *pvData, uint32_t u32Length)
     uint32_t u32Count;
     const uint8_t *pu8Data = pvData;
 
-    for (u32Count = 0u; u32Count < u32Length; u32Count++)
+    for (u32Count = 0U; u32Count < u32Length; u32Count++)
     {
         CRC8_DAT_REG = pu8Data[u32Count];
     }
@@ -331,7 +331,7 @@ static void CRC_16BitWrite(const void *pvData, uint32_t u32Length)
     uint32_t u32Count;
     const uint16_t *pu16Data = pvData;
 
-    for (u32Count = 0u; u32Count < u32Length; u32Count++)
+    for (u32Count = 0U; u32Count < u32Length; u32Count++)
     {
         CRC16_DAT_REG = pu16Data[u32Count];
     }
@@ -348,7 +348,7 @@ static void CRC_32BitWrite(const void *pvData, uint32_t u32Length)
     uint32_t u32Count;
     const uint32_t *pu32Data = pvData;
 
-    for (u32Count = 0u; u32Count < u32Length; u32Count++)
+    for (u32Count = 0U; u32Count < u32Length; u32Count++)
     {
         CRC32_DAT_REG = pu32Data[u32Count];
     }

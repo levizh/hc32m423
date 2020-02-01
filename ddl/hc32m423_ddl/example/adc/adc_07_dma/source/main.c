@@ -60,7 +60,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -84,10 +84,10 @@
 /* ADC channels definition for this example. */
 #define VAR_VOL_CHANNEL             (ADC_CH9)
 #define ADC_SA_CHANNEL              (VAR_VOL_CHANNEL)
-#define ADC_SA_CHANNEL_COUNT        (1u)
+#define ADC_SA_CHANNEL_COUNT        (1U)
 
 #define ADC_SB_CHANNEL              (ADC_CH2 | ADC_CH4)
-#define ADC_SB_CHANNEL_COUNT        (2u)
+#define ADC_SB_CHANNEL_COUNT        (2U)
 
 /* ADC channel sampling time. */
 #define ADC_SAMPLE_TIME             ((uint8_t)30)
@@ -114,17 +114,17 @@
 #define ADC_SB_IRQ_BIT              (ADC_FLAG_EOCB)
 
 /* ADC channels count. */
-#define ADC_CH_COUNT                (12u)
+#define ADC_CH_COUNT                (12U)
 
 /* DMA definition. */
-#define ADC_DMA_TRNCNT              (1ul)
+#define ADC_DMA_TRNCNT              (1UL)
 #define ADC_DMA_BLKSIZE             (ADC_CH_COUNT)
 #define ADC_DMA_DATAWIDTH           (DMA_DATAWIDTH_16BIT)
 #define ADC_DMA_SRC_ADDR            ((uint32_t)(&M0P_ADC->DR0))
-#define ADC_DMA_DEST_ADDR           ((uint32_t)(&m_au16AdcVal[0u]))
+#define ADC_DMA_DEST_ADDR           ((uint32_t)(&m_au16AdcVal[0U]))
 
 #define ADC_DMA_LLP_MODE            (DMA_LLP_WAIT)
-#define ADC_DMA_LLP_POS             (DMA_CH0CTL0_LLP_POS - 2u)
+#define ADC_DMA_LLP_POS             (DMA_CH0CTL0_LLP_POS - 2U)
 
 #define ADC_DMA_SA_CH               (DMA_CHANNEL_0)
 #define ADC_DMA_SA_TRIG             (EVT_ADC_EOCA)
@@ -192,7 +192,7 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
         /* Check ADC SA. */
         if (DMA_GetCplFlag(ADC_DMA_SA_CH, DMA_FLAG_BTC) == Set)
@@ -405,17 +405,17 @@ static void AdcSetChannelPinAnalogMode(uint16_t u16Channel)
 {
     uint8_t u8PinNbr;
 
-    u8PinNbr    = 0u;
+    u8PinNbr    = 0U;
     u16Channel &= ADC_CH_ALL;
 
-    while (u16Channel != 0u)
+    while (u16Channel != 0U)
     {
-        if (u16Channel & 0x1u)
+        if (u16Channel & 0x1U)
         {
             AdcSetPinAnalogMode(u8PinNbr);
         }
 
-        u16Channel >>= 1u;
+        u16Channel >>= 1U;
         u8PinNbr++;
     }
 }
@@ -430,7 +430,7 @@ static void AdcSetPinAnalogMode(uint8_t u8PinNbr)
 {
     uint8_t u8Port = GPIO_PORT_2;
     uint8_t u8Pin  = GPIO_PIN_0;
-    uint8_t u8Flag = 1u;
+    uint8_t u8Flag = 1U;
 
     switch (u8PinNbr)
     {
@@ -495,11 +495,11 @@ static void AdcSetPinAnalogMode(uint8_t u8PinNbr)
         break;
 
     default:
-        u8Flag = 0u;
+        u8Flag = 0U;
         break;
     }
 
-    if (u8Flag != 0u)
+    if (u8Flag != 0U)
     {
         GPIO_SetFunc(u8Port, u8Pin, GPIO_FUNC_1_ANIN);
     }

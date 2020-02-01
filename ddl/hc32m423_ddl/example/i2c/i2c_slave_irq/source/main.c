@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -73,7 +73,7 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Define slave device address for example */
-#define DEVICE_ADDRESS                  0x06u
+#define DEVICE_ADDRESS                  0x06U
 
 /* Define port and pin for SDA and SCL */
 #define I2C_SCL_PORT                    (GPIO_PORT_6)
@@ -83,19 +83,19 @@
 
 #define TIMEOUT                         ((uint32_t)0x10000)
 
-#define I2C_RET_OK                      0u
-#define I2C_RET_ERROR                   1u
+#define I2C_RET_OK                      0U
+#define I2C_RET_ERROR                   1U
 
-#define GENERATE_START                  0x00u
-#define GENERATE_RESTART                0x01u
+#define GENERATE_START                  0x00U
+#define GENERATE_RESTART                0x01U
 
-#define ADDRESS_W                       0x00u
-#define ADDRESS_R                       0x01u
+#define ADDRESS_W                       0x00U
+#define ADDRESS_R                       0x01U
 
 /* Define Write and read data length for the example */
-#define TEST_DATA_LEN                   128u
+#define TEST_DATA_LEN                   128U
 /* Define i2c baudrate */
-#define I2C_BAUDRATE                    400000ul
+#define I2C_BAUDRATE                    400000UL
 
 /* I2C interrupt source and number define */
 #define I2C_EEI_IRQn                    (Int008_IRQn)
@@ -139,9 +139,9 @@ static uint8_t BufRead(void);
  ******************************************************************************/
 uint8_t u8TxBuf[TEST_DATA_LEN];
 uint8_t u8RxBuf[TEST_DATA_LEN];
-uint32_t u32DataInOffset = 0u;
-uint32_t u32DataOutOffset = 0u;
-__IO uint8_t u8FinishFlag = 0u;
+uint32_t u32DataInOffset = 0U;
+uint32_t u32DataOutOffset = 0U;
+__IO uint8_t u8FinishFlag = 0U;
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
@@ -162,9 +162,9 @@ int32_t main(void)
     LedConfig();
 
     /* Test buffer initialize */
-    for(i=0u; i<TEST_DATA_LEN; i++)
+    for(i=0U; i<TEST_DATA_LEN; i++)
     {
-        u8RxBuf[i] = 0u;
+        u8RxBuf[i] = 0U;
     }
 
     /* Initialize I2C port*/
@@ -178,7 +178,7 @@ int32_t main(void)
     Slave_Initialize();
 
     /* Wait communicaiton finished*/
-    while(0u == u8FinishFlag)
+    while(0U == u8FinishFlag)
     {
         ;
     }
@@ -187,7 +187,7 @@ int32_t main(void)
     while(1)
     {
         LED_G_TOGGLE();
-        DDL_Delay1ms(500u);
+        DDL_Delay1ms(500U);
     }
 
 }
@@ -232,7 +232,7 @@ static uint8_t Slave_Initialize(void)
 
     I2C_StructInit(&stcI2cInit);
     stcI2cInit.u32Baudrate = I2C_BAUDRATE;
-    stcI2cInit.u32SclTime = 5u;
+    stcI2cInit.u32SclTime = 5U;
     stcI2cInit.u32I2cClkDiv = I2C_CLK_DIV1;
     I2C_Init(&stcI2cInit, &fErr);
 
@@ -292,7 +292,7 @@ static uint8_t Slave_Initialize(void)
  */
 static void LedConfig(void)
 {
-    stc_gpio_init_t stcGpioInit = {0u};
+    stc_gpio_init_t stcGpioInit = {0U};
 
     stcGpioInit.u16PinMode = PIN_MODE_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
@@ -359,7 +359,7 @@ static void I2C_EEI_Callback(void)
         /* Clear STOPF flag */
         I2C_ClearStatus(I2C_CLR_STOPFCLR);
         /* Communication finished */
-        u8FinishFlag = 1u;
+        u8FinishFlag = 1U;
     }
 }
 

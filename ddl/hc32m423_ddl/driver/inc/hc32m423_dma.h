@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_DMA_H__
-#define __HC32M120_DMA_H__
+#ifndef __HC32M423_DMA_H__
+#define __HC32M423_DMA_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -145,7 +145,7 @@ typedef struct
  * @{
  */
 #define DMA_CHANNEL_ENABLE          (DMA_CHEN_CHEN_0)         /*!< DMA channel 0 enable      */
-#define DMA_CHANNEL_DISABLE         ((uint32_t)0x00000000ul)   /*!< DMA channel disable       */
+#define DMA_CHANNEL_DISABLE         ((uint32_t)0x00000000UL)   /*!< DMA channel disable       */
 /**
  * @}
  */
@@ -154,8 +154,8 @@ typedef struct
  * @defgroup DMA_Channel_selection DMA Channel selection
  * @{
  */
-#define DMA_CHANNEL_0               (0x00u)       /*!< DMA Channel 0              */
-#define DMA_CHANNEL_1               (0x01u)       /*!< DMA Channel 1              */
+#define DMA_CHANNEL_0               (0x00U)       /*!< DMA Channel 0              */
+#define DMA_CHANNEL_1               (0x01U)       /*!< DMA Channel 1              */
 /**
  * @}
  */
@@ -199,7 +199,7 @@ typedef struct
  * @defgroup DMA_DataWidth DMA transfer data width
  * @{
  */
-#define DMA_DATAWIDTH_8BIT          ((uint32_t)0x00000000ul)   /*!< DMA transfer data width 8bit       */
+#define DMA_DATAWIDTH_8BIT          ((uint32_t)0x00000000UL)   /*!< DMA transfer data width 8bit       */
 #define DMA_DATAWIDTH_16BIT         (DMA_CH0CTL0_HSIZE_0)     /*!< DMA transfer data width 16bit      */
 #define DMA_DATAWIDTH_32BIT         (DMA_CH0CTL0_HSIZE_1)     /*!< DMA transfer data width 32bit      */
 /**
@@ -211,7 +211,7 @@ typedef struct
  * @{
  */
 #define DMA_LLP_ENABLE              (DMA_CH0CTL0_LLPEN)       /*!< DMA LLP(linked list pinter) enable     */
-#define DMA_LLP_DISABLE             ((uint32_t)0x00000000ul)   /*!< DMA LLP(linked list pinter) disable    */
+#define DMA_LLP_DISABLE             ((uint32_t)0x00000000UL)   /*!< DMA LLP(linked list pinter) disable    */
 /**
  * @}
  */
@@ -221,7 +221,7 @@ typedef struct
  * @{
  */
 #define DMA_LLP_RUN                 (DMA_CH0CTL0_LLPRUN)      /*!< DMA Llp run right now while transfering complete     */
-#define DMA_LLP_WAIT                ((uint32_t)0x00000000ul)   /*!< DMA Llp wait next request while transfering complete */
+#define DMA_LLP_WAIT                ((uint32_t)0x00000000UL)   /*!< DMA Llp wait next request while transfering complete */
 /**
  * @}
  */
@@ -230,7 +230,7 @@ typedef struct
  * @defgroup DMA_SrcAddr_Incremented_Mode DMA source address increment mode
  * @{
  */
-#define DMA_SRCADDRINC_FIX          ((uint32_t)0x00000000ul)   /*!< DMA source address fix             */
+#define DMA_SRCADDRINC_FIX          ((uint32_t)0x00000000UL)   /*!< DMA source address fix             */
 #define DMA_SRCADDRINC_INC          (DMA_CH0CTL1_SINC_0)      /*!< DMA source address increment       */
 #define DMA_SRCADDRINC_DEC          (DMA_CH0CTL1_SINC_1)      /*!< DMA source address decrement       */
 /**
@@ -241,7 +241,7 @@ typedef struct
  * @defgroup DMA_DesAddr_Incremented_Mode DMA destination address increment mode
  * @{
  */
-#define DMA_DESADDRINC_FIX          ((uint32_t)0x00000000ul)   /*!< DMA destination address fix        */
+#define DMA_DESADDRINC_FIX          ((uint32_t)0x00000000UL)   /*!< DMA destination address fix        */
 #define DMA_DESADDRINC_INC          (DMA_CH0CTL1_DINC_0)      /*!< DMA destination address increment  */
 #define DMA_DESADDRINC_DEC          (DMA_CH0CTL1_DINC_1)      /*!< DMA destination address decrement  */
 /**
@@ -252,7 +252,7 @@ typedef struct
  * @defgroup DMA_Rpt_Nonseq_State DMA source & destination address repeat & non_sequence state
  * @{
  */
-#define DMA_RPTNSSEL_DISABLE        ((uint32_t)0x00000000ul)   /*!< DMA disbale address repeat or non_sequence */
+#define DMA_RPTNSSEL_DISABLE        ((uint32_t)0x00000000UL)   /*!< DMA disbale address repeat or non_sequence */
 #define DMA_RPTNSSEL_ENABLE         (DMA_CH0CTL1_RPTNSEN)     /*!< DMA enable address repeat or non_sequence  */
 /**
  * @}
@@ -262,7 +262,7 @@ typedef struct
  * @defgroup DMA_Rpt_Nonseq_Sel DMA source & destination address repeat & non_sequence selection
  * @{
  */
-#define DMA_RPTNSSEL_SRCRPT         ((uint32_t)0x00000000ul)   /*!< DMA source address repeat              */
+#define DMA_RPTNSSEL_SRCRPT         ((uint32_t)0x00000000UL)   /*!< DMA source address repeat              */
 #define DMA_RPTNSSEL_DESRPT         (DMA_CH0CTL1_RPTNSSEL_0)  /*!< DMA destination address repeat         */
 #define DMA_RPTNSSEL_SRCNSEQ        (DMA_CH0CTL1_RPTNSSEL_1)  /*!< DMA source address non_sequence        */
 #define DMA_RPTNSSEL_DESNSEQ        (DMA_CH0CTL1_RPTNSSEL)    /*!< DMA destination address non_sequence   */
@@ -327,7 +327,7 @@ en_flag_status_t DMA_GetStatus(uint32_t u32Status);
 }
 #endif
 
-#endif /* __HC32M120_DMA_H__ */
+#endif /* __HC32M423_DMA_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

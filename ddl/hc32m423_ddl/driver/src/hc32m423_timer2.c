@@ -58,7 +58,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -555,7 +555,7 @@ en_flag_status_t TIMER2_GetFlag(uint16_t u16Flag)
 {
     en_flag_status_t enFlag = Reset;
 
-    if ((M0P_TMR2->STFLR & (uint32_t)u16Flag) != 0u)
+    if ((M0P_TMR2->STFLR & (uint32_t)u16Flag) != 0U)
     {
         enFlag = Set;
     }

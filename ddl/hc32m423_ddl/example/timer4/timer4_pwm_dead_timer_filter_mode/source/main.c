@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -86,11 +86,11 @@
 #define FUNCTION_CLK_GATE               (CLK_FCG_TIM4)
 
 /* Timer4 Counter period value && interrupt number definition */
-#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/128ul/2ul))    /* 500 ms */
+#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/128UL/2UL))    /* 500 ms */
 
 /* Timer4 OCO Channel definition */
 #define TIMER4_OCO_LOW_CH               (TIMER4_OCO_UL)    /* only TIMER4_OCO_UL  TIMER4_OCO_VL  TIMER4_OCO_WL */
-#define TIMER4_OCO_OCCR_BUF_SIZE        (4u)
+#define TIMER4_OCO_OCCR_BUF_SIZE        (4U)
 
 /* Timer4 OCO get interrupt source number definition */
 #define TIMER4_OCO_INT_SRC(x)           ((en_int_src_t)((uint32_t)INT_TMR4_GCMUH + ((uint32_t)((x) - TIMER4_OCO_UH))))
@@ -136,11 +136,11 @@ static void SystemClockConfig(void)
  */
 static void Timer4OcoMatchIrqCb(void)
 {
-    static uint8_t u8CntOcoMatchIrq = 0u;
+    static uint8_t u8CntOcoMatchIrq = 0U;
 
     if (++u8CntOcoMatchIrq >= TIMER4_OCO_OCCR_BUF_SIZE)
     {
-        u8CntOcoMatchIrq = 0u;
+        u8CntOcoMatchIrq = 0U;
     }
 
     TIMER4_OCO_ClearFlag(TIMER4_OCO_LOW_CH);
@@ -175,17 +175,17 @@ int32_t main(void)
     TIMER4_CNT_Init(&stcTimer4CntInit);
 
     /* Initialize TIMER4 OCO high&&low channel */
-    m_au16OccrVal[0] = (TIMER4_CNT_CYCLE_VAL / 8u);
-    m_au16OccrVal[1] = (TIMER4_CNT_CYCLE_VAL / 4u);
-    m_au16OccrVal[2] = (TIMER4_CNT_CYCLE_VAL / 2u);
-    m_au16OccrVal[3] = (TIMER4_CNT_CYCLE_VAL / 2u);
+    m_au16OccrVal[0] = (TIMER4_CNT_CYCLE_VAL / 8U);
+    m_au16OccrVal[1] = (TIMER4_CNT_CYCLE_VAL / 4U);
+    m_au16OccrVal[2] = (TIMER4_CNT_CYCLE_VAL / 2U);
+    m_au16OccrVal[3] = (TIMER4_CNT_CYCLE_VAL / 2U);
     TIMER4_OCO_StructInit(&stcTimer4OcoInit);
     stcTimer4OcoInit.enOcoCmd = Enable;
     stcTimer4OcoInit.enOcoIntCmd = Enable;
     stcTimer4OcoInit.u16OccrVal = m_au16OccrVal[0];
     TIMER4_OCO_Init(TIMER4_OCO_LOW_CH, &stcTimer4OcoInit);
 
-    if (TIMER4_OCO_LOW_CH % 2ul)
+    if (TIMER4_OCO_LOW_CH % 2UL)
     {
         /* OCMR[31:0] 0x0FF0 0FFF = b 0000 1111 1111 0000   0000 1111 1111 1111 */
         stcLowChCmpMode.OCMRx_f.OCFDCL = TIMER4_OCO_OCF_SET;    /* bit[0] 1 */
@@ -235,8 +235,8 @@ int32_t main(void)
     stcTimer4PwmInit.u16ClkDiv = TIMER4_PWM_CLK_DIV128;
     stcTimer4PwmInit.u16Mode = TIMER4_PWM_DEAD_TIMER_FILTER_MODE;
     TIMER4_PWM_Init(u32PwmCh, &stcTimer4PwmInit);
-    TIMER4_PWM_SetDeadRegionValue(u32PwmCh, 1u, 1u);
-    TIMER4_PWM_SetFilterCountValue(u32PwmCh, (m_au16OccrVal[1] + m_au16OccrVal[2])/2u);
+    TIMER4_PWM_SetDeadRegionValue(u32PwmCh, 1U, 1U);
+    TIMER4_PWM_SetFilterCountValue(u32PwmCh, (m_au16OccrVal[1] + m_au16OccrVal[2])/2U);
 
     /* Start TIMER4 counter. */
     TIMER4_CNT_Start();

@@ -65,7 +65,7 @@ extern "C"
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Midware
+ * @addtogroup HC32M423_DDL_Midware
  * @{
  */
 
@@ -113,8 +113,8 @@ extern "C"
  */
 typedef enum
 {
-    LinStateSleep  = 0u,                /*!< Idle */
-    LinStateWakeup = 1u,                /*!< Frame Break field */
+    LinStateSleep  = 0U,                /*!< Idle */
+    LinStateWakeup = 1U,                /*!< Frame Break field */
 } en_lin_state_t;
 
 /**
@@ -122,12 +122,12 @@ typedef enum
  */
 typedef enum
 {
-    LinFrameStateIdle     = 0u,         /*!< Frame idle */
-    LinFrameStateBreak    = 1u,         /*!< Frame Break field */
-    LinFrameStateSync     = 2u,         /*!< Frame Sync field  */
-    LinFrameStatePID      = 3u,         /*!< Frame PID field  */
-    LinFrameStateData     = 4u,         /*!< Frame Data  */
-    LinFrameStateChecksum = 5u,         /*!< Frame Checksum */
+    LinFrameStateIdle     = 0U,         /*!< Frame idle */
+    LinFrameStateBreak    = 1U,         /*!< Frame Break field */
+    LinFrameStateSync     = 2U,         /*!< Frame Sync field  */
+    LinFrameStatePID      = 3U,         /*!< Frame PID field  */
+    LinFrameStateData     = 4U,         /*!< Frame Data  */
+    LinFrameStateChecksum = 5U,         /*!< Frame Checksum */
 } en_lin_frame_state_t;
 
 /**
@@ -136,9 +136,9 @@ typedef enum
 typedef enum
 {
     LinOk          = 0,                 /*!< No error */
-    LinErrBreak    = 1u,                /*!< Error break */
-    LinErrPID      = 2u,                /*!< Error PID */
-    LinErrChecksum = 3u,                /*!< Error checksum */
+    LinErrBreak    = 1U,                /*!< Error break */
+    LinErrPID      = 2U,                /*!< Error PID */
+    LinErrChecksum = 3U,                /*!< Error checksum */
 } lin_err_t;
 
 /**
@@ -224,9 +224,9 @@ typedef struct
  * @defgroup LIN_Fram_Data_Length LIN Fram Data Length
  * @{
  */
-#define LIN_FRAME_DATA_BYTES_2          (1u << 4)   /*!< Frame data length:2 bytes */
-#define LIN_FRAME_DATA_BYTES_4          (2u << 4)   /*!< Frame data length:4 bytes */
-#define LIN_FRAME_DATA_BYTES_8          (3u << 4)   /*!< Frame data length:8 bytes */
+#define LIN_FRAME_DATA_BYTES_2          (1U << 4)   /*!< Frame data length:2 bytes */
+#define LIN_FRAME_DATA_BYTES_4          (2U << 4)   /*!< Frame data length:4 bytes */
+#define LIN_FRAME_DATA_BYTES_8          (3U << 4)   /*!< Frame data length:8 bytes */
 /**
  * @}
  */

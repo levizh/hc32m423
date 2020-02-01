@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -98,7 +98,7 @@ typedef struct
 #define FUNCTION_CLK_GATE               (CLK_FCG_EMB | CLK_FCG_TIM4)
 
 /* Timer4 Counter period value && interrupt number definition */
-#define TIMER4_CNT_CYCLE_VAL            (SystemCoreClock/512ul/2ul)    /* 500 ms */
+#define TIMER4_CNT_CYCLE_VAL            (SystemCoreClock/512UL/2UL)    /* 500 ms */
 
 /* Key Port/Pin definition */
 #define KEY_PORT                        (GPIO_PORT_2)
@@ -148,7 +148,7 @@ static en_key_state_t KeyGetState(const stc_key_t *pstcKey)
 
     if (pstcKey->enPressPinState == GPIO_ReadInputPortPin(pstcKey->u8Port, pstcKey->u8Pin))
     {
-        DDL_Delay1ms(20ul);
+        DDL_Delay1ms(20UL);
 
         if (pstcKey->enPressPinState == GPIO_ReadInputPortPin(pstcKey->u8Port, pstcKey->u8Pin))
         {
@@ -188,7 +188,7 @@ static void Timer4PwmConfig(void)
     stcTimer4OcoInit.enOcoCmd = Enable;
     stcTimer4OcoInit.enOcoIntCmd = Enable;
     stcTimer4OcoInit.u16OcoInvalidOp = TIMER4_OCO_INVAILD_OP_LOW;
-    stcTimer4OcoInit.u16OccrVal = (uint16_t)(TIMER4_CNT_CYCLE_VAL/2ul);
+    stcTimer4OcoInit.u16OccrVal = (uint16_t)(TIMER4_CNT_CYCLE_VAL/2UL);
     TIMER4_OCO_Init(TIMER4_OCO_UH, &stcTimer4OcoInit);
     TIMER4_OCO_Init(TIMER4_OCO_UL, &stcTimer4OcoInit);
 
@@ -267,7 +267,7 @@ int32_t main(void)
     /* Start TIMER4 counter. */
     TIMER4_CNT_Start();
 
-    while (1u)
+    while (1U)
     {
         while (KeyRelease != KeyGetState(&stcKeySw2))
         {

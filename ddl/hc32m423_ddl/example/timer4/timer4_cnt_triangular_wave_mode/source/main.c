@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -81,7 +81,7 @@
 #define FUNCTION_CLK_GATE               (CLK_FCG_TIM4)
 
 /* Timer4 Counter period value && interrupt number definition */
-#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/256ul/4ul))    /* 250 ms */
+#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/256UL/4UL))    /* 250 ms */
 #define TIMER4_CNT_OVF_INT              (INT_TMR4_GOVF)
 #define TIMER4_CNT_OVF_IRQn             (Int016_IRQn)
 

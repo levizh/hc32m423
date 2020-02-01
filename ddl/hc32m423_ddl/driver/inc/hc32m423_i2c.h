@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_I2C_H__
-#define __HC32M120_I2C_H__
+#ifndef __HC32M423_I2C_H__
+#define __HC32M423_I2C_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -111,14 +111,14 @@ typedef struct
 /** @defgroup I2C_Clock_division I2C clock division
   * @{
   */
-#define I2C_CLK_DIV1            0u
-#define I2C_CLK_DIV2            1u
-#define I2C_CLK_DIV4            2u
-#define I2C_CLK_DIV8            3u
-#define I2C_CLK_DIV16           4u
-#define I2C_CLK_DIV32           5u
-#define I2C_CLK_DIV64           6u
-#define I2C_CLK_DIV128          7u
+#define I2C_CLK_DIV1            0U
+#define I2C_CLK_DIV2            1U
+#define I2C_CLK_DIV4            2U
+#define I2C_CLK_DIV8            3U
+#define I2C_CLK_DIV16           4U
+#define I2C_CLK_DIV32           5U
+#define I2C_CLK_DIV64           6U
+#define I2C_CLK_DIV128          7U
 /**
  * @}
  */
@@ -130,7 +130,7 @@ typedef struct
 #define I2C_SMBUS_ALRTEN        (I2C_CR1_SMBALRTEN)
 #define I2C_SMBUS_DEFAULTEN     (I2C_CR1_SMBDEFAULTEN)
 #define I2C_SMBUS_HOSTEN        (I2C_CR1_SMBHOSTEN)
-#define I2C_SMBUS_DISEN         0u
+#define I2C_SMBUS_DISEN         0U
 /**
  * @}
  */
@@ -148,7 +148,7 @@ typedef struct
   * @{
   */
 #define I2C_PE_EN               (I2C_CR1_PE)
-#define I2C_PE_DISEN            0u
+#define I2C_PE_DISEN            0U
 
 /**
  * @}
@@ -158,10 +158,10 @@ typedef struct
 /** @defgroup I2C_Digital_Filter_mode I2C digital filter mode
   * @{
   */
-#define I2C_DIG_FILTMODE_1CYCLE     (0ul << I2C_FLTR_DNF_POS)
-#define I2C_DIG_FILTMODE_2CYCLE     (1ul << I2C_FLTR_DNF_POS)
-#define I2C_DIG_FILTMODE_3CYCLE     (2ul << I2C_FLTR_DNF_POS)
-#define I2C_DIG_FILTMODE_4CYCLE     (3ul << I2C_FLTR_DNF_POS)
+#define I2C_DIG_FILTMODE_1CYCLE     (0UL << I2C_FLTR_DNF_POS)
+#define I2C_DIG_FILTMODE_2CYCLE     (1UL << I2C_FLTR_DNF_POS)
+#define I2C_DIG_FILTMODE_3CYCLE     (2UL << I2C_FLTR_DNF_POS)
+#define I2C_DIG_FILTMODE_4CYCLE     (3UL << I2C_FLTR_DNF_POS)
 /**
  * @}
  */
@@ -169,7 +169,7 @@ typedef struct
 /** @defgroup I2C_Adr_Config I2C Address configuration
   * @{
   */
-#define     I2C_ADR_CONFIG_DISEN    0u
+#define     I2C_ADR_CONFIG_DISEN    0U
 #define     I2C_ADR_CONFIG_7BIT     (I2C_SLR0_SLADDR0EN)
 #define     I2C_ADR_CONFIG_10BIT    (I2C_SLR0_ADDRMOD0 | I2C_SLR0_SLADDR0EN)
 /**
@@ -179,8 +179,8 @@ typedef struct
 /** @defgroup I2C_Adr_Num I2C address index number
   * @{
   */
-#define     I2C_ADR_0               0u
-#define     I2C_ADR_1               1u
+#define     I2C_ADR_0               0U
+#define     I2C_ADR_1               1U
 /**
  * @}
  */
@@ -208,7 +208,7 @@ typedef struct
  */
 __STATIC_INLINE void I2C_GenerateStart(void)
 {
-    bM0P_I2C->CR1_b.START = 1u;
+    bM0P_I2C->CR1_b.START = 1U;
 }
 
 /**
@@ -218,7 +218,7 @@ __STATIC_INLINE void I2C_GenerateStart(void)
  */
 __STATIC_INLINE void I2C_GenerateReStart(void)
 {
-    bM0P_I2C->CR1_b.RESTART = 1u;
+    bM0P_I2C->CR1_b.RESTART = 1U;
 }
 
 /**
@@ -228,7 +228,7 @@ __STATIC_INLINE void I2C_GenerateReStart(void)
  */
 __STATIC_INLINE void I2C_GenerateStop(void)
 {
-    bM0P_I2C->CR1_b.STOP = 1u;
+    bM0P_I2C->CR1_b.STOP = 1U;
 }
 
 en_result_t I2C_BaudrateConfig(const stc_i2c_init_t* pstcI2C_InitStruct, float32_t *pf32Err);
@@ -273,7 +273,7 @@ void I2C_ClearStatus(uint32_t u32StatusBit);
 }
 #endif
 
-#endif /* __HC32M120_I2C_H__ */
+#endif /* __HC32M423_I2C_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

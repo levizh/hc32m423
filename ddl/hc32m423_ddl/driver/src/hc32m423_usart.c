@@ -57,7 +57,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -323,7 +323,7 @@ en_result_t USART_UartStructInit(stc_uart_init_t *pstcInit)
     /* Check parameters */
     if (NULL != pstcInit)
     {
-        pstcInit->u32Baudrate = 9600ul;
+        pstcInit->u32Baudrate = 9600UL;
         pstcInit->u32BitDirection = USART_LSB;
         pstcInit->u32Parity = USART_PARITY_NONE;
         pstcInit->u32StopBit = USART_STOP_BITS_1;
@@ -413,7 +413,7 @@ en_result_t UART_MultiProcessorStructInit(stc_uart_multiprocessor_init_t *pstcIn
     /* Check parameters */
     if (NULL != pstcInit)
     {
-        pstcInit->u32Baudrate = 9600ul;
+        pstcInit->u32Baudrate = 9600UL;
         pstcInit->u32BitDirection = USART_LSB;
         pstcInit->u32StopBit = USART_STOP_BITS_1;
         pstcInit->u32HwFlowCtrl = USART_HWFLOWCTRL_RTS;
@@ -497,7 +497,7 @@ en_result_t USART_LinStructInit(stc_lin_init_t *pstcInit)
     /* Check parameters */
     if (NULL != pstcInit)
     {
-        pstcInit->u32Baudrate = 9600ul;
+        pstcInit->u32Baudrate = 9600UL;
         pstcInit->u32ClkMode = USART_INTCLK_NONE_OUTPUT;
         pstcInit->u32ClkPrescaler = USART_CLK_PRESCALER_DIV1;
         pstcInit->u32NoiseFilterState = USART_NOISE_FILTER_DISABLE;
@@ -576,7 +576,7 @@ en_result_t USART_ClkSyncStructInit(stc_clksync_init_t *pstcInit)
     /* Check parameter */
     if (NULL != pstcInit)
     {
-        pstcInit->u32Baudrate = 9600ul;
+        pstcInit->u32Baudrate = 9600UL;
         pstcInit->u32ClkMode = USART_INTCLK_NONE_OUTPUT;
         pstcInit->u32ClkPrescaler = USART_CLK_PRESCALER_DIV1;
         pstcInit->u32BitDirection = USART_LSB;
@@ -607,11 +607,11 @@ en_result_t USART_DeInit(M0P_USART_TypeDef *USARTx)
     {
         /* Configures the registers to reset value. */
         WRITE_REG32(USARTx->CR1, (USART_CR1_CPE | USART_CR1_CFE | USART_CR1_CORE));
-        WRITE_REG32(USARTx->PR, 0x00000000ul);
-        WRITE_REG32(USARTx->BRR, 0x0000FF00ul);
-        WRITE_REG32(USARTx->CR1, 0x80000000ul);
-        WRITE_REG32(USARTx->CR2, 0x00000000ul);
-        WRITE_REG32(USARTx->CR3, 0x00000000ul);
+        WRITE_REG32(USARTx->PR, 0x00000000UL);
+        WRITE_REG32(USARTx->BRR, 0x0000FF00UL);
+        WRITE_REG32(USARTx->CR1, 0x80000000UL);
+        WRITE_REG32(USARTx->CR2, 0x00000000UL);
+        WRITE_REG32(USARTx->CR3, 0x00000000UL);
         enRet = Ok;
     }
 
@@ -1438,12 +1438,12 @@ en_result_t USART_SetBaudrate(M0P_USART_TypeDef *USARTx,
                                     uint32_t u32Baudrate,
                                     float32_t *pf32Err)
 {
-    uint32_t B = 0ul;
-    uint32_t C = 0ul;
-    uint32_t OVER8 = 0ul;
-    uint32_t DIV_Integer = 0ul;
-    uint32_t u32Temp = 0ul;
-    uint32_t u32Prescaler = 0ul;
+    uint32_t B = 0UL;
+    uint32_t C = 0UL;
+    uint32_t OVER8 = 0UL;
+    uint32_t DIV_Integer = 0UL;
+    uint32_t u32Temp = 0UL;
+    uint32_t u32Prescaler = 0UL;
     uint32_t u32Mode = READ_REG32_BIT(USARTx->CR1, USART_CR1_MS);
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -1453,28 +1453,28 @@ en_result_t USART_SetBaudrate(M0P_USART_TypeDef *USARTx,
         u32Prescaler = READ_REG32_BIT(USARTx->PR, USART_PR_PSC);
 
         B = u32Baudrate;
-        C = (SystemCoreClock / (1ul << (u32Prescaler * 2ul)));
-        OVER8 = READ_REG32_BIT(USARTx->CR1, USART_CR1_OVER8) ? 1ul : 0ul;
+        C = (SystemCoreClock / (1UL << (u32Prescaler * 2UL)));
+        OVER8 = READ_REG32_BIT(USARTx->CR1, USART_CR1_OVER8) ? 1UL : 0UL;
 
         if (USART_MODE_UART == u32Mode)
         {
             /* UART Baudrate Calculation Formula */
             /* B = C / (8 * (2 - OVER8) * (DIV_Integer + 1)) */
-            DIV_Integer = (C * 10ul) / (B * 8ul * (2ul - OVER8));
+            DIV_Integer = (C * 10UL) / (B * 8UL * (2UL - OVER8));
         }
         else
         {
             /* Clock Sync Baudrate Calculation Formula */
             /* B = C / (4 * (DIV_Integer + 1)) */
-            DIV_Integer = (C * 10ul) / (B * 4ul);
+            DIV_Integer = (C * 10UL) / (B * 4UL);
         }
 
-        if (DIV_Integer % 10ul < 5ul)
+        if (DIV_Integer % 10UL < 5UL)
         {
-            DIV_Integer -= 10ul;
+            DIV_Integer -= 10UL;
         }
 
-        DIV_Integer /= 10ul;
+        DIV_Integer /= 10UL;
 
         if (DIV_Integer <= 0xFFul)
         {
@@ -1484,13 +1484,13 @@ en_result_t USART_SetBaudrate(M0P_USART_TypeDef *USARTx,
                 {
                     /* UART Baudrate Error Calculation Formula */
                     /* E(%) = C / (8 * (2 - OVER8) * (DIV_Integer + 1) * B) - 1 */
-                    u32Temp = (8ul * (2ul - OVER8) * (DIV_Integer + 1ul) * B);
+                    u32Temp = (8UL * (2UL - OVER8) * (DIV_Integer + 1UL) * B);
                 }
                 else
                 {
                     /* Clock Sync Baudrate Error Calculation Formula */
                     /* E(%) = C / (4 * (DIV_Integer + 1) * B) - 1 */
-                    u32Temp = (4ul * (DIV_Integer + 1ul) * B);
+                    u32Temp = (4UL * (DIV_Integer + 1UL) * B);
                 }
 
                 *pf32Err = (float32_t)(((float64_t)C) / (float64_t)u32Temp) - 1.0f;

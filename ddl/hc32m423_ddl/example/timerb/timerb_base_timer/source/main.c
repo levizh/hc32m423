@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -81,7 +81,7 @@
 #define TIMERB_ODD_UNIT                 (M0P_TMRB1)
 #define TIMERB_ODD_UNIT_OVF_INT         (INT_TMRB_1_OVF)
 #define TIMERB_ODD_UNIT_OVF_IRQn        (Int020_IRQn)
-#define TIMERB_ODD_UNIT_PERIOD_VALUE    (SystemCoreClock/512ul/2ul)
+#define TIMERB_ODD_UNIT_PERIOD_VALUE    (SystemCoreClock/512UL/2UL)
 
 #define TIMERB_EVEN_UNIT                (M0P_TMRB2)
 #define TIMERB_EVEN_UNIT_OVF_INT        (INT_TMRB_2_OVF)
@@ -142,9 +142,9 @@ static void LedConfig(void)
  */
 static void TimerbOddUnitOvfIrqCallback(void)
 {
-    static uint32_t m_u32TimerbOddUnitOvfCnt = 0ul;
+    static uint32_t m_u32TimerbOddUnitOvfCnt = 0UL;
 
-    if ((++m_u32TimerbOddUnitOvfCnt)%2ul)
+    if ((++m_u32TimerbOddUnitOvfCnt)%2UL)
     {
         LED_G_TOGGLE();
     }
@@ -159,9 +159,9 @@ static void TimerbOddUnitOvfIrqCallback(void)
  */
 static void TimerbEvenUnitOvfIrqCallback(void)
 {
-    static uint32_t m_u32TimerbEvenUnitOvfCnt = 0ul;
+    static uint32_t m_u32TimerbEvenUnitOvfCnt = 0UL;
 
-    if (!((++m_u32TimerbEvenUnitOvfCnt)%2ul))
+    if (!((++m_u32TimerbEvenUnitOvfCnt)%2UL))
     {
         LED_G_TOGGLE();
     }

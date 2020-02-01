@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -95,11 +95,11 @@
    Set TIMER2 clock prescaler is TIMER2_CLK_PRESCALER_32, then TIMER2 clock is 32/32 = 1MHz.
    CompareVal = TimerPeriod(us) * TIMER2ClockFrequency(MHz).
    In this example:
-   TimerPeriod(50ms) = 50000us;
+   TimerPeriod(50ms) = 50000Us;
    TIMER2ClockFrequency = HCLK(32MHz) / Timer2ClockPrescaler(32) = 1MHz;
    CompareVal = 50000 * 1 = 50000. */
 #define TIMER2_CLK_PRESCALER        (TIMER2_CLK_PRESCALER_32)
-#define TIMER2_COMPARE_VALUE        (50000u)
+#define TIMER2_COMPARE_VALUE        (50000U)
 
 /* LED definition. */
 #define LED_R_PORT                  (GPIO_PORT_12)
@@ -150,7 +150,7 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
         /* Press SW1(genterate the event EVT_PORT_EIRQ2) to start TIMER2 and the red LED starts flashing.
            Making a falling edge of TRIGA to stop TIMER2 and the red LED stop flashing. */

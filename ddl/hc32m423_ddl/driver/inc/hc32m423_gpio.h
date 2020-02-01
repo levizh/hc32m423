@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_GPIO_H__
-#define __HC32M120_GPIO_H__
+#ifndef __HC32M423_GPIO_H__
+#define __HC32M423_GPIO_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -90,7 +90,7 @@ extern "C"
  */
 typedef enum
 {
-    Pin_Reset = 0u,           /*!< Pin reset    */
+    Pin_Reset = 0U,           /*!< Pin reset    */
     Pin_Set                   /*!< Pin set      */
 } en_pin_state_t;
 
@@ -124,14 +124,14 @@ typedef struct
 /** @defgroup GPIO_pins_define GPIO pin source
  * @{
  */
-#define GPIO_PIN_0                  ((uint8_t)0x01u)  /*!< Pin 0 selected    */
-#define GPIO_PIN_1                  ((uint8_t)0x02u)  /*!< Pin 1 selected    */
-#define GPIO_PIN_2                  ((uint8_t)0x04u)  /*!< Pin 2 selected    */
-#define GPIO_PIN_3                  ((uint8_t)0x08u)  /*!< Pin 3 selected    */
-#define GPIO_PIN_4                  ((uint8_t)0x10u)  /*!< Pin 4 selected    */
-#define GPIO_PIN_5                  ((uint8_t)0x20u)  /*!< Pin 5 selected    */
-#define GPIO_PIN_6                  ((uint8_t)0x40u)  /*!< Pin 6 selected    */
-#define GPIO_PIN_7                  ((uint8_t)0x80u)  /*!< Pin 7 selected    */
+#define GPIO_PIN_0                  ((uint8_t)0x01U)  /*!< Pin 0 selected    */
+#define GPIO_PIN_1                  ((uint8_t)0x02U)  /*!< Pin 1 selected    */
+#define GPIO_PIN_2                  ((uint8_t)0x04U)  /*!< Pin 2 selected    */
+#define GPIO_PIN_3                  ((uint8_t)0x08U)  /*!< Pin 3 selected    */
+#define GPIO_PIN_4                  ((uint8_t)0x10U)  /*!< Pin 4 selected    */
+#define GPIO_PIN_5                  ((uint8_t)0x20U)  /*!< Pin 5 selected    */
+#define GPIO_PIN_6                  ((uint8_t)0x40U)  /*!< Pin 6 selected    */
+#define GPIO_PIN_7                  ((uint8_t)0x80U)  /*!< Pin 7 selected    */
 #define GPIO_PIN_ALL                ((uint8_t)0xFFu)  /*!< All pins selected */
 
 #define GPIO_PIN_MASK               ((uint8_t)0xFFu)  /*!< PIN mask for assert test */
@@ -143,14 +143,14 @@ typedef struct
 /** @defgroup GPIO_Port_source GPIO port source
   * @{
   */
-#define GPIO_PORT_0                 ((uint8_t)0x00u)  /*!< Port 0 selected    */
-#define GPIO_PORT_1                 ((uint8_t)0x01u)  /*!< Port 1  selected   */
-#define GPIO_PORT_2                 ((uint8_t)0x02u)  /*!< Port 2  selected   */
-#define GPIO_PORT_3                 ((uint8_t)0x03u)  /*!< Port 3  selected   */
-#define GPIO_PORT_4                 ((uint8_t)0x04u)  /*!< Port 4  selected   */
-#define GPIO_PORT_5                 ((uint8_t)0x05u)  /*!< Port 5  selected   */
-#define GPIO_PORT_6                 ((uint8_t)0x06u)  /*!< Port 6  selected   */
-#define GPIO_PORT_7                 ((uint8_t)0x07u)  /*!< Port 7  selected   */
+#define GPIO_PORT_0                 ((uint8_t)0x00U)  /*!< Port 0 selected    */
+#define GPIO_PORT_1                 ((uint8_t)0x01U)  /*!< Port 1  selected   */
+#define GPIO_PORT_2                 ((uint8_t)0x02U)  /*!< Port 2  selected   */
+#define GPIO_PORT_3                 ((uint8_t)0x03U)  /*!< Port 3  selected   */
+#define GPIO_PORT_4                 ((uint8_t)0x04U)  /*!< Port 4  selected   */
+#define GPIO_PORT_5                 ((uint8_t)0x05U)  /*!< Port 5  selected   */
+#define GPIO_PORT_6                 ((uint8_t)0x06U)  /*!< Port 6  selected   */
+#define GPIO_PORT_7                 ((uint8_t)0x07U)  /*!< Port 7  selected   */
 #define GPIO_PORT_12                ((uint8_t)0x0Cu)  /*!< Port 12 selected   */
 #define GPIO_PORT_13                ((uint8_t)0x0Du)  /*!< Port 13 selected   */
 #define GPIO_PORT_14                ((uint8_t)0x0Eu)  /*!< Port 14 selected   */
@@ -161,17 +161,17 @@ typedef struct
 /** @defgroup GPIO_Port_index GPIO port index
  * @{
  */
-#define GPIO_PORT_IDX0              ((uint16_t)0x0001u)
-#define GPIO_PORT_IDX1              ((uint16_t)0x0002u)
-#define GPIO_PORT_IDX2              ((uint16_t)0x0004u)
-#define GPIO_PORT_IDX3              ((uint16_t)0x0008u)
-#define GPIO_PORT_IDX4              ((uint16_t)0x0010u)
-#define GPIO_PORT_IDX5              ((uint16_t)0x0020u)
-#define GPIO_PORT_IDX6              ((uint16_t)0x0040u)
-#define GPIO_PORT_IDX7              ((uint16_t)0x0080u)
-#define GPIO_PORT_IDX12             ((uint16_t)0x1000u)
-#define GPIO_PORT_IDX13             ((uint16_t)0x2000u)
-#define GPIO_PORT_IDX14             ((uint16_t)0x4000u)
+#define GPIO_PORT_IDX0              ((uint16_t)0x0001U)
+#define GPIO_PORT_IDX1              ((uint16_t)0x0002U)
+#define GPIO_PORT_IDX2              ((uint16_t)0x0004U)
+#define GPIO_PORT_IDX3              ((uint16_t)0x0008U)
+#define GPIO_PORT_IDX4              ((uint16_t)0x0010U)
+#define GPIO_PORT_IDX5              ((uint16_t)0x0020U)
+#define GPIO_PORT_IDX6              ((uint16_t)0x0040U)
+#define GPIO_PORT_IDX7              ((uint16_t)0x0080U)
+#define GPIO_PORT_IDX12             ((uint16_t)0x1000U)
+#define GPIO_PORT_IDX13             ((uint16_t)0x2000U)
+#define GPIO_PORT_IDX14             ((uint16_t)0x4000U)
 #define GPIO_PORT_ALL               ((uint16_t)0x70FFu)
 
 #define GPIO_PORT_MASK              ((uint16_t)0x70FFu)
@@ -189,7 +189,7 @@ typedef struct
 /** @defgroup GPIO_PinFunction0 GPIO Function 0 selection
  * @{
  */
-#define GPIO_FUNC_0         ((uint8_t)0x00u)
+#define GPIO_FUNC_0         ((uint8_t)0x00U)
 #define GPIO_FUNC_0_GPO     (GPIO_FUNC_0)     /* GPIO function */
 /**
  * @}
@@ -198,7 +198,7 @@ typedef struct
 /** @defgroup GPIO_PinFunction1 GPIO Function 1 selection
  * @{
  */
-#define GPIO_FUNC_1         ((uint8_t)0x01u)
+#define GPIO_FUNC_1         ((uint8_t)0x01U)
 #define GPIO_FUNC_1_LVDINP  (GPIO_FUNC_1)     /*!< Low Voltage Detection input pin  */
 #define GPIO_FUNC_1_ADTRG   (GPIO_FUNC_1)     /*!< ADC external trigger             */
 #define GPIO_FUNC_1_CTCREF  (GPIO_FUNC_1)     /*!< Reference input pin for internal \
@@ -217,7 +217,7 @@ typedef struct
 /** @defgroup GPIO_PinFunction2 GPIO Function 2 selection
  * @{
  */
-#define GPIO_FUNC_2         ((uint8_t)0x02u)
+#define GPIO_FUNC_2         ((uint8_t)0x02U)
 #define GPIO_FUNC_2_TIMB    (GPIO_FUNC_2)     /*!< Timer B PWM */
 #define GPIO_FUNC_2_TIM4    (GPIO_FUNC_2)     /*!< Timer 4 OUL/OVH */
 /**
@@ -227,7 +227,7 @@ typedef struct
 /** @defgroup GPIO_PinFunction3 GPIO Function 3 selection
  * @{
  */
-#define GPIO_FUNC_3         ((uint8_t)0x03u)
+#define GPIO_FUNC_3         ((uint8_t)0x03U)
 #define GPIO_FUNC_3_TIM2    (GPIO_FUNC_3)   /*!< Timer 2 PWM/CLK/TRIG */
 #define GPIO_FUNC_3_CMP     (GPIO_FUNC_3)   /*!< CMP VCOUT */
 #define GPIO_FUNC_3_TIMB    (GPIO_FUNC_3)   /*!< Timer B PWM */
@@ -239,7 +239,7 @@ typedef struct
 /** @defgroup GPIO_PinFunction4 GPIO Function 4 selection
  * @{
  */
-#define GPIO_FUNC_4         ((uint8_t)0x04u)
+#define GPIO_FUNC_4         ((uint8_t)0x04U)
 #define GPIO_FUNC_4_TIM4    (GPIO_FUNC_4)   /*!< Timer 4 OUH/OUL/OVH/OVL/OWH/OWL/CLK */
 #define GPIO_FUNC_4_EMB     (GPIO_FUNC_4)   /*!< EMB_IN */
 #define GPIO_FUNC_4_EVENTPT (GPIO_FUNC_4)   /*!< EVENT PORT EVENTP1/2/3/4 */
@@ -250,7 +250,7 @@ typedef struct
 /** @defgroup GPIO_PinFunction5 GPIO Function 5 selection
  * @{
  */
-#define GPIO_FUNC_5         ((uint8_t)0x05u)
+#define GPIO_FUNC_5         ((uint8_t)0x05U)
 #define GPIO_FUNC_5_USART   (GPIO_FUNC_5)     /*!< USART  */
 #define GPIO_FUNC_5_USART1  (GPIO_FUNC_5)     /*!< USART1 */
 #define GPIO_FUNC_5_USART2  (GPIO_FUNC_5)     /*!< USART2 */
@@ -263,7 +263,7 @@ typedef struct
 /** @defgroup GPIO_PinFunction6 GPIO Function 6 selection
  * @{
  */
-#define GPIO_FUNC_6         ((uint8_t)0x06u)
+#define GPIO_FUNC_6         ((uint8_t)0x06U)
 #define GPIO_FUNC_6_I2C     (GPIO_FUNC_6)     /*!< I2C  */
 #define GPIO_FUNC_6_KR      (GPIO_FUNC_6)     /*!< External KEY */
 /**
@@ -273,7 +273,7 @@ typedef struct
 /** @defgroup GPIO_PinFunction7 GPIO Function 7 selection
  * @{
  */
-#define GPIO_FUNC_7         ((uint8_t)0x07u)
+#define GPIO_FUNC_7         ((uint8_t)0x07U)
 #define GPIO_FUNC_7_SPI     (GPIO_FUNC_7)     /*!< SPI SCK/NSS/MISO/MOSI */
 #define GPIO_FUNC_7_TIMA    (GPIO_FUNC_7)     /*!< Timer A PWM/CLK/TRIG */
 /**
@@ -283,9 +283,9 @@ typedef struct
 /** @defgroup GPIO_DebugPin_Sel GPIO Debug pin selection
  * @{
  */
-#define GPIO_PIN_SWDIO      ((uint8_t)0x01u)
-#define GPIO_PIN_SWCLK      ((uint8_t)0x02u)
-#define GPIO_PIN_DEBUG      ((uint8_t)0x03u)
+#define GPIO_PIN_SWDIO      ((uint8_t)0x01U)
+#define GPIO_PIN_SWCLK      ((uint8_t)0x02U)
+#define GPIO_PIN_DEBUG      ((uint8_t)0x03U)
 /**
  * @}
  */
@@ -293,10 +293,10 @@ typedef struct
 /** @defgroup GPIO_ReadCycle_Sel GPIO pin read wait cycle selection
  * @{
  */
-#define GPIO_READ_WAIT_0    ((uint16_t)(0x00ul << PORT_PCCR_RDWT_POS))
-#define GPIO_READ_WAIT_1    ((uint16_t)(0x01ul << PORT_PCCR_RDWT_POS))
-#define GPIO_READ_WAIT_2    ((uint16_t)(0x02ul << PORT_PCCR_RDWT_POS))
-#define GPIO_READ_WAIT_3    ((uint16_t)(0x03ul << PORT_PCCR_RDWT_POS))
+#define GPIO_READ_WAIT_0    ((uint16_t)(0x00UL << PORT_PCCR_RDWT_POS))
+#define GPIO_READ_WAIT_1    ((uint16_t)(0x01UL << PORT_PCCR_RDWT_POS))
+#define GPIO_READ_WAIT_2    ((uint16_t)(0x02UL << PORT_PCCR_RDWT_POS))
+#define GPIO_READ_WAIT_3    ((uint16_t)(0x03UL << PORT_PCCR_RDWT_POS))
 /**
  * @}
  */
@@ -305,8 +305,8 @@ typedef struct
  * @defgroup GPIO_PinState_Sel GPIO pin output state selection
  * @{
  */
-#define PIN_STATE_RESET     ((uint16_t)(0ul << PORT_PCR_POUT_POS))
-#define PIN_STATE_SET       ((uint16_t)(1ul << PORT_PCR_POUT_POS))
+#define PIN_STATE_RESET     ((uint16_t)(0UL << PORT_PCR_POUT_POS))
+#define PIN_STATE_SET       ((uint16_t)(1UL << PORT_PCR_POUT_POS))
 /**
  * @}
  */
@@ -315,8 +315,8 @@ typedef struct
  * @defgroup GPIO_PinMode_Sel GPIO pin input/output mode selection
  * @{
  */
-#define PIN_MODE_IN         ((uint16_t)(0ul << PORT_PCR_POUTE_POS))
-#define PIN_MODE_OUT        ((uint16_t)(1ul << PORT_PCR_POUTE_POS))
+#define PIN_MODE_IN         ((uint16_t)(0UL << PORT_PCR_POUTE_POS))
+#define PIN_MODE_OUT        ((uint16_t)(1UL << PORT_PCR_POUTE_POS))
 /**
  * @}
  */
@@ -325,8 +325,8 @@ typedef struct
  * @defgroup GPIO_PinOutType_Sel GPIO pin output type selection
  * @{
  */
-#define PIN_OTYPE_CMOS      ((uint16_t)(0ul << PORT_PCR_NOD_POS))
-#define PIN_OTYPE_NMOS      ((uint16_t)(1ul << PORT_PCR_NOD_POS))
+#define PIN_OTYPE_CMOS      ((uint16_t)(0UL << PORT_PCR_NOD_POS))
+#define PIN_OTYPE_NMOS      ((uint16_t)(1UL << PORT_PCR_NOD_POS))
 /**
  * @}
  */
@@ -335,8 +335,8 @@ typedef struct
  * @defgroup GPIO_PinDrv_Sel GPIO Pin drive capacity selection
  * @{
  */
-#define PIN_NORMAL_DRV      ((uint16_t)(0ul << PORT_PCR_DRV_POS))
-#define PIN_HIGH_DRV        ((uint16_t)(1ul << PORT_PCR_DRV_POS))
+#define PIN_NORMAL_DRV      ((uint16_t)(0UL << PORT_PCR_DRV_POS))
+#define PIN_HIGH_DRV        ((uint16_t)(1UL << PORT_PCR_DRV_POS))
 /**
  * @}
  */
@@ -345,8 +345,8 @@ typedef struct
  * @defgroup GPIO_PinLatch_Sel GPIO Pin output latch selection
  * @{
  */
-#define PIN_LATCH_OFF       ((uint16_t)(0ul << PORT_PCR_LTE_POS))
-#define PIN_LATCH_ON        ((uint16_t)(1ul << PORT_PCR_LTE_POS))
+#define PIN_LATCH_OFF       ((uint16_t)(0UL << PORT_PCR_LTE_POS))
+#define PIN_LATCH_ON        ((uint16_t)(1UL << PORT_PCR_LTE_POS))
 /**
  * @}
  */
@@ -355,8 +355,8 @@ typedef struct
  * @defgroup GPIO_PinPU_Sel GPIO Pin internal pull-up resistor selection
  * @{
  */
-#define PIN_PU_OFF          ((uint16_t)(0ul << PORT_PCR_PUU_POS))
-#define PIN_PU_ON           ((uint16_t)(1ul << PORT_PCR_PUU_POS))
+#define PIN_PU_OFF          ((uint16_t)(0UL << PORT_PCR_PUU_POS))
+#define PIN_PU_ON           ((uint16_t)(1UL << PORT_PCR_PUU_POS))
 /**
  * @}
  */
@@ -365,8 +365,8 @@ typedef struct
  * @defgroup GPIO_PinInvert_Sel GPIO Pin I/O invert selection
  * @{
  */
-#define PIN_INVERT_OFF      ((uint16_t)(0ul << PORT_PCR_INVE_POS))
-#define PIN_INVERT_ON       ((uint16_t)(1ul << PORT_PCR_INVE_POS))
+#define PIN_INVERT_OFF      ((uint16_t)(0UL << PORT_PCR_INVE_POS))
+#define PIN_INVERT_ON       ((uint16_t)(1UL << PORT_PCR_INVE_POS))
 /**
  * @}
  */
@@ -375,8 +375,8 @@ typedef struct
  * @defgroup GPIO_PinInType_Sel GPIO Pin input type selection
  * @{
  */
-#define PIN_ITYPE_SMT       ((uint16_t)(0ul << PORT_PCR_CINSEL_POS))
-#define PIN_ITYPE_CMOS      ((uint16_t)(1ul << PORT_PCR_CINSEL_POS))
+#define PIN_ITYPE_SMT       ((uint16_t)(0UL << PORT_PCR_CINSEL_POS))
+#define PIN_ITYPE_CMOS      ((uint16_t)(1UL << PORT_PCR_CINSEL_POS))
 /**
  * @}
  */
@@ -385,8 +385,8 @@ typedef struct
  * @defgroup GPIO_PinExInt_Sel GPIO Pin external interrupt selection
  * @{
  */
-#define PIN_EXINT_OFF       ((uint16_t)(0ul << PORT_PCR_INTE_POS))
-#define PIN_EXINT_ON        ((uint16_t)(1ul << PORT_PCR_INTE_POS))
+#define PIN_EXINT_OFF       ((uint16_t)(0UL << PORT_PCR_INTE_POS))
+#define PIN_EXINT_ON        ((uint16_t)(1UL << PORT_PCR_INTE_POS))
 /**
  * @}
  */
@@ -395,8 +395,8 @@ typedef struct
  * @defgroup GPIO_Register_Protect GPIO Registers Protect Code
  * @{
  */
-#define GPIO_REG_UNPROTECT  ((uint16_t)0xA501u)
-#define GPIO_REG_PROTECT    ((uint16_t)0xA500u)
+#define GPIO_REG_UNPROTECT  ((uint16_t)0xA501U)
+#define GPIO_REG_PROTECT    ((uint16_t)0xA500U)
 /**
  * @}
  */
@@ -476,7 +476,7 @@ void GPIO_TogglePins(uint8_t u8Port, uint8_t u8Pin);
 }
 #endif
 
-#endif /* __HC32M120_GPIO_H__ */
+#endif /* __HC32M423_GPIO_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

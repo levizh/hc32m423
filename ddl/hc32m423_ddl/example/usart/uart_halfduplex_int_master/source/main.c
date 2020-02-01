@@ -59,7 +59,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -214,7 +214,7 @@ static en_key_state_t KeyGetState(const stc_key_t *pstcKey)
     {
         if (pstcKey->enPressPinState == GPIO_ReadInputPortPin(pstcKey->u8Port, pstcKey->u8Pin))
         {
-            DDL_Delay1ms(20ul);
+            DDL_Delay1ms(20UL);
 
             if (pstcKey->enPressPinState == GPIO_ReadInputPortPin(pstcKey->u8Port, pstcKey->u8Pin))
             {
@@ -315,7 +315,7 @@ int32_t main(void)
         .enPressPinState = Pin_Reset,
     };
     const stc_uart_init_t stcUartInit = {
-        .u32Baudrate = 19200ul,
+        .u32Baudrate = 19200UL,
         .u32BitDirection = USART_LSB,
         .u32StopBit = USART_STOP_BITS_1,
         .u32Parity = USART_PARITY_NONE,

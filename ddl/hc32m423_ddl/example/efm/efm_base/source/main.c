@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -137,7 +137,7 @@ int32_t main(void)
     stc_efm_cfg_t stcEfmCfg;
 
     uint8_t u8Data = 0x5Au;
-    uint16_t u16Data = 0xA5A5u;
+    uint16_t u16Data = 0xA5A5U;
     uint32_t u32Data = 0xAA5555AAu;
     uint32_t u32Addr;
 
@@ -171,7 +171,7 @@ int32_t main(void)
         LED_G_OFF();
     }
 
-    u32Addr += 2ul;
+    u32Addr += 2UL;
 
     /* program half word */
     if(Ok != EFM_ProgramHalfWord(u32Addr, u16Data))
@@ -180,7 +180,7 @@ int32_t main(void)
         LED_G_OFF();
     }
 
-    u32Addr += 2ul;
+    u32Addr += 2UL;
 
     /* program word */
     if(Ok != EFM_ProgramWord(u32Addr, u32Data))

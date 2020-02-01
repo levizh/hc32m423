@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_TIMER2_H__
-#define __HC32M120_TIMER2_H__
+#ifndef __HC32M423_TIMER2_H__
+#define __HC32M423_TIMER2_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -392,7 +392,7 @@ void TIMER2_ClrFlag(uint16_t u16Flag);
 }
 #endif
 
-#endif /* __HC32M120_TIMER2_H__ */
+#endif /* __HC32M423_TIMER2_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

@@ -57,7 +57,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -90,7 +90,7 @@
  * @{
  */
 /*  Parameter validity check for EVENT_PORT trigger edge. */
-#define IS_EVENT_PORT_TRIGGER(TRIGGER)  (((TRIGGER) & EVENT_PORT_TIGGER_MASK) != (uint16_t)0x0000u)
+#define IS_EVENT_PORT_TRIGGER(TRIGGER)  (((TRIGGER) & EVENT_PORT_TIGGER_MASK) != (uint16_t)0x0000U)
 
 /*  Parameter validity check for EVENT_PORT filter function. */
 #define IS_EVENT_PORT_FE(fe)                                                    \
@@ -112,7 +112,7 @@
     ((record) == EP_STATE_LAST3TIME))
 
 /*  Parameter validity check for EVENT_PORT state. */
-#define IS_EVENT_PORT_STATE(state)      (((state) & EP_STATE_MASK) != (uint8_t)0x00u)
+#define IS_EVENT_PORT_STATE(state)      (((state) & EP_STATE_MASK) != (uint8_t)0x00U)
 
 /**
  * @}
@@ -191,9 +191,9 @@ en_result_t EVENT_PORT_StructInit(stc_event_port_init_t *pstcEventPortInit)
     else
     {
         /* Reset EVENT_PORT init structure parameters values */
-        pstcEventPortInit->u32EPFE      = 0ul;
-        pstcEventPortInit->u32EPFClk    = 0ul;
-        pstcEventPortInit->u32EPTrigger = 0ul;
+        pstcEventPortInit->u32EPFE      = 0UL;
+        pstcEventPortInit->u32EPFClk    = 0UL;
+        pstcEventPortInit->u32EPTrigger = 0UL;
     }
     return enRet;
 }

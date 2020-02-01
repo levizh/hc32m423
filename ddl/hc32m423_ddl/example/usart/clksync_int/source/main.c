@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -141,8 +141,8 @@ typedef struct
 #define TIMEOUT_MAX                     (0xFFFFFFFFul)
 
 /* CLKSYNC device mode definition */
-#define CLKSYNC_MASTER_MODE             (0u)
-#define CLKSYNC_SLAVE_MODE              (1u)
+#define CLKSYNC_MASTER_MODE             (0U)
+#define CLKSYNC_SLAVE_MODE              (1U)
 
 /* USART master or slave mode selection */
 #define CLKSYNC_DEVICE_MODE             (CLKSYNC_MASTER_MODE)
@@ -258,7 +258,7 @@ static void UsartRxErrIrqCallback(void)
 static void TransmitReceive_IT(M0P_USART_TypeDef *USARTx,
                                stc_buffer_handle_t *pstcBufHandle)
 {
-    if (pstcBufHandle->u16RxXferCount != 0u)
+    if (pstcBufHandle->u16RxXferCount != 0U)
     {
         if (USART_GetFlag(USARTx, USART_FLAG_RXNE) != Reset)
         {
@@ -268,14 +268,14 @@ static void TransmitReceive_IT(M0P_USART_TypeDef *USARTx,
     }
 
     /* Check the latest data received */
-    if (pstcBufHandle->u16RxXferCount == 0u)
+    if (pstcBufHandle->u16RxXferCount == 0U)
     {
         /* Disable the USART RXNE && Error Interrupt */
         USART_FuncCmd(USARTx, USART_INT_RX, Disable);
     }
     else
     {
-        if (pstcBufHandle->u16TxXferCount != 0u)
+        if (pstcBufHandle->u16TxXferCount != 0U)
         {
             if (USART_GetFlag(USARTx, USART_FLAG_TXE) != Reset)
             {
@@ -283,7 +283,7 @@ static void TransmitReceive_IT(M0P_USART_TypeDef *USARTx,
                 pstcBufHandle->u16TxXferCount--;
 
                 /* Check the latest data transmitted */
-                if (pstcBufHandle->u16TxXferCount == 0u)
+                if (pstcBufHandle->u16TxXferCount == 0U)
                 {
                     USART_FuncCmd(USARTx, (USART_INT_TXE | USART_INT_TC), Disable);
                 }
@@ -345,8 +345,8 @@ static en_result_t CLKSYNC_TransmitReceive_IT(M0P_USART_TypeDef *USARTx,
  */
 int32_t main(void)
 {
-    uint16_t u16TxXferCount = 0u;
-    uint16_t u16RxXferCount = 0u;
+    uint16_t u16TxXferCount = 0U;
+    uint16_t u16RxXferCount = 0U;
     stc_irq_regi_config_t stcIrqRegiConf;
     stc_clksync_init_t stcClksyncInit;
     /* Buffer used for transmission */
@@ -367,7 +367,7 @@ int32_t main(void)
 
     /* Initialize CLKSYNC function. */
     USART_ClkSyncStructInit(&stcClksyncInit);
-    stcClksyncInit.u32Baudrate = 38400ul;
+    stcClksyncInit.u32Baudrate = 38400UL;
 #if (CLKSYNC_DEVICE_MODE == CLKSYNC_MASTER_MODE)
     stcClksyncInit.u32ClkMode = USART_INTCLK_OUTPUT;
 #else
@@ -428,7 +428,7 @@ int32_t main(void)
     {
         u16TxXferCount = m_stcBufHandle.u16TxXferCount;
         u16RxXferCount = m_stcBufHandle.u16RxXferCount;
-    } while ((u16TxXferCount != 0u) || (u16RxXferCount != 0u));
+    } while ((u16TxXferCount != 0U) || (u16RxXferCount != 0U));
 
     /* Compare m_u8TxBuffer and m_u8RxBuffer data */
     if (memcmp(au8TxData , au8RxData, (uint32_t)m_stcBufHandle.u16RxXferSize) == 0)

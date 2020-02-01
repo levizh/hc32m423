@@ -58,7 +58,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -116,8 +116,8 @@ typedef struct
 #define UART_UNIT_TCI_IRQn              (Int022_IRQn)
 
 /* Ring buffer size */
-#define RING_BUFFER_SIZE                (500u)
-#define IS_RING_BUFFER_EMPYT(x)         (0u == ((x)->u16UsedSize))
+#define RING_BUFFER_SIZE                (500U)
+#define IS_RING_BUFFER_EMPYT(x)         (0U == ((x)->u16UsedSize))
 
 /* Function clock gate definition  */
 #define FUNCTION_CLK_GATE               (CLK_FCG_UART2)
@@ -196,7 +196,7 @@ static void UartRxIrqCallback(void)
  */
 static void UartTxIrqCallback(void)
 {
-    uint8_t u8Data = 0u;
+    uint8_t u8Data = 0U;
 
     if (Ok == RingBufRead(&m_stcRingBuf, &u8Data))
     {
@@ -291,7 +291,7 @@ int32_t main(void)
 {
     stc_irq_regi_config_t stcIrqRegiConf;
     const stc_uart_init_t stcUartInit = {
-        .u32Baudrate = 115200ul,
+        .u32Baudrate = 115200UL,
         .u32BitDirection = USART_LSB,
         .u32StopBit = USART_STOP_BITS_1,
         .u32Parity = USART_PARITY_NONE,

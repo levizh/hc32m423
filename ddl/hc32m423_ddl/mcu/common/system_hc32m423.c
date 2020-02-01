@@ -62,7 +62,7 @@
  */
 
 /**
- * @addtogroup HC32m120_System
+ * @addtogroup HC32M423_System
  * @{
  */
 
@@ -74,7 +74,7 @@
  * Global variable definitions (declared in header file with 'extern')
  ******************************************************************************/
 /**
- * @addtogroup HC32m120_System_Global_Variable
+ * @addtogroup HC32M423_System_Global_Variable
  * @{
  */
 
@@ -92,7 +92,7 @@ uint32_t SystemCoreClock = HRC_VALUE;  /*!< System clock frequency (Core clock) 
  * Function implementation - global ('extern') and local ('static')
  ******************************************************************************/
 /**
- * @addtogroup HC32m120_System_Global_Functions
+ * @addtogroup HC32M423_System_Global_Functions
  * @{
  */
 
@@ -114,8 +114,8 @@ void SystemInit(void)
  */
 uint32_t HrcUpdate(void)
 {
-    uint32_t Hrc_value = 0ul;
-    uint8_t tmp = 0;//M0P_EFM->HRCCFGR & 0x07u;   //todo, levi 20200131
+    uint32_t Hrc_value = 0UL;
+    uint8_t tmp = 0;//M0P_EFM->HRCCFGR & 0x07U;   //todo, levi 20200131
 
     //if(EFM_HRCCFGR_HRCFREQS_3 == (M0P_EFM->HRCCFGR & EFM_HRCCFGR_HRCFREQS_3))
     if (1)      //todo, levi 20200131
@@ -123,22 +123,22 @@ uint32_t HrcUpdate(void)
         switch(tmp)
         {
             case 0x00:
-                Hrc_value = (uint32_t)32000000ul * 3ul / 2ul;
+                Hrc_value = (uint32_t)32000000UL * 3UL / 2UL;
                 break;
             case 0x01:
-                Hrc_value = (uint32_t)16000000ul * 3ul / 2ul;
+                Hrc_value = (uint32_t)16000000UL * 3UL / 2UL;
                 break;
             case 0x02:
-                Hrc_value = (uint32_t)8000000ul * 3ul / 2ul;
+                Hrc_value = (uint32_t)8000000UL * 3UL / 2UL;
                 break;
             case 0x03:
-                Hrc_value = (uint32_t)4000000ul * 3ul / 2ul;
+                Hrc_value = (uint32_t)4000000UL * 3UL / 2UL;
                 break;
             case 0x04:
-                Hrc_value = (uint32_t)2000000ul * 3ul / 2ul;
+                Hrc_value = (uint32_t)2000000UL * 3UL / 2UL;
                 break;
             default:
-                Hrc_value = (uint32_t)1000000ul * 3ul / 2ul;
+                Hrc_value = (uint32_t)1000000UL * 3UL / 2UL;
                 break;
         }
     }
@@ -147,22 +147,22 @@ uint32_t HrcUpdate(void)
         switch(tmp)
         {
             case 0x00:
-                Hrc_value = (uint32_t)32000000ul;
+                Hrc_value = (uint32_t)32000000UL;
                 break;
             case 0x01:
-                Hrc_value = (uint32_t)16000000ul;
+                Hrc_value = (uint32_t)16000000UL;
                 break;
             case 0x02:
-                Hrc_value = (uint32_t)8000000ul;
+                Hrc_value = (uint32_t)8000000UL;
                 break;
             case 0x03:
-                Hrc_value = (uint32_t)4000000ul;
+                Hrc_value = (uint32_t)4000000UL;
                 break;
             case 0x04:
-                Hrc_value = (uint32_t)2000000ul;
+                Hrc_value = (uint32_t)2000000UL;
                 break;
             default:
-                Hrc_value = (uint32_t)1000000ul;
+                Hrc_value = (uint32_t)1000000UL;
                 break;
         }
     }
@@ -199,22 +199,22 @@ void SystemCoreClockUpdate(void)
             SystemCoreClock = SystemCoreClock;
             break;
         case 0x01:
-            SystemCoreClock = SystemCoreClock / 2ul;
+            SystemCoreClock = SystemCoreClock / 2UL;
             break;
         case 0x02:
-            SystemCoreClock = SystemCoreClock / 4ul;
+            SystemCoreClock = SystemCoreClock / 4UL;
             break;
         case 0x03:
-            SystemCoreClock = SystemCoreClock / 8ul;
+            SystemCoreClock = SystemCoreClock / 8UL;
             break;
         case 0x04:
-            SystemCoreClock = SystemCoreClock / 16ul;
+            SystemCoreClock = SystemCoreClock / 16UL;
             break;
         case 0x05:
-            SystemCoreClock = SystemCoreClock / 32ul;
+            SystemCoreClock = SystemCoreClock / 32UL;
             break;
         case 0x06:
-            SystemCoreClock = SystemCoreClock / 64ul;
+            SystemCoreClock = SystemCoreClock / 64UL;
             break;
     }
 }

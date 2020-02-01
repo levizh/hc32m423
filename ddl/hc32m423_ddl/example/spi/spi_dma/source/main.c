@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -74,8 +74,8 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* SPI pin group definition. */
-#define SPI_PIN_GROUP_A             (1u)
-#define SPI_PIN_GROUP_B             (2u)
+#define SPI_PIN_GROUP_A             (1U)
+#define SPI_PIN_GROUP_B             (2U)
 #define SPI_PIN_GROUP               (SPI_PIN_GROUP_A)
 
 #if (SPI_PIN_GROUP == SPI_PIN_GROUP_A)
@@ -101,8 +101,8 @@
 #endif // #if (SPI_PIN_GROUP == SPI_PIN_GROUP_A)
 
 /* SPI wire mode definition. */
-#define SPI_APP_3_WIRE              (3u)
-#define SPI_APP_4_WIRE              (4u)
+#define SPI_APP_3_WIRE              (3U)
+#define SPI_APP_4_WIRE              (4U)
 #define SPI_APP_X_WIRE              (SPI_APP_4_WIRE)
 
 #if (SPI_APP_X_WIRE == SPI_APP_4_WIRE)
@@ -121,32 +121,32 @@
 
 
 /* SPI data buffer size definition. */
-#define SPI_BUFFER_LENGTH           (8ul)
+#define SPI_BUFFER_LENGTH           (8UL)
 
 /* Command from the master. */
-#define SPI_WRITE_SLAVE             (0x51u)             /*!< Customer definition. */
-#define SPI_READ_SLAVE              (0x56u)             /*!< Customer definition. */
+#define SPI_WRITE_SLAVE             (0x51U)             /*!< Customer definition. */
+#define SPI_READ_SLAVE              (0x56U)             /*!< Customer definition. */
 #define SPI_DUMMY_DATA              (0xFFu)
 
 /* SPI DMA definition. */
 #define SPI_DMA_DATAWIDTH           (DMA_DATAWIDTH_8BIT)
-#define SPI_DMA_BLKSIZE             (1ul)
+#define SPI_DMA_BLKSIZE             (1UL)
 
 #define SPI_DMA_RX_TRNCNT           (SPI_BUFFER_LENGTH)
 #define SPI_DMA_RX_CH               (DMA_CHANNEL_0)
 #define SPI_DMA_RX_TRIG             (EVT_SPI_SPRI)
 #define SPI_DMA_RX_SRC_ADDR         ((uint32_t)(&M0P_SPI->DR))
-#define SPI_DMA_RX_DEST_ADDR        ((uint32_t)(&m_au8SpiRxBuf[0u]))
+#define SPI_DMA_RX_DEST_ADDR        ((uint32_t)(&m_au8SpiRxBuf[0U]))
 #define SPI_DMA_RX_LLP_MODE         (DMA_LLP_WAIT)
-#define SPI_DMA_RX_LLP_POS          (DMA_CH0CTL0_LLP_POS - 2u)
+#define SPI_DMA_RX_LLP_POS          (DMA_CH0CTL0_LLP_POS - 2U)
 
 #define SPI_DMA_TX_TRNCNT           (SPI_BUFFER_LENGTH)
 #define SPI_DMA_TX_CH               (DMA_CHANNEL_1)
 #define SPI_DMA_TX_TRIG             (EVT_SPI_SPTI)
-#define SPI_DMA_TX_SRC_ADDR         ((uint32_t)(&m_au8SpiTxBuf[0u]))
+#define SPI_DMA_TX_SRC_ADDR         ((uint32_t)(&m_au8SpiTxBuf[0U]))
 #define SPI_DMA_TX_DEST_ADDR        ((uint32_t)(&M0P_SPI->DR))
 #define SPI_DMA_TX_LLP_MODE         (DMA_LLP_WAIT)
-#define SPI_DMA_TX_LLP_POS          (DMA_CH1CTL0_LLP_POS - 2u)
+#define SPI_DMA_TX_LLP_POS          (DMA_CH1CTL0_LLP_POS - 2U)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -197,26 +197,26 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
         if (DMA_GetCplFlag(SPI_DMA_RX_CH, DMA_FLAG_TC) == Set)
         {
             DMA_ClearCplFlag(SPI_DMA_RX_CH, DMA_FLAG_TC);
-            if (m_au8SpiRxBuf[0u] == SPI_WRITE_SLAVE)
+            if (m_au8SpiRxBuf[0U] == SPI_WRITE_SLAVE)
             {
                 // TODO: Use the data from the master.
             }
 
-            if (m_au8SpiRxBuf[0u] == SPI_READ_SLAVE)
+            if (m_au8SpiRxBuf[0U] == SPI_READ_SLAVE)
             {
                 /* Prepare data that needs to be sent to the master.
                    Valid data starts at offset 2 and length is SPI_BUFFER_LENGTH-2. */
-                m_au8SpiTxBuf[2u]++;
-                m_au8SpiTxBuf[3u]++;
-                m_au8SpiTxBuf[4u]++;
-                m_au8SpiTxBuf[5u]++;
-                m_au8SpiTxBuf[6u]++;
-                m_au8SpiTxBuf[7u]++;
+                m_au8SpiTxBuf[2U]++;
+                m_au8SpiTxBuf[3U]++;
+                m_au8SpiTxBuf[4U]++;
+                m_au8SpiTxBuf[5U]++;
+                m_au8SpiTxBuf[6U]++;
+                m_au8SpiTxBuf[7U]++;
             }
         }
     }

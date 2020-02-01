@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_CRC_H__
-#define __HC32M120_CRC_H__
+#ifndef __HC32M423_CRC_H__
+#define __HC32M423_CRC_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -99,7 +99,7 @@ extern "C"
  *        - CRC32 initial value is 0xFFFFFFFF
  * @{
  */
-#define CRC_CRC16           (0x0ul)
+#define CRC_CRC16           (0x0UL)
 #define CRC_CRC32           (CRC_CR_CR)
 /**
  * @}
@@ -118,9 +118,9 @@ extern "C"
  * @defgroup CRC_Bit_Width CRC Bit Width
  * @{
  */
-#define CRC_BW_8            (8u)
-#define CRC_BW_16           (16u)
-#define CRC_BW_32           (32u)
+#define CRC_BW_8            (8U)
+#define CRC_BW_16           (16U)
+#define CRC_BW_32           (32U)
 /**
  * @}
  */
@@ -170,7 +170,7 @@ en_flag_status_t CRC_Check(uint32_t u32CrcProtocol,
 }
 #endif
 
-#endif /* __HC32M120_CRC_H__ */
+#endif /* __HC32M423_CRC_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_RMU_H__
-#define __HC32M120_RMU_H__
+#ifndef __HC32M423_RMU_H__
+#define __HC32M423_RMU_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -117,8 +117,8 @@ typedef struct
 /** @defgroup RMU_REG_Write_Configuration RMU register write Configuration
   * @{
   */
-#define RMU_REG_WRITE_ENABLE()      (M0P_PWC->FPRC = 0xa502u)
-#define RMU_REG_WRITE_DISABLE()     (M0P_PWC->FPRC = 0xa500u)
+#define RMU_REG_WRITE_ENABLE()      (M0P_PWC->FPRC = 0xa502U)
+#define RMU_REG_WRITE_DISABLE()     (M0P_PWC->FPRC = 0xa500U)
 
 /**
   * @}
@@ -159,7 +159,7 @@ en_result_t RMU_ClrResetFlag(void);
 }
 #endif
 
-#endif /* __HC32M120_RMU_H__ */
+#endif /* __HC32M423_RMU_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

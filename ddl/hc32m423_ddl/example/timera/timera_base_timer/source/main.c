@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -86,7 +86,7 @@
 #define TIMERA_UNIT1_OVF_INT            (TIMERA_INT_OVF)
 #define TIMERA_UNIT1_OVF_INTn           (INT_TMRA_OVF)
 #define TIMERA_UNIT1_OVF_IRQn           (Int016_IRQn)
-#define TIMERA_UNIT1_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/1024u/100u))
+#define TIMERA_UNIT1_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/1024U/100U))
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -99,7 +99,7 @@
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static uint8_t u8TimeraUnit1Cnt = 0u;
+static uint8_t u8TimeraUnit1Cnt = 0U;
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
@@ -112,9 +112,9 @@ static uint8_t u8TimeraUnit1Cnt = 0u;
 static void TimeraUnit1Overflow_IrqCallback(void)
 {
     u8TimeraUnit1Cnt++;
-    if (u8TimeraUnit1Cnt >= 100u)    /* 1s */
+    if (u8TimeraUnit1Cnt >= 100U)    /* 1s */
     {
-        u8TimeraUnit1Cnt = 0u;
+        u8TimeraUnit1Cnt = 0U;
         LED_R_TOGGLE();
     }
     TIMERA_ClearFlag(TIMERA_UNIT1, TIMERA_FLAG_OVF);

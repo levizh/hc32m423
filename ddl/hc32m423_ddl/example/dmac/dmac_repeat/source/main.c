@@ -56,7 +56,7 @@
 #include "string.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -73,9 +73,9 @@
  ******************************************************************************/
 /* DMAC */
 #define DMA_CH          (DMA_CHANNEL_1)
-#define DMA_TRNCNT      (5u)
-#define DMA_BLKSIZE     (4u)
-#define DMA_RPTSIZE     (11u)
+#define DMA_TRNCNT      (5U)
+#define DMA_BLKSIZE     (4U)
+#define DMA_RPTSIZE     (11U)
 
 #define LED_R_PORT      (GPIO_PORT_12)
 #define LED_G_PORT      (GPIO_PORT_7)
@@ -94,7 +94,7 @@
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
  ******************************************************************************/
-uint8_t u8CmpRet = 1u;
+uint8_t u8CmpRet = 1U;
 /*******************************************************************************
  * Local function prototypes ('static')
  ******************************************************************************/
@@ -181,7 +181,7 @@ int32_t main(void)
     }
 
     u8CmpRet = (uint8_t)memcmp(u32DstBuf, u32ExpectDstBufData, sizeof(u32DstBuf));
-    if(0u == u8CmpRet)
+    if(0U == u8CmpRet)
     {
         LED_G_ON();    /* Meet the expected */
     }

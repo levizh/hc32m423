@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_SPI_H__
-#define __HC32M120_SPI_H__
+#ifndef __HC32M423_SPI_H__
+#define __HC32M423_SPI_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -132,7 +132,7 @@ typedef struct
  * @defgroup SPI_Wire_Mode SPI Wire Mode
  * @{
  */
-#define SPI_WIRE_4                  (0ul)
+#define SPI_WIRE_4                  (0UL)
 #define SPI_WIRE_3                  (SPI_CR1_SPIMDS)
 /**
  * @}
@@ -142,7 +142,7 @@ typedef struct
  * @defgroup SPI_Transfer_Mode SPI Transfer Mode
  * @{
  */
-#define SPI_FULL_DUPLEX             (0ul)               /*!< Full duplex. */
+#define SPI_FULL_DUPLEX             (0UL)               /*!< Full duplex. */
 #define SPI_SEND_ONLY               (SPI_CR1_TXMDS)     /*!< Send only. */
 /**
  * @}
@@ -152,7 +152,7 @@ typedef struct
  * @defgroup SPI_Master_Slave_Mode SPI Master Slave Mode
  * @{
  */
-#define SPI_SLAVE                   (0ul)
+#define SPI_SLAVE                   (0UL)
 #define SPI_MASTER                  (SPI_CR1_MSTR)
 /**
  * @}
@@ -163,7 +163,7 @@ typedef struct
  * @note Loopback mode is mainly used for parity self-diagnosis in 4-wire full-duplex mode.
  * @{
  */
-#define SPI_SPLPBK_INVALID          (0ul)
+#define SPI_SPLPBK_INVALID          (0UL)
 #define SPI_SPLPBK_MOSI_NOT         (SPI_CR1_SPLPBK)    /*!< MISO data is the inverse of the data output by MOSI. */
 #define SPI_SPLPBK_MOSI             (SPI_CR1_SPLPBK2)   /*!< MISO data is the data output by MOSI. */
 /**
@@ -190,7 +190,7 @@ typedef struct
  * @defgroup SPI_Mode_Fault_Dectet_Command SPI Mode Fault Dectet Command
  * @{
  */
-#define SPI_MODFE_DISABLE           (0ul)               /*!< Disable mode fault detection. */
+#define SPI_MODFE_DISABLE           (0UL)               /*!< Disable mode fault detection. */
 #define SPI_MODFE_ENABLE            (SPI_CR1_MODFE)     /*!< Enable mode fault detection. */
 /**
  * @}
@@ -200,7 +200,7 @@ typedef struct
  * @defgroup SPI_Parity_Check_Error_Self_Diagnosis SPI Parity Check Error Self Diagnosis
  * @{
  */
-#define SPI_PATE_DISABLE            (0ul)               /*!< Disable self diagnosis of parity check. */
+#define SPI_PATE_DISABLE            (0UL)               /*!< Disable self diagnosis of parity check. */
 #define SPI_PATE_ENABLE             (SPI_CR1_PATE)      /*!< Enable self diagnosis of parity check. */
 /**
  * @}
@@ -210,7 +210,7 @@ typedef struct
  * @defgroup SPI_Parity_Check SPI Parity Check
  * @{
  */
-#define SPI_PARITY_INVALID          (0ul)                           /*!< Parity check invalid. */
+#define SPI_PARITY_INVALID          (0UL)                           /*!< Parity check invalid. */
 #define SPI_PARITY_EVEN             (SPI_CR1_PAE)                   /*!< Parity check selection even parity. */
 #define SPI_PARITY_ODD              (SPI_CR1_PAE | SPI_CR1_PAOE)    /*!< Parity check selection odd parity. */
 /**
@@ -221,7 +221,7 @@ typedef struct
  * @defgroup SPI_NSS_Active_Level SPI NSS Active Level
  * @{
  */
-#define SPI_NSS_ACTIVE_LOW          (0ul)               /*!< NSS pin active low. */
+#define SPI_NSS_ACTIVE_LOW          (0UL)               /*!< NSS pin active low. */
 #define SPI_NSS_ACTIVE_HIGH         (SPI_CFG1_SS0PV)    /*!< NSS pin active high. */
 /**
  * @}
@@ -231,7 +231,7 @@ typedef struct
  * @defgroup SPI_Mode SPI Mode
  * @{
  */
-#define SPI_MODE_0                  (0ul)
+#define SPI_MODE_0                  (0UL)
 #define SPI_MODE_1                  (SPI_CFG2_CPHA)
 #define SPI_MODE_2                  (SPI_CFG2_CPOL)
 #define SPI_MODE_3                  (SPI_CFG2_CPOL | SPI_CFG2_CPHA)
@@ -243,7 +243,7 @@ typedef struct
  * @defgroup SPI_Baud_Rate_Prescaler SPI Baud Rate Prescaler
  * @{
  */
-#define SPI_BR_DIV_2                (0ul)                               /*!< SPI baud rate is the system clock divided by 2. */
+#define SPI_BR_DIV_2                (0UL)                               /*!< SPI baud rate is the system clock divided by 2. */
 #define SPI_BR_DIV_4                (SPI_CFG2_MBR_0)                    /*!< SPI baud rate is the system clock divided by 4. */
 #define SPI_BR_DIV_8                (SPI_CFG2_MBR_1)                    /*!< SPI baud rate is the system clock divided by 8. */
 #define SPI_BR_DIV_16               (SPI_CFG2_MBR_1 | SPI_CFG2_MBR_0)   /*!< SPI baud rate is the system clock divided by 16. */
@@ -259,7 +259,7 @@ typedef struct
  * @defgroup SPI_Data_Size SPI Data Size
  * @{
  */
-#define SPI_DATA_SIZE_8BIT          (0ul)
+#define SPI_DATA_SIZE_8BIT          (0UL)
 #define SPI_DATA_SIZE_16BIT         (SPI_CFG2_DSIZE)
 /**
  * @}
@@ -269,7 +269,7 @@ typedef struct
  * @defgroup SPI_First_Bit SPI First Bit
  * @{
  */
-#define SPI_FIRST_MSB               (0ul)
+#define SPI_FIRST_MSB               (0UL)
 #define SPI_FIRST_LSB               (SPI_CFG2_LSBF)
 /**
  * @}
@@ -355,7 +355,7 @@ __STATIC_INLINE en_flag_status_t SPI_GetFlag(uint32_t u32Flag)
 {
     en_flag_status_t enFlag = Reset;
 
-    if ((M0P_SPI->SR & u32Flag) != 0u)
+    if ((M0P_SPI->SR & u32Flag) != 0U)
     {
         enFlag = Set;
     }
@@ -430,7 +430,7 @@ en_result_t SPI_TransmitReceive(const void *pvTxBuf, void *pvRxBuf, uint32_t u32
 }
 #endif
 
-#endif /* __HC32M120_SPI_H__ */
+#endif /* __HC32M423_SPI_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

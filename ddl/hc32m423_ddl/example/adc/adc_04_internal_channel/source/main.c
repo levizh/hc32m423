@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -74,13 +74,13 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Function definition for this application. */
-#define APP_FUNC_GET_INREF          (1u)
-#define APP_FUNC_CAL_TEMP           (2u)
+#define APP_FUNC_GET_INREF          (1U)
+#define APP_FUNC_CAL_TEMP           (2U)
 #define APP_FUNCTION                (APP_FUNC_CAL_TEMP)
  
 /* ADC channels definition for this example. */
 #define ADC_SA_CHANNEL              (ADC_CH11)
-#define ADC_SA_CHANNEL_COUNT        (1u)
+#define ADC_SA_CHANNEL_COUNT        (1U)
 
 /* ADC channel sampling time. */
 #define ADC_SAMPLE_TIME             ((uint8_t)10)
@@ -89,13 +89,13 @@
 #define ADC_RESOLUTION              (ADC_RESOLUTION_12B)
 
 /* ADC accuracy. */
-#define ADC_ACCURACY                (1ul << 12u)
+#define ADC_ACCURACY                (1UL << 12U)
 
 /* ADC reference voltage. The voltage of pin VREFH. */
 #define ADC_VREF                    (3.29f)
 
 /* Timeout value definitions. */
-#define TIMEOUT_MS                  (10u)
+#define TIMEOUT_MS                  (10U)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -137,10 +137,10 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
         ADC_PollingSa(m_au16AdcSaVal, ADC_SA_CHANNEL_COUNT, TIMEOUT_MS);
-        m_f32Vol = ((float)m_au16AdcSaVal[0u] * ADC_VREF) / ((float)ADC_ACCURACY);
+        m_f32Vol = ((float)m_au16AdcSaVal[0U] * ADC_VREF) / ((float)ADC_ACCURACY);
 #if (APP_FUNCTION == APP_FUNC_CAL_TEMP)
         /* temperature = 25 - (((adc_voltage - 1.03) * 1000) / 3.5) */
         m_f32Temp = 25.f - (((m_f32Vol - 1.03f) * 1000.f) / 3.5f);

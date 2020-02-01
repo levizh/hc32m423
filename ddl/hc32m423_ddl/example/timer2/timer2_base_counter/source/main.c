@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -74,11 +74,11 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* If use interrupt. */
-#define TIMER2_USE_INTERRUPT        (1u)
+#define TIMER2_USE_INTERRUPT        (1U)
 
 /* Synchronous clock source definition. */
-#define SYNC_CLK_EVENT              (0u)
-#define SYNC_CLK_TRIGA              (1u)
+#define SYNC_CLK_EVENT              (0U)
+#define SYNC_CLK_TRIGA              (1U)
 #define TIMER2_SYNC_CLK             (SYNC_CLK_EVENT)
 
 #if (TIMER2_SYNC_CLK == SYNC_CLK_EVENT)
@@ -104,7 +104,7 @@
 #define TIMER2_TRIGA_PIN            (GPIO_PIN_0)
 
 /* Count times definition. */
-#define TIMER2_COUNT_TIMES          (5u)
+#define TIMER2_COUNT_TIMES          (5U)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -129,7 +129,7 @@ static void Timer2IrqConfig(void);
  * Local variable definitions ('static')
  ******************************************************************************/
 #if TIMER2_USE_INTERRUPT
-static uint8_t m_u8Timer2IrqFlag = 0u;
+static uint8_t m_u8Timer2IrqFlag = 0U;
 #endif
 
 /*******************************************************************************
@@ -158,7 +158,7 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
 #if (TIMER2_SYNC_CLK == SYNC_CLK_EVENT)
         /* Press SW1 to generate event EVT_PORT_EIRQ2, the counter will count the number of presses. */
@@ -168,10 +168,10 @@ int32_t main(void)
 
 #if TIMER2_USE_INTERRUPT
         /* Check the IRQ flag. */
-        if (m_u8Timer2IrqFlag != 0u)
+        if (m_u8Timer2IrqFlag != 0U)
         {
             /* The counter has reached the set number of counts. */
-            m_u8Timer2IrqFlag = 0u;
+            m_u8Timer2IrqFlag = 0U;
         }
 #else
         /* Call TIMER2_GetCounterVal to get the value of counter directly, like this:
@@ -242,7 +242,7 @@ static void Timer2Config(void)
 
     /* 3. Modify the configuration values depends on the application. */
     stcCfg.u16ClkSource    = TIMER2_SYNC_CLK_SRC;
-    stcCfg.u16CompareVal   = TIMER2_COUNT_TIMES - 1u;
+    stcCfg.u16CompareVal   = TIMER2_COUNT_TIMES - 1U;
 #if TIMER2_USE_INTERRUPT
     /* Enable counter match interrupt. */
     stcCfg.enMatchIntCmd   = Enable;
@@ -316,7 +316,7 @@ void Timer2GCmp_IrqHandler(void)
     if (TIMER2_GetFlag(TIMER2_FLAG_CNT_MATCH) == Set)
     {
         TIMER2_ClrFlag(TIMER2_FLAG_CNT_MATCH);
-        m_u8Timer2IrqFlag = 1u;
+        m_u8Timer2IrqFlag = 1U;
     }
 }
 

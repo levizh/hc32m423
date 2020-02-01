@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -110,8 +110,8 @@
 #define TIMEOUT_MAX                     (0xFFFFFFFFul)
 
 /* CLKSYNC device mode definition */
-#define CLKSYNC_MASTER_MODE             (0u)
-#define CLKSYNC_SLAVE_MODE              (1u)
+#define CLKSYNC_MASTER_MODE             (0U)
+#define CLKSYNC_SLAVE_MODE              (1U)
 
 /* USART master or slave mode selection */
 #define CLKSYNC_DEVICE_MODE             (CLKSYNC_MASTER_MODE)
@@ -234,9 +234,9 @@ static en_result_t CLKSYNC_TransmitReceive(M0P_USART_TypeDef *USARTx,
                                            uint32_t u32Size,
                                            uint32_t u32Timeout)
 {
-    uint32_t i = 0ul;
+    uint32_t i = 0UL;
     uint32_t u32Flag;
-    uint32_t u32TickStart = 0ul;
+    uint32_t u32TickStart = 0UL;
     uint32_t u32XferCount = u32Size;
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -248,7 +248,7 @@ static en_result_t CLKSYNC_TransmitReceive(M0P_USART_TypeDef *USARTx,
         u32TickStart = SysTick_GetTick();
 
         /* Check the remain data to be received */
-        while (u32XferCount > 0ul)
+        while (u32XferCount > 0UL)
         {
             u32XferCount--;
 
@@ -302,7 +302,7 @@ int32_t main(void)
     SystemClockConfig();
 
     /* Configure system tick. */
-    SysTick_Init(100ul);
+    SysTick_Init(100UL);
 
     /* Configure LED pin. */
     LedConfig();
@@ -317,7 +317,7 @@ int32_t main(void)
 
     /* Initialize CLKSYNC function. */
     USART_ClkSyncStructInit(&stcClksyncInit);
-    stcClksyncInit.u32Baudrate = 38400ul;
+    stcClksyncInit.u32Baudrate = 38400UL;
 #if (CLKSYNC_DEVICE_MODE == CLKSYNC_MASTER_MODE)
     stcClksyncInit.u32ClkMode = USART_INTCLK_OUTPUT;
 #else

@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -76,8 +76,8 @@
 #define SLAVE_TEST
 
 /* SPI pin group definition. */
-#define SPI_PIN_GROUP_A             (1u)
-#define SPI_PIN_GROUP_B             (2u)
+#define SPI_PIN_GROUP_A             (1U)
+#define SPI_PIN_GROUP_B             (2U)
 #define SPI_PIN_GROUP               (SPI_PIN_GROUP_A)
 
 #if (SPI_PIN_GROUP == SPI_PIN_GROUP_A)
@@ -103,8 +103,8 @@
 #endif // #if (SPI_PIN_GROUP == SPI_PIN_GROUP_A)
 
 /* SPI wire mode definition. */
-#define SPI_APP_3_WIRE              (3u)
-#define SPI_APP_4_WIRE              (4u)
+#define SPI_APP_3_WIRE              (3U)
+#define SPI_APP_4_WIRE              (4U)
 #define SPI_APP_X_WIRE              (SPI_APP_4_WIRE)
 
 #if (SPI_APP_X_WIRE == SPI_APP_4_WIRE)
@@ -113,7 +113,7 @@
 #else
 #define SPI_WIRE_MODE               (SPI_WIRE_3)
 #ifdef SLAVE_TEST
-#define SPI_SPI_MODE                (SPI_MODE_1)    /*!< HC32M120: Only SPI_MODE_1 and SPI_MODE_3 can be used in 3-wire slave mode. */
+#define SPI_SPI_MODE                (SPI_MODE_1)    /*!< HC32M423: Only SPI_MODE_1 and SPI_MODE_3 can be used in 3-wire slave mode. */
 #else
 #define SPI_SPI_MODE                (SPI_MODE_1)    /*!< Depends on your application. */
 #endif
@@ -129,8 +129,8 @@
 
 
 /* SPI communication mode definition */
-#define SPI_APP_SEND_ONLY           (1u)        /*!< Send only. */
-#define SPI_APP_FULL_DUPLEX         (2u)        /*!< Send and receive. */
+#define SPI_APP_SEND_ONLY           (1U)        /*!< Send only. */
+#define SPI_APP_FULL_DUPLEX         (2U)        /*!< Send and receive. */
 #ifdef SLAVE_TEST
 #define SPI_APP_TRANS_MODE          (SPI_APP_FULL_DUPLEX)
 #else
@@ -155,8 +155,8 @@
 
 
 /* SPI NSS pin active level definition. */
-#define SPI_NSS_ACTIVE_LO           (0u)
-#define SPI_NSS_ACTIVE_HI           (1u)
+#define SPI_NSS_ACTIVE_LO           (0U)
+#define SPI_NSS_ACTIVE_HI           (1U)
 #define SPI_NSS_ACTIVE_LEVEL        (SPI_NSS_ACTIVE_LO)
 
 #if (SPI_NSS_ACTIVE_LEVEL == SPI_NSS_ACTIVE_LO)
@@ -167,10 +167,10 @@
 
 
 /* SPI data buffer size definition. */
-#define SPI_BUFFER_LENGTH           (8u)
+#define SPI_BUFFER_LENGTH           (8U)
 #ifdef SLAVE_TEST
-#define SPI_WRITE_SLAVE             (0x51u)     /*!< Customer definition. */
-#define SPI_READ_SLAVE              (0x56u)     /*!< Customer definition. */
+#define SPI_WRITE_SLAVE             (0x51U)     /*!< Customer definition. */
+#define SPI_READ_SLAVE              (0x56U)     /*!< Customer definition. */
 #endif
 
 /*******************************************************************************
@@ -227,51 +227,51 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
 #ifdef SLAVE_TEST
         /* Write data to the slave. */
-        m_au8SpiTxBuf[0u] = SPI_WRITE_SLAVE;
-        SPI_Transmit((uint8_t *)&m_au8SpiTxBuf[0u], SPI_BUFFER_LENGTH);
+        m_au8SpiTxBuf[0U] = SPI_WRITE_SLAVE;
+        SPI_Transmit((uint8_t *)&m_au8SpiTxBuf[0U], SPI_BUFFER_LENGTH);
         /* Delay for slave handling data. */
-        DDL_Delay1ms(2u);
+        DDL_Delay1ms(2U);
 
         /* Read data from the slave. */
-        m_au8SpiTxBuf[0u] = SPI_READ_SLAVE;
-        SPI_Transmit((uint8_t *)&m_au8SpiTxBuf[0u], SPI_BUFFER_LENGTH);
+        m_au8SpiTxBuf[0U] = SPI_READ_SLAVE;
+        SPI_Transmit((uint8_t *)&m_au8SpiTxBuf[0U], SPI_BUFFER_LENGTH);
         /* Delay for slave handling data. */
-        DDL_Delay1ms(2u);
-        SPI_Receive((uint8_t *)&m_au8SpiRxBuf[0u], SPI_BUFFER_LENGTH);
+        DDL_Delay1ms(2U);
+        SPI_Receive((uint8_t *)&m_au8SpiRxBuf[0U], SPI_BUFFER_LENGTH);
         // TODO: Use data received from the slave. Valid data starts at offset 2.
 #else // If not defined SLAVE_TEST
 #if (SPI_APP_X_WIRE == SPI_APP_4_WIRE)
     #if (SPI_APP_TRANS_MODE == SPI_APP_FULL_DUPLEX)
         /* SPI send and receive in 4-wire master mode. */
-        SPI_TransmitReceive((uint8_t *)&m_au8SpiTxBuf[0u],      \
-                            (uint8_t *)&m_au8SpiRxBuf[0u],      \
+        SPI_TransmitReceive((uint8_t *)&m_au8SpiTxBuf[0U],      \
+                            (uint8_t *)&m_au8SpiRxBuf[0U],      \
                             SPI_BUFFER_LENGTH);
     #else
         /* SPI send only in 4-wire master mode. */
-        SPI_Transmit((uint8_t *)&m_au8SpiTxBuf[0u], SPI_BUFFER_LENGTH);
+        SPI_Transmit((uint8_t *)&m_au8SpiTxBuf[0U], SPI_BUFFER_LENGTH);
     #endif
 #else
     #ifdef SPI_APP_CUSTOM_NSS
         /* SPI send and receive in 3-wire master mode, with custom NSS pin. */
-        SpiTransmitData((uint8_t *)&m_au8SpiTxBuf[0u], SPI_BUFFER_LENGTH);
-        SpiReceiveData((uint8_t *)&m_au8SpiRxBuf[0u], SPI_BUFFER_LENGTH);
-        SpiTransmitReceiveData((uint8_t *)&m_au8SpiTxBuf[0u],   \
-                               (uint8_t *)&m_au8SpiRxBuf[0u],   \
+        SpiTransmitData((uint8_t *)&m_au8SpiTxBuf[0U], SPI_BUFFER_LENGTH);
+        SpiReceiveData((uint8_t *)&m_au8SpiRxBuf[0U], SPI_BUFFER_LENGTH);
+        SpiTransmitReceiveData((uint8_t *)&m_au8SpiTxBuf[0U],   \
+                               (uint8_t *)&m_au8SpiRxBuf[0U],   \
                                 SPI_BUFFER_LENGTH,              \
                                 SPI_BUFFER_LENGTH);
     #else
         #if (SPI_APP_TRANS_MODE == SPI_APP_FULL_DUPLEX)
             /* SPI send and receive in 3-wire master mode. */
-            SPI_TransmitReceive((uint8_t *)&m_au8SpiTxBuf[0u],  \
-                                (uint8_t *)&m_au8SpiRxBuf[0u],  \
+            SPI_TransmitReceive((uint8_t *)&m_au8SpiTxBuf[0U],  \
+                                (uint8_t *)&m_au8SpiRxBuf[0U],  \
                                 SPI_BUFFER_LENGTH);
         #else
             /* SPI send only in 3-wire master mode. */
-            SPI_Transmit((uint8_t *)&m_au8SpiTxBuf[0u], SPI_BUFFER_LENGTH);
+            SPI_Transmit((uint8_t *)&m_au8SpiTxBuf[0U], SPI_BUFFER_LENGTH);
         #endif
     #endif // #ifdef SPI_APP_CUSTOM_NSS
 #endif

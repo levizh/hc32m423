@@ -59,7 +59,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -83,10 +83,10 @@
 /* ADC channels definition for this example. */
 #define VAR_VOL_CHANNEL             (ADC_CH9)
 #define ADC_SA_CHANNEL              (VAR_VOL_CHANNEL)
-#define ADC_SA_CHANNEL_COUNT        (1u)
+#define ADC_SA_CHANNEL_COUNT        (1U)
 
 #define ADC_SB_CHANNEL              (ADC_CH2 | ADC_CH4)
-#define ADC_SB_CHANNEL_COUNT        (2u)
+#define ADC_SB_CHANNEL_COUNT        (2U)
 
 /* ADC channel sampling time. */
 #define ADC_SAMPLE_TIME             ((uint8_t)30)
@@ -163,12 +163,12 @@ int32_t main(void)
        Pull down the pin initialized by the function SbTriggerPinInit to generate
        the event(EVT_PORT_EIRQ0) to trigger sequence B. */
 
-    while (1u)
+    while (1U)
     {
         if (ADC_GetEocFlag(ADC_FLAG_EOCA) == Set)
         {
             DBG("\nSequence A is triggered by the falling edge of ADTRG.");
-            ADC_GetChannelData(ADC_SA_CHANNEL, (uint16_t *)&m_au16AdcSaVal[0u], ADC_SA_CHANNEL_COUNT);
+            ADC_GetChannelData(ADC_SA_CHANNEL, (uint16_t *)&m_au16AdcSaVal[0U], ADC_SA_CHANNEL_COUNT);
             ADC_ClrEocFlag(ADC_FLAG_EOCA);
             // TODO: Use the ADC data.
         }
@@ -176,7 +176,7 @@ int32_t main(void)
         if (ADC_GetEocFlag(ADC_FLAG_EOCB) == Set)
         {
             DBG("\nSequence B is triggered by the event.");
-            ADC_GetChannelData(ADC_SB_CHANNEL, (uint16_t *)&m_au16AdcSbVal[0u], ADC_SB_CHANNEL_COUNT);
+            ADC_GetChannelData(ADC_SB_CHANNEL, (uint16_t *)&m_au16AdcSbVal[0U], ADC_SB_CHANNEL_COUNT);
             ADC_ClrEocFlag(ADC_FLAG_EOCB);
             // TODO: Use the ADC data.
         }
@@ -323,17 +323,17 @@ static void AdcSetChannelPinAnalogMode(uint16_t u16Channel)
 {
     uint8_t u8PinNbr;
 
-    u8PinNbr    = 0u;
+    u8PinNbr    = 0U;
     u16Channel &= ADC_CH_ALL;
 
-    while (u16Channel != 0u)
+    while (u16Channel != 0U)
     {
-        if (u16Channel & 0x1u)
+        if (u16Channel & 0x1U)
         {
             AdcSetPinAnalogMode(u8PinNbr);
         }
 
-        u16Channel >>= 1u;
+        u16Channel >>= 1U;
         u8PinNbr++;
     }
 }
@@ -348,7 +348,7 @@ static void AdcSetPinAnalogMode(uint8_t u8PinNbr)
 {
     uint8_t u8Port = GPIO_PORT_2;
     uint8_t u8Pin  = GPIO_PIN_0;
-    uint8_t u8Flag = 1u;
+    uint8_t u8Flag = 1U;
 
     switch (u8PinNbr)
     {
@@ -413,11 +413,11 @@ static void AdcSetPinAnalogMode(uint8_t u8PinNbr)
         break;
 
     default:
-        u8Flag = 0u;
+        u8Flag = 0U;
         break;
     }
 
-    if (u8Flag != 0u)
+    if (u8Flag != 0U)
     {
         GPIO_SetFunc(u8Port, u8Pin, GPIO_FUNC_1_ANIN);
     }

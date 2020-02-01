@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -90,7 +90,7 @@
 #define LED_RG_ON()     {LED_R_ON();LED_G_ON();}
 #define LED_RG_OFF()    {LED_R_OFF();LED_G_OFF();}
 
-#define DELAY_TIME      (5000u)
+#define DELAY_TIME      (5000U)
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
  ******************************************************************************/

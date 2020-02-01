@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -79,7 +79,7 @@
    PwmFrequency = 2000Hz;
    CompareVal = 2000000 / 2000 / 2 = 500. */
 #define TIMER2_CLK_PRESCALER        (TIMER2_CLK_PRESCALER_16)
-#define TIMER2_COMPARE_VALUE        (500u)
+#define TIMER2_COMPARE_VALUE        (500U)
 
 /* PWM pin definition.
    P00, P01, P30, P31, P41 and P50 can be used as PWM output pin. */
@@ -122,7 +122,7 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
         /* Call TIMER2_Stop to stop the PWM output. */
         // TIMER2_Stop();

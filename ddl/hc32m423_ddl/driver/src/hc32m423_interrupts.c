@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-21       Zhangxl         First version
+   2020-02-01       Zhangxl         First version
    2020-01-22       Zhangxl         Modify exclusive IRQ request process for 
                                     share handler
  @endverbatim
@@ -60,7 +60,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -87,7 +87,7 @@
 /**
  * @brief   Maximum IRQ handler number
  */
-#define IRQ_NUM_MAX         16u
+#define IRQ_NUM_MAX         16U
 
 /**
  * @defgroup INTC_Check_Parameters_Validity INTC Check Parameters Validity
@@ -99,14 +99,14 @@
              INTC_WUPENR_EKEYWUEN       | INTC_WUPENR_TMR0CMPWUEN   |           \
              INTC_WUPENR_TMR2CMPWUEN    | INTC_WUPENR_TMR2OVFWUEN   |           \
              INTC_WUPENR_CMPWUEN        | INTC_WUPENR_PVDWUEN))                 \
-             != (uint32_t)0x00000000ul)
+             != (uint32_t)0x00000000UL)
 
 /*  Parameter validity check for event number. */
 #define IS_INTC_EVENT(event)                                                    \
 (   ((event) & (INTC_EVTER_EVTEN0   | INTC_EVTER_EVTEN1                 |       \
                 INTC_EVTER_EVTEN2   | INTC_EVTER_EVTEN3                 |       \
                 INTC_EVTER_EVTEN4   | INTC_EVTER_EVTEN5                 |       \
-                INTC_EVTER_EVTEN6   | INTC_EVTER_EVTEN7)) != (uint8_t)0x00u)
+                INTC_EVTER_EVTEN6   | INTC_EVTER_EVTEN7)) != (uint8_t)0x00U)
 
 /*  Parameter validity check for NMI pin filter function. */
 #define IS_NMI_FE(fe)                                                           \
@@ -126,7 +126,7 @@
     ((trigger) == NMI_TRIGGER_RISING))
 
 /*  Parameter validity check for NMI trigger souce. */
-#define IS_NMI_SRC(src) (((src) & NMI_SRC_MASK) != (uint8_t)0x00u)
+#define IS_NMI_SRC(src) (((src) & NMI_SRC_MASK) != (uint8_t)0x00U)
 
 /*  Parameter validity check for get NMI trigger source. */
 #define IS_GET_NMI_SRC(src)                                                     \
@@ -155,7 +155,7 @@
     ((trigger) == EXINT_TRIGGER_BOTH))
 
 /*  Parameter validity check for EXINT channel. */
-#define IS_EXINT_CH(ch)     (((ch) & EXINT_CH_MASK) != (uint16_t)0x0000u)
+#define IS_EXINT_CH(ch)     (((ch) & EXINT_CH_MASK) != (uint16_t)0x0000U)
 
 /*  Parameter validity check for get EXINT channel. */
 #define IS_GET_EXINT_CH(ch)                                                     \
@@ -171,7 +171,7 @@
     ((ch) == EXINT_CH09))
 
 /*  Parameter validity check for EKEY. */
-#define IS_INTC_EKEY(ekey)  (((ekey) & INTC_EKEY_MASK) != (uint8_t)0x00u)
+#define IS_INTC_EKEY(ekey)  (((ekey) & INTC_EKEY_MASK) != (uint8_t)0x00U)
 /**
  * @}
  */
@@ -232,15 +232,15 @@ en_result_t INTC_IrqRegistration(const stc_irq_regi_config_t *pstcIrqRegiConfig)
     else
     {
         /* Checking validity for Interrupt source of Group 0~7 and IRQ No. */
-        if (((pstcIrqRegiConfig->enIntSrc / 0x10u)*2u + 8u != pstcIrqRegiConfig->enIRQn) && \
-            ((pstcIrqRegiConfig->enIntSrc / 0x10u)*2u + 9u != pstcIrqRegiConfig->enIRQn))
+        if (((pstcIrqRegiConfig->enIntSrc / 0x10U)*2U + 8U != pstcIrqRegiConfig->enIRQn) && \
+            ((pstcIrqRegiConfig->enIntSrc / 0x10U)*2U + 9U != pstcIrqRegiConfig->enIRQn))
         {
             enRet = ErrorInvalidParameter;
         }
         else
         {
             /* EIRQ0~7 are fixed allocation of IRQ handler 0~7 */
-            if ((0u == pstcIrqRegiConfig->enIntSrc % 0x10u) || (pstcIrqRegiConfig->enIRQn < 8u))
+            if ((0U == pstcIrqRegiConfig->enIntSrc % 0x10U) || (pstcIrqRegiConfig->enIRQn < 8U))
             {
                 enRet = ErrorInvalidParameter;
             }
@@ -248,11 +248,11 @@ en_result_t INTC_IrqRegistration(const stc_irq_regi_config_t *pstcIrqRegiConfig)
             {
                 INTC_Unlock();
                 stcIntSel = (stc_intc_iselar_field_t *)((uint32_t)(&M0P_INTC->ISELAR8) +    \
-                                                     (4u * (pstcIrqRegiConfig->enIRQn - 8u)));
-                stcIntSel->ISEL = (pstcIrqRegiConfig->enIntSrc) % 0x10u;
+                                                     (4U * (pstcIrqRegiConfig->enIRQn - 8U)));
+                stcIntSel->ISEL = (pstcIrqRegiConfig->enIntSrc) % 0x10U;
 
                 /* Callback function */
-                pfnIrqHandler[pstcIrqRegiConfig->enIRQn-8u] = pstcIrqRegiConfig->pfnCallback;
+                pfnIrqHandler[pstcIrqRegiConfig->enIRQn-8U] = pstcIrqRegiConfig->pfnCallback;
 
                 INTC_Lock();
             }
@@ -276,21 +276,21 @@ en_result_t INTC_ShareIrqCmd(en_int_src_t enIntSrc, en_functional_state_t enNewS
     en_result_t enRet = Ok;
 
     /* EXINT0~7 cannot be configured into share IRQ */
-    if (0u == enIntSrc % 0x10u)
+    if (0U == enIntSrc % 0x10U)
     {
         enRet = ErrorInvalidParameter;
     }
     else
     {
         INTC_Unlock();
-        ISELRx = (uint32_t *)(((uint32_t)&M0P_INTC->ISELBR24) + (4u * (enIntSrc / 16u)));
+        ISELRx = (uint32_t *)(((uint32_t)&M0P_INTC->ISELBR24) + (4U * (enIntSrc / 16U)));
         if (Enable == enNewState)
         {
-            SET_REG32_BIT(*ISELRx, (1ul << (enIntSrc % 16ul)));
+            SET_REG32_BIT(*ISELRx, (1UL << (enIntSrc % 16UL)));
         }
         else
         {
-            CLEAR_REG32_BIT(*ISELRx, (1ul << (enIntSrc % 16ul)));
+            CLEAR_REG32_BIT(*ISELRx, (1UL << (enIntSrc % 16UL)));
         }
         INTC_Lock();
     }
@@ -506,7 +506,7 @@ void NMI_IrqHandler(void)
  */
 en_result_t EXINT_Init(const stc_exint_config_t *pstcExIntConfig)
 {
-    uint8_t u8ExIntPos = 0u;
+    uint8_t u8ExIntPos = 0U;
     en_result_t enRet = Ok;
 
     /* Check if pointer is NULL */
@@ -523,11 +523,11 @@ en_result_t EXINT_Init(const stc_exint_config_t *pstcExIntConfig)
         DDL_ASSERT(IS_EXINT_CH(pstcExIntConfig->u16ExIntCh));
 
         INTC_Unlock();
-        for (u8ExIntPos = 0u; u8ExIntPos < 10u; u8ExIntPos++)
+        for (u8ExIntPos = 0U; u8ExIntPos < 10U; u8ExIntPos++)
         {
-            if (pstcExIntConfig->u16ExIntCh & (1ul << u8ExIntPos))
+            if (pstcExIntConfig->u16ExIntCh & (1UL << u8ExIntPos))
             {
-                WRITE_REG8(*(uint8_t *)((uint32_t)(&M0P_INTC->EIRQCR0) + 4u*u8ExIntPos),\
+                WRITE_REG8(*(uint8_t *)((uint32_t)(&M0P_INTC->EIRQCR0) + 4U*u8ExIntPos),\
                           (pstcExIntConfig->u8ExIntFE         |                         \
                            pstcExIntConfig->u8ExIntFClk       |                         \
                            pstcExIntConfig->u8ExIntLvl));
@@ -557,7 +557,7 @@ en_result_t EXINT_StructInit(stc_exint_config_t *pstcExintConfig)
     else
     {
         /* Configure to default value */
-        pstcExintConfig->u16ExIntCh     = (uint16_t)0ul;
+        pstcExintConfig->u16ExIntCh     = (uint16_t)0UL;
         pstcExintConfig->u8ExIntFE      = EXINT_FILTER_OFF;
         pstcExintConfig->u8ExIntFClk    = EXINT_FCLK_HCLK_DIV1;
         pstcExintConfig->u8ExIntLvl     = EXINT_TRIGGER_FALLING;
@@ -703,7 +703,7 @@ void SysTick_Handler(void)
  */
 void IRQ008_Handler(void)
 {
-    pfnIrqHandler[Int008_IRQn-8u]();
+    pfnIrqHandler[Int008_IRQn-8U]();
 }
 
 /**
@@ -713,7 +713,7 @@ void IRQ008_Handler(void)
  */
 void IRQ009_Handler(void)
 {
-    pfnIrqHandler[Int009_IRQn-8u]();
+    pfnIrqHandler[Int009_IRQn-8U]();
 }
 
 /**
@@ -723,7 +723,7 @@ void IRQ009_Handler(void)
  */
 void IRQ010_Handler(void)
 {
-    pfnIrqHandler[Int010_IRQn-8u]();
+    pfnIrqHandler[Int010_IRQn-8U]();
 }
 
 
@@ -734,7 +734,7 @@ void IRQ010_Handler(void)
  */
 void IRQ011_Handler(void)
 {
-    pfnIrqHandler[Int011_IRQn-8u]();
+    pfnIrqHandler[Int011_IRQn-8U]();
 }
 
 /**
@@ -744,7 +744,7 @@ void IRQ011_Handler(void)
  */
 void IRQ012_Handler(void)
 {
-    pfnIrqHandler[Int012_IRQn-8u]();
+    pfnIrqHandler[Int012_IRQn-8U]();
 }
 
 /**
@@ -754,7 +754,7 @@ void IRQ012_Handler(void)
  */
 void IRQ013_Handler(void)
 {
-    pfnIrqHandler[Int013_IRQn-8u]();
+    pfnIrqHandler[Int013_IRQn-8U]();
 }
 
 /**
@@ -764,7 +764,7 @@ void IRQ013_Handler(void)
  */
 void IRQ014_Handler(void)
 {
-    pfnIrqHandler[Int014_IRQn-8u]();
+    pfnIrqHandler[Int014_IRQn-8U]();
 }
 
 /**
@@ -774,7 +774,7 @@ void IRQ014_Handler(void)
  */
 void IRQ015_Handler(void)
 {
-    pfnIrqHandler[Int015_IRQn-8u]();
+    pfnIrqHandler[Int015_IRQn-8U]();
 }
 
 /**
@@ -784,7 +784,7 @@ void IRQ015_Handler(void)
  */
 void IRQ016_Handler(void)
 {
-    pfnIrqHandler[Int016_IRQn-8u]();
+    pfnIrqHandler[Int016_IRQn-8U]();
 }
 
 /**
@@ -794,7 +794,7 @@ void IRQ016_Handler(void)
  */
 void IRQ017_Handler(void)
 {
-    pfnIrqHandler[Int017_IRQn-8u]();
+    pfnIrqHandler[Int017_IRQn-8U]();
 }
 
 /**
@@ -804,7 +804,7 @@ void IRQ017_Handler(void)
  */
 void IRQ018_Handler(void)
 {
-    pfnIrqHandler[Int018_IRQn-8u]();
+    pfnIrqHandler[Int018_IRQn-8U]();
 }
 
 /**
@@ -814,7 +814,7 @@ void IRQ018_Handler(void)
  */
 void IRQ019_Handler(void)
 {
-    pfnIrqHandler[Int019_IRQn-8u]();
+    pfnIrqHandler[Int019_IRQn-8U]();
 }
 
 /**
@@ -824,7 +824,7 @@ void IRQ019_Handler(void)
  */
 void IRQ020_Handler(void)
 {
-    pfnIrqHandler[Int020_IRQn-8u]();
+    pfnIrqHandler[Int020_IRQn-8U]();
 }
 
 /**
@@ -834,7 +834,7 @@ void IRQ020_Handler(void)
  */
 void IRQ021_Handler(void)
 {
-    pfnIrqHandler[Int021_IRQn-8u]();
+    pfnIrqHandler[Int021_IRQn-8U]();
 }
 
 /**
@@ -844,7 +844,7 @@ void IRQ021_Handler(void)
  */
 void IRQ022_Handler(void)
 {
-    pfnIrqHandler[Int022_IRQn-8u]();
+    pfnIrqHandler[Int022_IRQn-8U]();
 }
 
 /**
@@ -854,7 +854,7 @@ void IRQ022_Handler(void)
  */
 void IRQ023_Handler(void)
 {
-    pfnIrqHandler[Int023_IRQn-8u]();
+    pfnIrqHandler[Int023_IRQn-8U]();
 }
 
 /**
@@ -864,8 +864,8 @@ void IRQ023_Handler(void)
  */
 void IRQ024_Handler(void)
 {
-    uint32_t u32Tmp1 = 0ul;
-    uint32_t u32Tmp2 = 0ul;
+    uint32_t u32Tmp1 = 0UL;
+    uint32_t u32Tmp2 = 0UL;
     uint32_t ISELBR24 = M0P_INTC->ISELBR24;
 
     /* External interrupt 08 */
@@ -962,8 +962,8 @@ void IRQ024_Handler(void)
  */
 void IRQ025_Handler(void)
 {
-    uint32_t u32Tmp1 = 0ul;
-    uint32_t u32Tmp2 = 0ul;
+    uint32_t u32Tmp1 = 0UL;
+    uint32_t u32Tmp2 = 0UL;
     uint32_t ISELBR25 = M0P_INTC->ISELBR25;
 
     /* External interrupt 09 */
@@ -1011,8 +1011,8 @@ void IRQ025_Handler(void)
  */
 void IRQ026_Handler(void)
 {
-    uint32_t u32Tmp1 = 0ul;
-    uint32_t u32Tmp2 = 0ul;
+    uint32_t u32Tmp1 = 0UL;
+    uint32_t u32Tmp2 = 0UL;
     uint32_t ISELBR26 = M0P_INTC->ISELBR26;
 
     /* DMA request or transfer error */
@@ -1087,8 +1087,8 @@ void IRQ026_Handler(void)
  */
 void IRQ027_Handler(void)
 {
-    uint32_t u32Tmp1 = 0ul;
-    uint32_t u32Tmp2 = 0ul;
+    uint32_t u32Tmp1 = 0UL;
+    uint32_t u32Tmp2 = 0UL;
     uint32_t ISELBR27 = M0P_INTC->ISELBR27;
 
     /* EKEY and other Interrupt source are exclusive */
@@ -1166,8 +1166,8 @@ void IRQ027_Handler(void)
  */
 void IRQ028_Handler(void)
 {
-    uint32_t u32Tmp1 = 0ul;
-    uint32_t u32Tmp2 = 0ul;
+    uint32_t u32Tmp1 = 0UL;
+    uint32_t u32Tmp2 = 0UL;
     uint32_t ISELBR28 = M0P_INTC->ISELBR28;
 
     /* TimerA overflow */
@@ -1270,8 +1270,8 @@ void IRQ028_Handler(void)
  */
 void IRQ029_Handler(void)
 {
-    uint32_t u32Tmp1 = 0ul;
-    uint32_t u32Tmp2 = 0ul;
+    uint32_t u32Tmp1 = 0UL;
+    uint32_t u32Tmp2 = 0UL;
     uint32_t ISELBR29 = M0P_INTC->ISELBR29;
 
     /* Timer2 compare match */
@@ -1346,8 +1346,8 @@ void IRQ029_Handler(void)
  */
 void IRQ030_Handler(void)
 {
-    uint32_t u32Tmp1 = 0ul;
-    uint32_t u32Tmp2 = 0ul;
+    uint32_t u32Tmp1 = 0UL;
+    uint32_t u32Tmp2 = 0UL;
     uint32_t ISELBR30 = M0P_INTC->ISELBR30;
 
     /* TimerB1 overflow */
@@ -1401,12 +1401,12 @@ void IRQ030_Handler(void)
  */
 void IRQ031_Handler(void)
 {
-    uint32_t u32Tmp1 = 0ul;
-    uint32_t u32Tmp2 = 0ul;
+    uint32_t u32Tmp1 = 0UL;
+    uint32_t u32Tmp2 = 0UL;
     uint32_t ISELBR31 = M0P_INTC->ISELBR31;
 
     /* LVD detected */
-    if (0u == M0P_EFM->LVDICGCR_f.LVDDIS)
+    if (0U == M0P_EFM->LVDICGCR_f.LVDDIS)
     {
         u32Tmp1 = bM0P_PWC->LVDCSR_b.DETF;
         if ((ISELBR31 & BIT_MASK_02) && (u32Tmp1))

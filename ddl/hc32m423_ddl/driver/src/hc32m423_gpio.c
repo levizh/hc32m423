@@ -59,7 +59,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -86,9 +86,9 @@
  * @defgroup GPIO_Registers_Reset_Value GPIO Registers Reset Value
  * @{
  */
-#define GPIO_PSPCR_RESET_VALUE          ((uint16_t)0x0003u)
-#define GPIO_PCCR_RESET_VALUE           ((uint16_t)0x4000u)
-#define GPIO_PINAER_RESET_VALUE         ((uint16_t)0x0000u)
+#define GPIO_PSPCR_RESET_VALUE          ((uint16_t)0x0003U)
+#define GPIO_PCCR_RESET_VALUE           ((uint16_t)0x4000U)
+#define GPIO_PINAER_RESET_VALUE         ((uint16_t)0x0000U)
 /**
  * @}
  */
@@ -143,7 +143,7 @@
     ((exint) == PIN_EXINT_ON))
 
 /*  Parameter validity check for pin number. */
-#define IS_GPIO_PIN(pin)    (((pin) & GPIO_PIN_MASK ) != (uint8_t)0x00u)
+#define IS_GPIO_PIN(pin)    (((pin) & GPIO_PIN_MASK ) != (uint8_t)0x00U)
 
 /*  Parameter validity check for get pin index. */
 #define IS_GET_GPIO_PIN(pin)                                                    \
@@ -157,7 +157,7 @@
     ((pin) == GPIO_PIN_7))
 
 /*  Parameter validity check for port source. */
-#define IS_GPIO_PORT(port)  (((port) & GPIO_PORT_MASK) != (uint16_t)0x0000u)
+#define IS_GPIO_PORT(port)  (((port) & GPIO_PORT_MASK) != (uint16_t)0x0000U)
 
 /*  Parameter validity check for port source. */
 #define IS_GPIO_PORT_SOURCE(port)                                               \
@@ -233,7 +233,7 @@
 en_result_t GPIO_Init(uint8_t u8Port, uint8_t u8Pin, const stc_gpio_init_t *pstcGpioInit)
 {
     uint16_t *PCRx;
-    uint8_t u8PinPos = 0u;
+    uint8_t u8PinPos = 0U;
     uint16_t u16PCRVal;
     en_result_t enRet = Ok;
 
@@ -259,12 +259,12 @@ en_result_t GPIO_Init(uint8_t u8Port, uint8_t u8Pin, const stc_gpio_init_t *pstc
 
         GPIO_Unlock();
 
-        for (u8PinPos = 0u; u8PinPos < 8u; u8PinPos++)
+        for (u8PinPos = 0U; u8PinPos < 8U; u8PinPos++)
         {
-            if (u8Pin & (1ul<<u8PinPos))
+            if (u8Pin & (1UL<<u8PinPos))
             {
                 PCRx = (uint16_t *)((uint32_t)(&M0P_PORT->PCR00) +                  \
-                                  u8Port * 0x10ul + u8PinPos * 2ul);
+                                  u8Port * 0x10UL + u8PinPos * 2UL);
 
                 u16PCRVal = pstcGpioInit->u16ExInt  | pstcGpioInit->u16PinIType |   \
                             pstcGpioInit->u16Invert | pstcGpioInit->u16PullUp   |   \
@@ -381,11 +381,11 @@ void GPIO_DebugPortSetting(uint8_t u8DebugPort, en_functional_state_t enNewState
 
     if (Enable == enNewState)
     {
-        M0P_PORT->PSPCR |= (uint16_t)((uint16_t)u8DebugPort & 0x03u);
+        M0P_PORT->PSPCR |= (uint16_t)((uint16_t)u8DebugPort & 0x03U);
     }
     else
     {
-        M0P_PORT->PSPCR &= (uint16_t)(~((uint16_t)u8DebugPort & 0x03u));
+        M0P_PORT->PSPCR &= (uint16_t)(~((uint16_t)u8DebugPort & 0x03U));
     }
 
     GPIO_Lock();
@@ -401,7 +401,7 @@ void GPIO_DebugPortSetting(uint8_t u8DebugPort, en_functional_state_t enNewState
 void GPIO_SetFunc(uint8_t u8Port, uint8_t u8Pin, uint8_t u8Func)
 {
     __IO stc_port_pcr_field_t *PCRx;
-    uint8_t u8PinPos = 0u;
+    uint8_t u8PinPos = 0U;
 
     /* Parameter validity checking */
     DDL_ASSERT(IS_GPIO_PORT_SOURCE(u8Port));
@@ -410,12 +410,12 @@ void GPIO_SetFunc(uint8_t u8Port, uint8_t u8Pin, uint8_t u8Func)
 
     GPIO_Unlock();
 
-    for (u8PinPos = 0u; u8PinPos < 8u; u8PinPos ++)
+    for (u8PinPos = 0U; u8PinPos < 8U; u8PinPos ++)
     {
-        if (u8Pin & (1ul<<u8PinPos))
+        if (u8Pin & (1UL<<u8PinPos))
         {
             PCRx = (stc_port_pcr_field_t *)((uint32_t)(&M0P_PORT->PCR00) + \
-                                              u8Port * 0x10ul + u8PinPos * 2ul);
+                                              u8Port * 0x10UL + u8PinPos * 2UL);
             PCRx->FSEL = u8Func;
         }
     }

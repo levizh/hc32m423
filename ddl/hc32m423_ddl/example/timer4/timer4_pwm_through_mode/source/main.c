@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -86,7 +86,7 @@
 #define FUNCTION_CLK_GATE               (CLK_FCG_TIM4)
 
 /* Timer4 Counter period value && interrupt number definition */
-#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/512ul/2ul))    /* 500 ms */
+#define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/512UL/2UL))    /* 500 ms */
 
 /* Timer4 OCO Channel definition */
 #define TIMER4_OCO_HIGH_CH              (TIMER4_OCO_UH)    /* only TIMER4_OCO_UH  TIMER4_OCO_VH  TIMER4_OCO_WH */
@@ -131,7 +131,7 @@ static void SystemClockConfig(void)
 int32_t main(void)
 {
     uint32_t u32PwmCh;
-    uint32_t u32OcoLowCh = TIMER4_OCO_HIGH_CH + 1ul;
+    uint32_t u32OcoLowCh = TIMER4_OCO_HIGH_CH + 1UL;
     stc_timer4_cnt_init_t stcTimer4CntInit;
     stc_timer4_oco_init_t stcTimer4OcoInit;
     stc_timer4_pwm_init_t stcTimer4PwmInit;
@@ -156,11 +156,11 @@ int32_t main(void)
     stcTimer4OcoInit.enOcoCmd = Enable;
     stcTimer4OcoInit.enOcoIntCmd = Enable;
     stcTimer4OcoInit.u16OcoInvalidOp = TIMER4_OCO_INVAILD_OP_LOW;
-    stcTimer4OcoInit.u16OccrVal = TIMER4_CNT_CYCLE_VAL/2u;
+    stcTimer4OcoInit.u16OccrVal = TIMER4_CNT_CYCLE_VAL/2U;
     TIMER4_OCO_Init(TIMER4_OCO_HIGH_CH, &stcTimer4OcoInit);
     TIMER4_OCO_Init(u32OcoLowCh, &stcTimer4OcoInit);
 
-    if (!(TIMER4_OCO_HIGH_CH % 2ul))
+    if (!(TIMER4_OCO_HIGH_CH % 2UL))
     {
         /* OCMR[15:0] = 0x0FFF = b 0000 1111 1111 1111 */
         stcHighChCmpMode.OCMRx_f.OCFDCH = TIMER4_OCO_OCF_SET;   /* bit[0] 1 */
@@ -183,7 +183,7 @@ int32_t main(void)
     {
     }
 
-    if (u32OcoLowCh % 2ul)
+    if (u32OcoLowCh % 2UL)
     {
         /* OCMR[31:0] 0x0FF0 0FFF = b 0000 1111 1111 0000   0000 1111 1111 1111 */
         stcLowChCmpMode.OCMRx_f.OCFDCL = TIMER4_OCO_OCF_SET;    /* bit[0] 1 */

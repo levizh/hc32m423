@@ -57,7 +57,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -279,14 +279,14 @@ en_result_t TIMERB_Init(M0P_TMRB_TypeDef *TMRBx,
     if ((IS_TIMERB_INSTANCE(TMRBx)) && (NULL != pstcInit))
     {
         /* Check parameters */
-        DDL_ASSERT(0u != pstcInit->u16PeriodVal);
+        DDL_ASSERT(0U != pstcInit->u16PeriodVal);
         DDL_ASSERT(IS_TIMERB_CNT_MODE(pstcInit->u16CntMode));
         DDL_ASSERT(IS_TIMERB_CLOCK_DIV(pstcInit->u16ClkDiv));
         DDL_ASSERT(IS_TIMERB_CNT_DIRECTION(pstcInit->u16CntDir));
         DDL_ASSERT(IS_TIMERB_OVERFLOW_STATE(pstcInit->u16OverflowAction));
         DDL_ASSERT(IS_TIMERB_SYNC_START_STATE(pstcInit->u16SynStartState));
 
-        WRITE_REG16(TMRBx->CNTER, 0u);
+        WRITE_REG16(TMRBx->CNTER, 0U);
         WRITE_REG16(TMRBx->PERAR, pstcInit->u16PeriodVal);
         MODIFY_REG16(TMRBx->BCSTR,                                             \
                      (TMRB_BCSTR_DIR   | TMRB_BCSTR_MODE  |                    \
@@ -359,9 +359,9 @@ en_result_t TIMERB_DeInit(M0P_TMRB_TypeDef *TMRBx)
     if (IS_TIMERB_INSTANCE(TMRBx))
     {
         /* Configures the registers to reset value. */
-        WRITE_REG16(TMRBx->CNTER, 0x0000u);
+        WRITE_REG16(TMRBx->CNTER, 0x0000U);
         WRITE_REG16(TMRBx->PERAR, 0xFFFFu);
-        WRITE_REG16(TMRBx->BCSTR, 0x0002u);
+        WRITE_REG16(TMRBx->BCSTR, 0x0002U);
         enRet = Ok;
     }
 
@@ -1046,10 +1046,10 @@ en_result_t TIMERB_IC_DeInit(M0P_TMRB_TypeDef *TMRBx)
     {
         /* Configures the registers to reset value. */
         WRITE_REG16(TMRBx->PERAR, 0xFFFFu);
-        WRITE_REG16(TMRBx->CCONR, 0x0001u);
-        WRITE_REG16(TMRBx->HCONR, 0x0000u);
-        WRITE_REG16(TMRBx->HCUPR, 0x0000u);
-        WRITE_REG16(TMRBx->HCDOR, 0x0000u);
+        WRITE_REG16(TMRBx->CCONR, 0x0001U);
+        WRITE_REG16(TMRBx->HCONR, 0x0000U);
+        WRITE_REG16(TMRBx->HCUPR, 0x0000U);
+        WRITE_REG16(TMRBx->HCDOR, 0x0000U);
         enRet = Ok;
     }
 
@@ -1238,10 +1238,10 @@ en_result_t TIMERB_OC_DeInit(M0P_TMRB_TypeDef *TMRBx)
     if (IS_TIMERB_INSTANCE(TMRBx))
     {
         /* Configures the registers to reset value. */
-        WRITE_REG16(TMRBx->PCONR, 0x0000u);
+        WRITE_REG16(TMRBx->PCONR, 0x0000U);
         WRITE_REG16(TMRBx->PERAR, 0xFFFFu);
         WRITE_REG16(TMRBx->CMPAR, 0xFFFFu);
-        WRITE_REG16(TMRBx->BCSTR, 0x0000u);
+        WRITE_REG16(TMRBx->BCSTR, 0x0000U);
         enRet = Ok;
     }
 

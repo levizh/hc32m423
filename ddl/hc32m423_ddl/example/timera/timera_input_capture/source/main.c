@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -98,7 +98,7 @@
 #define TIMERA_UNIT1_CLOCK              (CLK_FCG_TIMA)
 #define TIMERA_UNIT1_CMP_INTn           (INT_TMRA_CMP)
 #define TIMERA_UNIT1_CMP_IRQn           (Int016_IRQn)
-#define TIMERA_UNIT1_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/256u/100u))
+#define TIMERA_UNIT1_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/256U/100U))
 
 /* TIMERA channel 1 Port/Pin definition */
 #define TIMERA_UNIT1_CH1                (TIMERA_CHANNEL_CH1)

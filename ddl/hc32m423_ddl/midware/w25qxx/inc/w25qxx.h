@@ -64,7 +64,7 @@ extern "C"
 #include <stdint.h>
 
 /**
- * @addtogroup HC32M120_DDL_Midware
+ * @addtogroup HC32M423_DDL_Midware
  * @{
  */
 
@@ -89,7 +89,7 @@ extern "C"
 typedef struct
 {
     uint16_t u16ManId;              /*!< Manufacturer device ID. */
-    uint8_t  au8UniqueId[8u];       /*!< 64 bit unique ID number. */
+    uint8_t  au8UniqueId[8U];       /*!< 64 bit unique ID number. */
     uint32_t u32PageCount;
     uint32_t u32SectorCount;
     uint32_t u32BlockCount32k;
@@ -114,11 +114,11 @@ typedef struct
  * @defgroup W25QXX_ID W25QXX ID
  * @{
  */
-#define W25Q80                  (0xEF13u)
-#define W25Q16                  (0xEF14u)
-#define W25Q32                  (0xEF15u)
-#define W25Q64                  (0xEF16u)
-#define W25Q128                 (0xEF17u)
+#define W25Q80                  (0xEF13U)
+#define W25Q16                  (0xEF14U)
+#define W25Q32                  (0xEF15U)
+#define W25Q64                  (0xEF16U)
+#define W25Q128                 (0xEF17U)
 /**
  * @}
  */
@@ -127,34 +127,34 @@ typedef struct
  * @defgroup W25QXX_Command W25QXX Command
  * @{
  */
-#define W25Q_WRITE_ENABLE                   ((uint8_t)0x06u)
-#define W25Q_VOLATILE_SR_WRITE_ENABLE       ((uint8_t)0x50u)
-#define W25Q_WRITE_DISABLE                  ((uint8_t)0x04u)
-#define W25Q_READ_STATUS_REG_1              ((uint8_t)0x05u)
-#define W25Q_READ_STATUS_REG_2              ((uint8_t)0x35u)
-#define W25Q_WRITE_STATUS_REG               ((uint8_t)0x01u)
-#define W25Q_PAGE_PROGRAM                   ((uint8_t)0x02u)
-#define W25Q_SECTOR_ERASE                   ((uint8_t)0x20u)
-#define W25Q_BLOCK_ERASE_32K                ((uint8_t)0x52u)
-#define W25Q_BLOCK_ERASE_64K                ((uint8_t)0xD8u)
-#define W25Q_CHIP_ERASE                     ((uint8_t)0xC7u)
-#define W25Q_ERASE_PROGRAM_SUSPEND          ((uint8_t)0x75u)
+#define W25Q_WRITE_ENABLE                   ((uint8_t)0x06U)
+#define W25Q_VOLATILE_SR_WRITE_ENABLE       ((uint8_t)0x50U)
+#define W25Q_WRITE_DISABLE                  ((uint8_t)0x04U)
+#define W25Q_READ_STATUS_REG_1              ((uint8_t)0x05U)
+#define W25Q_READ_STATUS_REG_2              ((uint8_t)0x35U)
+#define W25Q_WRITE_STATUS_REG               ((uint8_t)0x01U)
+#define W25Q_PAGE_PROGRAM                   ((uint8_t)0x02U)
+#define W25Q_SECTOR_ERASE                   ((uint8_t)0x20U)
+#define W25Q_BLOCK_ERASE_32K                ((uint8_t)0x52U)
+#define W25Q_BLOCK_ERASE_64K                ((uint8_t)0xD8U)
+#define W25Q_CHIP_ERASE                     ((uint8_t)0xC7U)
+#define W25Q_ERASE_PROGRAM_SUSPEND          ((uint8_t)0x75U)
 #define W25Q_ERASE_PROGRAM_RESUME           ((uint8_t)0x7Au)
-#define W25Q_POWER_DOWN                     ((uint8_t)0xB9u)
-#define W25Q_READ_DATA                      ((uint8_t)0x03u)
+#define W25Q_POWER_DOWN                     ((uint8_t)0xB9U)
+#define W25Q_READ_DATA                      ((uint8_t)0x03U)
 #define W25Q_FAST_READ                      ((uint8_t)0x0Bu)
 #define W25Q_DEVICE_ID                      ((uint8_t)0xABu)
 #define W25Q_RELEASE_POWER_DOWN             (W25Q_DEVICE_ID)
-#define W25Q_MANUFACTURER_DEVICE_ID         ((uint8_t)0x90u)
+#define W25Q_MANUFACTURER_DEVICE_ID         ((uint8_t)0x90U)
 #define W25Q_JEDEC_ID                       ((uint8_t)0x9Fu)
 #define W25Q_READ_UNIQUE_ID                 ((uint8_t)0x4Bu)
 #define W25Q_READ_SFDP_REG                  ((uint8_t)0x5Au)
-#define W25Q_REASE_SECURITY_REG             ((uint8_t)0x44u)
-#define W25Q_PROGRAM_SECURITY_REG           ((uint8_t)0x42u)
-#define W25Q_READ_SECURITY_REG              ((uint8_t)0x48u)
-#define W25Q_ENABLE_QPI                     ((uint8_t)0x38u)
-#define W25Q_ENABLE_RESET                   ((uint8_t)0x66u)
-#define W25Q_RESET                          ((uint8_t)0x99u)
+#define W25Q_REASE_SECURITY_REG             ((uint8_t)0x44U)
+#define W25Q_PROGRAM_SECURITY_REG           ((uint8_t)0x42U)
+#define W25Q_READ_SECURITY_REG              ((uint8_t)0x48U)
+#define W25Q_ENABLE_QPI                     ((uint8_t)0x38U)
+#define W25Q_ENABLE_RESET                   ((uint8_t)0x66U)
+#define W25Q_RESET                          ((uint8_t)0x99U)
 /**
  * @}
  */

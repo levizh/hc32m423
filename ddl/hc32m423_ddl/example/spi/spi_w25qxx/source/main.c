@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 #include "w25qxx.h"
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -72,8 +72,8 @@
 /*******************************************************************************
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
-#define WRITE_BUFFER_SIZE           (8u)
-#define READ_BUFFER_SIZE            (512u)
+#define WRITE_BUFFER_SIZE           (8U)
+#define READ_BUFFER_SIZE            (512U)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -108,10 +108,10 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
-        W25Q_WriteData(251u, m_au8WriteBuffer, WRITE_BUFFER_SIZE);
-        W25Q_ReadData(0u, m_au8ReadBuffer, READ_BUFFER_SIZE);
+        W25Q_WriteData(251U, m_au8WriteBuffer, WRITE_BUFFER_SIZE);
+        W25Q_ReadData(0U, m_au8ReadBuffer, READ_BUFFER_SIZE);
     }
 }
 

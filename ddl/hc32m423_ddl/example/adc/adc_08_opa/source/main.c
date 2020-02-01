@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -73,8 +73,8 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* OPA working mode definition. */
-#define OPA_INDEPENDENT             (0u)
-#define OPA_WITH_ADC                (1u)
+#define OPA_INDEPENDENT             (0U)
+#define OPA_WITH_ADC                (1U)
 #define OPA_WORK_MODE               (OPA_WITH_ADC)
 
 /* OPAM pin definitions. */
@@ -96,19 +96,19 @@
 /* ADC channels definition for this example. */
 #define OPA1_IN_PIN                 (ADC_ANI1)
 #define OPA1_OUT_PIN                (ADC_ANI0)
-#define OPA1_IN_CH                  ((uint16_t)(1ul << OPA1_IN_PIN))
-#define OPA1_OUT_CH                 ((uint16_t)(1ul << OPA1_OUT_PIN))
+#define OPA1_IN_CH                  ((uint16_t)(1UL << OPA1_IN_PIN))
+#define OPA1_OUT_CH                 ((uint16_t)(1UL << OPA1_OUT_PIN))
 
 #define OPA2_IN_PIN                 (ADC_ANI8)
 #define OPA2_OUT_PIN                (ADC_ANI3)
-#define OPA2_IN_CH                  ((uint16_t)(1ul << OPA2_IN_PIN))
-#define OPA2_OUT_CH                 ((uint16_t)(1ul << OPA2_OUT_PIN))
+#define OPA2_IN_CH                  ((uint16_t)(1UL << OPA2_IN_PIN))
+#define OPA2_OUT_CH                 ((uint16_t)(1UL << OPA2_OUT_PIN))
 
 #define ADC_OPA_CHANNEL             (OPA1_IN_CH | OPA1_OUT_CH | OPA2_IN_CH | OPA2_OUT_CH)
 #define ADC_NORMAL_CHANNEL          (ADC_CH10)
 
 #define ADC_SA_CHANNEL              (ADC_OPA_CHANNEL | ADC_NORMAL_CHANNEL)
-#define ADC_SA_CHANNEL_COUNT        (5u)
+#define ADC_SA_CHANNEL_COUNT        (5U)
 
 /* ADC channel sampling time. */
 #define ADC_SAMPLE_TIME             ((uint8_t)50)
@@ -117,26 +117,26 @@
 #define ADC_RESOLUTION              (ADC_RESOLUTION_12B)
 
 /* ADC accuracy. */
-#define ADC_ACCURACY                (1ul << 12u)
+#define ADC_ACCURACY                (1UL << 12U)
 
 /* ADC reference voltage. The voltage of pin VREFH. */
 #define ADC_VREF                    (3.307f)
 
 /* Timeout value definitions. */
-#define TIMEOUT_MS                  (10u)
+#define TIMEOUT_MS                  (10U)
 
 /* Rp(KR) and Rn(KR) definitions. The amplification factor depends on the Rp and Rn. */
-#define OPA_RN                      (5u)
-#define OPA1_RP                     (30u)
-#define OPA2_RP                     (10u)
-#define OPA1_FACTOR                 (1u + (OPA1_RP / OPA_RN))
-#define OPA2_FACTOR                 (1u + (OPA2_RP / OPA_RN))
+#define OPA_RN                      (5U)
+#define OPA1_RP                     (30U)
+#define OPA2_RP                     (10U)
+#define OPA1_FACTOR                 (1U + (OPA1_RP / OPA_RN))
+#define OPA2_FACTOR                 (1U + (OPA2_RP / OPA_RN))
 
 /* Values of OPA definitions. */
-#define opa1_in_val                 (m_au16AdcSaVal[1u])
-#define opa1_out_val                (m_au16AdcSaVal[0u])
-#define opa2_in_val                 (m_au16AdcSaVal[3u])
-#define opa2_out_val                (m_au16AdcSaVal[2u])
+#define opa1_in_val                 (m_au16AdcSaVal[1U])
+#define opa1_out_val                (m_au16AdcSaVal[0U])
+#define opa2_in_val                 (m_au16AdcSaVal[3U])
+#define opa2_out_val                (m_au16AdcSaVal[2U])
 #endif // #if (OPA_WORK_MODE == OPA_WITH_ADC)
 
 /* Debug printing definition. */
@@ -200,7 +200,7 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
 #if (OPA_WORK_MODE == OPA_WITH_ADC)
         ADC_PollingSa(m_au16AdcSaVal, ADC_SA_CHANNEL_COUNT, TIMEOUT_MS);
@@ -226,7 +226,7 @@ int32_t main(void)
         (void)m_f32VolOpa2Out;
 #endif // #if (DDL_PRINT_ENABLE == DDL_ON)
 
-        DDL_Delay1ms(500u);
+        DDL_Delay1ms(500U);
 
 #endif // #if (OPA_WORK_MODE == OPA_WITH_ADC)
     }
@@ -304,17 +304,17 @@ static void AdcSetChannelPinAnalogMode(uint16_t u16Channel)
 {
     uint8_t u8PinNbr;
 
-    u8PinNbr    = 0u;
+    u8PinNbr    = 0U;
     u16Channel &= ADC_CH_ALL;
 
-    while (u16Channel != 0u)
+    while (u16Channel != 0U)
     {
-        if (u16Channel & 0x1u)
+        if (u16Channel & 0x1U)
         {
             AdcSetPinAnalogMode(u8PinNbr);
         }
 
-        u16Channel >>= 1u;
+        u16Channel >>= 1U;
         u8PinNbr++;
     }
 }
@@ -329,7 +329,7 @@ static void AdcSetPinAnalogMode(uint8_t u8PinNbr)
 {
     uint8_t u8Port = GPIO_PORT_2;
     uint8_t u8Pin  = GPIO_PIN_0;
-    uint8_t u8Flag = 1u;
+    uint8_t u8Flag = 1U;
 
     switch (u8PinNbr)
     {
@@ -394,11 +394,11 @@ static void AdcSetPinAnalogMode(uint8_t u8PinNbr)
         break;
 
     default:
-        u8Flag = 0u;
+        u8Flag = 0U;
         break;
     }
 
-    if (u8Flag != 0u)
+    if (u8Flag != 0U)
     {
         GPIO_SetFunc(u8Port, u8Pin, GPIO_FUNC_1_ANIN);
     }

@@ -58,7 +58,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -164,17 +164,17 @@ en_result_t EMB_Init(const stc_emb_ctrl_timer4_init_t *pstcInit)
 
         /* Set default value */
         WRITE_REG32(M0P_EMB->STATCLR, 0x0Ful);
-        WRITE_REG32(M0P_EMB->INTEN, 0x00ul);
-        WRITE_REG32(M0P_EMB->SOE, 0x00ul);
+        WRITE_REG32(M0P_EMB->INTEN, 0x00UL);
+        WRITE_REG32(M0P_EMB->SOE, 0x00UL);
 
         WRITE_REG32(M0P_EMB->CTL,                                               \
                     ((pstcInit->enPortCmd << EMB_CTL_PORTINEN_POS)            | \
                      (pstcInit->enCmp1Cmd << EMB_CTL_CMPEN_POS)               | \
-                     (pstcInit->enCmp2Cmd << (EMB_CTL_CMPEN_POS + 1ul))       | \
+                     (pstcInit->enCmp2Cmd << (EMB_CTL_CMPEN_POS + 1UL))       | \
                      (pstcInit->enOscCmd << EMB_CTL_OSCSTPEN_POS)             | \
                      (pstcInit->enTimer4PwmWCmd << EMB_CTL_PWMSEL_POS)        | \
-                     (pstcInit->enTimer4PwmVCmd << (EMB_CTL_PWMSEL_POS + 1ul))| \
-                     (pstcInit->enTimer4PwmUCmd << (EMB_CTL_PWMSEL_POS + 2ul))| \
+                     (pstcInit->enTimer4PwmVCmd << (EMB_CTL_PWMSEL_POS + 1UL))| \
+                     (pstcInit->enTimer4PwmUCmd << (EMB_CTL_PWMSEL_POS + 2UL))| \
                      pstcInit->u32PortLevel                                   | \
                      pstcInit->u32PortFilterDiv));
         enRet = Ok;
@@ -293,8 +293,8 @@ void EMB_SetDetectPwmLevel(stc_emb_timer4_pwm_level_t stcPwmLevel)
 
     WRITE_REG32(M0P_EMB->PWMLV, \
       (((uint32_t)(stcPwmLevel.enPwmWHighLvl)) << EMB_PWMLV_PWMLV_POS)         | \
-      (((uint32_t)(stcPwmLevel.enPwmVHighLvl)) << (EMB_PWMLV_PWMLV_POS + 1ul)) | \
-      (((uint32_t)(stcPwmLevel.enPwmUHighLvl)) << (EMB_PWMLV_PWMLV_POS + 2ul)));
+      (((uint32_t)(stcPwmLevel.enPwmVHighLvl)) << (EMB_PWMLV_PWMLV_POS + 1UL)) | \
+      (((uint32_t)(stcPwmLevel.enPwmUHighLvl)) << (EMB_PWMLV_PWMLV_POS + 2UL)));
 }
 
 /**

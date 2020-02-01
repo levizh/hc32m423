@@ -58,7 +58,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -142,7 +142,7 @@
 
 #define IS_VALID_EFM_ADDR(addr)                                                \
 (       (((addr) == EFM_START_ADDR)             ||                             \
-        ((addr) >= (EFM_START_ADDR + 1u)))      &&                             \
+        ((addr) >= (EFM_START_ADDR + 1U)))      &&                             \
         ((addr) <= EFM_END_ADDR))
 
 /**
@@ -394,7 +394,7 @@ void EFM_InterruptCmd(uint32_t u32EfmInt, en_functional_state_t enNewState)
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
     DDL_ASSERT(IS_VALID_EFM_INT_SEL(u32EfmInt));
 
-    u8state = ((Enable == enNewState) ? 1u : 0u);
+    u8state = ((Enable == enNewState) ? 1U : 0U);
 
     switch(u32EfmInt)
     {
@@ -430,7 +430,7 @@ en_flag_status_t EFM_GetFlagStatus(uint32_t u32flag)
 {
     DDL_ASSERT(IS_VALID_EFM_FLAG(u32flag));
 
-    return ((0ul == (M0P_EFM->FSR & u32flag)) ? Reset :Set);
+    return ((0UL == (M0P_EFM->FSR & u32flag)) ? Reset :Set);
 }
 
 /**
@@ -491,7 +491,7 @@ void EFM_SetBusState(uint32_t u32State)
 en_result_t EFM_ProgramWord(uint32_t u32Addr, uint32_t u32Data)
 {
     en_result_t enRet = Ok;
-    uint16_t u16tmp = 0u;
+    uint16_t u16tmp = 0U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
 
@@ -538,7 +538,7 @@ en_result_t EFM_ProgramWord(uint32_t u32Addr, uint32_t u32Data)
 en_result_t EFM_ProgramHalfWord(uint32_t u32Addr, uint16_t u16Data)
 {
     en_result_t enRet = Ok;
-    uint16_t u16tmp = 0u;
+    uint16_t u16tmp = 0U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
 
@@ -585,7 +585,7 @@ en_result_t EFM_ProgramHalfWord(uint32_t u32Addr, uint16_t u16Data)
 en_result_t EFM_ProgramByte(uint32_t u32Addr, uint8_t u8Data)
 {
     en_result_t enRet = Ok;
-    uint16_t u16tmp = 0u;
+    uint16_t u16tmp = 0U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
 
@@ -632,7 +632,7 @@ en_result_t EFM_ProgramByte(uint32_t u32Addr, uint8_t u8Data)
 en_result_t EFM_ProgramWordRB(uint32_t u32Addr, uint32_t u32Data)
 {
     en_result_t enRet = Ok;
-    uint16_t u16tmp = 0u;
+    uint16_t u16tmp = 0U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
 
@@ -681,7 +681,7 @@ en_result_t EFM_ProgramWordRB(uint32_t u32Addr, uint32_t u32Data)
 en_result_t EFM_ProgramHalfWordRB(uint32_t u32Addr, uint16_t u16Data)
 {
     en_result_t enRet = Ok;
-    uint16_t u16tmp = 0u;
+    uint16_t u16tmp = 0U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
 
@@ -730,7 +730,7 @@ en_result_t EFM_ProgramHalfWordRB(uint32_t u32Addr, uint16_t u16Data)
 en_result_t EFM_ProgramByteRB(uint32_t u32Addr, uint8_t u8Data)
 {
     en_result_t enRet = Ok;
-    uint16_t u16tmp = 0u;
+    uint16_t u16tmp = 0U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
 
@@ -779,11 +779,11 @@ en_result_t EFM_ProgramByteRB(uint32_t u32Addr, uint8_t u8Data)
 en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
 {
     en_result_t enRet = Ok;
-    uint16_t u16tmp = 0u;
+    uint16_t u16tmp = 0U;
     uint32_t *u32pSrc = pBuf;
     uint32_t *u32pDest = (uint32_t *)u32Addr;
     uint32_t u32LoopWords = u32Len >> 2;
-    uint32_t u32RemainBytes = u32Len % 4ul;
+    uint32_t u32RemainBytes = u32Len % 4UL;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
     DDL_ASSERT(IS_VALID_POINTER(pBuf));
@@ -825,7 +825,7 @@ en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
     /* Set read only mode. */
     EFM_SetOperateMode(EFM_MODE_READONLY);
 
-    u16tmp = 0u;
+    u16tmp = 0U;
     while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
     {
         u16tmp ++;
@@ -851,7 +851,7 @@ en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
 en_result_t EFM_SectorErase(uint32_t u32Addr)
 {
     en_result_t enRet = Ok;
-    uint16_t u16tmp = 0u;
+    uint16_t u16tmp = 0U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
 
@@ -863,7 +863,7 @@ en_result_t EFM_SectorErase(uint32_t u32Addr)
     /* Set sector erase mode. */
     EFM_SetOperateMode(EFM_MODE_ERASESECTOR);
 
-    *(uint32_t*)u32Addr = 0ul;
+    *(uint32_t*)u32Addr = 0UL;
 
     while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
     {
@@ -892,7 +892,7 @@ en_result_t EFM_SectorErase(uint32_t u32Addr)
 en_result_t EFM_ChipErase(void)
 {
     en_result_t enRet = Ok;
-    uint16_t u16tmp = 0u;
+    uint16_t u16tmp = 0U;
 
     /* CLear the error flag. */
     EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
@@ -902,7 +902,7 @@ en_result_t EFM_ChipErase(void)
     /* Set sector erase mode. */
     EFM_SetOperateMode(EFM_MODE_ERASECHIP);
 
-    *(uint32_t*)0 = 0ul;
+    *(uint32_t*)0 = 0UL;
 
     while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
     {

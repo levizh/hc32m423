@@ -50,8 +50,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_EVENT_PORT_H__
-#define __HC32M120_EVENT_PORT_H__
+#ifndef __HC32M423_EVENT_PORT_H__
+#define __HC32M423_EVENT_PORT_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -113,7 +113,7 @@ typedef struct
  * @defgroup EVENT_PORT_Registers_Reset_Value EVENT_PORT Registers Reset Value
  * @{
  */
-#define EVENT_PORT_CR_RESET_VALUE          ((uint32_t)0x00000000ul)
+#define EVENT_PORT_CR_RESET_VALUE          ((uint32_t)0x00000000UL)
 /**
  * @}
  */
@@ -126,10 +126,10 @@ typedef struct
 #define EP2_STATE_SET             (uint8_t)(AOS_EVPRT_SR_PTSTS0_1)
 #define EP3_STATE_SET             (uint8_t)(AOS_EVPRT_SR_PTSTS0_2)
 #define EP4_STATE_SET             (uint8_t)(AOS_EVPRT_SR_PTSTS0_3)
-#define EP1_STATE_RESET           (uint8_t)(0x00u)
-#define EP2_STATE_RESET           (uint8_t)(0x00u)
-#define EP3_STATE_RESET           (uint8_t)(0x00u)
-#define EP4_STATE_RESET           (uint8_t)(0x00u)
+#define EP1_STATE_RESET           (uint8_t)(0x00U)
+#define EP2_STATE_RESET           (uint8_t)(0x00U)
+#define EP3_STATE_RESET           (uint8_t)(0x00U)
+#define EP4_STATE_RESET           (uint8_t)(0x00U)
 
 #define EP_STATE_MASK             (uint8_t)(0x0Fu)
 /**
@@ -140,14 +140,14 @@ typedef struct
  * @defgroup EVENT_PORT_Trigger_Edge_Sel EVENT_PORT trigger edge
  * @{
  */
-#define EP1_TRIGGER_FALLING       (uint16_t)(1ul << AOS_EVPRT_CR_EVP1FEE_POS)
-#define EP2_TRIGGER_FALLING       (uint16_t)(1ul << AOS_EVPRT_CR_EVP2FEE_POS)
-#define EP3_TRIGGER_FALLING       (uint16_t)(1ul << AOS_EVPRT_CR_EVP3FEE_POS)
-#define EP4_TRIGGER_FALLING       (uint16_t)(1ul << AOS_EVPRT_CR_EVP4FEE_POS)
-#define EP1_TRIGGER_RISING        (uint16_t)(1ul << AOS_EVPRT_CR_EVP1REE_POS)
-#define EP2_TRIGGER_RISING        (uint16_t)(1ul << AOS_EVPRT_CR_EVP2REE_POS)
-#define EP3_TRIGGER_RISING        (uint16_t)(1ul << AOS_EVPRT_CR_EVP3REE_POS)
-#define EP4_TRIGGER_RISING        (uint16_t)(1ul << AOS_EVPRT_CR_EVP4REE_POS)
+#define EP1_TRIGGER_FALLING       (uint16_t)(1UL << AOS_EVPRT_CR_EVP1FEE_POS)
+#define EP2_TRIGGER_FALLING       (uint16_t)(1UL << AOS_EVPRT_CR_EVP2FEE_POS)
+#define EP3_TRIGGER_FALLING       (uint16_t)(1UL << AOS_EVPRT_CR_EVP3FEE_POS)
+#define EP4_TRIGGER_FALLING       (uint16_t)(1UL << AOS_EVPRT_CR_EVP4FEE_POS)
+#define EP1_TRIGGER_RISING        (uint16_t)(1UL << AOS_EVPRT_CR_EVP1REE_POS)
+#define EP2_TRIGGER_RISING        (uint16_t)(1UL << AOS_EVPRT_CR_EVP2REE_POS)
+#define EP3_TRIGGER_RISING        (uint16_t)(1UL << AOS_EVPRT_CR_EVP3REE_POS)
+#define EP4_TRIGGER_RISING        (uint16_t)(1UL << AOS_EVPRT_CR_EVP4REE_POS)
 #define EVENT_PORT_TIGGER_MASK    (uint16_t)(0xFFFFu)
 /**
  * @}
@@ -157,9 +157,9 @@ typedef struct
  * @defgroup EVENT_PORT_Record_Time_Sel EVENT_PORT record time
  * @{
  */
-#define EP_STATE_CURRENT            (uint8_t)(0x00u)
-#define EP_STATE_LASTTIME           (uint8_t)(0x04u)
-#define EP_STATE_LAST2TIME          (uint8_t)(0x08u)
+#define EP_STATE_CURRENT            (uint8_t)(0x00U)
+#define EP_STATE_LASTTIME           (uint8_t)(0x04U)
+#define EP_STATE_LAST2TIME          (uint8_t)(0x08U)
 #define EP_STATE_LAST3TIME          (uint8_t)(0x0Cu)
 /**
  * @}
@@ -169,8 +169,8 @@ typedef struct
  * @defgroup EVENT_PORT_FilterClock_Sel EVENT_PORT pin filter selection
  * @{
  */
-#define EVENT_PORT_FILTER_OFF       (uint32_t)(0ul << AOS_EVPRT_CR_EVPNFE_POS)
-#define EVENT_PORT_FILTER_ON        (uint32_t)(1ul << AOS_EVPRT_CR_EVPNFE_POS)
+#define EVENT_PORT_FILTER_OFF       (uint32_t)(0UL << AOS_EVPRT_CR_EVPNFE_POS)
+#define EVENT_PORT_FILTER_ON        (uint32_t)(1UL << AOS_EVPRT_CR_EVPNFE_POS)
 /**
  * @}
  */
@@ -179,10 +179,10 @@ typedef struct
  * @defgroup EVENT_PORT_FilterClock_Div EVENT_PORT filter sampling clock division selection
  * @{
  */
-#define EVENT_PORT_FCLK_HCLK_DIV1     (uint32_t)(0ul << AOS_EVPRT_CR_EVPDIVS_POS)
-#define EVENT_PORT_FCLK_HCLK_DIV4     (uint32_t)(1ul << AOS_EVPRT_CR_EVPDIVS_POS)
-#define EVENT_PORT_FCLK_HCLK_DIV16    (uint32_t)(2ul << AOS_EVPRT_CR_EVPDIVS_POS)
-#define EVENT_PORT_FCLK_HCLK_DIV64    (uint32_t)(3ul << AOS_EVPRT_CR_EVPDIVS_POS)
+#define EVENT_PORT_FCLK_HCLK_DIV1     (uint32_t)(0UL << AOS_EVPRT_CR_EVPDIVS_POS)
+#define EVENT_PORT_FCLK_HCLK_DIV4     (uint32_t)(1UL << AOS_EVPRT_CR_EVPDIVS_POS)
+#define EVENT_PORT_FCLK_HCLK_DIV16    (uint32_t)(2UL << AOS_EVPRT_CR_EVPDIVS_POS)
+#define EVENT_PORT_FCLK_HCLK_DIV64    (uint32_t)(3UL << AOS_EVPRT_CR_EVPDIVS_POS)
 /**
  * @}
  */
@@ -236,7 +236,7 @@ void EVENT_PORT_TriggerEdgeCmd(uint8_t u8TriggerEdge, en_functional_state_t enNe
 }
 #endif
 
-#endif /* __HC32M120_EVENT_PORT_H__ */
+#endif /* __HC32M423_EVENT_PORT_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

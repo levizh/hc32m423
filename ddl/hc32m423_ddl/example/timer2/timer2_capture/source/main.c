@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -75,14 +75,14 @@
  ******************************************************************************/
 /* Clock source definition for this example.
    Set HCLK as the clock source for TIMER2 by default. HCLK is XTAL(20MHz on the test board) in this example.
-   TIMER2 clock frequency is 20/8 = 2.5MHz, clock cycle is 1/2.5 = 0.4us. */
+   TIMER2 clock frequency is 20/8 = 2.5MHz, clock cycle is 1/2.5 = 0.4Us. */
 #define TIMER2_CLK_PRESCALER        (TIMER2_CLK_PRESCALER_8)
 
 /* Capturing function definition. */
-#define APP_CAPTURE_EVENT           (0u)
-#define APP_CAPTURE_TRIGA           (1u)
-#define APP_MEASURE_PULSE_WIDTH     (2u)
-#define APP_MEASURE_PERIOD          (3u)
+#define APP_CAPTURE_EVENT           (0U)
+#define APP_CAPTURE_TRIGA           (1U)
+#define APP_MEASURE_PULSE_WIDTH     (2U)
+#define APP_MEASURE_PERIOD          (3U)
 #define APP_FUNCTION                (APP_CAPTURE_EVENT)
 
 /* TRIGA definition. */
@@ -90,7 +90,7 @@
      (APP_FUNCTION == APP_MEASURE_PULSE_WIDTH) || \
      (APP_FUNCTION == APP_CAPTURE_TRIGA))
 /* Enable the filter of TRIGA if needed. */
-#define TIMER2_TRIGA_FILTER_ENABLE  (0u)
+#define TIMER2_TRIGA_FILTER_ENABLE  (0U)
 
 /* TRIGA pin definition.
    One of these pins P00, P01, P30, P31, P41 and P50 can be used as TRIGA input pin. */
@@ -137,7 +137,7 @@
 #endif // Hardware condition definitions end.
 
 /* Capture count definition. */
-#define CAPTURE_COUNT               (16u)
+#define CAPTURE_COUNT               (16U)
 
 /* Debug printing definition. */
 #if (DDL_PRINT_ENABLE == DDL_ON)
@@ -165,11 +165,11 @@ static void Timer2IrqConfig(void);
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static uint8_t m_u8CaptureCount = 0u;
+static uint8_t m_u8CaptureCount = 0U;
 static uint16_t m_au16CaptureVal[CAPTURE_COUNT];
 
 #if ((APP_FUNCTION == APP_CAPTURE_EVENT) || (APP_FUNCTION == APP_CAPTURE_TRIGA))
-static uint32_t m_u32OvfCount = 0u;
+static uint32_t m_u32OvfCount = 0U;
 static uint32_t m_u32Interval;
 #endif
 
@@ -202,25 +202,25 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
 #if ((APP_FUNCTION == APP_CAPTURE_EVENT) || (APP_FUNCTION == APP_CAPTURE_TRIGA))
     #if 0
             /* If the time interval between two events or two falling edges is greater than 65536 TIMER2 clock cycles,
             the interval can be calculated by the following method. */
-            if (m_u8CaptureCount >= 2u)
+            if (m_u8CaptureCount >= 2U)
             {
                 /* The interval(TIMER2 clock cycle) between two occurrences of the event(or edge of TRIGA) is: */
-                m_u32Interval = 65536ul * m_u32OvfCount + m_au16CaptureVal[1u];
+                m_u32Interval = 65536UL * m_u32OvfCount + m_au16CaptureVal[1U];
                 DBG("\nInterval: %d.", m_u32Interval);
-                m_u32OvfCount    = 0u;
-                m_u8CaptureCount = 0u;
+                m_u32OvfCount    = 0U;
+                m_u8CaptureCount = 0U;
                 (void)m_u32Interval;
             }
     #else
             if (m_u8CaptureCount >= CAPTURE_COUNT)
             {
-                m_u8CaptureCount = 0u;
+                m_u8CaptureCount = 0U;
                 // TODO: Use the capture values.
                 (void)m_au16CaptureVal;
             }
@@ -229,7 +229,7 @@ int32_t main(void)
 #else
         if (m_u8CaptureCount >= CAPTURE_COUNT)
         {
-            m_u8CaptureCount = 0u;
+            m_u8CaptureCount = 0U;
             // TODO: Use the capture values.
             (void)m_au16CaptureVal;
         }
@@ -394,7 +394,7 @@ void Timer2GOV_IrqHandler(void)
 {
     if (TIMER2_GetFlag(TIMER2_FLAG_CNT_OVF) == Set)
     {
-        if (m_u8CaptureCount != 0u)
+        if (m_u8CaptureCount != 0U)
         {
             m_u32OvfCount++;
         }

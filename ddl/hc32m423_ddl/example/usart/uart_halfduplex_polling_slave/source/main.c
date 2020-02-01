@@ -59,7 +59,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -147,9 +147,9 @@ static void UartRxErrProcess(void)
  */
 int32_t main(void)
 {
-    uint8_t u8SlaveRxData = 0u;
+    uint8_t u8SlaveRxData = 0U;
     const stc_uart_init_t stcUartInit = {
-        .u32Baudrate = 19200ul,
+        .u32Baudrate = 19200UL,
         .u32BitDirection = USART_LSB,
         .u32StopBit = USART_STOP_BITS_1,
         .u32Parity = USART_PARITY_NONE,

@@ -57,7 +57,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -98,7 +98,7 @@ typedef struct
 #define FUNCTION_CLK_GATE               (CLK_FCG_EMB | CLK_FCG_TIM4)
 
 /* Timer4 Counter period value && interrupt number definition */
-#define TIMER4_CNT_CYCLE_VAL            (SystemCoreClock/512ul/2ul)    /* 500 ms */
+#define TIMER4_CNT_CYCLE_VAL            (SystemCoreClock/512UL/2UL)    /* 500 ms */
 
 /* Key Port/Pin definition */
 #define KEY_PORT                        (GPIO_PORT_2)
@@ -119,7 +119,7 @@ static void EmbIrqCallback(void);
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static __IO uint8_t m_u8EmbFlag = 0u;
+static __IO uint8_t m_u8EmbFlag = 0U;
 
 static stc_key_t m_stcKeySw2 = {
     .u8Port = KEY_PORT,
@@ -156,7 +156,7 @@ static en_key_state_t KeyGetState(const stc_key_t *pstcKey)
 
     if (pstcKey->enPressPinState == GPIO_ReadInputPortPin(pstcKey->u8Port, pstcKey->u8Pin))
     {
-        DDL_Delay1ms(20ul);
+        DDL_Delay1ms(20UL);
 
         if (pstcKey->enPressPinState == GPIO_ReadInputPortPin(pstcKey->u8Port, pstcKey->u8Pin))
         {
@@ -196,7 +196,7 @@ static void Timer4PwmConfig(void)
     stcTimer4OcoInit.enOcoCmd = Enable;
     stcTimer4OcoInit.enOcoIntCmd = Enable;
     stcTimer4OcoInit.u16OcoInvalidOp = TIMER4_OCO_INVAILD_OP_LOW;
-    stcTimer4OcoInit.u16OccrVal = (uint16_t)(TIMER4_CNT_CYCLE_VAL/2ul);
+    stcTimer4OcoInit.u16OccrVal = (uint16_t)(TIMER4_CNT_CYCLE_VAL/2UL);
     TIMER4_OCO_Init(TIMER4_OCO_UH, &stcTimer4OcoInit);
     TIMER4_OCO_Init(TIMER4_OCO_UL, &stcTimer4OcoInit);
 
@@ -256,7 +256,7 @@ static void EmbIrqCallback(void)
 {
     if(Set == EMB_GetStatus(EMB_FLAG_PWM))
     {
-        m_u8EmbFlag = 1u;
+        m_u8EmbFlag = 1U;
 
         while (KeyRelease != KeyGetState(&m_stcKeySw2))
         {
@@ -320,7 +320,7 @@ int32_t main(void)
     /* Start TIMER4 counter. */
     TIMER4_CNT_Start();
 
-    while (1u)
+    while (1U)
     {
         /* Wait key release */
         while (KeyRelease != KeyGetState(&m_stcKeySw2))
@@ -335,7 +335,7 @@ int32_t main(void)
             ;
         }
 
-        m_u8EmbFlag = 0u;
+        m_u8EmbFlag = 0U;
     }
 }
 

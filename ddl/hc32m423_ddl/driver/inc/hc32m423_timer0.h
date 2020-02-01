@@ -51,8 +51,8 @@
  * at all times.
  *******************************************************************************
  */
-#ifndef __HC32M120_TIMER0_H__
-#define __HC32M120_TIMER0_H__
+#ifndef __HC32M423_TIMER0_H__
+#define __HC32M423_TIMER0_H__
 
 /* C binding of definitions if building with C++ compiler */
 #ifdef __cplusplus
@@ -67,7 +67,7 @@ extern "C"
 #include "ddl_config.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -127,17 +127,17 @@ typedef struct
 /** @defgroup TIMER0_Clock_Division_define TIMER0 clock division define
  * @{
  */
-#define TIMER0_CLK_DIV1     (uint32_t)(0ul<<TMR0_BCONR_CKDIVA_POS)
-#define TIMER0_CLK_DIV2     (uint32_t)(1ul<<TMR0_BCONR_CKDIVA_POS)
-#define TIMER0_CLK_DIV4     (uint32_t)(2ul<<TMR0_BCONR_CKDIVA_POS)
-#define TIMER0_CLK_DIV8     (uint32_t)(3ul<<TMR0_BCONR_CKDIVA_POS)
-#define TIMER0_CLK_DIV16    (uint32_t)(4ul<<TMR0_BCONR_CKDIVA_POS)
-#define TIMER0_CLK_DIV32    (uint32_t)(5ul<<TMR0_BCONR_CKDIVA_POS)
-#define TIMER0_CLK_DIV64    (uint32_t)(6ul<<TMR0_BCONR_CKDIVA_POS)
-#define TIMER0_CLK_DIV128   (uint32_t)(7ul<<TMR0_BCONR_CKDIVA_POS)
-#define TIMER0_CLK_DIV256   (uint32_t)(8ul<<TMR0_BCONR_CKDIVA_POS)
-#define TIMER0_CLK_DIV512   (uint32_t)(9ul<<TMR0_BCONR_CKDIVA_POS)
-#define TIMER0_CLK_DIV1024  (uint32_t)(10ul<<TMR0_BCONR_CKDIVA_POS)
+#define TIMER0_CLK_DIV1     (uint32_t)(0UL<<TMR0_BCONR_CKDIVA_POS)
+#define TIMER0_CLK_DIV2     (uint32_t)(1UL<<TMR0_BCONR_CKDIVA_POS)
+#define TIMER0_CLK_DIV4     (uint32_t)(2UL<<TMR0_BCONR_CKDIVA_POS)
+#define TIMER0_CLK_DIV8     (uint32_t)(3UL<<TMR0_BCONR_CKDIVA_POS)
+#define TIMER0_CLK_DIV16    (uint32_t)(4UL<<TMR0_BCONR_CKDIVA_POS)
+#define TIMER0_CLK_DIV32    (uint32_t)(5UL<<TMR0_BCONR_CKDIVA_POS)
+#define TIMER0_CLK_DIV64    (uint32_t)(6UL<<TMR0_BCONR_CKDIVA_POS)
+#define TIMER0_CLK_DIV128   (uint32_t)(7UL<<TMR0_BCONR_CKDIVA_POS)
+#define TIMER0_CLK_DIV256   (uint32_t)(8UL<<TMR0_BCONR_CKDIVA_POS)
+#define TIMER0_CLK_DIV512   (uint32_t)(9UL<<TMR0_BCONR_CKDIVA_POS)
+#define TIMER0_CLK_DIV1024  (uint32_t)(10UL<<TMR0_BCONR_CKDIVA_POS)
 
 /**
  * @}
@@ -146,7 +146,7 @@ typedef struct
 /** @defgroup TIMER0_Clock_Source_define TIMER0 clock source define
  * @{
  */
-#define TIMER0_CLK_SRC_HCLK         (0x00000000ul)
+#define TIMER0_CLK_SRC_HCLK         (0x00000000UL)
 #define TIMER0_CLK_SRC_INTHWTRIG    (TMR0_BCONR_SYNCLKA)
 #define TIMER0_CLK_SRC_LRC          (TMR0_BCONR_SYNSA)
 /**
@@ -156,7 +156,7 @@ typedef struct
 /** @defgroup TIMER0_Function_define TIMER0 Function define
  * @{
  */
-#define TIMER0_FUNC_CMP             (0x00000000ul)
+#define TIMER0_FUNC_CMP             (0x00000000UL)
 #define TIMER0_FUNC_CAPTURE         (TMR0_BCONR_CAPMDA | TMR0_BCONR_HICPA)
 /**
  * @}
@@ -168,7 +168,7 @@ typedef struct
 #define TIMER0_BT_HWTRG_FUNC_START  (TMR0_BCONR_HSTAA)
 #define TIMER0_BT_HWTRG_FUNC_CLEAR  (TMR0_BCONR_HCLEA)
 #define TIMER0_BT_HWTRG_FUNC_STOP   (TMR0_BCONR_HSTPA)
-#define TIMER0_BT_HWTRG_FUNC_NONE   (0x00000000ul)
+#define TIMER0_BT_HWTRG_FUNC_NONE   (0x00000000UL)
 
 /**
  * @}
@@ -224,7 +224,7 @@ void TIMER0_SetTriggerSrc(en_event_src_t enEvent);
 }
 #endif
 
-#endif /* __HC32M120_TIMER0_H__ */
+#endif /* __HC32M423_TIMER0_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

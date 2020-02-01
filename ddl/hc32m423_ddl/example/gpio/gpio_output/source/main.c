@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -97,7 +97,7 @@
 #define LED_RGB_ON()    {LED_R_ON();LED_G_ON();LED_B_ON();}
 #define LED_RGB_OFF()   {LED_R_OFF();LED_G_OFF();LED_B_OFF();}
 
-#define DLY_MS  (500ul)
+#define DLY_MS  (500UL)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')

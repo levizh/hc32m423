@@ -57,7 +57,7 @@
 #include <stdio.h>
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -75,10 +75,10 @@
  ******************************************************************************/
 
 /* Test reset mode enum*/
-#define RESET_WDT                       0u
-#define RESET_XTALERR                   1u
-#define RESET_SOFTWARERST               2u
-#define RESET_LVD                       3u
+#define RESET_WDT                       0U
+#define RESET_XTALERR                   1U
+#define RESET_SOFTWARERST               2U
+#define RESET_LVD                       3U
 
 /* Modify for test reset mode, can be RESET_WDT,RESET_XTALERR or RESET_SOFTWARERST or RESET_LVD*/
 #define TEST_RESET_MODE                 (RESET_LVD)
@@ -118,7 +118,7 @@ int32_t main(void)
 
     /* configuration uart for debug information */
     DDL_UartInit();
-    DDL_Delay1ms(10u);
+    DDL_Delay1ms(10U);
 
     RMU_GetResetCause(&stcResetFlag);
     RMU_ClrResetFlag();
@@ -132,7 +132,7 @@ int32_t main(void)
     MakeReset();
 
     /* Reset condition configuration finished */
-    while(1u)
+    while(1U)
     {
     }
 }
@@ -225,7 +225,7 @@ static void MakeReset(void)
 #elif (TEST_RESET_MODE == RESET_SOFTWARERST)
     /* Software reset MCU */
     printf("Software reset soon.\r\n");
-    printf(0u);
+    printf(0U);
     NVIC_SystemReset();
 
 #elif (TEST_RESET_MODE == RESET_WDT)
@@ -275,21 +275,21 @@ static void WaitSw2_ShortPress(void)
     {
         ;
     }
-    DDL_Delay1ms(5u);
+    DDL_Delay1ms(5U);
 
     /* Wait key down */
     while(Pin_Reset != GPIO_ReadInputPortPin(GPIO_PORT_2, GPIO_PIN_1))
     {
         ;
     }
-    DDL_Delay1ms(5u);
+    DDL_Delay1ms(5U);
 
     /* Wait key up */
     while(Pin_Set != GPIO_ReadInputPortPin(GPIO_PORT_2, GPIO_PIN_1))
     {
         ;
     }
-    DDL_Delay1ms(5u);
+    DDL_Delay1ms(5U);
 }
 /**
  * @}

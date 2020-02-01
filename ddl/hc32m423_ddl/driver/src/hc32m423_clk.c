@@ -57,7 +57,7 @@
 #include "hc32m423_utility.h"
 
 /**
- * @addtogroup HC32M120_DDL_Driver
+ * @addtogroup HC32M423_DDL_Driver
  * @{
  */
 
@@ -264,22 +264,22 @@ void CLK_DeInit(void)
     M0P_CMU->FCG = 0xFFFFFFFFu;
 
     /* Reset system clock / HCLK divider */
-    M0P_CMU->SCKDIVR = 0x00u;
-    M0P_CMU->PERICKSEL = 0x00u;
+    M0P_CMU->SCKDIVR = 0x00U;
+    M0P_CMU->PERICKSEL = 0x00U;
 
     /* Reset MCO */
-    M0P_CMU->MCO1CFGR = 0x00u;
+    M0P_CMU->MCO1CFGR = 0x00U;
 
     /* Reset the system source */
-    M0P_CMU->CKSWR = 0x00u;
+    M0P_CMU->CKSWR = 0x00U;
 
     /* Reset HRC LRC XTAL */
-    M0P_CMU->HRCCR = 0x00u;
-    M0P_CMU->LRCCR = 0x00u;
-    M0P_CMU->XTALCR = 0x01u;
+    M0P_CMU->HRCCR = 0x00U;
+    M0P_CMU->LRCCR = 0x00U;
+    M0P_CMU->XTALCR = 0x01U;
 
     /* Reset XTALSTD */
-    M0P_CMU->XTALSTDCR = 0x00u;
+    M0P_CMU->XTALSTDCR = 0x00U;
 
     /* Disbale register write. */
     CLK_REG_WRITE_DISABLE();
@@ -331,7 +331,7 @@ en_result_t CLK_XtalStrucInit(stc_clk_xtal_init_t* pstcXtal)
   */
 en_result_t CLK_XTALInit(const stc_clk_xtal_init_t* pstcXtal)
 {
-    uint32_t u32timeout = 0ul;
+    uint32_t u32timeout = 0UL;
     en_result_t enRet = Ok;
 
     if (pstcXtal == NULL)
@@ -432,7 +432,7 @@ en_result_t CLK_XTALInit(const stc_clk_xtal_init_t* pstcXtal)
  */
 en_result_t CLK_HRCInit(uint8_t HRCState, uint8_t HRCFreq)
 {
-    uint32_t u32timeout = 0ul;
+    uint32_t u32timeout = 0UL;
     en_result_t enRet = Ok;
 
     /* Paramers check */

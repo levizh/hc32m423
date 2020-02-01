@@ -56,7 +56,7 @@
 #include "lin.h"
 
 /**
- * @addtogroup HC32M120_DDL_Midware
+ * @addtogroup HC32M423_DDL_Midware
  * @{
  */
 
@@ -81,16 +81,16 @@
  */
 
 /* BIT operation */
-#define BIT(x, pos)                             (((x) >> (pos)) & 0x01u)
+#define BIT(x, pos)                             (((x) >> (pos)) & 0x01U)
 
 /* LIN wakeup/break/sync data definition */
-#define LIN_WAKEUP_DATA                         (0x80u)
-#define LIN_BREAK_DATA                          (0x00u)
-#define LIN_SYNC_DATA                           (0x55u)
+#define LIN_WAKEUP_DATA                         (0x80U)
+#define LIN_BREAK_DATA                          (0x00U)
+#define LIN_SYNC_DATA                           (0x55U)
 
 /* LIN Timerb capture count/bits definition */
-#define LIN_SYNC_CAPTURE_EDGE_CNT               (5u)
-#define LIN_SYNC_CAPTURE_BITS                   (8u)
+#define LIN_SYNC_CAPTURE_EDGE_CNT               (5U)
+#define LIN_SYNC_CAPTURE_BITS                   (8U)
 
 /* LIN Timerb period value definition */
 #define LIN_TIMERB_UNIT_PERIOD_VALUE            (0xFFFFu)
@@ -99,10 +99,10 @@
  * @defgroup LIN_Delay LIN Delay
  * @{
  */
-#define LIN_INTER_FRAME_DELAY                   (10ul) // Pause (Frame->Frame)   (ca. 10ms)
-#define LIN_FRAME_RESPONSE_DELAY                (2ul)  // Pause (Header->Data)   (ca.  2ms)
-#define LIN_BREAKFIELD_DELAY                    (4ul)  // Pause (Breakfield)     (ca.  4ms)
-#define LIN_DATA_BYTE_DELAY                     (1ul)  // Pause (Data->Data)     (ca.  1ms)
+#define LIN_INTER_FRAME_DELAY                   (10UL) // Pause (Frame->Frame)   (ca. 10ms)
+#define LIN_FRAME_RESPONSE_DELAY                (2UL)  // Pause (Header->Data)   (ca.  2ms)
+#define LIN_BREAKFIELD_DELAY                    (4UL)  // Pause (Breakfield)     (ca.  4ms)
+#define LIN_DATA_BYTE_DELAY                     (1UL)  // Pause (Data->Data)     (ca.  1ms)
 /**
  * @}
  */
@@ -228,7 +228,7 @@ en_result_t LIN_MASTER_SendFrame(stc_lin_hanlde_t *pstcLinHandle,
         DDL_Delay1ms(LIN_FRAME_RESPONSE_DELAY);
 
         /* Send data */
-        for (pstcFrame->u8XferCnt = 0u; pstcFrame->u8XferCnt < pstcFrame->u8Length ; pstcFrame->u8XferCnt++)
+        for (pstcFrame->u8XferCnt = 0U; pstcFrame->u8XferCnt < pstcFrame->u8Length ; pstcFrame->u8XferCnt++)
         {
             LIN_SendChar(M0P_USART1, pstcFrame->au8Data[pstcFrame->u8XferCnt]);
             DDL_Delay1ms(LIN_DATA_BYTE_DELAY);
@@ -268,19 +268,19 @@ en_result_t LIN_MASTER_RecFrame(stc_lin_hanlde_t *pstcLinHandle,
         enRet = LIN_MASTER_SendFrameHeader(pstcLinHandle, pstcFrame);
         if (Ok == enRet)
         {
-            pstcFrame->u8XferCnt = 0u;
-            pstcFrame->u8Checksum = 0u;
-            pstcFrame->u8Error = 0u;
-            for (i = 0u; i < 8u; i++)
+            pstcFrame->u8XferCnt = 0U;
+            pstcFrame->u8Checksum = 0U;
+            pstcFrame->u8Error = 0U;
+            for (i = 0U; i < 8U; i++)
             {
-                pstcFrame->au8Data[i] = 0u;
+                pstcFrame->au8Data[i] = 0U;
             }
 
             /* Enable receive data */
             UsartDisableRxTX(pstcLinHandle);
             USART_FuncCmd(M0P_USART1, USART_RX | USART_INT_RX, Enable);
 
-            u32Cyc = (i32Timeout < 0) ? 0ul : (uint32_t)i32Timeout * (SystemCoreClock / 10000ul);  /* i32Timeout * 1ms */
+            u32Cyc = (i32Timeout < 0) ? 0UL : (uint32_t)i32Timeout * (SystemCoreClock / 10000UL);  /* i32Timeout * 1ms */
 
             /* Wait checksum */
             while (u32Cyc || (i32Timeout < 0))
@@ -292,7 +292,7 @@ en_result_t LIN_MASTER_RecFrame(stc_lin_hanlde_t *pstcLinHandle,
                 }
             }
 
-            if ((0ul == u32Cyc) && (i32Timeout >= 0))
+            if ((0UL == u32Cyc) && (i32Timeout >= 0))
             {
                 enRet = ErrorTimeout;
             }
@@ -420,16 +420,16 @@ en_result_t LIN_SLAVE_RecFrameHeader(stc_lin_hanlde_t *pstcLinHandle,
                                         int32_t i32Timeout)
 {
     en_result_t enRet = ErrorInvalidParameter;
-    __IO uint32_t u32Cyc = (i32Timeout < 0) ? 0u : ((uint32_t)i32Timeout) * (SystemCoreClock / 10000ul);  /* i32Timeout * 1ms */
+    __IO uint32_t u32Cyc = (i32Timeout < 0) ? 0U : ((uint32_t)i32Timeout) * (SystemCoreClock / 10000UL);  /* i32Timeout * 1ms */
 
     if ((pstcFrame != NULL) &&
         (pstcLinHandle != NULL))
     {
-        pstcFrame->u8PID = 0u;
-        pstcFrame->u8Error = 0u;
-        pstcFrame->u8Length = 0u;
-        pstcFrame->u8XferCnt = 0u;
-        pstcFrame->u8Checksum = 0u;
+        pstcFrame->u8PID = 0U;
+        pstcFrame->u8Error = 0U;
+        pstcFrame->u8Length = 0U;
+        pstcFrame->u8XferCnt = 0U;
+        pstcFrame->u8Checksum = 0U;
         pstcFrame->u8State = LinFrameStateIdle;
 
         pstcLinHandle->pstcFrame = pstcFrame;
@@ -437,7 +437,7 @@ en_result_t LIN_SLAVE_RecFrameHeader(stc_lin_hanlde_t *pstcLinHandle,
         /* Data state */
         UsartDisableRxTX(pstcLinHandle);
 
-        TIMERB_SetCounter(M0P_TMRB4, 0u);
+        TIMERB_SetCounter(M0P_TMRB4, 0U);
         TIMERB_SetHwTriggerCondition(M0P_TMRB4, TIMERB_HWSTART_TIMB_T_PWM1_FALLING | TIMERB_HWSTOP_TIMB_T_PWM1_RISING | TIMERB_HWCLEAR_TIMB_T_PWM1_FALLING);
         TIMERB_IC_SetCaptureCondition(M0P_TMRB4, TIMERB_IC_RISING);
 
@@ -450,7 +450,7 @@ en_result_t LIN_SLAVE_RecFrameHeader(stc_lin_hanlde_t *pstcLinHandle,
             }
         }
 
-        if ((0ul == u32Cyc) && (i32Timeout >= 0))
+        if ((0UL == u32Cyc) && (i32Timeout >= 0))
         {
             enRet = ErrorTimeout;
         }
@@ -475,9 +475,9 @@ en_result_t LIN_SLAVE_RecFrameResponse(const stc_lin_hanlde_t *pstcLinHandle,
                                         stc_lin_frame_t *pstcFrame,
                                         int32_t i32Timeout)
 {
-    uint8_t u8Checksum = 0u;
+    uint8_t u8Checksum = 0U;
     en_result_t enRet = ErrorInvalidParameter;
-    __IO uint32_t u32Cyc = (i32Timeout < 0) ? 0u : ((uint32_t)i32Timeout) * (SystemCoreClock / 10000ul);  /* i32Timeout * 1ms */
+    __IO uint32_t u32Cyc = (i32Timeout < 0) ? 0U : ((uint32_t)i32Timeout) * (SystemCoreClock / 10000UL);  /* i32Timeout * 1ms */
 
     if ((pstcFrame != NULL) &&
         (pstcLinHandle != NULL))
@@ -505,7 +505,7 @@ en_result_t LIN_SLAVE_RecFrameResponse(const stc_lin_hanlde_t *pstcLinHandle,
                 }
             }
 
-            if ((0ul == u32Cyc) && (i32Timeout >= 0))
+            if ((0UL == u32Cyc) && (i32Timeout >= 0))
             {
                 enRet = ErrorTimeout;
             }
@@ -536,7 +536,7 @@ en_result_t LIN_SLAVE_SendFrameResponse(stc_lin_hanlde_t *pstcLinHandle,
         (pstcLinHandle == NULL) ||
         (pstcLinHandle->pstcFrame == NULL) ||
         (pstcLinHandle->pstcFrame->u8PID == 0xFFu) ||
-        (pstcLinHandle->pstcFrame->u8PID == 0x00u)))
+        (pstcLinHandle->pstcFrame->u8PID == 0x00U)))
     {
         if (pstcLinHandle->pstcFrame->u8State == LinFrameStatePID)
         {
@@ -548,7 +548,7 @@ en_result_t LIN_SLAVE_SendFrameResponse(stc_lin_hanlde_t *pstcLinHandle,
             DDL_Delay1ms(LIN_FRAME_RESPONSE_DELAY);
 
             /* Send data */
-            for (pstcFrame->u8XferCnt = 0u; pstcFrame->u8XferCnt < pstcFrame->u8Length ; pstcFrame->u8XferCnt++)
+            for (pstcFrame->u8XferCnt = 0U; pstcFrame->u8XferCnt < pstcFrame->u8Length ; pstcFrame->u8XferCnt++)
             {
                 LIN_SendChar(M0P_USART1, pstcFrame->au8Data[pstcFrame->u8XferCnt]);
                 DDL_Delay1ms(LIN_DATA_BYTE_DELAY);
@@ -668,18 +668,18 @@ en_result_t LIN_SendWakeupSignal(stc_lin_hanlde_t *pstcLinHandle)
 uint8_t LIN_CalcChecksum(uint8_t u8PID, const uint8_t au8Data[], uint8_t u8Len)
 {
     uint8_t i;
-    uint16_t u16Checksum = 0u;
+    uint16_t u16Checksum = 0U;
 
     if ((u8PID - 0x3Cu) || (u8PID - 0x3Du))  /* 0x3C 0x3D Classic Checksum */
     {
-        u16Checksum = 0u;
+        u16Checksum = 0U;
     }
     else /* Enhanced Checksum */
     {
         u16Checksum  = (uint16_t)u8PID ;
     }
 
-    for (i = 0u; i < u8Len; i++)
+    for (i = 0U; i < u8Len; i++)
     {
         u16Checksum += au8Data[i];
 
@@ -701,14 +701,14 @@ uint8_t LIN_CalcChecksum(uint8_t u8PID, const uint8_t au8Data[], uint8_t u8Len)
  */
 static en_result_t LIN_SendBreak(stc_lin_hanlde_t *pstcLinHandle)
 {
-    uint32_t u32Baudrate = 0ul;
+    uint32_t u32Baudrate = 0UL;
 
     while (!USART_GetFlag(M0P_USART1, USART_FLAG_TC))
     {
         ;
     }
 
-    u32Baudrate = pstcLinHandle->stcLinInit.u32Baudrate * 9ul / 13ul;
+    u32Baudrate = pstcLinHandle->stcLinInit.u32Baudrate * 9UL / 13UL;
 
     UsartDisableRxTX(pstcLinHandle);
     USART_SetBaudrate(M0P_USART1, u32Baudrate, NULL);
@@ -782,7 +782,7 @@ static en_result_t LIN_MASTER_SendFrameHeader(stc_lin_hanlde_t *pstcLinHandle,
     if ((pstcFrame != NULL)  &&
         (pstcLinHandle != NULL) &&
         (pstcFrame->u8PID != 0xFFu) &&
-        (pstcFrame->u8PID != 0x00u))
+        (pstcFrame->u8PID != 0x00U))
     {
         pstcLinHandle->pstcFrame = pstcFrame;
 
@@ -826,19 +826,19 @@ static en_result_t LIN_MASTER_SendFrameHeader(stc_lin_hanlde_t *pstcLinHandle,
  */
 static uint8_t LIN_SLAVE_GetFrameDataLenbyPID(uint8_t u8PID)
 {
-    uint8_t u8DataLen = 0u;
+    uint8_t u8DataLen = 0U;
 
-    switch (u8PID & 0x30u)
+    switch (u8PID & 0x30U)
     {
-        case 0x00u:
-        case 0x10u:
-            u8DataLen = 2u;
+        case 0x00U:
+        case 0x10U:
+            u8DataLen = 2U;
             break;
-        case 0x20u:
-            u8DataLen = 4u;
+        case 0x20U:
+            u8DataLen = 4U;
             break;
-        case 0x30u:
-            u8DataLen = 8u;
+        case 0x30U:
+            u8DataLen = 8U;
             break;
         default:
             break;
@@ -927,7 +927,7 @@ static void UartErrIrqCallback(void)
  */
 static uint32_t TimerbGetClk(const M0P_TMRB_TypeDef *TMRBx)
 {
-    uint32_t u16ClkDiv = 0u;
+    uint32_t u16ClkDiv = 0U;
 
     u16ClkDiv = TIMERB_GetClkDiv(M0P_TMRB4);
 
@@ -941,25 +941,25 @@ static uint32_t TimerbGetClk(const M0P_TMRB_TypeDef *TMRBx)
  */
 static void TimerbLinUnitCmpIrqCallback(void)
 {
-    uint16_t u16Bit = 0u;
+    uint16_t u16Bit = 0U;
 
-    static uint16_t u16CmpVal = 0u;
-    static __IO uint32_t m_u32Clk = 0ul;
-    static __IO uint32_t m_u32Baudrate = 0ul;
-    static __IO uint32_t m_u32SyncCaptureCnt = 0ul;
-    static uint32_t m_u32SyncCaptureVal = 0ul;
+    static uint16_t u16CmpVal = 0U;
+    static __IO uint32_t m_u32Clk = 0UL;
+    static __IO uint32_t m_u32Baudrate = 0UL;
+    static __IO uint32_t m_u32SyncCaptureCnt = 0UL;
+    static uint32_t m_u32SyncCaptureVal = 0UL;
 
     u16CmpVal = TIMERB_GetCompare(M0P_TMRB4);
 
     if (LinFrameStateIdle == m_pstcLinHandle->pstcFrame->u8State)
     {
-        m_u32SyncCaptureCnt = 0ul;
-        m_u32SyncCaptureVal = 0ul;
+        m_u32SyncCaptureCnt = 0UL;
+        m_u32SyncCaptureVal = 0UL;
         m_u32Clk = TimerbGetClk(M0P_TMRB4);
-        u16Bit= (uint16_t)((m_pstcLinHandle->stcLinInit.u32Baudrate * u16CmpVal * 10ul) / m_u32Clk);
-        if (u16Bit > 110u)
+        u16Bit= (uint16_t)((m_pstcLinHandle->stcLinInit.u32Baudrate * u16CmpVal * 10UL) / m_u32Clk);
+        if (u16Bit > 110U)
         {
-            TIMERB_SetCounter(M0P_TMRB4, 0u);
+            TIMERB_SetCounter(M0P_TMRB4, 0U);
             TIMERB_SetHwStopCondition(M0P_TMRB4, TIMERB_HWSTOP_INVALID);
             TIMERB_IC_SetCaptureCondition(M0P_TMRB4, TIMERB_IC_FALLING);
             m_pstcLinHandle->pstcFrame->u8State = LinFrameStateBreak;

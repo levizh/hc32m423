@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -73,8 +73,8 @@
  */
 typedef enum stc_i2c_com_mode
 {
-    Mode_Send = 0u,
-    Mode_Rev = 1u,
+    Mode_Send = 0U,
+    Mode_Rev = 1U,
 }stc_i2c_com_mode_t;
 
 
@@ -95,7 +95,7 @@ typedef struct
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Define slave device address for example */
-#define DEVICE_ADDRESS                  0x06u
+#define DEVICE_ADDRESS                  0x06U
 
 /* Define port and pin for SDA and SCL */
 #define I2C_SCL_PORT                    (GPIO_PORT_6)
@@ -105,19 +105,19 @@ typedef struct
 
 #define TIMEOUT                         ((uint32_t)0x10000)
 
-#define I2C_RET_OK                      0u
-#define I2C_RET_ERROR                   1u
+#define I2C_RET_OK                      0U
+#define I2C_RET_ERROR                   1U
 
-#define GENERATE_START                  0x00u
-#define GENERATE_RESTART                0x01u
+#define GENERATE_START                  0x00U
+#define GENERATE_RESTART                0x01U
 
-#define ADDRESS_W                       0x00u
-#define ADDRESS_R                       0x01u
+#define ADDRESS_W                       0x00U
+#define ADDRESS_R                       0x01U
 
 /* Define Write and read data length for the example */
-#define TEST_DATA_LEN                   128u
+#define TEST_DATA_LEN                   128U
 /* Define i2c baudrate */
-#define I2C_BAUDRATE                    400000ul
+#define I2C_BAUDRATE                    400000UL
 
 /* I2C interrupt source and number define */
 #define I2C_EEI_IRQn                    (Int008_IRQn)
@@ -188,13 +188,13 @@ int32_t main(void)
     LedConfig();
 
     /* Test buffer initialize */
-    for(i=0u; i<TEST_DATA_LEN; i++)
+    for(i=0U; i<TEST_DATA_LEN; i++)
     {
-        u8TxBuf[i] = (uint8_t)i+1u;
+        u8TxBuf[i] = (uint8_t)i+1U;
     }
-    for(i=0u; i<TEST_DATA_LEN; i++)
+    for(i=0U; i<TEST_DATA_LEN; i++)
     {
-        u8RxBuf[i] = 0u;
+        u8RxBuf[i] = 0U;
     }
 
     /* Initialize I2C port*/
@@ -213,9 +213,9 @@ int32_t main(void)
     /* I2C master data write */
     MasterSendData(TEST_DATA_LEN, u8TxBuf);
 
-    i = 0ul;
+    i = 0UL;
     /* Wait communicaiton finished*/
-    while(0u == GetComStatus())
+    while(0U == GetComStatus())
     {
         if(TIMEOUT == i++)
         {
@@ -223,20 +223,20 @@ int32_t main(void)
             while(1)
             {
                 LED_R_TOGGLE();
-                DDL_Delay1ms(500u);
+                DDL_Delay1ms(500U);
             }
         }
     }
 
     /* 5mS delay for device*/
-    DDL_Delay1ms(1u);
+    DDL_Delay1ms(1U);
 
     /* I2C master data Read */
     MasterRevData(TEST_DATA_LEN, u8RxBuf);
 
-    i = 0ul;
+    i = 0UL;
     /* Wait communicaiton finished*/
-    while(0u == GetComStatus())
+    while(0U == GetComStatus())
     {
         if(TIMEOUT == i++)
         {
@@ -244,13 +244,13 @@ int32_t main(void)
             while(1)
             {
                 LED_R_TOGGLE();
-                DDL_Delay1ms(500u);
+                DDL_Delay1ms(500U);
             }
         }
     }
 
     /* Compare the data */
-    for(i=0u; i<TEST_DATA_LEN; i++)
+    for(i=0U; i<TEST_DATA_LEN; i++)
     {
         if(u8TxBuf[i] != u8RxBuf[i])
         {
@@ -258,7 +258,7 @@ int32_t main(void)
             while(1)
             {
                 LED_R_TOGGLE();
-                DDL_Delay1ms(500u);
+                DDL_Delay1ms(500U);
             }
         }
     }
@@ -267,7 +267,7 @@ int32_t main(void)
     while(1)
     {
         LED_G_TOGGLE();
-        DDL_Delay1ms(500u);
+        DDL_Delay1ms(500U);
     }
 }
 
@@ -279,8 +279,8 @@ int32_t main(void)
  */
 static void MasterSendData(uint32_t u32Len, uint8_t* pbuf)
 {
-    stcI2cCom.u32DataIndex = 0u;
-    stcI2cCom.u8FinishFlag = 0u;
+    stcI2cCom.u32DataIndex = 0U;
+    stcI2cCom.u8FinishFlag = 0U;
     stcI2cCom.enMode = Mode_Send;
     stcI2cCom.u32Length = u32Len;
     stcI2cCom.pBuf = pbuf;
@@ -297,8 +297,8 @@ static void MasterSendData(uint32_t u32Len, uint8_t* pbuf)
  */
 static void MasterRevData(uint32_t u32Len, uint8_t* pbuf)
 {
-    stcI2cCom.u32DataIndex = 0u;
-    stcI2cCom.u8FinishFlag = 0u;
+    stcI2cCom.u32DataIndex = 0U;
+    stcI2cCom.u8FinishFlag = 0U;
     stcI2cCom.enMode = Mode_Rev;
     stcI2cCom.u32Length = u32Len;
     stcI2cCom.pBuf = pbuf;
@@ -330,21 +330,21 @@ static void WaitSw2_ShortPress(void)
     {
         ;
     }
-    DDL_Delay1ms(5u);
+    DDL_Delay1ms(5U);
 
     /* Wait key down */
     while(Pin_Reset != GPIO_ReadInputPortPin(GPIO_PORT_2, GPIO_PIN_1))
     {
         ;
     }
-    DDL_Delay1ms(5u);
+    DDL_Delay1ms(5U);
 
     /* Wait key up */
     while(Pin_Set != GPIO_ReadInputPortPin(GPIO_PORT_2, GPIO_PIN_1))
     {
         ;
     }
-    DDL_Delay1ms(5u);
+    DDL_Delay1ms(5U);
 }
 
 /**
@@ -388,7 +388,7 @@ static uint8_t Master_Initialize(void)
     I2C_StructInit(&stcI2cInit);
     stcI2cInit.u32Baudrate = I2C_BAUDRATE;
     stcI2cInit.u32I2cClkDiv = I2C_CLK_DIV1;
-    stcI2cInit.u32SclTime = 5u;
+    stcI2cInit.u32SclTime = 5U;
     I2C_Init(&stcI2cInit, &fErr);
 
     /* Set slave address*/
@@ -480,7 +480,7 @@ static uint8_t Master_SendAdr(uint8_t u8Adr)
     /* Wait tx buffer empty */
     while(Reset == I2C_GetStatus(I2C_SR_TEMPTYF))
     {
-        if(0u == (u32TimeOut--))
+        if(0U == (u32TimeOut--))
         {
             u8Ret = I2C_RET_ERROR;
         }
@@ -502,7 +502,7 @@ static uint8_t Master_SendAdr(uint8_t u8Adr)
  */
 static void LedConfig(void)
 {
-    stc_gpio_init_t stcGpioInit = {0u};
+    stc_gpio_init_t stcGpioInit = {0U};
 
     stcGpioInit.u16PinMode = PIN_MODE_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
@@ -523,11 +523,11 @@ static void I2C_EEI_Callback(void)
         I2C_ClearStatus(I2C_CLR_STARTFCLR);
         if(Mode_Send == stcI2cCom.enMode)
         {
-            Master_SendAdr(((uint8_t)DEVICE_ADDRESS<<1u) | ADDRESS_W);
+            Master_SendAdr(((uint8_t)DEVICE_ADDRESS<<1U) | ADDRESS_W);
         }
         else
         {
-            Master_SendAdr(((uint8_t)DEVICE_ADDRESS<<1u) | ADDRESS_R);
+            Master_SendAdr(((uint8_t)DEVICE_ADDRESS<<1U) | ADDRESS_R);
         }
     }
 
@@ -577,7 +577,7 @@ static void I2C_EEI_Callback(void)
     if(Set == I2C_GetStatus(I2C_SR_STOPF))
     {
         /* Communication finished */
-        stcI2cCom.u8FinishFlag = 1u;
+        stcI2cCom.u8FinishFlag = 1U;
         /* Disable Stop flag interrupt */
         I2C_IntCmd(I2C_CR2_STOPIE, Disable);
         I2C_ClearStatus(I2C_CLR_STOPFCLR);

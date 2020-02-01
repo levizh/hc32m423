@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -73,14 +73,14 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Asynchronous clock source definition. */
-#define ASYNC_CLOCK_LRC             (0u)    /*!< Asynchronous clock source is LRC(32.768KHz) */
-#define ASYNC_CLOCK_CLKA            (1u)    /*!< Asynchronous clock source input from pin CLKA. */
+#define ASYNC_CLOCK_LRC             (0U)    /*!< Asynchronous clock source is LRC(32.768KHz) */
+#define ASYNC_CLOCK_CLKA            (1U)    /*!< Asynchronous clock source input from pin CLKA. */
 #define TIMER2_ASYNC_CLOCK          (ASYNC_CLOCK_CLKA)
 
 /* Comparison value definition.
    CompareVal = TimerPeriod(us) * TIMER2ClockFrequency(MHz).
    In this example:
-        TimerPeriod(50ms) = 50000us;
+        TimerPeriod(50ms) = 50000Us;
         TIMER2 clock prescaler = 1;
         TIMER2 Clock source:
    LRC:
@@ -91,10 +91,10 @@
         CompareVal = 50000 * 0.01 = 500. */
 #if (TIMER2_ASYNC_CLOCK == ASYNC_CLOCK_LRC)
 #define TIMER2_ASYNC_CLOCK_SOURCE   (TIMER2_ASYNC_CS_LRC)
-#define TIMER2_COMPARE_VALUE        (1638u)
+#define TIMER2_COMPARE_VALUE        (1638U)
 #elif (TIMER2_ASYNC_CLOCK == ASYNC_CLOCK_CLKA)
 #define TIMER2_ASYNC_CLOCK_SOURCE   (TIMER2_ASYNC_CS_CLKA)
-#define TIMER2_COMPARE_VALUE        (500u)
+#define TIMER2_COMPARE_VALUE        (500U)
 #define TIMER2_CLKA_PORT            (GPIO_PORT_6)
 #define TIMER2_CLKA_PIN             (GPIO_PIN_2)
 #else
@@ -147,7 +147,7 @@ int32_t main(void)
 
     /***************** Configuration end, application start **************/
 
-    while (1u)
+    while (1U)
     {
         /* If you want to write a TIMER2 register, you need to wait for at least 3 asynchronous clock cycles
            after the last write operation! e.g.:

@@ -56,7 +56,7 @@
 #include "string.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -73,10 +73,10 @@
  ******************************************************************************/
 /* DMAC */
 #define DMA_CH          (DMA_CHANNEL_0)
-#define DMA_TRNCNT      (1ul)
+#define DMA_TRNCNT      (1UL)
 #define DMA_BLKSIZE     ((uint32_t)ARRAY_SZ(u16SrcBuf))
 #define DMA_LLP_MODE    (DMA_LLP_RUN)
-#define DMA_LLP_POS     (DMA_CH0CTL0_LLP_POS - 2ul)
+#define DMA_LLP_POS     (DMA_CH0CTL0_LLP_POS - 2UL)
 
 #define LED_R_PORT      (GPIO_PORT_12)
 #define LED_G_PORT      (GPIO_PORT_7)
@@ -95,7 +95,7 @@
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
  ******************************************************************************/
-uint8_t u8CmpRet = 0u;
+uint8_t u8CmpRet = 0U;
 /*******************************************************************************
  * Local function prototypes ('static')
  ******************************************************************************/
@@ -203,20 +203,20 @@ int32_t main(void)
     /* Verify destination buffer data && expeted data */
     if(0 != memcmp(u8DstBuf, u8SrcBuf, sizeof(u8SrcBuf)))
     {
-        u8CmpRet += 1u;
+        u8CmpRet += 1U;
     }
 
     if(0 != memcmp(u16DstBuf, u16SrcBuf, sizeof(u16SrcBuf)))
     {
-        u8CmpRet += 1u;
+        u8CmpRet += 1U;
     }
 
     if(0 != memcmp(u32DstBuf, u32SrcBuf, sizeof(u32SrcBuf)))
     {
-        u8CmpRet += 1u;
+        u8CmpRet += 1U;
     }
 
-    if(0u == u8CmpRet)
+    if(0U == u8CmpRet)
     {
         LED_G_ON();      /* Meet the expected */
     }

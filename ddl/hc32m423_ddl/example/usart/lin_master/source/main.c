@@ -58,7 +58,7 @@
 #include "lin.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -199,7 +199,7 @@ static en_key_state_t KeyGetState(const stc_key_t *pstcKey)
     {
         if (pstcKey->enPressPinState == GPIO_ReadInputPortPin(pstcKey->u8Port, pstcKey->u8Pin))
         {
-            DDL_Delay1ms(20ul);
+            DDL_Delay1ms(20UL);
 
             if (pstcKey->enPressPinState == GPIO_ReadInputPortPin(pstcKey->u8Port, pstcKey->u8Pin))
             {
@@ -230,18 +230,18 @@ int32_t main(void)
         .enPressPinState = Pin_Reset,
     };
     static stc_lin_frame_t m_stcTxFrame = {
-        .u8PID = (0x01u | (uint8_t)LIN_FRAME_DATA_BYTES_8),
-        .u8Length = 8u,
+        .u8PID = (0x01U | (uint8_t)LIN_FRAME_DATA_BYTES_8),
+        .u8Length = 8U,
     };
 
     static stc_lin_frame_t m_stcRxFrame = {
-        .u8PID = (0x01u | (uint8_t)LIN_FRAME_DATA_BYTES_8),
-        .u8Length = 8u,
+        .u8PID = (0x01U | (uint8_t)LIN_FRAME_DATA_BYTES_8),
+        .u8Length = 8U,
     };
 
     static stc_lin_hanlde_t m_stcLinHandle = {
         .stcLinInit = {
-            .u32Baudrate = 9600ul,
+            .u32Baudrate = 9600UL,
             .u32ClkMode = USART_INTCLK_NONE_OUTPUT,
             .u32ClkPrescaler = USART_CLK_PRESCALER_DIV4,
             .u32OversamplingBits = USART_OVERSAMPLING_BITS_8,
@@ -285,7 +285,7 @@ int32_t main(void)
         LIN_SendWakeupSignal(&m_stcLinHandle);
 
         /* Node must prepare to receive frame in range of 100ms after wakeup signal*/
-        DDL_Delay1ms(100ul);
+        DDL_Delay1ms(100UL);
 
         /* LIN master send frame */
         LIN_MASTER_SendFrame(&m_stcLinHandle, &m_stcTxFrame);
@@ -305,7 +305,7 @@ int32_t main(void)
             LED_G_OFF();
         }
 
-        for (i = 0u; i < sizeof (m_stcTxFrame.au8Data); i++)
+        for (i = 0U; i < sizeof (m_stcTxFrame.au8Data); i++)
         {
             m_stcTxFrame.au8Data[i]++;
         }

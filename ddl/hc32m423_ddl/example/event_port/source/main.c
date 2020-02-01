@@ -56,7 +56,7 @@
 #include "hc32_ddl.h"
 
 /**
- * @addtogroup HC32M120_DDL_Examples
+ * @addtogroup HC32M423_DDL_Examples
  * @{
  */
 
@@ -125,7 +125,7 @@
 static void EP1_Rising(void)
 {
     GPIO_ResetPins(EP1_TRG_PORT, EP1_TRG_PIN);
-    DDL_Delay1ms(1ul);
+    DDL_Delay1ms(1UL);
     GPIO_SetPins(EP1_TRG_PORT, EP1_TRG_PIN);
 }
 
@@ -137,7 +137,7 @@ static void EP1_Rising(void)
 static void EP2_Rising(void)
 {
     GPIO_ResetPins(EP2_TRG_PORT, EP2_TRG_PIN);
-    DDL_Delay1ms(1ul);
+    DDL_Delay1ms(1UL);
     GPIO_SetPins(EP2_TRG_PORT, EP2_TRG_PIN);
 }
 
@@ -149,7 +149,7 @@ static void EP2_Rising(void)
 static void EP3_Rising(void)
 {
     GPIO_ResetPins(EP3_TRG_PORT, EP3_TRG_PIN);
-    DDL_Delay1ms(1ul);
+    DDL_Delay1ms(1UL);
     GPIO_SetPins(EP3_TRG_PORT, EP3_TRG_PIN);
 }
 
@@ -268,7 +268,7 @@ int32_t main(void)
             ;
         }
 
-        DDL_Delay1ms(100ul);
+        DDL_Delay1ms(100UL);
 
         /* triggered by EP2 rising edge */
         GPIO_SetPins(EP3_TRG_PORT, EP3_TRG_PIN);        /* 1 */
@@ -304,7 +304,7 @@ int32_t main(void)
             ;
         }
 
-        DDL_Delay1ms(100ul);
+        DDL_Delay1ms(100UL);
 
         /* triggered by EP3 rising edge */
         GPIO_SetPins(EP3_TRG_PORT, EP3_TRG_PIN);        /* 1 */
@@ -339,7 +339,7 @@ int32_t main(void)
         {
             ;
         }
-        DDL_Delay1ms(100ul);
+        DDL_Delay1ms(100UL);
     }
 }
 
