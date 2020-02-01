@@ -1,5 +1,0 @@
-version     date           comment
- 1.0.0
-            Jan 22, 2020   XXX
-
-EOF
