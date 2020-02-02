@@ -44,8 +44,8 @@
 ;/*****************************************************************************/
 ;/*  Startup for ARM                                                          */
 ;/*  Version     V1.0                                                         */
-;/*  Date        2019-04-11                                                   */
-;/*  Target-mcu  HC32F120                                                     */
+;/*  Date        2020-02-01                                                   */
+;/*  Target-mcu  HC32M423                                                     */
 ;/*****************************************************************************/
 
 ; Stack Configuration
@@ -80,24 +80,31 @@ __heap_limit
                 EXPORT  __Vectors_End
                 EXPORT  __Vectors_Size
 
-__Vectors
-                DCD     __initial_sp              ; Top of Stack
-                DCD     Reset_Handler             ; Reset
-                DCD     NMI_Handler               ; NMI
-                DCD     HardFault_Handler         ; Hard Fault
+__Vectors       DCD     __initial_sp              ; Top of Stack
+                DCD     Reset_Handler             ; Reset Handler
+                DCD     NMI_Handler               ; NMI Handler
+                DCD     HardFault_Handler         ; Hard Fault Handler
+                DCD     MemManage_Handler         ; MPU Fault Handler
+                DCD     BusFault_Handler          ; Bus Fault Handler
+                DCD     UsageFault_Handler        ; Usage Fault Handler
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
+                DCD     SVC_Handler               ; SVCall Handler
+                DCD     DebugMon_Handler          ; Debug Monitor Handler
                 DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     SVC_Handler               ; SVCall
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     PendSV_Handler            ; PendSV
-                DCD     SysTick_Handler           ; SysTick
+                DCD     PendSV_Handler            ; PendSV Handler
+                DCD     SysTick_Handler           ; SysTick Handler
 
+                DCD     IRQ000_Handler
+                DCD     IRQ001_Handler
+                DCD     IRQ002_Handler
+                DCD     IRQ003_Handler
+                DCD     IRQ004_Handler
+                DCD     IRQ005_Handler
+                DCD     IRQ006_Handler
+                DCD     IRQ007_Handler
                 DCD     EXINT00_Handler
                 DCD     EXINT01_Handler
                 DCD     EXINT02_Handler
@@ -106,30 +113,91 @@ __Vectors
                 DCD     EXINT05_Handler
                 DCD     EXINT06_Handler
                 DCD     EXINT07_Handler
-                DCD     IRQ008_Handler
-                DCD     IRQ009_Handler
-                DCD     IRQ010_Handler
-                DCD     IRQ011_Handler
-                DCD     IRQ012_Handler
-                DCD     IRQ013_Handler
-                DCD     IRQ014_Handler
-                DCD     IRQ015_Handler
-                DCD     IRQ016_Handler
-                DCD     IRQ017_Handler
-                DCD     IRQ018_Handler
-                DCD     IRQ019_Handler
-                DCD     IRQ020_Handler
-                DCD     IRQ021_Handler
-                DCD     IRQ022_Handler
-                DCD     IRQ023_Handler
-                DCD     IRQ024_Handler
-                DCD     IRQ025_Handler
-                DCD     IRQ026_Handler
-                DCD     IRQ027_Handler
-                DCD     IRQ028_Handler
-                DCD     IRQ029_Handler
-                DCD     IRQ030_Handler
-                DCD     IRQ031_Handler
+                DCD     DMA_Tc0_Handler
+                DCD     DMA_Tc1_Handler
+                DCD     DMA_Tc2_Handler
+                DCD     DMA_Tc3_Handler
+                DCD     DMA_Btc0_Handler
+                DCD     DMA_Btc1_Handler
+                DCD     DMA_Btc2_Handler
+                DCD     DMA_Btc3_Handler
+                DCD     DMA_Err_Handler
+                DCD     EFM_PgmEraseErr_Handler
+                DCD     EFM_ColErr_Handler
+                DCD     EFM_OpEnd_Handler
+                DCD     DCU_Handler
+                DCD     TIMER0_1_CmpA_Handler
+                DCD     TIMER0_1_CmpB_Handler
+                DCD     TIMER0_2_CmpA_Handler
+                DCD     TIMER0_2_CmpB_Handler
+                DCD     CLK_XtalStop_Handler
+                DCD     SWDT_Handler
+                DCD     TIMERA_1_Ovf_Handler
+                DCD     TIMERA_1_Udf_Handler
+                DCD     TIMERA_1_Cmp_Handler
+                DCD     TIMERA_2_Ovf_Handler
+                DCD     TIMERA_2_Udf_Handler
+                DCD     TIMERA_2_Cmp_Handler
+                DCD     TIMERA_3_Ovf_Handler
+                DCD     TIMERA_3_Udf_Handler
+                DCD     TIMERA_3_Cmp_Handler
+                DCD     TIMERA_4_Ovf_Handler
+                DCD     TIMERA_4_Udf_Handler
+                DCD     TIMERA_4_Cmp_Handler
+                DCD     TIMERB_Ovf_Handler
+                DCD     TIMERB_Udf_Handler
+                DCD     TIMERB_Cmp_Handler
+                DCD     USART_1_RxErr_Handler
+                DCD     USART_1_RxEnd_Handler
+                DCD     USART_1_TxEmpty_Handler
+                DCD     USART_1_TxEnd_Handler
+                DCD     USART_2_RxErr_Handler
+                DCD     USART_2_RxEnd_Handler
+                DCD     USART_2_TxEmpty_Handler
+                DCD     USART_2_TxEnd_Handler
+                DCD     USART_3_RxErr_Handler
+                DCD     USART_3_RxEnd_Handler
+                DCD     USART_3_TxEmpty_Handler
+                DCD     USART_3_TxEnd_Handler
+                DCD     USART_4_RxErr_Handler
+                DCD     USART_4_RxEnd_Handler
+                DCD     USART_4_TxEmpty_Handler
+                DCD     USART_4_TxEnd_Handler
+                DCD     SPI_RxEnd_Handler
+                DCD     SPI_TxEmpty_Handler
+                DCD     SPI_Idle_Handler
+                DCD     SPI_Err_Handler
+                DCD     TIMER4_GCmpUH_Handler
+                DCD     TIMER4_GCmpUL_Handler
+                DCD     TIMER4_GCmpVH_Handler
+                DCD     TIMER4_GCmpVL_Handler
+                DCD     TIMER4_GCmpWH_Handler
+                DCD     TIMER4_GCmpWL_Handler
+                DCD     TIMER4_Ovf_Handler
+                DCD     TIMER4_Udf_Handler
+                DCD     TIMER4_ReloadU_Handler
+                DCD     TIMER4_ReloadV_Handler
+                DCD     TIMER4_ReloadW_Handler
+                DCD     EMB_GR0_Handler
+                DCD     CMP_1_Handler
+                DCD     CMP_2_Handler
+                DCD     CMP_3_Handler
+                DCD     I2C_RxEnd_Handler
+                DCD     I2C_TxEnd_Handler
+                DCD     I2C_TxEmpty_Handler
+                DCD     I2C_Err_Handler
+                DCD     USART_1_WKUP_Handler
+                DCD     PWR_Lvd1_Handler
+                DCD     PWR_Lvd2_Handler
+                DCD     FCM_Err_Handler
+                DCD     FCM_End_Handler
+                DCD     FCM_Ovf_Handler
+                DCD     WDT_Handler
+                DCD     CTC_Err_Handler
+                DCD     ADC_SeqA_Handler
+                DCD     ADC_SeqB_Handler
+                DCD     ADC_ChCmp_Handler
+                DCD     ADC_SeqCmp_Handler
 
 
 

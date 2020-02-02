@@ -166,9 +166,7 @@
     ((ch) == EXINT_CH04)                        ||                              \
     ((ch) == EXINT_CH05)                        ||                              \
     ((ch) == EXINT_CH06)                        ||                              \
-    ((ch) == EXINT_CH07)                        ||                              \
-    ((ch) == EXINT_CH08)                        ||                              \
-    ((ch) == EXINT_CH09))
+    ((ch) == EXINT_CH07))
 
 /*  Parameter validity check for EKEY. */
 #define IS_INTC_EKEY(ekey)  (((ekey) & INTC_EKEY_MASK) != (uint8_t)0x00U)

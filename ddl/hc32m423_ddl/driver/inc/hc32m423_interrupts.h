@@ -276,11 +276,8 @@ typedef struct
 #define EXINT_CH05                  (uint16_t)(1UL << 5U)
 #define EXINT_CH06                  (uint16_t)(1UL << 6U)
 #define EXINT_CH07                  (uint16_t)(1UL << 7U)
-#define EXINT_CH08                  (uint16_t)(1UL << 8U)
-#define EXINT_CH09                  (uint16_t)(1UL << 9U)
 #define EXINT_CH_MASK   (EXINT_CH00 | EXINT_CH01 | EXINT_CH02 | EXINT_CH03 |    \
-                         EXINT_CH04 | EXINT_CH05 | EXINT_CH06 | EXINT_CH07 |    \
-                         EXINT_CH08 | EXINT_CH09)
+                         EXINT_CH04 | EXINT_CH05 | EXINT_CH06 | EXINT_CH07)
 /**
  * @}
  */
