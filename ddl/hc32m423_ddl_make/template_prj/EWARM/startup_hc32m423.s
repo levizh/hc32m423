@@ -347,10 +347,10 @@ DMA_Tc1_Handler
 DMA_Tc2_Handler
                 B       DMA_Tc2_Handler
 
-                PUBWEAK DMA_Tc3IrqHandler
+                PUBWEAK DMA_Tc3_Handler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-DMA_Tc3IrqHandler
-                B       DMA_Tc3IrqHandler
+DMA_Tc3_Handler
+                B       DMA_Tc3_Handler
 
                 PUBWEAK DMA_Btc0_Handler
                 SECTION .text:CODE:NOROOT:REORDER(1)
