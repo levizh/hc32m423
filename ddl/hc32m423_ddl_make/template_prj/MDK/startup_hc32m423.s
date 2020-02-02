@@ -147,16 +147,16 @@ Reset_Handler   PROC
                 IMPORT  SystemInit
                 IMPORT  __main
 
-                LDR     R2, =0x40014020 ; PWC_FPRC
-                LDR     R0, =0xA502
-                STR     R0, [R2]        ; PWC_FPRC = 0xA502
-
-                MOVS    R0, #1
-                LDR     R1, =0x42280190 ; PWC_RAMCR_RPERDIS
-                STRB    R0, [R1]        ; PWC_RAMCR_RPERDIS = 1
-
-                LDR     R0, =0xA500
-                STR     R0, [R2]        ; PWC_FPRC = 0xA500
+;                LDR     R2, =0x40014020 ; PWC_FPRC
+;                LDR     R0, =0xA502
+;                STR     R0, [R2]        ; PWC_FPRC = 0xA502
+;
+;                MOVS    R0, #1
+;                LDR     R1, =0x42280190 ; PWC_RAMCR_RPERDIS
+;                STRB    R0, [R1]        ; PWC_RAMCR_RPERDIS = 1
+;
+;                LDR     R0, =0xA500
+;                STR     R0, [R2]        ; PWC_FPRC = 0xA500
 
                 LDR     R0, =SystemInit
                 BLX     R0
@@ -171,27 +171,55 @@ NMI_Handler     PROC
                 EXPORT  NMI_Handler               [WEAK]
                 B       .
                 ENDP
-
-
 HardFault_Handler\
                 PROC
                 EXPORT  HardFault_Handler         [WEAK]
+                B       .
+                ENDP
+MemManage_Handler\
+                PROC
+                EXPORT  MemManage_Handler         [WEAK]
+                B       .
+                ENDP
+BusFault_Handler\
+                PROC
+                EXPORT  BusFault_Handler          [WEAK]
+                B       .
+                ENDP
+UsageFault_Handler\
+                PROC
+                EXPORT  UsageFault_Handler        [WEAK]
                 B       .
                 ENDP
 SVC_Handler     PROC
                 EXPORT  SVC_Handler               [WEAK]
                 B       .
                 ENDP
-PendSV_Handler  PROC
+DebugMon_Handler\
+                PROC
+                EXPORT  DebugMon_Handler          [WEAK]
+                B       .
+                ENDP
+PendSV_Handler\
+                PROC
                 EXPORT  PendSV_Handler            [WEAK]
                 B       .
                 ENDP
-SysTick_Handler PROC
+SysTick_Handler\
+                PROC
                 EXPORT  SysTick_Handler           [WEAK]
                 B       .
                 ENDP
 
 Default_Handler PROC
+                EXPORT  IRQ000_Handler            [WEAK]
+                EXPORT  IRQ001_Handler            [WEAK]
+                EXPORT  IRQ002_Handler            [WEAK]
+                EXPORT  IRQ003_Handler            [WEAK]
+                EXPORT  IRQ004_Handler            [WEAK]
+                EXPORT  IRQ005_Handler            [WEAK]
+                EXPORT  IRQ006_Handler            [WEAK]
+                EXPORT  IRQ007_Handler            [WEAK]
                 EXPORT  EXINT00_Handler           [WEAK]
                 EXPORT  EXINT01_Handler           [WEAK]
                 EXPORT  EXINT02_Handler           [WEAK]
@@ -200,31 +228,100 @@ Default_Handler PROC
                 EXPORT  EXINT05_Handler           [WEAK]
                 EXPORT  EXINT06_Handler           [WEAK]
                 EXPORT  EXINT07_Handler           [WEAK]
-                EXPORT  IRQ008_Handler            [WEAK]
-                EXPORT  IRQ009_Handler            [WEAK]
-                EXPORT  IRQ010_Handler            [WEAK]
-                EXPORT  IRQ011_Handler            [WEAK]
-                EXPORT  IRQ012_Handler            [WEAK]
-                EXPORT  IRQ013_Handler            [WEAK]
-                EXPORT  IRQ014_Handler            [WEAK]
-                EXPORT  IRQ015_Handler            [WEAK]
-                EXPORT  IRQ016_Handler            [WEAK]
-                EXPORT  IRQ017_Handler            [WEAK]
-                EXPORT  IRQ018_Handler            [WEAK]
-                EXPORT  IRQ019_Handler            [WEAK]
-                EXPORT  IRQ020_Handler            [WEAK]
-                EXPORT  IRQ021_Handler            [WEAK]
-                EXPORT  IRQ022_Handler            [WEAK]
-                EXPORT  IRQ023_Handler            [WEAK]
-                EXPORT  IRQ024_Handler            [WEAK]
-                EXPORT  IRQ025_Handler            [WEAK]
-                EXPORT  IRQ026_Handler            [WEAK]
-                EXPORT  IRQ027_Handler            [WEAK]
-                EXPORT  IRQ028_Handler            [WEAK]
-                EXPORT  IRQ029_Handler            [WEAK]
-                EXPORT  IRQ030_Handler            [WEAK]
-                EXPORT  IRQ031_Handler            [WEAK]
+                EXPORT  DMA_Tc0_Handler           [WEAK]
+                EXPORT  DMA_Tc1_Handler           [WEAK]
+                EXPORT  DMA_Tc2_Handler           [WEAK]
+                EXPORT  DMA_Tc3_Handler           [WEAK]
+                EXPORT  DMA_Btc0_Handler          [WEAK]
+                EXPORT  DMA_Btc1_Handler          [WEAK]
+                EXPORT  DMA_Btc2_Handler          [WEAK]
+                EXPORT  DMA_Btc3_Handler          [WEAK]
+                EXPORT  DMA_Err_Handler           [WEAK]
+                EXPORT  EFM_PgmEraseErr_Handler   [WEAK]
+                EXPORT  EFM_ColErr_Handler        [WEAK]
+                EXPORT  EFM_OpEnd_Handler         [WEAK]
+                EXPORT  DCU_Handler               [WEAK]
+                EXPORT  TIMER0_1_CmpA_Handler     [WEAK]
+                EXPORT  TIMER0_1_CmpB_Handler     [WEAK]
+                EXPORT  TIMER0_2_CmpA_Handler     [WEAK]
+                EXPORT  TIMER0_2_CmpB_Handler     [WEAK]
+                EXPORT  CLK_XtalStop_Handler      [WEAK]
+                EXPORT  SWDT_Handler              [WEAK]
+                EXPORT  TIMERA_1_Ovf_Handler      [WEAK]
+                EXPORT  TIMERA_1_Udf_Handler      [WEAK]
+                EXPORT  TIMERA_1_Cmp_Handler      [WEAK]
+                EXPORT  TIMERA_2_Ovf_Handler      [WEAK]
+                EXPORT  TIMERA_2_Udf_Handler      [WEAK]
+                EXPORT  TIMERA_2_Cmp_Handler      [WEAK]
+                EXPORT  TIMERA_3_Ovf_Handler      [WEAK]
+                EXPORT  TIMERA_3_Udf_Handler      [WEAK]
+                EXPORT  TIMERA_3_Cmp_Handler      [WEAK]
+                EXPORT  TIMERA_4_Ovf_Handler      [WEAK]
+                EXPORT  TIMERA_4_Udf_Handler      [WEAK]
+                EXPORT  TIMERA_4_Cmp_Handler      [WEAK]
+                EXPORT  TIMERB_Ovf_Handler        [WEAK]
+                EXPORT  TIMERB_Udf_Handler        [WEAK]
+                EXPORT  TIMERB_Cmp_Handler        [WEAK]
+                EXPORT  USART_1_RxErr_Handler     [WEAK]
+                EXPORT  USART_1_RxEnd_Handler     [WEAK]
+                EXPORT  USART_1_TxEmpty_Handler   [WEAK]
+                EXPORT  USART_1_TxEnd_Handler     [WEAK]
+                EXPORT  USART_2_RxErr_Handler     [WEAK]
+                EXPORT  USART_2_RxEnd_Handler     [WEAK]
+                EXPORT  USART_2_TxEmpty_Handler   [WEAK]
+                EXPORT  USART_2_TxEnd_Handler     [WEAK]
+                EXPORT  USART_3_RxErr_Handler     [WEAK]
+                EXPORT  USART_3_RxEnd_Handler     [WEAK]
+                EXPORT  USART_3_TxEmpty_Handler   [WEAK]
+                EXPORT  USART_3_TxEnd_Handler     [WEAK]
+                EXPORT  USART_4_RxErr_Handler     [WEAK]
+                EXPORT  USART_4_RxEnd_Handler     [WEAK]
+                EXPORT  USART_4_TxEmpty_Handler   [WEAK]
+                EXPORT  USART_4_TxEnd_Handler     [WEAK]
+                EXPORT  SPI_RxEnd_Handler         [WEAK]
+                EXPORT  SPI_TxEmpty_Handler       [WEAK]
+                EXPORT  SPI_Idle_Handler          [WEAK]
+                EXPORT  SPI_Err_Handler           [WEAK]
+                EXPORT  TIMER4_GCmpUH_Handler     [WEAK]
+                EXPORT  TIMER4_GCmpUL_Handler     [WEAK]
+                EXPORT  TIMER4_GCmpVH_Handler     [WEAK]
+                EXPORT  TIMER4_GCmpVL_Handler     [WEAK]
+                EXPORT  TIMER4_GCmpWH_Handler     [WEAK]
+                EXPORT  TIMER4_GCmpWL_Handler     [WEAK]
+                EXPORT  TIMER4_Ovf_Handler        [WEAK]
+                EXPORT  TIMER4_Udf_Handler        [WEAK]
+                EXPORT  TIMER4_ReloadU_Handler    [WEAK]
+                EXPORT  TIMER4_ReloadV_Handler    [WEAK]
+                EXPORT  TIMER4_ReloadW_Handler    [WEAK]
+                EXPORT  EMB_GR0_Handler           [WEAK]
+                EXPORT  CMP_1_Handler             [WEAK]
+                EXPORT  CMP_2_Handler             [WEAK]
+                EXPORT  CMP_3_Handler             [WEAK]
+                EXPORT  I2C_RxEnd_Handler         [WEAK]
+                EXPORT  I2C_TxEnd_Handler         [WEAK]
+                EXPORT  I2C_TxEmpty_Handler       [WEAK]
+                EXPORT  I2C_Err_Handler           [WEAK]
+                EXPORT  USART_1_WKUP_Handler      [WEAK]
+                EXPORT  PWR_Lvd1_Handler          [WEAK]
+                EXPORT  PWR_Lvd2_Handler          [WEAK]
+                EXPORT  FCM_Err_Handler           [WEAK]
+                EXPORT  FCM_End_Handler           [WEAK]
+                EXPORT  FCM_Ovf_Handler           [WEAK]
+                EXPORT  WDT_Handler               [WEAK]
+                EXPORT  CTC_Err_Handler           [WEAK]
+                EXPORT  ADC_SeqA_Handler          [WEAK]
+                EXPORT  ADC_SeqB_Handler          [WEAK]
+                EXPORT  ADC_ChCmp_Handler         [WEAK]
+                EXPORT  ADC_SeqCmp_Handler        [WEAK]
 
+IRQ000_Handler
+IRQ001_Handler
+IRQ002_Handler
+IRQ003_Handler
+IRQ004_Handler
+IRQ005_Handler
+IRQ006_Handler
+IRQ007_Handler
 EXINT00_Handler
 EXINT01_Handler
 EXINT02_Handler
@@ -233,30 +330,92 @@ EXINT04_Handler
 EXINT05_Handler
 EXINT06_Handler
 EXINT07_Handler
-IRQ008_Handler
-IRQ009_Handler
-IRQ010_Handler
-IRQ011_Handler
-IRQ012_Handler
-IRQ013_Handler
-IRQ014_Handler
-IRQ015_Handler
-IRQ016_Handler
-IRQ017_Handler
-IRQ018_Handler
-IRQ019_Handler
-IRQ020_Handler
-IRQ021_Handler
-IRQ022_Handler
-IRQ023_Handler
-IRQ024_Handler
-IRQ025_Handler
-IRQ026_Handler
-IRQ027_Handler
-IRQ028_Handler
-IRQ029_Handler
-IRQ030_Handler
-IRQ031_Handler
+DMA_Tc0_Handler
+DMA_Tc1_Handler
+DMA_Tc2_Handler
+DMA_Tc3_Handler
+DMA_Btc0_Handler
+DMA_Btc1_Handler
+DMA_Btc2_Handler
+DMA_Btc3_Handler
+DMA_Err_Handler
+EFM_PgmEraseErr_Handler
+EFM_ColErr_Handler
+EFM_OpEnd_Handler
+DCU_Handler
+TIMER0_1_CmpA_Handler
+TIMER0_1_CmpB_Handler
+TIMER0_2_CmpA_Handler
+TIMER0_2_CmpB_Handler
+CLK_XtalStop_Handler
+SWDT_Handler
+TIMERA_1_Ovf_Handler
+TIMERA_1_Udf_Handler
+TIMERA_1_Cmp_Handler
+TIMERA_2_Ovf_Handler
+TIMERA_2_Udf_Handler
+TIMERA_2_Cmp_Handler
+TIMERA_3_Ovf_Handler
+TIMERA_3_Udf_Handler
+TIMERA_3_Cmp_Handler
+TIMERA_4_Ovf_Handler
+TIMERA_4_Udf_Handler
+TIMERA_4_Cmp_Handler
+TIMERB_Ovf_Handler
+TIMERB_Udf_Handler
+TIMERB_Cmp_Handler
+USART_1_RxErr_Handler
+USART_1_RxEnd_Handler
+USART_1_TxEmpty_Handler
+USART_1_TxEnd_Handler
+USART_2_RxErr_Handler
+USART_2_RxEnd_Handler
+USART_2_TxEmpty_Handler
+USART_2_TxEnd_Handler
+USART_3_RxErr_Handler
+USART_3_RxEnd_Handler
+USART_3_TxEmpty_Handler
+USART_3_TxEnd_Handler
+USART_4_RxErr_Handler
+USART_4_RxEnd_Handler
+USART_4_TxEmpty_Handler
+USART_4_TxEnd_Handler
+SPI_RxEnd_Handler
+SPI_TxEmpty_Handler
+SPI_Idle_Handler
+SPI_Err_Handler
+TIMER4_GCmpUH_Handler
+TIMER4_GCmpUL_Handler
+TIMER4_GCmpVH_Handler
+TIMER4_GCmpVL_Handler
+TIMER4_GCmpWH_Handler
+TIMER4_GCmpWL_Handler
+TIMER4_Ovf_Handler
+TIMER4_Udf_Handler
+TIMER4_ReloadU_Handler
+TIMER4_ReloadV_Handler
+TIMER4_ReloadW_Handler
+EMB_GR0_Handler
+CMP_1_Handler
+CMP_2_Handler
+CMP_3_Handler
+I2C_RxEnd_Handler
+I2C_TxEnd_Handler
+I2C_TxEmpty_Handler
+I2C_Err_Handler
+USART_1_WKUP_Handler
+PWR_Lvd1_Handler
+PWR_Lvd2_Handler
+FCM_Err_Handler
+FCM_End_Handler
+FCM_Ovf_Handler
+WDT_Handler
+CTC_Err_Handler
+ADC_SeqA_Handler
+ADC_SeqB_Handler
+ADC_ChCmp_Handler
+ADC_SeqCmp_Handler
+
                 B .
 
                 ENDP

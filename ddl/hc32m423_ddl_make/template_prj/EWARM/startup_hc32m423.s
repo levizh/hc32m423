@@ -42,8 +42,8 @@
 ;/*****************************************************************************/
 ;/*  Startup for IAR                                                          */
 ;/*  Version     V1.0                                                         */
-;/*  Date        2019-04-04                                                   */
-;/*  Target-mcu  M0+ Device                                                   */
+;/*  Date        2020-02-01                                                   */
+;/*  Target-mcu  HC32M423                                                     */
 ;/*****************************************************************************/
 
 
@@ -62,318 +62,699 @@
                 DATA
 __vector_table
                 DCD     sfe(CSTACK)               ; Top of Stack
-                DCD     Reset_Handler             ; Reset
-                DCD     NMI_Handler               ; NMI
-                DCD     HardFault_Handler         ; Hard Fault
+                DCD     Reset_IrqHandler          ; Reset
+                DCD     NMI_IrqHandler            ; NMI
+                DCD     HardFault_IrqHandler      ; Hard Fault
+                DCD     MemManage_IrqHandler      ; MemManage Fault
+                DCD     BusFault_IrqHandler       ; Bus Fault
+                DCD     UsageFault_IrqHandler     ; Usage Fault
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
+                DCD     SVC_IrqHandler            ; SVCall
+                DCD     DebugMon_IrqHandler       ; Debug Monitor
                 DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     SVC_Handler               ; SVCall
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     PendSV_Handler            ; PendSV
-                DCD     SysTick_Handler           ; SysTick
+                DCD     PendSV_IrqHandler         ; PendSV
+                DCD     SysTick_IrqHandler        ; SysTick
 
 ; Numbered IRQ handler vectors
 
 ; Note: renaming to device dependent ISR function names are done in
-;       ddl.h (section "IRQ name definition for all type MCUs")
-                DCD     EXINT00_Handler
-                DCD     EXINT01_Handler
-                DCD     EXINT02_Handler
-                DCD     EXINT03_Handler
-                DCD     EXINT04_Handler
-                DCD     EXINT05_Handler
-                DCD     EXINT06_Handler
-                DCD     EXINT07_Handler
-                DCD     IRQ008_Handler
-                DCD     IRQ009_Handler
-                DCD     IRQ010_Handler
-                DCD     IRQ011_Handler
-                DCD     IRQ012_Handler
-                DCD     IRQ013_Handler
-                DCD     IRQ014_Handler
-                DCD     IRQ015_Handler
-                DCD     IRQ016_Handler
-                DCD     IRQ017_Handler
-                DCD     IRQ018_Handler
-                DCD     IRQ019_Handler
-                DCD     IRQ020_Handler
-                DCD     IRQ021_Handler
-                DCD     IRQ022_Handler
-                DCD     IRQ023_Handler
-                DCD     IRQ024_Handler
-                DCD     IRQ025_Handler
-                DCD     IRQ026_Handler
-                DCD     IRQ027_Handler
-                DCD     IRQ028_Handler
-                DCD     IRQ029_Handler
-                DCD     IRQ030_Handler
-                DCD     IRQ031_Handler
+;      (section "IRQ name definition for all type MCUs")
+                DCD     IRQ000_IrqHandler
+                DCD     IRQ001_IrqHandler
+                DCD     IRQ002_IrqHandler
+                DCD     IRQ003_IrqHandler
+                DCD     IRQ004_IrqHandler
+                DCD     IRQ005_IrqHandler
+                DCD     IRQ006_IrqHandler
+                DCD     IRQ007_IrqHandler
+                DCD     EXINT00_IrqHandler
+                DCD     EXINT01_IrqHandler
+                DCD     EXINT02_IrqHandler
+                DCD     EXINT03_IrqHandler
+                DCD     EXINT04_IrqHandler
+                DCD     EXINT05_IrqHandler
+                DCD     EXINT06_IrqHandler
+                DCD     EXINT07_IrqHandler
+                DCD     DMA_Tc0_IrqHandler
+                DCD     DMA_Tc1_IrqHandler
+                DCD     DMA_Tc2_IrqHandler
+                DCD     DMA_Tc3_IrqHandler
+                DCD     DMA_Btc0_IrqHandler
+                DCD     DMA_Btc1_IrqHandler
+                DCD     DMA_Btc2_IrqHandler
+                DCD     DMA_Btc3_IrqHandler
+                DCD     DMA_Err_IrqHandler
+                DCD     EFM_PgmEraseErr_IrqHandler
+                DCD     EFM_ColErr_IrqHandler
+                DCD     EFM_OpEnd_IrqHandler
+                DCD     DCU_IrqHandler
+                DCD     TIMER0_1_CmpA_IrqHandler
+                DCD     TIMER0_1_CmpB_IrqHandler
+                DCD     TIMER0_2_CmpA_IrqHandler
+                DCD     TIMER0_2_CmpB_IrqHandler
+                DCD     CLK_XtalStop_IrqHandler
+                DCD     SWDT_IrqHandler
+                DCD     TIMERA_1_Ovf_IrqHandler
+                DCD     TIMERA_1_Udf_IrqHandler
+                DCD     TIMERA_1_Cmp_IrqHandler
+                DCD     TIMERA_2_Ovf_IrqHandler
+                DCD     TIMERA_2_Udf_IrqHandler
+                DCD     TIMERA_2_Cmp_IrqHandler
+                DCD     TIMERA_3_Ovf_IrqHandler
+                DCD     TIMERA_3_Udf_IrqHandler
+                DCD     TIMERA_3_Cmp_IrqHandler
+                DCD     TIMERA_4_Ovf_IrqHandler
+                DCD     TIMERA_4_Udf_IrqHandler
+                DCD     TIMERA_4_Cmp_IrqHandler
+                DCD     TIMERB_Ovf_IrqHandler
+                DCD     TIMERB_Udf_IrqHandler
+                DCD     TIMERB_Cmp_IrqHandler
+                DCD     USART_1_RxErr_IrqHandler
+                DCD     USART_1_RxEnd_IrqHandler
+                DCD     USART_1_TxEmpty_IrqHandler
+                DCD     USART_1_TxEnd_IrqHandler
+                DCD     USART_2_RxErr_IrqHandler
+                DCD     USART_2_RxEnd_IrqHandler
+                DCD     USART_2_TxEmpty_IrqHandler
+                DCD     USART_2_TxEnd_IrqHandler
+                DCD     USART_3_RxErr_IrqHandler
+                DCD     USART_3_RxEnd_IrqHandler
+                DCD     USART_3_TxEmpty_IrqHandler
+                DCD     USART_3_TxEnd_IrqHandler
+                DCD     USART_4_RxErr_IrqHandler
+                DCD     USART_4_RxEnd_IrqHandler
+                DCD     USART_4_TxEmpty_IrqHandler
+                DCD     USART_4_TxEnd_IrqHandler
+                DCD     SPI_RxEnd_IrqHandler
+                DCD     SPI_TxEmpty_IrqHandler
+                DCD     SPI_Idle_IrqHandler
+                DCD     SPI_Err_IrqHandler
+                DCD     TIMER4_GCmpUH_IrqHandler
+                DCD     TIMER4_GCmpUL_IrqHandler
+                DCD     TIMER4_GCmpVH_IrqHandler
+                DCD     TIMER4_GCmpVL_IrqHandler
+                DCD     TIMER4_GCmpWH_IrqHandler
+                DCD     TIMER4_GCmpWL_IrqHandler
+                DCD     TIMER4_Ovf_IrqHandler
+                DCD     TIMER4_Udf_IrqHandler
+                DCD     TIMER4_ReloadU_IrqHandler
+                DCD     TIMER4_ReloadV_IrqHandler
+                DCD     TIMER4_ReloadW_IrqHandler
+                DCD     EMB_GR0_IrqHandler
+                DCD     CMP_1_IrqHandler
+                DCD     CMP_2_IrqHandler
+                DCD     CMP_3_IrqHandler
+                DCD     I2C_RxEnd_IrqHandler
+                DCD     I2C_TxEnd_IrqHandler
+                DCD     I2C_TxEmpty_IrqHandler
+                DCD     I2C_Err_IrqHandler
+                DCD     USART_1_WKUP_IrqHandler
+                DCD     PWR_Lvd1_IrqHandler
+                DCD     PWR_Lvd2_IrqHandler
+                DCD     FCM_Err_IrqHandler
+                DCD     FCM_End_IrqHandler
+                DCD     FCM_Ovf_IrqHandler
+                DCD     WDT_IrqHandler
+                DCD     CTC_Err_IrqHandler
+                DCD     ADC_SeqA_IrqHandler
+                DCD     ADC_SeqB_IrqHandler
+                DCD     ADC_ChCmp_IrqHandler
+                DCD     ADC_SeqCmp_IrqHandler
 
 
                 THUMB
 ; Dummy Exception Handlers (infinite loops which can be modified)
 
-                PUBWEAK Reset_Handler
+                PUBWEAK Reset_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(2)
-Reset_Handler
-                LDR     R2, =0x40014020 ; PWC_FPRC
-                LDR     R0, =0xA502
-                STR     R0, [R2]        ; PWC_FPRC = 0xA502
+Reset_IrqHandler
+;                LDR     R2, =0x40014020 ; PWC_FPRC
+;                LDR     R0, =0xA502
+;                STR     R0, [R2]        ; PWC_FPRC = 0xA502
+;
+;                MOVS    R0, #1
+;                LDR     R1, =0x42280190 ; PWC_RAMCR_RPERDIS
+;                STRB    R0, [R1]        ; PWC_RAMCR_RPERDIS = 1
+;
+;                LDR     R0, =0xA500
+;                STR     R0, [R2]        ; PWC_FPRC = 0xA500
 
-                MOVS    R0, #1
-                LDR     R1, =0x42280190 ; PWC_RAMCR_RPERDIS
-                STRB    R0, [R1]        ; PWC_RAMCR_RPERDIS = 1
-
-                LDR     R0, =0xA500
-                STR     R0, [R2]        ; PWC_FPRC = 0xA500
-                
                 LDR     R0, =SystemInit
                 BLX     R0
                 LDR     R0, =__iar_program_start
                 BX      R0
 
-                PUBWEAK NMI_Handler
+                PUBWEAK NMI_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-NMI_Handler
-                B       NMI_Handler
+NMI_IrqHandler
+                B       NMI_IrqHandler
 
-                PUBWEAK HardFault_Handler
+                PUBWEAK HardFault_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-HardFault_Handler
-                B       HardFault_Handler
+HardFault_IrqHandler
+                B       HardFault_IrqHandler
 
-                PUBWEAK MemManage_Handler
+                PUBWEAK MemManage_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-MemManage_Handler
-                B       MemManage_Handler
+MemManage_IrqHandler
+                B       MemManage_IrqHandler
 
-                PUBWEAK BusFault_Handler
+                PUBWEAK BusFault_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-BusFault_Handler
-                B       BusFault_Handler
+BusFault_IrqHandler
+                B       BusFault_IrqHandler
 
-                PUBWEAK UsageFault_Handler
+                PUBWEAK UsageFault_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-UsageFault_Handler
-                B       UsageFault_Handler
+UsageFault_IrqHandler
+                B       UsageFault_IrqHandler
 
-                PUBWEAK SVC_Handler
+                PUBWEAK SVC_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-SVC_Handler
-                B       SVC_Handler
+SVC_IrqHandler
+                B       SVC_IrqHandler
 
-                PUBWEAK DebugMon_Handler
+                PUBWEAK DebugMon_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-DebugMon_Handler
-                B       DebugMon_Handler
+DebugMon_IrqHandler
+                B       DebugMon_IrqHandler
 
-                PUBWEAK PendSV_Handler
+                PUBWEAK PendSV_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-PendSV_Handler
-                B       PendSV_Handler
+PendSV_IrqHandler
+                B       PendSV_IrqHandler
 
-                PUBWEAK SysTick_Handler
+                PUBWEAK SysTick_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-SysTick_Handler
-                B       SysTick_Handler
+SysTick_IrqHandler
+                B       SysTick_IrqHandler
 
-
-
-                PUBWEAK EXINT00_Handler
+                PUBWEAK IRQ000_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-EXINT00_Handler
-                B       EXINT00_Handler
+IRQ000_IrqHandler
+                B       IRQ000_IrqHandler
 
-
-                PUBWEAK EXINT01_Handler
+                PUBWEAK IRQ001_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-EXINT01_Handler
-                B       EXINT01_Handler
+IRQ001_IrqHandler
+                B       IRQ001_IrqHandler
 
-
-                PUBWEAK EXINT02_Handler
+                PUBWEAK IRQ002_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-EXINT02_Handler
-                B       EXINT02_Handler
+IRQ002_IrqHandler
+                B       IRQ002_IrqHandler
 
-
-                PUBWEAK EXINT03_Handler
+                PUBWEAK IRQ003_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-EXINT03_Handler
-                B       EXINT03_Handler
+IRQ003_IrqHandler
+                B       IRQ003_IrqHandler
 
-
-                PUBWEAK EXINT04_Handler
+                PUBWEAK IRQ004_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-EXINT04_Handler
-                B       EXINT04_Handler
+IRQ004_IrqHandler
+                B       IRQ004_IrqHandler
 
-
-                PUBWEAK EXINT05_Handler
+                PUBWEAK IRQ005_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-EXINT05_Handler
-                B       EXINT05_Handler
+IRQ005_IrqHandler
+                B       IRQ005_IrqHandler
 
-
-                PUBWEAK EXINT06_Handler
+                PUBWEAK IRQ006_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-EXINT06_Handler
-                B       EXINT06_Handler
+IRQ006_IrqHandler
+                B       IRQ006_IrqHandler
 
-
-                PUBWEAK EXINT07_Handler
+                PUBWEAK IRQ007_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-EXINT07_Handler
-                B       EXINT07_Handler
+IRQ007_IrqHandler
+                B       IRQ007_IrqHandler
 
-
-                PUBWEAK IRQ008_Handler
+                PUBWEAK EXINT00_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ008_Handler
-                B       IRQ008_Handler
+EXINT00_IrqHandler
+                B       EXINT00_IrqHandler
 
-
-                PUBWEAK IRQ009_Handler
+                PUBWEAK EXINT01_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ009_Handler
-                B       IRQ009_Handler
+EXINT01_IrqHandler
+                B       EXINT01_IrqHandler
 
-
-                PUBWEAK IRQ010_Handler
+                PUBWEAK EXINT02_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ010_Handler
-                B       IRQ010_Handler
+EXINT02_IrqHandler
+                B       EXINT02_IrqHandler
 
-
-                PUBWEAK IRQ011_Handler
+                PUBWEAK EXINT03_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ011_Handler
-                B       IRQ011_Handler
+EXINT03_IrqHandler
+                B       EXINT03_IrqHandler
 
-
-                PUBWEAK IRQ012_Handler
+                PUBWEAK EXINT04_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ012_Handler
-                B       IRQ012_Handler
+EXINT04_IrqHandler
+                B       EXINT04_IrqHandler
 
-
-                PUBWEAK IRQ013_Handler
+                PUBWEAK EXINT05_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ013_Handler
-                B       IRQ013_Handler
+EXINT05_IrqHandler
+                B       EXINT05_IrqHandler
 
-
-                PUBWEAK IRQ014_Handler
+                PUBWEAK EXINT06_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ014_Handler
-                B       IRQ014_Handler
+EXINT06_IrqHandler
+                B       EXINT06_IrqHandler
 
-
-                PUBWEAK IRQ015_Handler
+                PUBWEAK EXINT07_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ015_Handler
-                B       IRQ015_Handler
+EXINT07_IrqHandler
+                B       EXINT07_IrqHandler
 
-
-                PUBWEAK IRQ016_Handler
+                PUBWEAK DMA_Tc0_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ016_Handler
-                B       IRQ016_Handler
+DMA_Tc0_IrqHandler
+                B       DMA_Tc0_IrqHandler
 
-
-                PUBWEAK IRQ017_Handler
+                PUBWEAK DMA_Tc1_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ017_Handler
-                B       IRQ017_Handler
+DMA_Tc1_IrqHandler
+                B       DMA_Tc1_IrqHandler
 
-
-                PUBWEAK IRQ018_Handler
+                PUBWEAK DMA_Tc2_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ018_Handler
-                B       IRQ018_Handler
+DMA_Tc2_IrqHandler
+                B       DMA_Tc2_IrqHandler
 
-
-                PUBWEAK IRQ019_Handler
+                PUBWEAK DMA_Tc3IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ019_Handler
-                B       IRQ019_Handler
+DMA_Tc3IrqHandler
+                B       DMA_Tc3IrqHandler
 
-
-                PUBWEAK IRQ020_Handler
+                PUBWEAK DMA_Btc0_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ020_Handler
-                B       IRQ020_Handler
+DMA_Btc0_IrqHandler
+                B       DMA_Btc0_IrqHandler
 
-
-                PUBWEAK IRQ021_Handler
+                PUBWEAK DMA_Btc1_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ021_Handler
-                B       IRQ021_Handler
+DMA_Btc1_IrqHandler
+                B       DMA_Btc1_IrqHandler
 
-
-                PUBWEAK IRQ022_Handler
+                PUBWEAK DMA_Btc2_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ022_Handler
-                B       IRQ022_Handler
+DMA_Btc2_IrqHandler
+                B       DMA_Btc2_IrqHandler
 
-
-                PUBWEAK IRQ023_Handler
+                PUBWEAK DMA_Btc3_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ023_Handler
-                B       IRQ023_Handler
+DMA_Btc3_IrqHandler
+                B       DMA_Btc3_IrqHandler
 
-
-                PUBWEAK IRQ024_Handler
+                PUBWEAK DMA_Err_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ024_Handler
-                B       IRQ024_Handler
+DMA_Err_IrqHandler
+                B       DMA_Err_IrqHandler
 
-
-                PUBWEAK IRQ025_Handler
+                PUBWEAK EFM_PgmEraseErr_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ025_Handler
-                B       IRQ025_Handler
+EFM_PgmEraseErr_IrqHandler
+                B       EFM_PgmEraseErr_IrqHandler
 
-
-                PUBWEAK IRQ026_Handler
+                PUBWEAK EFM_ColErr_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ026_Handler
-                B       IRQ026_Handler
+EFM_ColErr_IrqHandler
+                B       EFM_ColErr_IrqHandler
 
-
-                PUBWEAK IRQ027_Handler
+                PUBWEAK EFM_OpEnd_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ027_Handler
-                B       IRQ027_Handler
+EFM_OpEnd_IrqHandler
+                B       EFM_OpEnd_IrqHandler
 
-
-                PUBWEAK IRQ028_Handler
+                PUBWEAK DCU_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ028_Handler
-                B       IRQ028_Handler
+DCU_IrqHandler
+                B       DCU_IrqHandler
 
-
-                PUBWEAK IRQ029_Handler
+                PUBWEAK TIMER0_1_CmpA_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ029_Handler
-                B       IRQ029_Handler
+TIMER0_1_CmpA_IrqHandler
+                B       TIMER0_1_CmpA_IrqHandler
 
-
-                PUBWEAK IRQ030_Handler
+                PUBWEAK TIMER0_1_CmpB_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ030_Handler
-                B       IRQ030_Handler
+TIMER0_1_CmpB_IrqHandler
+                B       TIMER0_1_CmpB_IrqHandler
 
-
-                PUBWEAK IRQ031_Handler
+                PUBWEAK TIMER0_2_CmpA_IrqHandler
                 SECTION .text:CODE:NOROOT:REORDER(1)
-IRQ031_Handler
-                B       IRQ031_Handler
+TIMER0_2_CmpA_IrqHandler
+                B       TIMER0_2_CmpA_IrqHandler
+
+                PUBWEAK TIMER0_2_CmpB_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER0_2_CmpB_IrqHandler
+                B       TIMER0_2_CmpB_IrqHandler
+
+                PUBWEAK CLK_XtalStop_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+CLK_XtalStop_IrqHandler
+                B       CLK_XtalStop_IrqHandler
+
+                PUBWEAK SWDT_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+SWDT_IrqHandler
+                B       SWDT_IrqHandler
+
+                PUBWEAK TIMERA_1_Ovf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_1_Ovf_IrqHandler
+                B       TIMERA_1_Ovf_IrqHandler
+
+                PUBWEAK TIMERA_1_Udf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_1_Udf_IrqHandler
+                B       TIMERA_1_Udf_IrqHandler
+
+                PUBWEAK TIMERA_1_Cmp_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_1_Cmp_IrqHandler
+                B       TIMERA_1_Cmp_IrqHandler
+
+                PUBWEAK TIMERA_2_Ovf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_2_Ovf_IrqHandler
+                B       TIMERA_2_Ovf_IrqHandler
+
+                PUBWEAK TIMERA_2_Udf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_2_Udf_IrqHandler
+                B       TIMERA_2_Udf_IrqHandler
+
+                PUBWEAK TIMERA_2_Cmp_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_2_Cmp_IrqHandler
+                B       TIMERA_2_Cmp_IrqHandler
+
+                PUBWEAK TIMERA_3_Ovf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_3_Ovf_IrqHandler
+                B       TIMERA_3_Ovf_IrqHandler
+
+                PUBWEAK TIMERA_3_Udf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_3_Udf_IrqHandler
+                B       TIMERA_3_Udf_IrqHandler
+
+                PUBWEAK TIMERA_3_Cmp_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_3_Cmp_IrqHandler
+                B       TIMERA_3_Cmp_IrqHandler
+
+                PUBWEAK TIMERA_4_Ovf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_4_Ovf_IrqHandler
+                B       TIMERA_4_Ovf_IrqHandler
+
+                PUBWEAK TIMERA_4_Udf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_4_Udf_IrqHandler
+                B       TIMERA_4_Udf_IrqHandler
+
+                PUBWEAK TIMERA_4_Cmp_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERA_4_Cmp_IrqHandler
+                B       TIMERA_4_Cmp_IrqHandler
+
+                PUBWEAK TIMERB_Ovf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERB_Ovf_IrqHandler
+                B       TIMERB_Ovf_IrqHandler
+
+                PUBWEAK TIMERB_Udf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERB_Udf_IrqHandler
+                B       TIMERB_Udf_IrqHandler
+
+                PUBWEAK TIMERB_Cmp_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMERB_Cmp_IrqHandler
+                B       TIMERB_Cmp_IrqHandler
+
+                PUBWEAK USART_1_RxErr_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_1_RxErr_IrqHandler
+                B       USART_1_RxErr_IrqHandler
+
+                PUBWEAK USART_1_RxEnd_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_1_RxEnd_IrqHandler
+                B       USART_1_RxEnd_IrqHandler
+
+                PUBWEAK USART_1_TxEmpty_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_1_TxEmpty_IrqHandler
+                B       USART_1_TxEmpty_IrqHandler
+
+                PUBWEAK USART_1_TxEnd_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_1_TxEnd_IrqHandler
+                B       USART_1_TxEnd_IrqHandler
+
+                PUBWEAK USART_2_RxErr_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_2_RxErr_IrqHandler
+                B       USART_2_RxErr_IrqHandler
+
+                PUBWEAK USART_2_RxEnd_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_2_RxEnd_IrqHandler
+                B       USART_2_RxEnd_IrqHandler
+
+                PUBWEAK USART_2_TxEmpty_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_2_TxEmpty_IrqHandler
+                B       USART_2_TxEmpty_IrqHandler
+
+                PUBWEAK USART_2_TxEnd_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_2_TxEnd_IrqHandler
+                B       USART_2_TxEnd_IrqHandler
+
+                PUBWEAK USART_3_RxErr_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_3_RxErr_IrqHandler
+                B       USART_3_RxErr_IrqHandler
+
+                PUBWEAK USART_3_RxEnd_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_3_RxEnd_IrqHandler
+                B       USART_3_RxEnd_IrqHandler
+
+                PUBWEAK USART_3_TxEmpty_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_3_TxEmpty_IrqHandler
+                B       USART_3_TxEmpty_IrqHandler
+
+                PUBWEAK USART_3_TxEnd_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_3_TxEnd_IrqHandler
+                B       USART_3_TxEnd_IrqHandler
+
+                PUBWEAK USART_4_RxErr_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_4_RxErr_IrqHandler
+                B       USART_4_RxErr_IrqHandler
+
+                PUBWEAK USART_4_RxEnd_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_4_RxEnd_IrqHandler
+                B       USART_4_RxEnd_IrqHandler
+
+                PUBWEAK USART_4_TxEmpty_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_4_TxEmpty_IrqHandler
+                B       USART_4_TxEmpty_IrqHandler
+
+                PUBWEAK USART_4_TxEnd_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_4_TxEnd_IrqHandler
+                B       USART_4_TxEnd_IrqHandler
+
+                PUBWEAK SPI_RxEnd_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+SPI_RxEnd_IrqHandler
+                B       SPI_RxEnd_IrqHandler
+
+                PUBWEAK SPI_TxEmpty_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+SPI_TxEmpty_IrqHandler
+                B       SPI_TxEmpty_IrqHandler
+
+                PUBWEAK SPI_Idle_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+SPI_Idle_IrqHandler
+                B       SPI_Idle_IrqHandler
+
+                PUBWEAK SPI_Err_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+SPI_Err_IrqHandler
+                B       SPI_Err_IrqHandler
+
+                PUBWEAK TIMER4_GCmpUH_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER4_GCmpUH_IrqHandler
+                B       TIMER4_GCmpUH_IrqHandler
+
+                PUBWEAK TIMER4_GCmpUL_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER4_GCmpUL_IrqHandler
+                B       TIMER4_GCmpUL_IrqHandler
+
+                PUBWEAK TIMER4_GCmpVH_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER4_GCmpVH_IrqHandler
+                B       TIMER4_GCmpVH_IrqHandler
+
+                PUBWEAK TIMER4_GCmpVL_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER4_GCmpVL_IrqHandler
+                B       TIMER4_GCmpVL_IrqHandler
+
+                PUBWEAK TIMER4_GCmpWH_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER4_GCmpWH_IrqHandler
+                B       TIMER4_GCmpWH_IrqHandler
+
+                PUBWEAK TIMER4_GCmpWL_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER4_GCmpWL_IrqHandler
+                B       TIMER4_GCmpWL_IrqHandler
+
+                PUBWEAK TIMER4_Ovf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER4_Ovf_IrqHandler
+                B       TIMER4_Ovf_IrqHandler
+
+                PUBWEAK TIMER4_Udf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER4_Udf_IrqHandler
+                B       TIMER4_Udf_IrqHandler
+
+                PUBWEAK TIMER4_ReloadU_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER4_ReloadU_IrqHandler
+                B       TIMER4_ReloadU_IrqHandler
+
+                PUBWEAK TIMER4_ReloadV_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER4_ReloadV_IrqHandler
+                B       TIMER4_ReloadV_IrqHandler
+
+                PUBWEAK TIMER4_ReloadW_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+TIMER4_ReloadW_IrqHandler
+                B       TIMER4_ReloadW_IrqHandler
+
+                PUBWEAK EMB_GR0_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+EMB_GR0_IrqHandler
+                B       EMB_GR0_IrqHandler
+
+                PUBWEAK CMP_1_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+CMP_1_IrqHandler
+                B       CMP_1_IrqHandler
+
+                PUBWEAK CMP_2_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+CMP_2_IrqHandler
+                B       CMP_2_IrqHandler
+
+                PUBWEAK CMP_3_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+CMP_3_IrqHandler
+                B       CMP_3_IrqHandler
+
+                PUBWEAK I2C_RxEnd_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+I2C_RxEnd_IrqHandler
+                B       I2C_RxEnd_IrqHandler
+
+                PUBWEAK I2C_TxEnd_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+I2C_TxEnd_IrqHandler
+                B       I2C_TxEnd_IrqHandler
+
+                PUBWEAK I2C_TxEmpty_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+I2C_TxEmpty_IrqHandler
+                B       I2C_TxEmpty_IrqHandler
+
+                PUBWEAK I2C_Err_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+I2C_Err_IrqHandler
+                B       I2C_Err_IrqHandler
+
+                PUBWEAK USART_1_WKUP_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+USART_1_WKUP_IrqHandler
+                B       USART_1_WKUP_IrqHandler
+
+                PUBWEAK PWR_Lvd1_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+PWR_Lvd1_IrqHandler
+                B       PWR_Lvd1_IrqHandler
+
+                PUBWEAK PWR_Lvd2_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+PWR_Lvd2_IrqHandler
+                B       PWR_Lvd2_IrqHandler
+
+                PUBWEAK FCM_Err_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+FCM_Err_IrqHandler
+                B       FCM_Err_IrqHandler
+
+                PUBWEAK FCM_End_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+FCM_End_IrqHandler
+                B       FCM_End_IrqHandler
+
+                PUBWEAK FCM_Ovf_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+FCM_Ovf_IrqHandler
+                B       FCM_Ovf_IrqHandler
+
+                PUBWEAK WDT_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+WDT_IrqHandler
+                B       WDT_IrqHandler
+
+                PUBWEAK CTC_Err_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+CTC_Err_IrqHandler
+                B       CTC_Err_IrqHandler
+
+                PUBWEAK ADC_SeqA_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+ADC_SeqA_IrqHandler
+                B       ADC_SeqA_IrqHandler
+
+                PUBWEAK ADC_SeqB_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+ADC_SeqB_IrqHandler
+                B       ADC_SeqB_IrqHandler
+
+                PUBWEAK ADC_ChCmp_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+ADC_ChCmp_IrqHandler
+                B       ADC_ChCmp_IrqHandler
+
+                PUBWEAK ADC_SeqCmp_IrqHandler
+                SECTION .text:CODE:NOROOT:REORDER(1)
+ADC_SeqCmp_IrqHandler
+                B       ADC_SeqCmp_IrqHandler
 
                 END
