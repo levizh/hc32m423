@@ -93,8 +93,8 @@ extern "C"
  * @defgroup ICG_SWDT_Running_State ICG SWDT Running State
  * @{
  */
-#define ICG_SWDT_AFTER_RESET_AUTOSTART          ((uint32_t)0x00000000UL)       /*!< SWDT Auto Start after reset */
-#define ICG_SWDT_AFTER_RESET_STOP               ((uint32_t)ICG_ICG0_SWDTAUTS)  /*!< SWDT stop after reset */
+#define ICG_SWDT_AFTER_RESET_AUTOSTART          ((uint32_t)0x00000000UL)        /*!< SWDT Auto Start after reset */
+#define ICG_SWDT_AFTER_RESET_STOP               ((uint32_t)ICG_ICG0_SWDTAUTST)  /*!< SWDT stop after reset */
 /**
  * @}
  */
@@ -125,19 +125,13 @@ extern "C"
  * @defgroup ICG_SWDT_Clock_Division ICG SWDT Clock Division
  * @{
  */
-#define ICG_SWDT_CLOCK_DIV1                     ((uint32_t)0x00000000UL)            /*!< SWDTCLK */
-#define ICG_SWDT_CLOCK_DIV16                    ((uint32_t)ICG_ICG0_SWDTCKS_2)      /*!< SWDTCLK/16 */
-#define ICG_SWDT_CLOCK_DIV32                    ((uint32_t)(ICG_ICG0_SWDTCKS_0 | \
-                                                            ICG_ICG0_SWDTCKS_2))    /*!< SWDTCLK/32 */
-#define ICG_SWDT_CLOCK_DIV64                    ((uint32_t)(ICG_ICG0_SWDTCKS_1 | \
-                                                            ICG_ICG0_SWDTCKS_2))    /*!< SWDTCLK/64 */
-#define ICG_SWDT_CLOCK_DIV128                   ((uint32_t)(ICG_ICG0_SWDTCKS_0 | \
-                                                            ICG_ICG0_SWDTCKS_1 | \
-                                                            ICG_ICG0_SWDTCKS_2))    /*!< SWDTCLK/128 */
-#define ICG_SWDT_CLOCK_DIV256                   ((uint32_t)ICG_ICG0_SWDTCKS_3)      /*!< SWDTCLK/256 */
-#define ICG_SWDT_CLOCK_DIV2048                  ((uint32_t)(ICG_ICG0_SWDTCKS_0 | \
-                                                            ICG_ICG0_SWDTCKS_1 | \
-                                                            ICG_ICG0_SWDTCKS_3))    /*!< SWDTCLK/2048 */
+#define ICG_SWDT_CLOCK_DIV1                     ((uint32_t)0x00000000UL)                                                    /*!< SWDTCLK */
+#define ICG_SWDT_CLOCK_DIV16                    ((uint32_t)ICG_ICG0_SWDTCKS_2)                                              /*!< SWDTCLK/16 */
+#define ICG_SWDT_CLOCK_DIV32                    ((uint32_t)(ICG_ICG0_SWDTCKS_0 | ICG_ICG0_SWDTCKS_2))                       /*!< SWDTCLK/32 */
+#define ICG_SWDT_CLOCK_DIV64                    ((uint32_t)(ICG_ICG0_SWDTCKS_1 | ICG_ICG0_SWDTCKS_2))                       /*!< SWDTCLK/64 */
+#define ICG_SWDT_CLOCK_DIV128                   ((uint32_t)(ICG_ICG0_SWDTCKS_0 | ICG_ICG0_SWDTCKS_1 | ICG_ICG0_SWDTCKS_2))  /*!< SWDTCLK/128 */
+#define ICG_SWDT_CLOCK_DIV256                   ((uint32_t)ICG_ICG0_SWDTCKS_3)                                              /*!< SWDTCLK/256 */
+#define ICG_SWDT_CLOCK_DIV2048                  ((uint32_t)(ICG_ICG0_SWDTCKS_0 | ICG_ICG0_SWDTCKS_1 | ICG_ICG0_SWDTCKS_3))  /*!< SWDTCLK/2048 */
 /**
  * @}
  */
@@ -146,36 +140,22 @@ extern "C"
  * @defgroup ICG_SWDT_Refresh_Percent_Range ICG SWDT Refresh Percent Range
  * @{
  */
-#define ICG_SWDT_RANGE_100PCT                   ((uint32_t)0x00000000UL)            /*!< 100% */
-#define ICG_SWDT_RANGE_0TO25PCT                 ((uint32_t)ICG_ICG0_SWDTWDPT_0)     /*!< 0%~25% */
-#define ICG_SWDT_RANGE_25TO50PCT                ((uint32_t)ICG_ICG0_SWDTWDPT_1)     /*!< 25%~50% */
-#define ICG_SWDT_RANGE_0TO50PCT                 ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | \
-                                                            ICG_ICG0_SWDTWDPT_1))   /*!< 0%~50% */
-#define ICG_SWDT_RANGE_50TO75PCT                ((uint32_t)ICG_ICG0_SWDTWDPT_2)     /*!< 50%~75% */
-#define ICG_SWDT_RANGE_0TO25PCT_50TO75PCT       ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | \
-                                                            ICG_ICG0_SWDTWDPT_2))   /*!< 0%~25% & 50%~75% */
-#define ICG_SWDT_RANGE_25TO75PCT                ((uint32_t)(ICG_ICG0_SWDTWDPT_1 | \
-                                                            ICG_ICG0_SWDTWDPT_2))   /*!< 25%~75% */
-#define ICG_SWDT_RANGE_0TO75PCT                 ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | \
-                                                            ICG_ICG0_SWDTWDPT_1 | \
-                                                            ICG_ICG0_SWDTWDPT_2))   /*!< 0%~75% */
-#define ICG_SWDT_RANGE_75TO100PCT               ((uint32_t)ICG_ICG0_SWDTWDPT_3)     /*!< 75%~100% */
-#define ICG_SWDT_RANGE_0TO25PCT_75TO100PCT      ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | \
-                                                            ICG_ICG0_SWDTWDPT_3))   /*!< 0%~25% & 75%~100% */
-#define ICG_SWDT_RANGE_25TO50PCT_75TO100PCT     ((uint32_t)(ICG_ICG0_SWDTWDPT_1 | \
-                                                            ICG_ICG0_SWDTWDPT_3))   /*!< 25%~50% & 75%~100% */
-#define ICG_SWDT_RANGE_0TO50PCT_75TO100PCT      ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | \
-                                                            ICG_ICG0_SWDTWDPT_1 | \
-                                                            ICG_ICG0_SWDTWDPT_3))   /*!< 0%~50% & 75%~100% */
-#define ICG_SWDT_RANGE_50TO100PCT               ((uint32_t)(ICG_ICG0_SWDTWDPT_2 | \
-                                                            ICG_ICG0_SWDTWDPT_3))   /*!< 50%~100% */
-#define ICG_SWDT_RANGE_0TO25PCT_50TO100PCT      ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | \
-                                                            ICG_ICG0_SWDTWDPT_2 | \
-                                                            ICG_ICG0_SWDTWDPT_3))   /*!< 0%~25% & 50%~100% */
-#define ICG_SWDT_RANGE_25TO100PCT               ((uint32_t)(ICG_ICG0_SWDTWDPT_1 | \
-                                                            ICG_ICG0_SWDTWDPT_2 | \
-                                                            ICG_ICG0_SWDTWDPT_3))   /*!< 25%~100% */
-#define ICG_SWDT_RANGE_0TO100PCT                ((uint32_t)ICG_ICG0_SWDTWDPT)       /*!< 0%~100% */
+#define ICG_SWDT_RANGE_100PCT                   ((uint32_t)0x00000000UL)                                                        /*!< 100% */
+#define ICG_SWDT_RANGE_0TO25PCT                 ((uint32_t)ICG_ICG0_SWDTWDPT_0)                                                 /*!< 0%~25% */
+#define ICG_SWDT_RANGE_25TO50PCT                ((uint32_t)ICG_ICG0_SWDTWDPT_1)                                                 /*!< 25%~50% */
+#define ICG_SWDT_RANGE_0TO50PCT                 ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | ICG_ICG0_SWDTWDPT_1))                         /*!< 0%~50% */
+#define ICG_SWDT_RANGE_50TO75PCT                ((uint32_t)ICG_ICG0_SWDTWDPT_2)                                                 /*!< 50%~75% */
+#define ICG_SWDT_RANGE_0TO25PCT_50TO75PCT       ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | ICG_ICG0_SWDTWDPT_2))                         /*!< 0%~25% & 50%~75% */
+#define ICG_SWDT_RANGE_25TO75PCT                ((uint32_t)(ICG_ICG0_SWDTWDPT_1 | ICG_ICG0_SWDTWDPT_2))                         /*!< 25%~75% */
+#define ICG_SWDT_RANGE_0TO75PCT                 ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | ICG_ICG0_SWDTWDPT_1 | ICG_ICG0_SWDTWDPT_2))   /*!< 0%~75% */
+#define ICG_SWDT_RANGE_75TO100PCT               ((uint32_t)ICG_ICG0_SWDTWDPT_3)                                                 /*!< 75%~100% */
+#define ICG_SWDT_RANGE_0TO25PCT_75TO100PCT      ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | ICG_ICG0_SWDTWDPT_3))                         /*!< 0%~25% & 75%~100% */
+#define ICG_SWDT_RANGE_25TO50PCT_75TO100PCT     ((uint32_t)(ICG_ICG0_SWDTWDPT_1 | ICG_ICG0_SWDTWDPT_3))                         /*!< 25%~50% & 75%~100% */
+#define ICG_SWDT_RANGE_0TO50PCT_75TO100PCT      ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | ICG_ICG0_SWDTWDPT_1 | ICG_ICG0_SWDTWDPT_3))   /*!< 0%~50% & 75%~100% */
+#define ICG_SWDT_RANGE_50TO100PCT               ((uint32_t)(ICG_ICG0_SWDTWDPT_2 | ICG_ICG0_SWDTWDPT_3))                         /*!< 50%~100% */
+#define ICG_SWDT_RANGE_0TO25PCT_50TO100PCT      ((uint32_t)(ICG_ICG0_SWDTWDPT_0 | ICG_ICG0_SWDTWDPT_2 | ICG_ICG0_SWDTWDPT_3))   /*!< 0%~25% & 50%~100% */
+#define ICG_SWDT_RANGE_25TO100PCT               ((uint32_t)(ICG_ICG0_SWDTWDPT_1 | ICG_ICG0_SWDTWDPT_2 | ICG_ICG0_SWDTWDPT_3))   /*!< 25%~100% */
+#define ICG_SWDT_RANGE_0TO100PCT                ((uint32_t)ICG_ICG0_SWDTWDPT)                                                   /*!< 0%~100% */
 /**
  * @}
  */
@@ -195,27 +175,30 @@ extern "C"
  * @defgroup ICG_HRC_Frequency_Select ICG HRC Frequency Select
  * @{
  */
-#define ICG_HRC_FREQ_1MHZ                       ((uint32_t)(ICG_ICG0_HRCREQS_0 | \
-                                                            ICG_ICG0_HRCREQS_2))    /*!< HRC frequency 1MHZ */
-#define ICG_HRC_FREQ_1P5MHZ                     ((uint32_t)(ICG_ICG0_HRCREQS_0 | \
-                                                            ICG_ICG0_HRCREQS_2 | \
-                                                            ICG_ICG0_HRCREQS_3))    /*!< HRC frequency 1.5MHZ */
-#define ICG_HRC_FREQ_2MHZ                       ((uint32_t)ICG_ICG0_HRCREQS_2)      /*!< HRC frequency 2MHZ */
-#define ICG_HRC_FREQ_3MHZ                       ((uint32_t)(ICG_ICG0_HRCREQS_2 | \
-                                                            ICG_ICG0_HRCREQS_3))    /*!< HRC frequency 3MHZ */
-#define ICG_HRC_FREQ_4MHZ                       ((uint32_t)(ICG_ICG0_HRCREQS_0 | \
-                                                            ICG_ICG0_HRCREQS_1))    /*!< HRC frequency 4MHZ */
-#define ICG_HRC_FREQ_6MHZ                       ((uint32_t)(ICG_ICG0_HRCREQS_0 | \
-                                                            ICG_ICG0_HRCREQS_1 | \
-                                                            ICG_ICG0_HRCREQS_3))    /*!< HRC frequency 6MHZ */
-#define ICG_HRC_FREQ_8MHZ                       ((uint32_t)ICG_ICG0_HRCREQS_1)      /*!< HRC frequency 8MHZ */
-#define ICG_HRC_FREQ_12MHZ                      ((uint32_t)(ICG_ICG0_HRCREQS_1 | \
-                                                            ICG_ICG0_HRCREQS_3))    /*!< HRC frequency 12MHZ */
-#define ICG_HRC_FREQ_16MHZ                      ((uint32_t)ICG_ICG0_HRCREQS_0)      /*!< HRC frequency 16MHZ */
-#define ICG_HRC_FREQ_24MHZ                      ((uint32_t)(ICG_ICG0_HRCREQS_0 | \
-                                                            ICG_ICG0_HRCREQS_3))    /*!< HRC frequency 24MHZ */
-#define ICG_HRC_FREQ_32MHZ                      ((uint32_t)0x00000000UL)            /*!< HRC frequency 32MHZ */
-#define ICG_HRC_FREQ_48MHZ                      ((uint32_t)ICG_ICG0_HRCREQS_3)      /*!< HRC frequency 48MHZ */
+
+#define ICG_HRC_FREQ_1P5MHZ                     ((uint32_t)(ICG_ICG0_HRCREQS_0 | ICG_ICG0_HRCREQS_2 | ICG_ICG0_HRCREQS_3))  /*!< HRC frequency 1.5MHZ */
+#define ICG_HRC_FREQ_2MHZ                       ((uint32_t)(ICG_ICG0_HRCREQS_0 | ICG_ICG0_HRCREQS_2))                       /*!< HRC frequency 2MHZ */
+#define ICG_HRC_FREQ_3MHZ                       ((uint32_t)(ICG_ICG0_HRCREQS_2 | ICG_ICG0_HRCREQS_3))                       /*!< HRC frequency 3MHZ */
+#define ICG_HRC_FREQ_4MHZ                       ((uint32_t)ICG_ICG0_HRCREQS_2)                                              /*!< HRC frequency 4MHZ */
+#define ICG_HRC_FREQ_6MHZ                       ((uint32_t)(ICG_ICG0_HRCREQS_0 | ICG_ICG0_HRCREQS_1 | ICG_ICG0_HRCREQS_3))  /*!< HRC frequency 6MHZ */
+#define ICG_HRC_FREQ_8MHZ                       ((uint32_t)(ICG_ICG0_HRCREQS_0 | ICG_ICG0_HRCREQS_1))                       /*!< HRC frequency 8MHZ */
+#define ICG_HRC_FREQ_12MHZ                      ((uint32_t)(ICG_ICG0_HRCREQS_1 | ICG_ICG0_HRCREQS_3))                       /*!< HRC frequency 12MHZ */
+#define ICG_HRC_FREQ_16MHZ                      ((uint32_t)ICG_ICG0_HRCREQS_1)                                              /*!< HRC frequency 16MHZ */
+#define ICG_HRC_FREQ_24MHZ                      ((uint32_t)(ICG_ICG0_HRCREQS_0 | ICG_ICG0_HRCREQS_3))                       /*!< HRC frequency 24MHZ */
+#define ICG_HRC_FREQ_32MHZ                      ((uint32_t)ICG_ICG0_HRCREQS_0)                                              /*!< HRC frequency 32MHZ */
+#define ICG_HRC_FREQ_48MHZ                      ((uint32_t)ICG_ICG0_HRCREQS_3)                                              /*!< HRC frequency 48MHZ */
+#define ICG_HRC_FREQ_64MHZ                      ((uint32_t)0x00000000UL)                                                    /*!< HRC frequency 64MHZ */
+/**
+ * @}
+ */
+
+/**
+ * @defgroup ICG_HRC_Switch ICG HRC Switch
+ * @brief Enable or disable HRC function
+ * @{
+ */
+#define ICG_HRC_ENABLE                          ((uint32_t)0x00000000UL)      /*!< Enable HRC */
+#define ICG_HRC_DISABLE                         ((uint32_t)ICG_ICG0_HRCSTOP)  /*!< Disable HRC */
 /**
  * @}
  */
@@ -269,107 +252,129 @@ extern "C"
  * @brief Enable or disable NMI pin ICG configure
  * @{
  */
-#define ICG_NMI_PIN_ICG_CONFIG_DISABLE          ((uint32_t)ICG_ICG0_NMIICGENA)  /*!< Disable NMI pin ICG configure */
+#define ICG_NMI_PIN_ICG_CONFIG_DISABLE          ((uint32_t)ICG_ICG0_NMIICGNE)   /*!< Disable NMI pin ICG configure */
 #define ICG_NMI_PIN_ICG_CONFIG_ENABLE           ((uint32_t)0x00000000UL)        /*!< Enable NMI pin ICG configure */
 /**
  * @}
  */
 
 /**
- * @defgroup ICG_LVD_Digital_Filter_Clock_Cycle ICG LVD Digital Filter Clock Cycle
+ * @defgroup ICG_Lockup_Reset_Switch ICG Lockup Reset Switch
+ * @brief Enable or disable core Lockup reset
  * @{
  */
-#define ICG_LVD_FILTER_CLOCK_LRC2               ((uint32_t)0x00000000UL)    /*!< 2 LRC clock cycle */
-#define ICG_LVD_FILTER_CLOCK_LRC4               ((uint32_t)ICG_ICG1_DFS_0)  /*!< 4 LRC clock cycle */
-#define ICG_LVD_FILTER_CLOCK_LRC8               ((uint32_t)ICG_ICG1_DFS_1)  /*!< 8 LRC clock cycle */
-#define ICG_LVD_FILTER_CLOCK_LRC16              ((uint32_t)ICG_ICG1_DFS)    /*!< 16 LRC clock cycle */
-/**
- * @}
- */
-
-/**
- * @defgroup ICG_LVD_Digital_Filter_Switch ICG LVD Digital Filter Switch
- * @brief Enable or disable LVD digital filter
- * @{
- */
-#define ICG_LVD_DIGITAL_FILTER_DISABLE          ((uint32_t)ICG_ICG1_DFDIS)  /*!< Disable LVD digital filter */
-#define ICG_LVD_DIGITAL_FILTER_ENABLE           ((uint32_t)0x00000000UL)    /*!< Enable LVD digital filter */
+#define ICG_LOCKUP_RESET_DISABLE                ((uint32_t)ICG_ICG1_LKUPDIS)    /*!< Disable core Lockup reset */
+#define ICG_LOCKUP_RESET_ENABLE                 ((uint32_t)0x00000000UL)        /*!< Enable core Lockup reset */
 /**
  * @}
  */
 
 /**
  * @defgroup ICG_LVD_Voltage_Threshold ICG LVD Voltage Threshold
- * @note Select external voltage input requires LVD voltage threshold choose
- *  LVD_THRESHOLD_EXTERNAL_INPUT and EXVCCINEN=1 in LVDCSR register.
  * @{
  */
-#define ICG_LVD_BELOW3P98_OR_ABOVE4P06          ((uint32_t)0x00000000UL)            /*!< LVD voltage threshold less than 3.98 or higher than 4.06 */
-#define ICG_LVD_BELOW3P67_OR_ABOVE3P75          ((uint32_t)ICG_ICG1_LVDLVL_0)       /*!< LVD voltage threshold less than 3.67 or higher than 3.75 */
-#define ICG_LVD_BELOW3P06_OR_ABOVE3P13          ((uint32_t)ICG_ICG1_LVDLVL_1)       /*!< LVD voltage threshold less than 3.06 or higher than 3.13 */
-#define ICG_LVD_BELOW2P96_OR_ABOVE3P02          ((uint32_t)(ICG_ICG1_LVDLVL_0 | \
-                                                            ICG_ICG1_LVDLVL_1))     /*!< LVD voltage threshold less than 2.96 or higher than 3.02 */
-#define ICG_LVD_BELOW2P86_OR_ABOVE2P92          ((uint32_t)ICG_ICG1_LVDLVL_2)       /*!< LVD voltage threshold less than 2.86 or higher than 2.92 */
-#define ICG_LVD_BELOW2P75_OR_ABOVE2P81          ((uint32_t)(ICG_ICG1_LVDLVL_0 | \
-                                                            ICG_ICG1_LVDLVL_2))     /*!< LVD voltage threshold less than 2.75 or higher than 2.81 */
-#define ICG_LVD_BELOW2P65_OR_ABOVE2P71          ((uint32_t)(ICG_ICG1_LVDLVL_1 | \
-                                                            ICG_ICG1_LVDLVL_2))     /*!< LVD voltage threshold less than 2.65 or higher than 2.71 */
-#define ICG_LVD_BELOW2P55_OR_ABOVE2P61          ((uint32_t)(ICG_ICG1_LVDLVL_0 | \
-                                                            ICG_ICG1_LVDLVL_1 | \
-                                                            ICG_ICG1_LVDLVL_2))     /*!< LVD voltage threshold less than 2.55 or higher than 2.61 */
-#define ICG_LVD_BELOW2P45_OR_ABOVE2P50          ((uint32_t)ICG_ICG1_LVDLVL_3)       /*!< LVD voltage threshold less than 2.45 or higher than 2.50 */
-#define ICG_LVD_BELOW2P04_OR_ABOVE2P09          ((uint32_t)(ICG_ICG1_LVDLVL_0 | \
-                                                            ICG_ICG1_LVDLVL_3))     /*!< LVD voltage threshold less than 2.04 or higher than 2.09 */
-#define ICG_LVD_BELOW1P94_OR_ABOVE1P98          ((uint32_t)(ICG_ICG1_LVDLVL_1 | \
-                                                            ICG_ICG1_LVDLVL_3))     /*!< LVD voltage threshold less than 1.94 or higher than 1.98 */
-#define ICG_LVD_BELOW1P84_OR_ABOVE1P88          ((uint32_t)(ICG_ICG1_LVDLVL_0 | \
-                                                            ICG_ICG1_LVDLVL_1 | \
-                                                            ICG_ICG1_LVDLVL_3))     /*!< LVD voltage threshold less than 1.84 or higher than 1.88 */
-#define ICG_LVD_EXTERNAL_INPUT                  ((uint32_t)(ICG_ICG1_LVDLVL_1 | \
-                                                            ICG_ICG1_LVDLVL_2 | \
-                                                            ICG_ICG1_LVDLVL_3))     /*!< LVD voltage threshold reference external input */
-/**
- * @}
- */
-
-/**
- * @defgroup ICG_LVD_INT_Type ICG LVD Interrupt Type
- * @{
- */
-#define ICG_LVD_INT_TYPE_INTR                   ((uint32_t)0x00000000UL)   /*!< LVD choose maskable interrupt */
-#define ICG_LVD_INT_TYPE_NMI                    ((uint32_t)ICG_ICG1_NMIS)  /*!< LVD choose non-maskable interrupt */
-/**
- * @}
- */
-
-/**
- * @defgroup ICG_LVD_Trigger_Event_Type ICG LVD Trigger Event Type
- * @{
- */
-#define ICG_LVD_TRIG_EVENT_INT                  ((uint32_t)0x00000000UL)  /*!< LVD trigger interrupt */
-#define ICG_LVD_TRIG_EVENT_RESET                ((uint32_t)ICG_ICG1_IRS)  /*!< LVD trigger reset */
-/**
- * @}
- */
-
-/**
- * @defgroup ICG_LVD_Abnormal_Function_Switch ICG LVD Abnormal Function Switch
- * @brief Enable or disable LVD interrupt and reset function
- * @{
- */
-#define ICG_LVD_INT_AND_RESET_DISABLE           ((uint32_t)ICG_ICG1_IRDIS)  /*!< Disable LVD interrupt and reset */
-#define ICG_LVD_INT_AND_RESET_ENABLE            ((uint32_t)0x00000000UL)    /*!< Enable LVD interrupt and reset */
+#define ICG_LVD_BELOW4P29_OR_ABOVE4P39          ((uint32_t)0x00000000UL)                                /*!< LVD voltage threshold less than 4.29 or higher than 4.39 */
+#define ICG_LVD_BELOW3P84_OR_ABOVE3P96          ((uint32_t)ICG_ICG1_LVD0LVL_0)                          /*!< LVD voltage threshold less than 3.84 or higher than 3.96 */
+#define ICG_LVD_BELOW2P82_OR_ABOVE2P90          ((uint32_t)ICG_ICG1_LVD0LVL_1)                          /*!< LVD voltage threshold less than 2.82 or higher than 2.90 */
+#define ICG_LVD_BELOW2P51_OR_ABOVE2P59          ((uint32_t)(ICG_ICG1_LVD0LVL_0 | ICG_ICG1_LVD0LVL_1))   /*!< LVD voltage threshold less than 2.51 or higher than 2.59 */
+#define ICG_LVD_BELOW2P34_OR_ABOVE2P41          ((uint32_t)ICG_ICG1_LVD0LVL_2)                          /*!< LVD voltage threshold less than 2.34 or higher than 2.41 */
+#define ICG_LVD_BELOW2P14_OR_ABOVE2P21          ((uint32_t)(ICG_ICG1_LVD0LVL_0 | ICG_ICG1_LVD0LVL_2))   /*!< LVD voltage threshold less than 2.14 or higher than 2.21 */
+#define ICG_LVD_BELOW1P94_OR_ABOVE2P01          ((uint32_t)(ICG_ICG1_LVD0LVL_1 | ICG_ICG1_LVD0LVL_2))   /*!< LVD voltage threshold less than 1.94 or higher than 2.01 */
+#define ICG_LVD_BELOW1P84_OR_ABOVE1P90          ((uint32_t)ICG_ICG1_LVD0LVL)                            /*!< LVD voltage threshold less than 1.84 or higher than 1.90 */
 /**
  * @}
  */
 
 /**
  * @defgroup ICG_LVD_Voltage_Detection_Switch ICG LVD Voltage Detection Switch
- * @brief Enable or disable voltage detection
+ * @brief Enable or disable LVD0 circuitry detection
  * @{
  */
-#define ICG_LVD_VOLTAGE_DETECTION_DISABLE       ((uint32_t)ICG_ICG1_LVDDIS)  /*!< Disable voltage detection */
-#define ICG_LVD_VOLTAGE_DETECTION_ENABLE        ((uint32_t)0x00000000UL)     /*!< Enable voltage detection */
+#define ICG_LVD_VOLTAGE_DETECTION_DISABLE       ((uint32_t)ICG_ICG1_LVDDIS)  /*!< Disable LVD0 circuitry detection */
+#define ICG_LVD_VOLTAGE_DETECTION_ENABLE        ((uint32_t)0x00000000UL)     /*!< Enable LVD0 circuitry detection */
+/**
+ * @}
+ */
+
+/**
+ * @defgroup ICG_WDT_Running_State ICG WDT Running State
+ * @{
+ */
+#define ICG_WDT_AFTER_RESET_AUTOSTART           ((uint32_t)0x00000000UL)       /*!< WDT Auto Start after reset */
+#define ICG_WDT_AFTER_RESET_STOP                ((uint32_t)ICG_ICG7_WDTAUTST)  /*!< WDT stop after reset */
+/**
+ * @}
+ */
+
+/**
+ * @defgroup ICG_WDT_Trigger_Event_Type ICG WDT Trigger Event Type
+ * @{
+ */
+#define ICG_WDT_TRIG_EVENT_INT                  ((uint32_t)0x00000000UL)     /*!< WDT trigger interrupt */
+#define ICG_WDT_TRIG_EVENT_RESET                ((uint32_t)ICG_ICG7_WDTITS)  /*!< WDT trigger reset */
+/**
+ * @}
+ */
+
+/**
+ * @defgroup ICG_WDT_Counter_Cycle ICG WDT Counter Cycle
+ * @{
+ */
+#define ICG_WDT_COUNTER_CYCLE_256               ((uint32_t)0x00000000UL)        /*!< 256 clock cycle */
+#define ICG_WDT_COUNTER_CYCLE_4096              ((uint32_t)ICG_ICG7_WDTPERI_0)  /*!< 4096 clock cycle */
+#define ICG_WDT_COUNTER_CYCLE_16384             ((uint32_t)ICG_ICG7_WDTPERI_1)  /*!< 16384 clock cycle */
+#define ICG_WDT_COUNTER_CYCLE_65536             ((uint32_t)ICG_ICG7_WDTPERI)    /*!< 65536 clock cycle */
+/**
+ * @}
+ */
+
+/**
+ * @defgroup ICG_WDT_Clock_Division ICG WDT Clock Division
+ * @{
+ */
+#define ICG_WDT_CLOCK_DIV4                      ((uint32_t)ICG_ICG7_WDTCKS_1)                                            /*!< PCLK1/4 */
+#define ICG_WDT_CLOCK_DIV64                     ((uint32_t)(ICG_ICG7_WDTCKS_1 | ICG_ICG7_WDTCKS_2))                      /*!< PCLK1/64 */
+#define ICG_WDT_CLOCK_DIV128                    ((uint32_t)(ICG_ICG7_WDTCKS_0 | ICG_ICG7_WDTCKS_1 | ICG_ICG7_WDTCKS_2))  /*!< PCLK1/128 */
+#define ICG_WDT_CLOCK_DIV256                    ((uint32_t)ICG_ICG7_WDTCKS_3)                                            /*!< PCLK1/256 */
+#define ICG_WDT_CLOCK_DIV512                    ((uint32_t)(ICG_ICG7_WDTCKS_0 | ICG_ICG7_WDTCKS_3))                      /*!< PCLK1/512 */
+#define ICG_WDT_CLOCK_DIV1024                   ((uint32_t)(ICG_ICG7_WDTCKS_1 | ICG_ICG7_WDTCKS_3))                      /*!< PCLK1/1024 */
+#define ICG_WDT_CLOCK_DIV2048                   ((uint32_t)(ICG_ICG7_WDTCKS_0 | ICG_ICG7_WDTCKS_1 | ICG_ICG7_WDTCKS_3))  /*!< PCLK1/2048 */
+#define ICG_WDT_CLOCK_DIV8192                   ((uint32_t)(ICG_ICG7_WDTCKS_0 | ICG_ICG7_WDTCKS_2 | ICG_ICG7_WDTCKS_3))  /*!< PCLK1/8192 */
+/**
+ * @}
+ */
+
+/**
+ * @defgroup ICG_WDT_Refresh_Percent_Range ICG WDT Refresh Percent Range
+ * @{
+ */
+#define ICG_WDT_RANGE_100PCT                    ((uint32_t)0x00000000UL)                                                    /*!< 100% */
+#define ICG_WDT_RANGE_0TO25PCT                  ((uint32_t)ICG_ICG7_WDTWDPT_0)                                              /*!< 0%~25% */
+#define ICG_WDT_RANGE_25TO50PCT                 ((uint32_t)ICG_ICG7_WDTWDPT_1)                                              /*!< 25%~50% */
+#define ICG_WDT_RANGE_0TO50PCT                  ((uint32_t)(ICG_ICG7_WDTWDPT_0 | ICG_ICG7_WDTWDPT_1))                       /*!< 0%~50% */
+#define ICG_WDT_RANGE_50TO75PCT                 ((uint32_t)ICG_ICG7_WDTWDPT_2)                                              /*!< 50%~75% */
+#define ICG_WDT_RANGE_0TO25PCT_50TO75PCT        ((uint32_t)(ICG_ICG7_WDTWDPT_0 | ICG_ICG7_WDTWDPT_2))                       /*!< 0%~25% & 50%~75% */
+#define ICG_WDT_RANGE_25TO75PCT                 ((uint32_t)(ICG_ICG7_WDTWDPT_1 | ICG_ICG7_WDTWDPT_2))                       /*!< 25%~75% */
+#define ICG_WDT_RANGE_0TO75PCT                  ((uint32_t)(ICG_ICG7_WDTWDPT_0 | ICG_ICG7_WDTWDPT_1 | ICG_ICG7_WDTWDPT_2))  /*!< 0%~75% */
+#define ICG_WDT_RANGE_75TO100PCT                ((uint32_t)ICG_ICG7_WDTWDPT_3)                                              /*!< 75%~100% */
+#define ICG_WDT_RANGE_0TO25PCT_75TO100PCT       ((uint32_t)(ICG_ICG7_WDTWDPT_0 | ICG_ICG7_WDTWDPT_3))                       /*!< 0%~25% & 75%~100% */
+#define ICG_WDT_RANGE_25TO50PCT_75TO100PCT      ((uint32_t)(ICG_ICG7_WDTWDPT_1 | ICG_ICG7_WDTWDPT_3))                       /*!< 25%~50% & 75%~100% */
+#define ICG_WDT_RANGE_0TO50PCT_75TO100PCT       ((uint32_t)(ICG_ICG7_WDTWDPT_0 | ICG_ICG7_WDTWDPT_1 | ICG_ICG7_WDTWDPT_3))  /*!< 0%~50% & 75%~100% */
+#define ICG_WDT_RANGE_50TO100PCT                ((uint32_t)(ICG_ICG7_WDTWDPT_2 | ICG_ICG7_WDTWDPT_3))                       /*!< 50%~100% */
+#define ICG_WDT_RANGE_0TO25PCT_50TO100PCT       ((uint32_t)(ICG_ICG7_WDTWDPT_0 | ICG_ICG7_WDTWDPT_2 | ICG_ICG7_WDTWDPT_3))  /*!< 0%~25% & 50%~100% */
+#define ICG_WDT_RANGE_25TO100PCT                ((uint32_t)(ICG_ICG7_WDTWDPT_1 | ICG_ICG7_WDTWDPT_2 | ICG_ICG7_WDTWDPT_3))  /*!< 25%~100% */
+#define ICG_WDT_RANGE_0TO100PCT                 ((uint32_t)ICG_ICG7_WDTWDPT)                                                /*!< 0%~100% */
+/**
+ * @}
+ */
+
+/**
+ * @defgroup ICG_WDT_LPW_Mode_Count ICG WDT Low Power Mode Count
+ * @brief WDT count control in the sleep/stop mode
+ * @{
+ */
+#define ICG_WDT_LPW_MODE_COUNT_CONTINUE         ((uint32_t)0x00000000UL)        /*!< WDT count continue in the sleep/stop mode */
+#define ICG_WDT_LPW_MODE_COUNT_STOP             ((uint32_t)ICG_ICG7_WDTSLPOFF)  /*!< WDT count stop in the sleep/stop mode */
 /**
  * @}
  */
@@ -404,20 +409,20 @@ extern "C"
 #define ICG0_SWDT_HARDWARE_START                (ICG_FUNCTION_OFF)
 
 /* SWDT register config */
-#define ICG0_SWDT_AUTS                          (ICG_SWDT_AFTER_RESET_AUTOSTART)
+#define ICG0_SWDT_AUTST                         (ICG_SWDT_AFTER_RESET_AUTOSTART)
 #define ICG0_SWDT_ITS                           (ICG_SWDT_TRIG_EVENT_INT)
 #define ICG0_SWDT_PERI                          (ICG_SWDT_COUNTER_CYCLE_256)
-#define ICG0_SWDT_CKS                           (ICG_SWDT_CLOCK_DIV128)
+#define ICG0_SWDT_CKS                           (ICG_SWDT_CLOCK_DIV32)
 #define ICG0_SWDT_WDPT                          (ICG_SWDT_RANGE_100PCT)
 #define ICG0_SWDT_SLTPOFF                       (ICG_SWDT_LPW_MODE_COUNT_CONTINUE)
 
 /* SWDT register config value */
 #if ICG0_SWDT_HARDWARE_START == ICG_FUNCTION_ON
-    #define ICG0_SWDT_REG_CONFIG                (((uint32_t)ICG0_SWDT_AUTS | ICG0_SWDT_ITS | \
-                                                            ICG0_SWDT_PERI | ICG0_SWDT_CKS | \
-                                                            ICG0_SWDT_WDPT | ICG0_SWDT_SLTPOFF))
+    #define ICG0_SWDT_REG_CONFIG                (((uint32_t)ICG0_SWDT_AUTST | ICG0_SWDT_ITS | \
+                                                            ICG0_SWDT_PERI  | ICG0_SWDT_CKS | \
+                                                            ICG0_SWDT_WDPT  | ICG0_SWDT_SLTPOFF))
 #else
-    #define ICG0_SWDT_REG_CONFIG                ((uint32_t)0x0000FFFFul)
+    #define ICG0_SWDT_REG_CONFIG                ((uint32_t)0x0000FFFFUL)
 #endif
 
 /**
@@ -434,13 +439,14 @@ extern "C"
 #define ICG0_HRC_HARDWARE_START                 (ICG_FUNCTION_OFF)
 
 /* HRC register config */
-#define ICG0_HRC_REQS                           (ICG_HRC_FREQ_16MHZ)
+#define ICG0_HRC_FRQSEL                         (ICG_HRC_FREQ_16MHZ)
+#define ICG0_HRC_STOP                           (ICG_HRC_ENABLE)
 
 /* HRC register config value */
 #if ICG0_HRC_HARDWARE_START == ICG_FUNCTION_ON
-    #define ICG0_HRC_REG_CONFIG                 ((uint32_t)ICG0_HRC_REQS)
+    #define ICG0_HRC_REG_CONFIG                 ((uint32_t)(ICG0_HRC_FRQSEL | ICG0_HRC_STOP))
 #else
-    #define ICG0_HRC_REG_CONFIG                 ((uint32_t)ICG_HRC_FREQ_8MHZ)
+    #define ICG0_HRC_REG_CONFIG                 ((uint32_t)0x00FF0000UL)
 #endif
 
 /**
@@ -485,23 +491,47 @@ extern "C"
 /* Enable or disable LVD hardware start */
 #define ICG1_LVD_HARDWARE_START                 (ICG_FUNCTION_OFF)
 
+/* Lockup register config */
+#define ICG1_LKUP_DIS                           (ICG_LOCKUP_RESET_ENABLE)
 /* LVD register config */
-#define ICG1_LVD_DFS                            (ICG_LVD_FILTER_CLOCK_LRC16)
-#define ICG1_LVD_DFDIS                          (ICG_LVD_DIGITAL_FILTER_ENABLE)
-#define ICG1_LVD_LVDLVL                         (ICG_LVD_BELOW2P96_OR_ABOVE3P02)
-#define ICG1_LVD_NMIS                           (ICG_LVD_INT_TYPE_INTR)
-#define ICG1_LVD_IRS                            (ICG_LVD_TRIG_EVENT_INT)
-#define ICG1_LVD_IRDIS                          (ICG_LVD_INT_AND_RESET_ENABLE)
-#define ICG1_LVD_LVDDIS                         (ICG_LVD_VOLTAGE_DETECTION_ENABLE)
+#define ICG1_LVD0_LVL                           (ICG_LVD_BELOW2P82_OR_ABOVE2P90)
+#define ICG1_LVD0_DIS                           (ICG_LVD_VOLTAGE_DETECTION_ENABLE)
 
 /* LVD register config value */
 #if ICG1_LVD_HARDWARE_START == ICG_FUNCTION_ON
-    #define ICG1_LVD_REG_CONFIG                 ((uint32_t)(ICG1_LVD_DFS    | ICG1_LVD_DFDIS | \
-                                                            ICG1_LVD_LVDLVL | ICG1_LVD_NMIS  | \
-                                                            ICG1_LVD_IRS    | ICG1_LVD_IRDIS | \
-                                                            ICG1_LVD_LVDDIS))
+    #define ICG1_LVD_REG_CONFIG                 ((uint32_t)(ICG1_LKUP_DIS | ICG1_LVD0_LVL | ICG1_LVD0_DIS))
 #else
-    #define ICG1_LVD_REG_CONFIG                 ((uint32_t)0xFFFFFFFFul)
+    #define ICG1_LVD_REG_CONFIG                 ((uint32_t)0xFFFFFFFFUL)
+#endif
+
+/**
+ * @}
+ */
+
+/**
+ *******************************************************************************
+ * @defgroup ICG_WDT_Hardware_Start_Configuration WDT Hardware Start Configuration
+ * @{
+ *******************************************************************************
+ */
+/* Enable or disable WDT hardware start */
+#define ICG7_WDT_HARDWARE_START                 (ICG_FUNCTION_OFF)
+
+/* WDT register config */
+#define ICG7_WDT_AUTST                          (ICG_WDT_AFTER_RESET_AUTOSTART)
+#define ICG7_WDT_ITS                            (ICG_WDT_TRIG_EVENT_INT)
+#define ICG7_WDT_PERI                           (ICG_WDT_COUNTER_CYCLE_16384)
+#define ICG7_WDT_CKS                            (ICG_WDT_CLOCK_DIV512)
+#define ICG7_WDT_WDPT                           (ICG_WDT_RANGE_100PCT)
+#define ICG7_WDT_SLTPOFF                        (ICG_WDT_LPW_MODE_COUNT_CONTINUE)
+
+/* WDT register config value */
+#if ICG7_WDT_HARDWARE_START == ICG_FUNCTION_ON
+    #define ICG7_WDT_REG_CONFIG                 (((uint32_t)ICG7_WDT_AUTST | ICG7_WDT_ITS | \
+                                                            ICG7_WDT_PERI  | ICG7_WDT_CKS | \
+                                                            ICG7_WDT_WDPT  | ICG7_WDT_SLTPOFF))
+#else
+    #define ICG7_WDT_REG_CONFIG                 ((uint32_t)0xFFFFFFFFUL)
 #endif
 
 /**
@@ -520,12 +550,14 @@ extern "C"
                                                             ICG0_NMI_REG_CONFIG))
 /* ICG1 register value */
 #define ICG1_REGISTER_CONSTANT                  ((uint32_t)ICG1_LVD_REG_CONFIG)
-/* ICG2~7 register reserved value */
-#define ICG2_REGISTER_CONSTANT                  ((uint32_t)0xFFFFFFFFul)
-#define ICG3_REGISTER_CONSTANT                  ((uint32_t)0xFFFFFFFFul)
-#define ICG4_REGISTER_CONSTANT                  ((uint32_t)0xFFFFFFFFul)
-#define ICG5_REGISTER_CONSTANT                  ((uint32_t)0xFFFFFFFFul)
-#define ICG6_REGISTER_CONSTANT                  ((uint32_t)0xFFFFFFFFul)
+/* ICG2~6 register reserved value */
+#define ICG2_REGISTER_CONSTANT                  ((uint32_t)0xFFFFFFFFUL)
+#define ICG3_REGISTER_CONSTANT                  ((uint32_t)0xFFFFFFFFUL)
+#define ICG4_REGISTER_CONSTANT                  ((uint32_t)0xFFFFFFFFUL)
+#define ICG5_REGISTER_CONSTANT                  ((uint32_t)0xFFFFFFFFUL)
+#define ICG6_REGISTER_CONSTANT                  ((uint32_t)0xFFFFFFFFUL)
+/* ICG7 register value */
+#define ICG7_REGISTER_CONSTANT                  ((uint32_t)ICG7_WDT_REG_CONFIG)
 
 /**
  * @}
