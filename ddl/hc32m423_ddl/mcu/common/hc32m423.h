@@ -1323,9 +1323,9 @@ typedef struct
     __IO uint16_t PDBRW;
     __IO uint16_t POCRU;
     uint8_t RESERVED14[2];
-    __IO uint16_t ;
+    __IO uint16_t POCRV;
     uint8_t RESERVED15[2];
-    __IO uint16_t ;
+    __IO uint16_t POCRW;
     uint8_t RESERVED16[2];
     __IO uint16_t RCSR;
     uint8_t RESERVED17[12];
@@ -6423,21 +6423,6 @@ typedef struct
 #define TMR4_POCR_LVLS                                 ((uint16_t)0x00C0U)
 #define TMR4_POCR_LVLS_0                               ((uint16_t)0x0040U)
 #define TMR4_POCR_LVLS_1                               ((uint16_t)0x0080U)
-
-/*  Bit definition for POCR register  */
-#define POCR_DIVCK_POS                                 (0U)
-#define POCR_DIVCK                                     ((uint16_t)0x0007U)
-#define POCR_DIVCK_0                                   ((uint16_t)0x0001U)
-#define POCR_DIVCK_1                                   ((uint16_t)0x0002U)
-#define POCR_DIVCK_2                                   ((uint16_t)0x0004U)
-#define POCR_PWMMD_POS                                 (4U)
-#define POCR_PWMMD                                     ((uint16_t)0x0030U)
-#define POCR_PWMMD_0                                   ((uint16_t)0x0010U)
-#define POCR_PWMMD_1                                   ((uint16_t)0x0020U)
-#define POCR_LVLS_POS                                  (6U)
-#define POCR_LVLS                                      ((uint16_t)0x00C0U)
-#define POCR_LVLS_0                                    ((uint16_t)0x0040U)
-#define POCR_LVLS_1                                    ((uint16_t)0x0080U)
 
 /*  Bit definition for TMR4_RCSR register  */
 #define TMR4_RCSR_RTIDU_POS                            (0U)
@@ -14417,19 +14402,6 @@ typedef struct
 
 typedef struct
 {
-    __IO uint32_t DIVCK0;
-    __IO uint32_t DIVCK1;
-    __IO uint32_t DIVCK2;
-    uint32_t RESERVED0[1];
-    __IO uint32_t PWMMD0;
-    __IO uint32_t PWMMD1;
-    __IO uint32_t LVLS0;
-    __IO uint32_t LVLS1;
-    uint32_t RESERVED1[8];
-} stc_pocr_bit_t;
-
-typedef struct
-{
     __IO uint32_t RTIDU;
     __IO uint32_t RTIDV;
     __IO uint32_t RTIDW;
@@ -16169,9 +16141,9 @@ typedef struct
     stc_tmr4_pdbrw_bit_t                     PDBRW_b;
     stc_tmr4_pocr_bit_t                      POCRU_b;
     uint32_t                                 RESERVED14[16];
-    stc_pocr_bit_t                           _b;
+    stc_tmr4_pocr_bit_t                      POCRV_b;
     uint32_t                                 RESERVED15[16];
-    stc_pocr_bit_t                           _b;
+    stc_tmr4_pocr_bit_t                      POCRW_b;
     uint32_t                                 RESERVED16[16];
     stc_tmr4_rcsr_bit_t                      RCSR_b;
     uint32_t                                 RESERVED17[96];
