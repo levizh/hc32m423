@@ -695,13 +695,93 @@ void SysTick_Handler(void)
 }
 
 /**
+ * @brief  Interrupt No.000 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ000_Handler(void)
+{
+    pfnIrqHandler[Int000_IRQn]();
+}
+
+/**
+ * @brief  Interrupt No.001 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ001_Handler(void)
+{
+    pfnIrqHandler[Int001_IRQn]();
+}
+
+/**
+ * @brief  Interrupt No.002 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ002_Handler(void)
+{
+    pfnIrqHandler[Int002_IRQn]();
+}
+
+/**
+ * @brief  Interrupt No.003 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ003_Handler(void)
+{
+    pfnIrqHandler[Int003_IRQn]();
+}
+
+/**
+ * @brief  Interrupt No.004 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ004_Handler(void)
+{
+    pfnIrqHandler[Int004_IRQn]();
+}
+
+/**
+ * @brief  Interrupt No.005 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ005_Handler(void)
+{
+    pfnIrqHandler[Int005_IRQn]();
+}
+
+/**
+ * @brief  Interrupt No.006 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ006_Handler(void)
+{
+    pfnIrqHandler[Int006_IRQn]();
+}
+
+/**
+ * @brief  Interrupt No.007 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ007_Handler(void)
+{
+    pfnIrqHandler[Int007_IRQn]();
+}
+
+/**
  * @brief  Interrupt No.008 IRQ handler
  * @param  None
  * @retval None
  */
 void IRQ008_Handler(void)
 {
-    pfnIrqHandler[Int008_IRQn-8U]();
+    EXINT00_IrqHandler();
 }
 
 /**
@@ -711,7 +791,7 @@ void IRQ008_Handler(void)
  */
 void IRQ009_Handler(void)
 {
-    pfnIrqHandler[Int009_IRQn-8U]();
+    EXINT01_IrqHandler();
 }
 
 /**
@@ -721,9 +801,8 @@ void IRQ009_Handler(void)
  */
 void IRQ010_Handler(void)
 {
-    pfnIrqHandler[Int010_IRQn-8U]();
+    EXINT02_IrqHandler();
 }
-
 
 /**
  * @brief  Interrupt No.011 IRQ handler
@@ -732,7 +811,7 @@ void IRQ010_Handler(void)
  */
 void IRQ011_Handler(void)
 {
-    pfnIrqHandler[Int011_IRQn-8U]();
+    EXINT03_IrqHandler();
 }
 
 /**
@@ -742,7 +821,7 @@ void IRQ011_Handler(void)
  */
 void IRQ012_Handler(void)
 {
-    pfnIrqHandler[Int012_IRQn-8U]();
+    EXINT04_IrqHandler();
 }
 
 /**
@@ -752,7 +831,7 @@ void IRQ012_Handler(void)
  */
 void IRQ013_Handler(void)
 {
-    pfnIrqHandler[Int013_IRQn-8U]();
+    EXINT05_IrqHandler();
 }
 
 /**
@@ -762,7 +841,7 @@ void IRQ013_Handler(void)
  */
 void IRQ014_Handler(void)
 {
-    pfnIrqHandler[Int014_IRQn-8U]();
+    EXINT06_IrqHandler();
 }
 
 /**
@@ -772,7 +851,7 @@ void IRQ014_Handler(void)
  */
 void IRQ015_Handler(void)
 {
-    pfnIrqHandler[Int015_IRQn-8U]();
+    EXINT07_IrqHandler();
 }
 
 /**
@@ -782,7 +861,7 @@ void IRQ015_Handler(void)
  */
 void IRQ016_Handler(void)
 {
-    pfnIrqHandler[Int016_IRQn-8U]();
+    DMA_Tc0_IrqHandler();
 }
 
 /**
@@ -792,7 +871,7 @@ void IRQ016_Handler(void)
  */
 void IRQ017_Handler(void)
 {
-    pfnIrqHandler[Int017_IRQn-8U]();
+    DMA_Tc1_IrqHandler();
 }
 
 /**
@@ -802,7 +881,7 @@ void IRQ017_Handler(void)
  */
 void IRQ018_Handler(void)
 {
-    pfnIrqHandler[Int018_IRQn-8U]();
+    DMA_Tc2_IrqHandler();
 }
 
 /**
@@ -812,7 +891,7 @@ void IRQ018_Handler(void)
  */
 void IRQ019_Handler(void)
 {
-    pfnIrqHandler[Int019_IRQn-8U]();
+    DMA_Tc3_IrqHandler();
 }
 
 /**
@@ -822,7 +901,7 @@ void IRQ019_Handler(void)
  */
 void IRQ020_Handler(void)
 {
-    pfnIrqHandler[Int020_IRQn-8U]();
+    DMA_Btc0_IrqHandler();
 }
 
 /**
@@ -832,7 +911,7 @@ void IRQ020_Handler(void)
  */
 void IRQ021_Handler(void)
 {
-    pfnIrqHandler[Int021_IRQn-8U]();
+    DMA_Btc1_IrqHandler();
 }
 
 /**
@@ -842,7 +921,7 @@ void IRQ021_Handler(void)
  */
 void IRQ022_Handler(void)
 {
-    pfnIrqHandler[Int022_IRQn-8U]();
+    DMA_Btc2_IrqHandler();
 }
 
 /**
@@ -852,626 +931,777 @@ void IRQ022_Handler(void)
  */
 void IRQ023_Handler(void)
 {
-    pfnIrqHandler[Int023_IRQn-8U]();
+    DMA_Btc3_IrqHandler();
 }
 
 /**
- * @brief  Interrupt No.024 share IRQ handler
+ * @brief  Interrupt No.024 IRQ handler
  * @param  None
  * @retval None
  */
 void IRQ024_Handler(void)
 {
-    uint32_t u32Tmp1 = 0UL;
-    uint32_t u32Tmp2 = 0UL;
-    uint32_t ISELBR24 = M0P_INTC->ISELBR24;
-
-    /* External interrupt 08 */
-    u32Tmp1 = bM0P_INTC->EIRQFR_b.EIRQF8;
-    if ((ISELBR24 & BIT_MASK_01) && (u32Tmp1))
-    {
-        Extint08_IrqHandler();
-    }
-    /* DMA Ch.0 transfer complete  */
-    if (Reset == bM0P_DMA->INTMASK1_b.MSKTC0)
-    {
-        if ((bM0P_DMA->INTSTAT1_b.TC0) && (ISELBR24 & BIT_MASK_02))
-        {
-            DmaTc0_IrqHandler();
-        }
-    }
-    /* DMA Ch.0 block transfer complete  */
-    if (Reset == bM0P_DMA->INTMASK1_b.MSKBTC0)
-    {
-        if ((bM0P_DMA->INTSTAT1_b.BTC0) && (ISELBR24 & BIT_MASK_03))
-        {
-            DmaBtc0_IrqHandler();
-        }
-    }
-    /* EFM program/erase error */
-    if (bM0P_EFM->FITE_b.PEERRITE)
-    {
-        u32Tmp1 = M0P_EFM->FSR & (EFM_FSR_PEWERR | EFM_FSR_PEPRTERR | EFM_FSR_PGMISMTCH);
-        if ((ISELBR24 & BIT_MASK_04) && (u32Tmp1))
-        {
-            EfmPgmEraseErr_IrqHandler();
-        }
-    }
-    /* EFM read collision */
-    if (bM0P_EFM->FITE_b.RDCOLERRITE)
-    {
-        u32Tmp1 = bM0P_EFM->FSR_b.RDCOLERR;
-        if ((ISELBR24 & BIT_MASK_05) && (u32Tmp1))
-        {
-            EfmColErr_IrqHandler();
-        }
-    }
-    /* XTAL stop */
-    if (bM0P_CMU->XTALSTDCR_b.XTALSTDIE)
-    {
-        u32Tmp1 = bM0P_CMU->XTALSTDSR_b.XTALSTDF;
-        if ((ISELBR24 & BIT_MASK_06) && (u32Tmp1))
-        {
-            XtalStop_IrqHandler();
-        }
-    }
-    /* SWDT underflow or fresh error */
-    u32Tmp1 = M0P_SWDT->SR & (SWDT_SR_UDF | SWDT_SR_REF);
-    if ((ISELBR24 & BIT_MASK_07) && (u32Tmp1))
-    {
-        Swdt_IrqHandler();
-    }
-    /* USART1 Rx ORE/FE/PE error */
-    u32Tmp1 = M0P_USART1->SR & (USART_SR_PE | USART_SR_FE | USART_SR_ORE);
-    u32Tmp2 = bM0P_USART1->CR1_b.RIE;
-    if ((ISELBR24 & BIT_MASK_12) && (u32Tmp1) && (u32Tmp2))
-    {
-        Usart1RxErr_IrqHandler();
-    }
-    /* I2c error */
-    u32Tmp1 = M0P_I2C->SR & (I2C_SR_STARTF   | I2C_SR_SLADDR0F     |            \
-                             I2C_SR_SLADDR1F | I2C_SR_STOPF        |            \
-                             I2C_SR_ARLOF    | I2C_SR_NACKF        |            \
-                             I2C_SR_GENCALLF | I2C_SR_SMBDEFAULTF  |            \
-                             I2C_SR_SMBHOSTF | I2C_SR_SMBALRTF);
-
-    u32Tmp2 = M0P_I2C->CR2& (I2C_CR2_STARTIE   | I2C_CR2_SLADDR0IE     |        \
-                             I2C_CR2_SLADDR1IE | I2C_CR2_STOPIE        |        \
-                             I2C_CR2_ARLOIE    | I2C_CR2_NACKIE        |        \
-                             I2C_CR2_GENCALLIE | I2C_CR2_SMBDEFAULTIE  |        \
-                             I2C_CR2_SMBHOSTIE | I2C_CR2_SMBALRTIE);
-    if ((ISELBR24 & BIT_MASK_13) && (u32Tmp1 & u32Tmp2))
-    {
-        I2cErr_IrqHandler();
-    }
-    /* SPI parity/overflow/underflow/mode error */
-    u32Tmp1 = M0P_SPI->SR & (SPI_SR_UDRERF | SPI_SR_PERF | SPI_SR_MODFERF | SPI_SR_OVRERF);
-    u32Tmp2 = bM0P_SPI->CR1_b.EIE;
-    if ((ISELBR24 & BIT_MASK_14) && (u32Tmp1) && (u32Tmp2))
-    {
-        SpiErr_IrqHandler();
-    }
+    DMA_Err_IrqHandler();
 }
 
 /**
- * @brief  Interrupt No.025 share IRQ handler
+ * @brief  Interrupt No.025 IRQ handler
  * @param  None
  * @retval None
  */
 void IRQ025_Handler(void)
 {
-    uint32_t u32Tmp1 = 0UL;
-    uint32_t u32Tmp2 = 0UL;
-    uint32_t ISELBR25 = M0P_INTC->ISELBR25;
-
-    /* External interrupt 09 */
-    u32Tmp1 = bM0P_INTC->EIRQFR_b.EIRQF9;
-    if ((ISELBR25 & BIT_MASK_01) && (u32Tmp1))
-    {
-        Extint09_IrqHandler();
-    }
-    /* DMA Ch.1 transfer complete  */
-    if (Reset == bM0P_DMA->INTMASK1_b.MSKTC1)
-    {
-        if ((bM0P_DMA->INTSTAT1_b.TC1) && (ISELBR25 & BIT_MASK_02))
-        {
-            DmaTc1_IrqHandler();
-        }
-    }
-    /* DMA Ch.1 block transfer complete  */
-    if (Reset == bM0P_DMA->INTMASK1_b.MSKBTC1)
-    {
-        if ((bM0P_DMA->INTSTAT1_b.BTC1) && (ISELBR25 & BIT_MASK_03))
-        {
-            DmaBtc1_IrqHandler();
-        }
-    }
-    /* Clock trimming error */
-    u32Tmp1 = M0P_CTC->STR & (CTC_STR_TRMOVF | CTC_STR_TRMUDF);
-    u32Tmp2 = bM0P_CTC->CR1_b.ERRIE;
-    if ((ISELBR25 & BIT_MASK_04) && (u32Tmp1) && (u32Tmp2))
-    {
-        ClockTrimErr_IrqHandler();
-    }
-    /* USART1 Rx end */
-    u32Tmp1 = bM0P_USART1->SR_b.RXNE;
-    u32Tmp2 = bM0P_USART1->CR1_b.RIE;
-    if ((ISELBR25 & BIT_MASK_12) && (u32Tmp1) && (u32Tmp2))
-    {
-        Usart1RxEnd_IrqHandler();
-    }
+    EFM_PgmEraseErr_IrqHandler();
 }
 
 /**
- * @brief  Interrupt No.026 share IRQ handler
+ * @brief  Interrupt No.026 IRQ handler
  * @param  None
  * @retval None
  */
 void IRQ026_Handler(void)
 {
-    uint32_t u32Tmp1 = 0UL;
-    uint32_t u32Tmp2 = 0UL;
-    uint32_t ISELBR26 = M0P_INTC->ISELBR26;
-
-    /* DMA request or transfer error */
-    u32Tmp1 = M0P_DMA->INTSTAT0 & (DMA_INTSTAT0_TRNERR | DMA_INTSTAT0_REQERR);
-    u32Tmp2 = (uint32_t)(~(M0P_DMA->INTMASK0) & (DMA_INTMASK0_MSKTRNERR | DMA_INTMASK0_MSKREQERR));
-    if ((ISELBR26 & BIT_MASK_01) && (u32Tmp1 & u32Tmp2))
-    {
-        DmaErr_IrqHandler();
-    }
-    /* Timer4 U phase higher compare match */
-    u32Tmp1 = bM0P_TMR4->OCSRU_b.OCFH;
-    u32Tmp2 = bM0P_TMR4->OCSRU_b.OCIEH;
-    if ((ISELBR26 & BIT_MASK_02) && (u32Tmp1) && (u32Tmp2))
-    {
-        Timer4GCMUH_IrqHandler();
-    }
-    /* Timer4 U phase lower compare match */
-    u32Tmp1 = bM0P_TMR4->OCSRU_b.OCFL;
-    u32Tmp2 = bM0P_TMR4->OCSRU_b.OCIEL;
-    if ((ISELBR26 & BIT_MASK_03) && (u32Tmp1) && (u32Tmp2))
-    {
-        Timer4GCMUL_IrqHandler();
-    }
-    /* Timer4 V phase higher compare match */
-    u32Tmp1 = bM0P_TMR4->OCSRV_b.OCFH;
-    u32Tmp2 = bM0P_TMR4->OCSRV_b.OCIEH;
-    if ((ISELBR26 & BIT_MASK_04) && (u32Tmp1) && (u32Tmp2))
-    {
-        Timer4GCMVH_IrqHandler();
-    }
-    /* Timer4 V phase lower compare match */
-    u32Tmp1 = bM0P_TMR4->OCSRV_b.OCFL;
-    u32Tmp2 = bM0P_TMR4->OCSRV_b.OCIEL;
-    if ((ISELBR26 & BIT_MASK_05) && (u32Tmp1) && (u32Tmp2))
-    {
-        Timer4GCMVL_IrqHandler();
-    }
-    /* Timer4 W phase higher compare match */
-    u32Tmp1 = bM0P_TMR4->OCSRW_b.OCFH;
-    u32Tmp2 = bM0P_TMR4->OCSRW_b.OCIEH;
-    if ((ISELBR26 & BIT_MASK_06) && (u32Tmp1) && (u32Tmp2))
-    {
-        Timer4GCMWH_IrqHandler();
-    }
-    /* Timer4 W phase lower compare match */
-    u32Tmp1 = bM0P_TMR4->OCSRW_b.OCFL;
-    u32Tmp2 = bM0P_TMR4->OCSRW_b.OCIEL;
-    if ((ISELBR26 & BIT_MASK_07) && (u32Tmp1) && (u32Tmp2))
-    {
-        Timer4GCMWL_IrqHandler();
-    }
-    /* USART1 Tx buffer empty */
-    u32Tmp1 = bM0P_USART1->SR_b.TXE;
-    u32Tmp2 = bM0P_USART1->CR1_b.TXEIE;
-    if ((ISELBR26 & BIT_MASK_12) && (u32Tmp1) && (u32Tmp2))
-    {
-        Usart1TxEmpt_IrqHandler();
-    }
-    /* USART3 Rx ORE/FE/PE error */
-    u32Tmp1 = M0P_USART3->SR & (USART_SR_PE | USART_SR_FE | USART_SR_ORE);
-    u32Tmp2 = bM0P_USART3->CR1_b.RIE;
-    if ((ISELBR26 & BIT_MASK_13) && (u32Tmp1) && (u32Tmp2))
-    {
-        Usart3RxErr_IrqHandler();
-    }
+    EFM_ColErr_IrqHandler();
 }
 
 /**
- * @brief  Interrupt No.027 share IRQ handler
+ * @brief  Interrupt No.027 IRQ handler
  * @param  None
  * @retval None
  */
 void IRQ027_Handler(void)
 {
-    uint32_t u32Tmp1 = 0UL;
-    uint32_t u32Tmp2 = 0UL;
-    uint32_t ISELBR27 = M0P_INTC->ISELBR27;
-
-    /* EKEY and other Interrupt source are exclusive */
-    if (BIT_MASK_01 == ISELBR27)
-    {
-        EKey_IrqHandler();
-    }
-    else
-    {
-        /* Timer 0 compare match */
-        u32Tmp1 = bM0P_TMR0->STFLR_b.CMFA;
-        u32Tmp2 = bM0P_TMR0->BCONR_b.INTENA;
-        if ((ISELBR27 & BIT_MASK_02) && (u32Tmp1) && (u32Tmp2))
-        {
-            Timer0GCmp_IrqHandler();
-        }
-        /* Timer4 U phase reload */
-        u32Tmp1 = bM0P_TMR4->RCSR_b.RTIFU;
-        u32Tmp2 = bM0P_TMR4->RCSR_b.RTIDU;
-        if ((ISELBR27 & BIT_MASK_04) && (u32Tmp1) && (Reset == u32Tmp2))
-        {
-            Timer4ReloadU_IrqHandler();
-        }
-        /* Timer4 V phase reload */
-        u32Tmp1 = bM0P_TMR4->RCSR_b.RTIFV;
-        u32Tmp2 = bM0P_TMR4->RCSR_b.RTIDV;
-        if ((ISELBR27 & BIT_MASK_05) && (u32Tmp1) && (Reset == u32Tmp2))
-        {
-            Timer4ReloadV_IrqHandler();
-        }
-        /* Timer4 W phase reload */
-        u32Tmp1 = bM0P_TMR4->RCSR_b.RTIFW;
-        u32Tmp2 = bM0P_TMR4->RCSR_b.RTIDW;
-        if ((ISELBR27 & BIT_MASK_06) && (u32Tmp1) && (Reset == u32Tmp2))
-        {
-            Timer4ReloadW_IrqHandler();
-        }
-        /* EMB */
-        u32Tmp1 = M0P_EMB->STAT & (EMB_STAT_PORTINF | EMB_STAT_PWMSF |          \
-                                   EMB_STAT_CMPF    | EMB_STAT_OSF);
-        u32Tmp2 = M0P_EMB->INTEN & (EMB_INTEN_PORTINTEN | EMB_INTEN_PWMINTEN |  \
-                                    EMB_INTEN_CMPINTEN  | EMB_INTEN_OSINTEN);
-        if ((ISELBR27 & BIT_MASK_07) && (u32Tmp1 & u32Tmp2))
-        {
-            Emb_IrqHandler();
-        }
-        /* USART1 Tx end */
-        u32Tmp1 = bM0P_USART1->SR_b.TC;
-        u32Tmp2 = bM0P_USART1->CR1_b.TCIE;
-        if ((ISELBR27 & BIT_MASK_12) && (u32Tmp1) && (u32Tmp2))
-        {
-            Usart1TxEnd_IrqHandler();
-        }
-        /* USART3 Rx end */
-        u32Tmp1 = bM0P_USART3->SR_b.RXNE;
-        u32Tmp2 = bM0P_USART3->CR1_b.RIE;
-        if ((ISELBR27 & BIT_MASK_13) && (u32Tmp1) && (u32Tmp2))
-        {
-            Usart3RxEnd_IrqHandler();
-        }
-        /* SPI Rx end */
-        u32Tmp1 = bM0P_SPI->SR_b.RDFF;
-        u32Tmp2 = bM0P_SPI->CR1_b.RXIE;
-        if ((ISELBR27 & BIT_MASK_14) && (u32Tmp1) && (u32Tmp2))
-        {
-            SpiRxEnd_IrqHandler();
-        }
-    }
+    EFM_OpEnd_IrqHandler();
 }
 
 /**
- * @brief  Interrupt No.028 share IRQ handler
+ * @brief  Interrupt No.028 IRQ handler
  * @param  None
  * @retval None
  */
 void IRQ028_Handler(void)
 {
-    uint32_t u32Tmp1 = 0UL;
-    uint32_t u32Tmp2 = 0UL;
-    uint32_t ISELBR28 = M0P_INTC->ISELBR28;
-
-    /* TimerA overflow */
-    u32Tmp1 = bM0P_TMRA->BCSTR_b.OVFF;
-    u32Tmp2 = bM0P_TMRA->BCSTR_b.INENOVF;
-    if ((ISELBR28 & BIT_MASK_01) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerAOV_IrqHandler();
-    }
-    /* TimerA underflow */
-    u32Tmp1 = bM0P_TMRA->BCSTR_b.UDFF;
-    u32Tmp2 = bM0P_TMRA->BCSTR_b.INENUDF;
-    if ((ISELBR28 & BIT_MASK_02) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerAUD_IrqHandler();
-    }
-    /* TimerA compare match */
-    u32Tmp1 = M0P_TMRA->STFLR & (uint32_t)(TMRA_STFLR_CMPF1 | TMRA_STFLR_CMPF2);
-    u32Tmp2 = M0P_TMRA->ICONR & (uint32_t)(TMRA_ICONR_ITEN1 | TMRA_ICONR_ITEN2);
-    if ((ISELBR28 & BIT_MASK_03) && (u32Tmp1 & u32Tmp2))
-    {
-        TimerACmp_IrqHandler();
-    }
-    /* Timer4 overflow */
-    u32Tmp1 = bM0P_TMR4->CCSR_b.IRQPF;
-    u32Tmp2 = bM0P_TMR4->CCSR_b.IRQPEN;
-    if ((ISELBR28 & BIT_MASK_04) && (u32Tmp1) && (u32Tmp2))
-    {
-        Timer4GOV_IrqHandler();
-    }
-    /* Timer4 underflow */
-    u32Tmp1 = bM0P_TMR4->CCSR_b.IRQZF;
-    u32Tmp2 = bM0P_TMR4->CCSR_b.IRQZEN;
-    if ((ISELBR28 & BIT_MASK_05) && (u32Tmp1) && (u32Tmp2))
-    {
-        Timer4GUD_IrqHandler();
-    }
-    /* TimerB3 overflow */
-    u32Tmp1 = bM0P_TMRB3->BCSTR_b.OVFF;
-    u32Tmp2 = bM0P_TMRB3->BCSTR_b.INENOVF;
-    if ((ISELBR28 & BIT_MASK_08) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB3OF_IrqHandler();
-    }
-    /* TimerB3 underflow */
-    u32Tmp1 = bM0P_TMRB3->BCSTR_b.UDFF;
-    u32Tmp2 = bM0P_TMRB3->BCSTR_b.INENUDF;
-    if ((ISELBR28 & BIT_MASK_09) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB3UF_IrqHandler();
-    }
-    /* TimerB4 compare match */
-    u32Tmp1 = bM0P_TMRB4->STFLR_b.CMPF1;
-    u32Tmp2 = bM0P_TMRB4->ICONR_b.ITEN1;
-    if ((ISELBR28 & BIT_MASK_10) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB4Cmp_IrqHandler();
-    }
-    /* ADC seq.A convert complete */
-    u32Tmp1 = bM0P_ADC->ISR_b.EOCAF;
-    u32Tmp2 = bM0P_ADC->ICR_b.EOCAIEN;
-    if ((ISELBR28 & BIT_MASK_11) && (u32Tmp1) && (u32Tmp2))
-    {
-        AdcSeqA_IrqHandler();
-    }
-    /* USART2 Rx ORE/FE/PE error */
-    u32Tmp1 = M0P_USART2->SR & (USART_SR_PE | USART_SR_FE | USART_SR_ORE);
-    u32Tmp2 = bM0P_USART2->CR1_b.RIE;
-    if ((ISELBR28 & BIT_MASK_12) && (u32Tmp1) && (u32Tmp2))
-    {
-        Usart2RxErr_IrqHandler();
-    }
-    /* USART3 Tx buffer empty */
-    u32Tmp1 = bM0P_USART3->SR_b.TXE;
-    u32Tmp2 = bM0P_USART3->CR1_b.TXEIE;
-    if ((ISELBR28 & BIT_MASK_13) && (u32Tmp1) && (u32Tmp2))
-    {
-        Usart3TxEmpt_IrqHandler();
-    }
-    /* I2c Tx buffer empty */
-    u32Tmp1 = bM0P_I2C->SR_b.TEMPTYF;
-    u32Tmp2 = bM0P_I2C->CR2_b.TEMPTYIE;
-    if ((ISELBR28 & BIT_MASK_14) && (u32Tmp1) && (u32Tmp2))
-    {
-        I2cTxEmpt_IrqHandler();
-    }
-    /* SPI bus idle */
-    u32Tmp1 = bM0P_SPI->SR_b.IDLNF;
-    u32Tmp2 = bM0P_SPI->CR1_b.IDIE;
-    if ((ISELBR28 & BIT_MASK_15) && (u32Tmp1) && (u32Tmp2))
-    {
-        SpiIdle_IrqHandler();
-    }
+    DCU_IrqHandler();
 }
 
 /**
- * @brief  Interrupt No.029 share IRQ handler
+ * @brief  Interrupt No.029 IRQ handler
  * @param  None
  * @retval None
  */
 void IRQ029_Handler(void)
 {
-    uint32_t u32Tmp1 = 0UL;
-    uint32_t u32Tmp2 = 0UL;
-    uint32_t ISELBR29 = M0P_INTC->ISELBR29;
-
-    /* Timer2 compare match */
-    u32Tmp1 = bM0P_TMR2->STFLR_b.CMFA;
-    u32Tmp2 = bM0P_TMR2->ICONR_b.CMENA;
-    if ((ISELBR29 & BIT_MASK_02) && (u32Tmp1) && (u32Tmp2))
-    {
-        Timer2GCmp_IrqHandler();
-    }
-    /* Timer2 overflow */
-    u32Tmp1 = bM0P_TMR2->STFLR_b.OVFA;
-    u32Tmp2 = bM0P_TMR2->ICONR_b.OVENA;
-    if ((ISELBR29 & BIT_MASK_03) && (u32Tmp1) && (u32Tmp2))
-    {
-        Timer2GOV_IrqHandler();
-    }
-    /* TimerB4 overflow */
-    u32Tmp1 = bM0P_TMRB4->BCSTR_b.OVFF;
-    u32Tmp2 = bM0P_TMRB4->BCSTR_b.INENOVF;
-    if ((ISELBR29 & BIT_MASK_08) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB4OF_IrqHandler();
-    }
-    /* TimerB4 underflow */
-    u32Tmp1 = bM0P_TMRB4->BCSTR_b.UDFF;
-    u32Tmp2 = bM0P_TMRB4->BCSTR_b.INENUDF;
-    if ((ISELBR29 & BIT_MASK_09) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB4UF_IrqHandler();
-    }
-    /* TimerB3 compare match */
-    u32Tmp1 = bM0P_TMRB3->STFLR_b.CMPF1;
-    u32Tmp2 = bM0P_TMRB3->ICONR_b.ITEN1;
-    if ((ISELBR29 & BIT_MASK_10) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB3Cmp_IrqHandler();
-    }
-    /* ADC seq.B convert complete */
-    u32Tmp1 = bM0P_ADC->ISR_b.EOCBF;
-    u32Tmp2 = bM0P_ADC->ICR_b.EOCBIEN;
-    if ((ISELBR29 & BIT_MASK_11) && (u32Tmp1) && (u32Tmp2))
-    {
-        AdcSeqB_IrqHandler();
-    }
-    /* USART2 Rx end */
-    u32Tmp1 = bM0P_USART2->SR_b.RXNE;
-    u32Tmp2 = bM0P_USART2->CR1_b.RIE;
-    if ((ISELBR29 & BIT_MASK_12) && (u32Tmp1) && (u32Tmp2))
-    {
-        Usart2RxEnd_IrqHandler();
-    }
-    /* USART3 Tx end */
-    u32Tmp1 = bM0P_USART3->SR_b.TC;
-    u32Tmp2 = bM0P_USART3->CR1_b.TCIE;
-    if ((ISELBR29 & BIT_MASK_13) && (u32Tmp1) && (u32Tmp2))
-    {
-        Usart3TxEnd_IrqHandler();
-    }
-    /* I2c Rx end */
-    u32Tmp1 = bM0P_I2C->SR_b.RFULLF;
-    u32Tmp2 = bM0P_I2C->CR2_b.RFULLIE;
-    if ((ISELBR29 & BIT_MASK_14) && (u32Tmp1) && (u32Tmp2))
-    {
-        I2cRxEnd_IrqHandler();
-    }
+    TIMER0_1_CmpA_IrqHandler();
 }
 
 /**
- * @brief  Interrupt No.030 share IRQ handler
+ * @brief  Interrupt No.030 IRQ handler
  * @param  None
  * @retval None
  */
 void IRQ030_Handler(void)
 {
-    uint32_t u32Tmp1 = 0UL;
-    uint32_t u32Tmp2 = 0UL;
-    uint32_t ISELBR30 = M0P_INTC->ISELBR30;
-
-    /* TimerB1 overflow */
-    u32Tmp1 = bM0P_TMRB1->BCSTR_b.OVFF;
-    u32Tmp2 = bM0P_TMRB1->BCSTR_b.INENOVF;
-    if ((ISELBR30 & BIT_MASK_08) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB1OF_IrqHandler();
-    }
-    /* TimerB1 underflow */
-    u32Tmp1 = bM0P_TMRB1->BCSTR_b.UDFF;
-    u32Tmp2 = bM0P_TMRB1->BCSTR_b.INENUDF;
-    if ((ISELBR30 & BIT_MASK_09) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB1UF_IrqHandler();
-    }
-    /* TimerB2 compare match */
-    u32Tmp1 = bM0P_TMRB2->STFLR_b.CMPF1;
-    u32Tmp2 = bM0P_TMRB2->ICONR_b.ITEN1;
-    if ((ISELBR30 & BIT_MASK_10) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB2Cmp_IrqHandler();
-    }
-    /* ADC convert result in range of window 0 setting */
-    u32Tmp1 = bM0P_ADC->AWDSR_b.AWD0F;
-    u32Tmp2 = bM0P_ADC->AWDCR_b.AWD0IEN;
-    if ((ISELBR30 & BIT_MASK_11) && (u32Tmp1) && (u32Tmp2))
-    {
-        AdcCmp0_IrqHandler();
-    }
-    /* USART2 Tx buffer empty */
-    u32Tmp1 = bM0P_USART2->SR_b.TXE;
-    u32Tmp2 = bM0P_USART2->CR1_b.TXEIE;
-    if ((ISELBR30 & BIT_MASK_12) && (u32Tmp1) && (u32Tmp2))
-    {
-        Usart2TxEmpt_IrqHandler();
-    }
-    /* I2c Tx end */
-    u32Tmp1 = bM0P_I2C->SR_b.TENDF;
-    u32Tmp2 = bM0P_I2C->CR2_b.TENDIE;
-    if ((ISELBR30 & BIT_MASK_13) && (u32Tmp1) && (u32Tmp2))
-    {
-        I2cTxEnd_IrqHandler();
-    }
+    TIMER0_1_CmpB_IrqHandler();
 }
 
 /**
- * @brief  Interrupt No.031 share IRQ handler
+ * @brief  Interrupt No.031 IRQ handler
  * @param  None
  * @retval None
  */
 void IRQ031_Handler(void)
 {
-    uint32_t u32Tmp1 = 0UL;
-    uint32_t u32Tmp2 = 0UL;
-    uint32_t ISELBR31 = M0P_INTC->ISELBR31;
+    TIMER0_2_CmpA_IrqHandler();
+}
 
-    /* LVD detected */
-    if (0U == M0P_EFM->LVDICGCR_f.LVDDIS)
-    {
-        u32Tmp1 = bM0P_PWC->LVDCSR_b.DETF;
-        if ((ISELBR31 & BIT_MASK_02) && (u32Tmp1))
-        {
-            Lvd_IrqHandler();
-        }
-    }
-    /* EFM operate end */
-    if (bM0P_EFM->FITE_b.OPTENDITE)
-    {
-        u32Tmp1 = bM0P_EFM->FSR_b.OPTEND;
-        if ((ISELBR31 & BIT_MASK_04) && (u32Tmp1))
-        {
-            EfmOpEnd_IrqHandler();
-        }
-    }
-    /* TimerB2 overflow */
-    u32Tmp1 = bM0P_TMRB2->BCSTR_b.OVFF;
-    u32Tmp2 = bM0P_TMRB2->BCSTR_b.INENOVF;
-    if ((ISELBR31 & BIT_MASK_08) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB2OF_IrqHandler();
-    }
-    /* TimerB2 underflow */
-    u32Tmp1 = bM0P_TMRB2->BCSTR_b.UDFF;
-    u32Tmp2 = bM0P_TMRB2->BCSTR_b.INENUDF;
-    if ((ISELBR31 & BIT_MASK_09) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB2UF_IrqHandler();
-    }
-    /* TimerB1 compare match */
-    u32Tmp1 = bM0P_TMRB1->STFLR_b.CMPF1;
-    u32Tmp2 = bM0P_TMRB1->ICONR_b.ITEN1;
-    if ((ISELBR31 & BIT_MASK_10) && (u32Tmp1) && (u32Tmp2))
-    {
-        TimerB1Cmp_IrqHandler();
-    }
-    if (Set == bM0P_ADC->AWDCR_b.AWD1IEN)
-    {
-        /* ADC convert result in range of window 1 if independence use */
-        u32Tmp1 = bM0P_ADC->AWDSR_b.AWD1F;
-        u32Tmp2 = M0P_ADC->AWDCR_f.AWDCM;
-        if ((ISELBR31 & BIT_MASK_11) && (u32Tmp1) && (Reset == u32Tmp2))
-        {
-            AdcCmp1_IrqHandler();
-        }
-        /* ADC convert result combination use of window 0 & 1 */
-        u32Tmp1 = bM0P_ADC->AWDSR_b.AWDCMF;
-        if ((ISELBR31 & BIT_MASK_11) && (u32Tmp1) && (Reset != u32Tmp2))
-        {
-            AdcCmp1_IrqHandler();
-        }
-    }
-    /* USART2 Tx end */
-    u32Tmp1 = bM0P_USART2->SR_b.TC;
-    u32Tmp2 = bM0P_USART2->CR1_b.TCIE;
-    if ((ISELBR31 & BIT_MASK_12) && (u32Tmp1) && (u32Tmp2))
-    {
-        Usart2TxEnd_IrqHandler();
-    }
-    /* SPI Tx buffer empty */
-    u32Tmp1 = bM0P_SPI->SR_b.TDEF;
-    u32Tmp2 = bM0P_SPI->CR1_b.TXIE;
-    if ((ISELBR31 & BIT_MASK_13) && (u32Tmp1) && (u32Tmp2))
-    {
-        SpiTxEmpt_IrqHandler();
-    }
+/**
+ * @brief  Interrupt No.032 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ032_Handler(void)
+{
+    TIMER0_2_CmpB_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.033 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ033_Handler(void)
+{
+    CLK_XtalStop_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.034 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ034_Handler(void)
+{
+    SWDT_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.035 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ035_Handler(void)
+{
+    TIMERA_1_Ovf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.036 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ036_Handler(void)
+{
+    TIMERA_1_Udf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.037 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ037_Handler(void)
+{
+    TIMERA_1_Cmp_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.038 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ038_Handler(void)
+{
+    TIMERA_2_Ovf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.039 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ039_Handler(void)
+{
+    TIMERA_2_Udf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.040 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ040_Handler(void)
+{
+    TIMERA_2_Cmp_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.041 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ041_Handler(void)
+{
+    TIMERA_3_Ovf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.042 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ042_Handler(void)
+{
+    TIMERA_3_Udf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.043 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ043_Handler(void)
+{
+    TIMERA_3_Cmp_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.044 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ044_Handler(void)
+{
+    TIMERA_4_Ovf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.045 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ045_Handler(void)
+{
+    TIMERA_4_Udf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.046 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ046_Handler(void)
+{
+    TIMERA_4_Cmp_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.047 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ047_Handler(void)
+{
+    TIMERB_Ovf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.048 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ048_Handler(void)
+{
+    TIMERB_Udf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.049 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ049_Handler(void)
+{
+    TIMERB_Cmp_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.050 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ050_Handler(void)
+{
+    USART_1_RxErr_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.051 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ051_Handler(void)
+{
+    USART_1_RxEnd_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.052 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ052_Handler(void)
+{
+    USART_1_TxEmpty_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.053 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ053_Handler(void)
+{
+    USART_1_TxEnd_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.054 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ054_Handler(void)
+{
+    USART_2_RxErr_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.055 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ055_Handler(void)
+{
+    USART_2_RxEnd_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.056 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ056_Handler(void)
+{
+    USART_2_TxEmpty_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.057 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ057_Handler(void)
+{
+    USART_2_TxEnd_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.058 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ058_Handler(void)
+{
+    USART_3_RxErr_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.059 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ059_Handler(void)
+{
+    USART_3_RxEnd_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.060 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ060_Handler(void)
+{
+    USART_3_TxEmpty_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.061 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ061_Handler(void)
+{
+    USART_3_TxEnd_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.062 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ062_Handler(void)
+{
+    USART_4_RxErr_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.063 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ063_Handler(void)
+{
+    USART_4_RxEnd_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.064 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ064_Handler(void)
+{
+    USART_4_TxEmpty_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.065 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ065_Handler(void)
+{
+    USART_4_TxEnd_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.066 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ066_Handler(void)
+{
+    SPI_RxEnd_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.067 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ067_Handler(void)
+{
+    SPI_TxEmpty_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.068 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ068_Handler(void)
+{
+    SPI_Idle_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.069 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ069_Handler(void)
+{
+    SPI_Err_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.070 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ070_Handler(void)
+{
+    TIMER4_GCmpUH_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.071 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ071_Handler(void)
+{
+    TIMER4_GCmpUL_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.072 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ072_Handler(void)
+{
+    TIMER4_GCmpVH_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.073 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ073_Handler(void)
+{
+    TIMER4_GCmpVL_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.074 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ074_Handler(void)
+{
+    TIMER4_GCmpWH_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.075 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ075_Handler(void)
+{
+    TIMER4_GCmpWL_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.076 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ076_Handler(void)
+{
+    TIMER4_Ovf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.077 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ077_Handler(void)
+{
+    TIMER4_Udf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.078 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ078_Handler(void)
+{
+    TIMER4_ReloadU_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.079 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ079_Handler(void)
+{
+    TIMER4_ReloadV_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.080 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ080_Handler(void)
+{
+    TIMER4_ReloadW_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.081 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ081_Handler(void)
+{
+    EMB_GR0_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.082 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ082_Handler(void)
+{
+    CMP_1_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.083 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ083_Handler(void)
+{
+    CMP_2_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.084 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ084_Handler(void)
+{
+    CMP_3_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.085 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ085_Handler(void)
+{
+    I2C_RxEnd_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.086 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ086_Handler(void)
+{
+    I2C_TxEnd_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.087 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ087_Handler(void)
+{
+    I2C_TxEmpty_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.088 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ088_Handler(void)
+{
+    I2C_Err_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.089 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ089_Handler(void)
+{
+    USART_1_WKUP_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.090 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ090_Handler(void)
+{
+    PWR_Lvd1_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.091 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ091_Handler(void)
+{
+    PWR_Lvd2_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.092 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ092_Handler(void)
+{
+    FCM_Err_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.093 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ093_Handler(void)
+{
+    FCM_End_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.094 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ094_Handler(void)
+{
+    FCM_Ovf_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.095 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ095_Handler(void)
+{
+    WDT_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.096 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ096_Handler(void)
+{
+    CTC_Err_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.097 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ097_Handler(void)
+{
+    ADC_SeqA_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.098 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ098_Handler(void)
+{
+    ADC_SeqB_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.099 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ099_Handler(void)
+{
+    ADC_ChCmp_IrqHandler();
+}
+
+/**
+ * @brief  Interrupt No.100 IRQ handler
+ * @param  None
+ * @retval None
+ */
+void IRQ100_Handler(void)
+{
+    ADC_SeqCmp_IrqHandler();
 }
 
 /**

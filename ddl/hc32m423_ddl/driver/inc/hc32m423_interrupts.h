@@ -408,96 +408,107 @@ void INTC_EKeyCmd(uint8_t u8EKey, en_functional_state_t enNewState);
 
 __WEAKDEF void NMI_IrqHandler(void);
 __WEAKDEF void HardFault_IrqHandler(void);
+__WEAKDEF void MemManage_IrqHandler(void);
+__WEAKDEF void BusFault_IrqHandler(void);
+__WEAKDEF void UsageFault_IrqHandler(void);
 __WEAKDEF void SVC_IrqHandler(void);
+__WEAKDEF void DebugMon_IrqHandler(void);
 __WEAKDEF void PendSV_IrqHandler(void);
 __WEAKDEF void SysTick_IrqHandler(void);
 
-__WEAKDEF void Extint08_IrqHandler(void);
-__WEAKDEF void Extint09_IrqHandler(void);
-
-__WEAKDEF void DmaTc0_IrqHandler(void);
-__WEAKDEF void DmaBtc0_IrqHandler(void);
-__WEAKDEF void DmaTc1_IrqHandler(void);
-__WEAKDEF void DmaBtc1_IrqHandler(void);
-__WEAKDEF void DmaErr_IrqHandler(void);
-
-__WEAKDEF void EfmPgmEraseErr_IrqHandler(void);
-__WEAKDEF void EfmColErr_IrqHandler(void);
-__WEAKDEF void EfmOpEnd_IrqHandler(void);
-
-__WEAKDEF void XtalStop_IrqHandler(void);
-
-__WEAKDEF void Swdt_IrqHandler(void);
-
-__WEAKDEF void Timer0GCmp_IrqHandler(void);
-
-__WEAKDEF void Timer2GCmp_IrqHandler(void);
-__WEAKDEF void Timer2GOV_IrqHandler(void);
-
-__WEAKDEF void Timer4GCMUH_IrqHandler(void);
-__WEAKDEF void Timer4GCMUL_IrqHandler(void);
-__WEAKDEF void Timer4GCMVH_IrqHandler(void);
-__WEAKDEF void Timer4GCMVL_IrqHandler(void);
-__WEAKDEF void Timer4GCMWH_IrqHandler(void);
-__WEAKDEF void Timer4GCMWL_IrqHandler(void);
-__WEAKDEF void Timer4GOV_IrqHandler(void);
-__WEAKDEF void Timer4GUD_IrqHandler(void);
-__WEAKDEF void Timer4ReloadU_IrqHandler(void);
-__WEAKDEF void Timer4ReloadV_IrqHandler(void);
-__WEAKDEF void Timer4ReloadW_IrqHandler(void);
-
-__WEAKDEF void Emb_IrqHandler(void);
-
-__WEAKDEF void TimerAOV_IrqHandler(void);
-__WEAKDEF void TimerAUD_IrqHandler(void);
-__WEAKDEF void TimerACmp_IrqHandler(void);
-
-__WEAKDEF void TimerB1OF_IrqHandler(void);
-__WEAKDEF void TimerB1UF_IrqHandler(void);
-__WEAKDEF void TimerB1Cmp_IrqHandler(void);
-__WEAKDEF void TimerB2OF_IrqHandler(void);
-__WEAKDEF void TimerB2UF_IrqHandler(void);
-__WEAKDEF void TimerB2Cmp_IrqHandler(void);
-__WEAKDEF void TimerB3OF_IrqHandler(void);
-__WEAKDEF void TimerB3UF_IrqHandler(void);
-__WEAKDEF void TimerB3Cmp_IrqHandler(void);
-__WEAKDEF void TimerB4OF_IrqHandler(void);
-__WEAKDEF void TimerB4UF_IrqHandler(void);
-__WEAKDEF void TimerB4Cmp_IrqHandler(void);
-
-__WEAKDEF void Usart1RxErr_IrqHandler(void);
-__WEAKDEF void Usart1RxEnd_IrqHandler(void);
-__WEAKDEF void Usart1TxEmpt_IrqHandler(void);
-__WEAKDEF void Usart1TxEnd_IrqHandler(void);
-__WEAKDEF void Usart2RxErr_IrqHandler(void);
-__WEAKDEF void Usart2RxEnd_IrqHandler(void);
-__WEAKDEF void Usart2TxEmpt_IrqHandler(void);
-__WEAKDEF void Usart2TxEnd_IrqHandler(void);
-__WEAKDEF void Usart3RxErr_IrqHandler(void);
-__WEAKDEF void Usart3RxEnd_IrqHandler(void);
-__WEAKDEF void Usart3TxEmpt_IrqHandler(void);
-__WEAKDEF void Usart3TxEnd_IrqHandler(void);
-
-__WEAKDEF void I2cRxEnd_IrqHandler(void);
-__WEAKDEF void I2cTxEnd_IrqHandler(void);
-__WEAKDEF void I2cTxEmpt_IrqHandler(void);
-__WEAKDEF void I2cErr_IrqHandler(void);
-
-__WEAKDEF void SpiRxEnd_IrqHandler(void);
-__WEAKDEF void SpiTxEmpt_IrqHandler(void);
-__WEAKDEF void SpiErr_IrqHandler(void);
-__WEAKDEF void SpiIdle_IrqHandler(void);
-
-__WEAKDEF void ClockTrimErr_IrqHandler(void);
-
-__WEAKDEF void EKey_IrqHandler(void);
-
-__WEAKDEF void AdcSeqA_IrqHandler(void);
-__WEAKDEF void AdcSeqB_IrqHandler(void);
-__WEAKDEF void AdcCmp0_IrqHandler(void);
-__WEAKDEF void AdcCmp1_IrqHandler(void);
-
-__WEAKDEF void Lvd_IrqHandler(void);
+__WEAKDEF void EXINT00_IrqHandler(void);
+__WEAKDEF void EXINT01_IrqHandler(void);
+__WEAKDEF void EXINT02_IrqHandler(void);
+__WEAKDEF void EXINT03_IrqHandler(void);
+__WEAKDEF void EXINT04_IrqHandler(void);
+__WEAKDEF void EXINT05_IrqHandler(void);
+__WEAKDEF void EXINT06_IrqHandler(void);
+__WEAKDEF void EXINT07_IrqHandler(void);
+__WEAKDEF void DMA_Tc0_IrqHandler(void);
+__WEAKDEF void DMA_Tc1_IrqHandler(void);
+__WEAKDEF void DMA_Tc2_IrqHandler(void);
+__WEAKDEF void DMA_Tc3_IrqHandler(void);
+__WEAKDEF void DMA_Btc0_IrqHandler(void);
+__WEAKDEF void DMA_Btc1_IrqHandler(void);
+__WEAKDEF void DMA_Btc2_IrqHandler(void);
+__WEAKDEF void DMA_Btc3_IrqHandler(void);
+__WEAKDEF void DMA_Err_IrqHandler(void);
+__WEAKDEF void EFM_PgmEraseErr_IrqHandler(void);
+__WEAKDEF void EFM_ColErr_IrqHandler(void);
+__WEAKDEF void EFM_OpEnd_IrqHandler(void);
+__WEAKDEF void DCU_IrqHandler(void);
+__WEAKDEF void TIMER0_1_CmpA_IrqHandler(void);
+__WEAKDEF void TIMER0_1_CmpB_IrqHandler(void);
+__WEAKDEF void TIMER0_2_CmpA_IrqHandler(void);
+__WEAKDEF void TIMER0_2_CmpB_IrqHandler(void);
+__WEAKDEF void CLK_XtalStop_IrqHandler(void);
+__WEAKDEF void SWDT_IrqHandler(void);
+__WEAKDEF void TIMERA_1_Ovf_IrqHandler(void);
+__WEAKDEF void TIMERA_1_Udf_IrqHandler(void);
+__WEAKDEF void TIMERA_1_Cmp_IrqHandler(void);
+__WEAKDEF void TIMERA_2_Ovf_IrqHandler(void);
+__WEAKDEF void TIMERA_2_Udf_IrqHandler(void);
+__WEAKDEF void TIMERA_2_Cmp_IrqHandler(void);
+__WEAKDEF void TIMERA_3_Ovf_IrqHandler(void);
+__WEAKDEF void TIMERA_3_Udf_IrqHandler(void);
+__WEAKDEF void TIMERA_3_Cmp_IrqHandler(void);
+__WEAKDEF void TIMERA_4_Ovf_IrqHandler(void);
+__WEAKDEF void TIMERA_4_Udf_IrqHandler(void);
+__WEAKDEF void TIMERA_4_Cmp_IrqHandler(void);
+__WEAKDEF void TIMERB_Ovf_IrqHandler(void);
+__WEAKDEF void TIMERB_Udf_IrqHandler(void);
+__WEAKDEF void TIMERB_Cmp_IrqHandler(void);
+__WEAKDEF void USART_1_RxErr_IrqHandler(void);
+__WEAKDEF void USART_1_RxEnd_IrqHandler(void);
+__WEAKDEF void USART_1_TxEmpty_IrqHandler(void);
+__WEAKDEF void USART_1_TxEnd_IrqHandler(void);
+__WEAKDEF void USART_2_RxErr_IrqHandler(void);
+__WEAKDEF void USART_2_RxEnd_IrqHandler(void);
+__WEAKDEF void USART_2_TxEmpty_IrqHandler(void);
+__WEAKDEF void USART_2_TxEnd_IrqHandler(void);
+__WEAKDEF void USART_3_RxErr_IrqHandler(void);
+__WEAKDEF void USART_3_RxEnd_IrqHandler(void);
+__WEAKDEF void USART_3_TxEmpty_IrqHandler(void);
+__WEAKDEF void USART_3_TxEnd_IrqHandler(void);
+__WEAKDEF void USART_4_RxErr_IrqHandler(void);
+__WEAKDEF void USART_4_RxEnd_IrqHandler(void);
+__WEAKDEF void USART_4_TxEmpty_IrqHandler(void);
+__WEAKDEF void USART_4_TxEnd_IrqHandler(void);
+__WEAKDEF void SPI_RxEnd_IrqHandler(void);
+__WEAKDEF void SPI_TxEmpty_IrqHandler(void);
+__WEAKDEF void SPI_Idle_IrqHandler(void);
+__WEAKDEF void SPI_Err_IrqHandler(void);
+__WEAKDEF void TIMER4_GCmpUH_IrqHandler(void);
+__WEAKDEF void TIMER4_GCmpUL_IrqHandler(void);
+__WEAKDEF void TIMER4_GCmpVH_IrqHandler(void);
+__WEAKDEF void TIMER4_GCmpVL_IrqHandler(void);
+__WEAKDEF void TIMER4_GCmpWH_IrqHandler(void);
+__WEAKDEF void TIMER4_GCmpWL_IrqHandler(void);
+__WEAKDEF void TIMER4_Ovf_IrqHandler(void);
+__WEAKDEF void TIMER4_Udf_IrqHandler(void);
+__WEAKDEF void TIMER4_ReloadU_IrqHandler(void);
+__WEAKDEF void TIMER4_ReloadV_IrqHandler(void);
+__WEAKDEF void TIMER4_ReloadW_IrqHandler(void);
+__WEAKDEF void EMB_GR0_IrqHandler(void);
+__WEAKDEF void CMP_1_IrqHandler(void);
+__WEAKDEF void CMP_2_IrqHandler(void);
+__WEAKDEF void CMP_3_IrqHandler(void);
+__WEAKDEF void I2C_RxEnd_IrqHandler(void);
+__WEAKDEF void I2C_TxEnd_IrqHandler(void);
+__WEAKDEF void I2C_TxEmpty_IrqHandler(void);
+__WEAKDEF void I2C_Err_IrqHandler(void);
+__WEAKDEF void USART_1_WKUP_IrqHandler(void);
+__WEAKDEF void PWR_Lvd1_IrqHandler(void);
+__WEAKDEF void PWR_Lvd2_IrqHandler(void);
+__WEAKDEF void FCM_Err_IrqHandler(void);
+__WEAKDEF void FCM_End_IrqHandler(void);
+__WEAKDEF void FCM_Ovf_IrqHandler(void);
+__WEAKDEF void WDT_IrqHandler(void);
+__WEAKDEF void CTC_Err_IrqHandler(void);
+__WEAKDEF void ADC_SeqA_IrqHandler(void);
+__WEAKDEF void ADC_SeqB_IrqHandler(void);
+__WEAKDEF void ADC_ChCmp_IrqHandler(void);
+__WEAKDEF void ADC_SeqCmp_IrqHandler(void);
 
 
 /**
