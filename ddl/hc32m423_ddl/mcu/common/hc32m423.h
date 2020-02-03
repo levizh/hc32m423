@@ -1294,15 +1294,15 @@ typedef struct
     __IO uint16_t OCERV;
     __IO uint16_t OCSRW;
     __IO uint16_t OCERW;
-    __IO uint16_t OCMRUH;
+    __IO uint16_t OCMRHUH;
     uint8_t RESERVED6[2];
-    __IO uint32_t OCMRUL;
-    __IO uint16_t OCMRVH;
+    __IO uint32_t OCMRLUL;
+    __IO uint16_t OCMRHVH;
     uint8_t RESERVED7[2];
-    __IO uint32_t OCMRVL;
-    __IO uint16_t OCMRWH;
+    __IO uint32_t OCMRLVL;
+    __IO uint16_t OCMRHWH;
     uint8_t RESERVED8[2];
-    __IO uint32_t OCMRL;
+    __IO uint32_t OCMRLWL;
     uint8_t RESERVED9[6];
     __IO uint16_t CPSR;
     uint8_t RESERVED10[2];
@@ -1323,9 +1323,9 @@ typedef struct
     __IO uint16_t PDBRW;
     __IO uint16_t POCRU;
     uint8_t RESERVED14[2];
-    __IO uint16_t POCRV;
+    __IO uint16_t ;
     uint8_t RESERVED15[2];
-    __IO uint16_t POCRW;
+    __IO uint16_t ;
     uint8_t RESERVED16[2];
     __IO uint16_t RCSR;
     uint8_t RESERVED17[12];
@@ -6176,449 +6176,153 @@ typedef struct
 /*  Bit definition for TMR4_OCCRWL register  */
 #define TMR4_OCCRWL                                    ((uint16_t)0xFFFFU)
 
-/*  Bit definition for TMR4_OCSRU register  */
-#define TMR4_OCSRU_OCEH_POS                            (0U)
-#define TMR4_OCSRU_OCEH                                ((uint16_t)0x0001U)
-#define TMR4_OCSRU_OCEL_POS                            (1U)
-#define TMR4_OCSRU_OCEL                                ((uint16_t)0x0002U)
-#define TMR4_OCSRU_OCPH_POS                            (2U)
-#define TMR4_OCSRU_OCPH                                ((uint16_t)0x0004U)
-#define TMR4_OCSRU_OCPL_POS                            (3U)
-#define TMR4_OCSRU_OCPL                                ((uint16_t)0x0008U)
-#define TMR4_OCSRU_OCIEH_POS                           (4U)
-#define TMR4_OCSRU_OCIEH                               ((uint16_t)0x0010U)
-#define TMR4_OCSRU_OCIEL_POS                           (5U)
-#define TMR4_OCSRU_OCIEL                               ((uint16_t)0x0020U)
-#define TMR4_OCSRU_OCFH_POS                            (6U)
-#define TMR4_OCSRU_OCFH                                ((uint16_t)0x0040U)
-#define TMR4_OCSRU_OCFL_POS                            (7U)
-#define TMR4_OCSRU_OCFL                                ((uint16_t)0x0080U)
+/*  Bit definition for TMR4_OCSR register  */
+#define TMR4_OCSR_OCEH_POS                             (0U)
+#define TMR4_OCSR_OCEH                                 ((uint16_t)0x0001U)
+#define TMR4_OCSR_OCEL_POS                             (1U)
+#define TMR4_OCSR_OCEL                                 ((uint16_t)0x0002U)
+#define TMR4_OCSR_OCPH_POS                             (2U)
+#define TMR4_OCSR_OCPH                                 ((uint16_t)0x0004U)
+#define TMR4_OCSR_OCPL_POS                             (3U)
+#define TMR4_OCSR_OCPL                                 ((uint16_t)0x0008U)
+#define TMR4_OCSR_OCIEH_POS                            (4U)
+#define TMR4_OCSR_OCIEH                                ((uint16_t)0x0010U)
+#define TMR4_OCSR_OCIEL_POS                            (5U)
+#define TMR4_OCSR_OCIEL                                ((uint16_t)0x0020U)
+#define TMR4_OCSR_OCFH_POS                             (6U)
+#define TMR4_OCSR_OCFH                                 ((uint16_t)0x0040U)
+#define TMR4_OCSR_OCFL_POS                             (7U)
+#define TMR4_OCSR_OCFL                                 ((uint16_t)0x0080U)
 
-/*  Bit definition for TMR4_OCERU register  */
-#define TMR4_OCERU_CHBUFEN_POS                         (0U)
-#define TMR4_OCERU_CHBUFEN                             ((uint16_t)0x0003U)
-#define TMR4_OCERU_CHBUFEN_0                           ((uint16_t)0x0001U)
-#define TMR4_OCERU_CHBUFEN_1                           ((uint16_t)0x0002U)
-#define TMR4_OCERU_CLBUFEN_POS                         (2U)
-#define TMR4_OCERU_CLBUFEN                             ((uint16_t)0x000CU)
-#define TMR4_OCERU_CLBUFEN_0                           ((uint16_t)0x0004U)
-#define TMR4_OCERU_CLBUFEN_1                           ((uint16_t)0x0008U)
-#define TMR4_OCERU_MHBUFEN_POS                         (4U)
-#define TMR4_OCERU_MHBUFEN                             ((uint16_t)0x0030U)
-#define TMR4_OCERU_MHBUFEN_0                           ((uint16_t)0x0010U)
-#define TMR4_OCERU_MHBUFEN_1                           ((uint16_t)0x0020U)
-#define TMR4_OCERU_MLBUFEN_POS                         (6U)
-#define TMR4_OCERU_MLBUFEN                             ((uint16_t)0x00C0U)
-#define TMR4_OCERU_MLBUFEN_0                           ((uint16_t)0x0040U)
-#define TMR4_OCERU_MLBUFEN_1                           ((uint16_t)0x0080U)
-#define TMR4_OCERU_LMCH_POS                            (8U)
-#define TMR4_OCERU_LMCH                                ((uint16_t)0x0100U)
-#define TMR4_OCERU_LMCL_POS                            (9U)
-#define TMR4_OCERU_LMCL                                ((uint16_t)0x0200U)
-#define TMR4_OCERU_LMMH_POS                            (10U)
-#define TMR4_OCERU_LMMH                                ((uint16_t)0x0400U)
-#define TMR4_OCERU_LMML_POS                            (11U)
-#define TMR4_OCERU_LMML                                ((uint16_t)0x0800U)
-#define TMR4_OCERU_MCECH_POS                           (12U)
-#define TMR4_OCERU_MCECH                               ((uint16_t)0x1000U)
-#define TMR4_OCERU_MCECL_POS                           (13U)
-#define TMR4_OCERU_MCECL                               ((uint16_t)0x2000U)
+/*  Bit definition for TMR4_OCER register  */
+#define TMR4_OCER_CHBUFEN_POS                          (0U)
+#define TMR4_OCER_CHBUFEN                              ((uint16_t)0x0003U)
+#define TMR4_OCER_CHBUFEN_0                            ((uint16_t)0x0001U)
+#define TMR4_OCER_CHBUFEN_1                            ((uint16_t)0x0002U)
+#define TMR4_OCER_CLBUFEN_POS                          (2U)
+#define TMR4_OCER_CLBUFEN                              ((uint16_t)0x000CU)
+#define TMR4_OCER_CLBUFEN_0                            ((uint16_t)0x0004U)
+#define TMR4_OCER_CLBUFEN_1                            ((uint16_t)0x0008U)
+#define TMR4_OCER_MHBUFEN_POS                          (4U)
+#define TMR4_OCER_MHBUFEN                              ((uint16_t)0x0030U)
+#define TMR4_OCER_MHBUFEN_0                            ((uint16_t)0x0010U)
+#define TMR4_OCER_MHBUFEN_1                            ((uint16_t)0x0020U)
+#define TMR4_OCER_MLBUFEN_POS                          (6U)
+#define TMR4_OCER_MLBUFEN                              ((uint16_t)0x00C0U)
+#define TMR4_OCER_MLBUFEN_0                            ((uint16_t)0x0040U)
+#define TMR4_OCER_MLBUFEN_1                            ((uint16_t)0x0080U)
+#define TMR4_OCER_LMCH_POS                             (8U)
+#define TMR4_OCER_LMCH                                 ((uint16_t)0x0100U)
+#define TMR4_OCER_LMCL_POS                             (9U)
+#define TMR4_OCER_LMCL                                 ((uint16_t)0x0200U)
+#define TMR4_OCER_LMMH_POS                             (10U)
+#define TMR4_OCER_LMMH                                 ((uint16_t)0x0400U)
+#define TMR4_OCER_LMML_POS                             (11U)
+#define TMR4_OCER_LMML                                 ((uint16_t)0x0800U)
+#define TMR4_OCER_MCECH_POS                            (12U)
+#define TMR4_OCER_MCECH                                ((uint16_t)0x1000U)
+#define TMR4_OCER_MCECL_POS                            (13U)
+#define TMR4_OCER_MCECL                                ((uint16_t)0x2000U)
 
-/*  Bit definition for TMR4_OCSRV register  */
-#define TMR4_OCSRV_OCEH_POS                            (0U)
-#define TMR4_OCSRV_OCEH                                ((uint16_t)0x0001U)
-#define TMR4_OCSRV_OCEL_POS                            (1U)
-#define TMR4_OCSRV_OCEL                                ((uint16_t)0x0002U)
-#define TMR4_OCSRV_OCPH_POS                            (2U)
-#define TMR4_OCSRV_OCPH                                ((uint16_t)0x0004U)
-#define TMR4_OCSRV_OCPL_POS                            (3U)
-#define TMR4_OCSRV_OCPL                                ((uint16_t)0x0008U)
-#define TMR4_OCSRV_OCIEH_POS                           (4U)
-#define TMR4_OCSRV_OCIEH                               ((uint16_t)0x0010U)
-#define TMR4_OCSRV_OCIEL_POS                           (5U)
-#define TMR4_OCSRV_OCIEL                               ((uint16_t)0x0020U)
-#define TMR4_OCSRV_OCFH_POS                            (6U)
-#define TMR4_OCSRV_OCFH                                ((uint16_t)0x0040U)
-#define TMR4_OCSRV_OCFL_POS                            (7U)
-#define TMR4_OCSRV_OCFL                                ((uint16_t)0x0080U)
-
-/*  Bit definition for TMR4_OCERV register  */
-#define TMR4_OCERV_CHBUFEN_POS                         (0U)
-#define TMR4_OCERV_CHBUFEN                             ((uint16_t)0x0003U)
-#define TMR4_OCERV_CHBUFEN_0                           ((uint16_t)0x0001U)
-#define TMR4_OCERV_CHBUFEN_1                           ((uint16_t)0x0002U)
-#define TMR4_OCERV_CLBUFEN_POS                         (2U)
-#define TMR4_OCERV_CLBUFEN                             ((uint16_t)0x000CU)
-#define TMR4_OCERV_CLBUFEN_0                           ((uint16_t)0x0004U)
-#define TMR4_OCERV_CLBUFEN_1                           ((uint16_t)0x0008U)
-#define TMR4_OCERV_MHBUFEN_POS                         (4U)
-#define TMR4_OCERV_MHBUFEN                             ((uint16_t)0x0030U)
-#define TMR4_OCERV_MHBUFEN_0                           ((uint16_t)0x0010U)
-#define TMR4_OCERV_MHBUFEN_1                           ((uint16_t)0x0020U)
-#define TMR4_OCERV_MLBUFEN_POS                         (6U)
-#define TMR4_OCERV_MLBUFEN                             ((uint16_t)0x00C0U)
-#define TMR4_OCERV_MLBUFEN_0                           ((uint16_t)0x0040U)
-#define TMR4_OCERV_MLBUFEN_1                           ((uint16_t)0x0080U)
-#define TMR4_OCERV_LMCH_POS                            (8U)
-#define TMR4_OCERV_LMCH                                ((uint16_t)0x0100U)
-#define TMR4_OCERV_LMCL_POS                            (9U)
-#define TMR4_OCERV_LMCL                                ((uint16_t)0x0200U)
-#define TMR4_OCERV_LMMH_POS                            (10U)
-#define TMR4_OCERV_LMMH                                ((uint16_t)0x0400U)
-#define TMR4_OCERV_LMML_POS                            (11U)
-#define TMR4_OCERV_LMML                                ((uint16_t)0x0800U)
-#define TMR4_OCERV_MCECH_POS                           (12U)
-#define TMR4_OCERV_MCECH                               ((uint16_t)0x1000U)
-#define TMR4_OCERV_MCECL_POS                           (13U)
-#define TMR4_OCERV_MCECL                               ((uint16_t)0x2000U)
-
-/*  Bit definition for TMR4_OCSRW register  */
-#define TMR4_OCSRW_OCEH_POS                            (0U)
-#define TMR4_OCSRW_OCEH                                ((uint16_t)0x0001U)
-#define TMR4_OCSRW_OCEL_POS                            (1U)
-#define TMR4_OCSRW_OCEL                                ((uint16_t)0x0002U)
-#define TMR4_OCSRW_OCPH_POS                            (2U)
-#define TMR4_OCSRW_OCPH                                ((uint16_t)0x0004U)
-#define TMR4_OCSRW_OCPL_POS                            (3U)
-#define TMR4_OCSRW_OCPL                                ((uint16_t)0x0008U)
-#define TMR4_OCSRW_OCIEH_POS                           (4U)
-#define TMR4_OCSRW_OCIEH                               ((uint16_t)0x0010U)
-#define TMR4_OCSRW_OCIEL_POS                           (5U)
-#define TMR4_OCSRW_OCIEL                               ((uint16_t)0x0020U)
-#define TMR4_OCSRW_OCFH_POS                            (6U)
-#define TMR4_OCSRW_OCFH                                ((uint16_t)0x0040U)
-#define TMR4_OCSRW_OCFL_POS                            (7U)
-#define TMR4_OCSRW_OCFL                                ((uint16_t)0x0080U)
-
-/*  Bit definition for TMR4_OCERW register  */
-#define TMR4_OCERW_CHBUFEN_POS                         (0U)
-#define TMR4_OCERW_CHBUFEN                             ((uint16_t)0x0003U)
-#define TMR4_OCERW_CHBUFEN_0                           ((uint16_t)0x0001U)
-#define TMR4_OCERW_CHBUFEN_1                           ((uint16_t)0x0002U)
-#define TMR4_OCERW_CLBUFEN_POS                         (2U)
-#define TMR4_OCERW_CLBUFEN                             ((uint16_t)0x000CU)
-#define TMR4_OCERW_CLBUFEN_0                           ((uint16_t)0x0004U)
-#define TMR4_OCERW_CLBUFEN_1                           ((uint16_t)0x0008U)
-#define TMR4_OCERW_MHBUFEN_POS                         (4U)
-#define TMR4_OCERW_MHBUFEN                             ((uint16_t)0x0030U)
-#define TMR4_OCERW_MHBUFEN_0                           ((uint16_t)0x0010U)
-#define TMR4_OCERW_MHBUFEN_1                           ((uint16_t)0x0020U)
-#define TMR4_OCERW_MLBUFEN_POS                         (6U)
-#define TMR4_OCERW_MLBUFEN                             ((uint16_t)0x00C0U)
-#define TMR4_OCERW_MLBUFEN_0                           ((uint16_t)0x0040U)
-#define TMR4_OCERW_MLBUFEN_1                           ((uint16_t)0x0080U)
-#define TMR4_OCERW_LMCH_POS                            (8U)
-#define TMR4_OCERW_LMCH                                ((uint16_t)0x0100U)
-#define TMR4_OCERW_LMCL_POS                            (9U)
-#define TMR4_OCERW_LMCL                                ((uint16_t)0x0200U)
-#define TMR4_OCERW_LMMH_POS                            (10U)
-#define TMR4_OCERW_LMMH                                ((uint16_t)0x0400U)
-#define TMR4_OCERW_LMML_POS                            (11U)
-#define TMR4_OCERW_LMML                                ((uint16_t)0x0800U)
-#define TMR4_OCERW_MCECH_POS                           (12U)
-#define TMR4_OCERW_MCECH                               ((uint16_t)0x1000U)
-#define TMR4_OCERW_MCECL_POS                           (13U)
-#define TMR4_OCERW_MCECL                               ((uint16_t)0x2000U)
-
-/*  Bit definition for TMR4_OCMRUH register  */
-#define TMR4_OCMRUH_OCFDCHH_POS                        (0U)
-#define TMR4_OCMRUH_OCFDCHH                            ((uint16_t)0x0001U)
-#define TMR4_OCMRUH_OCFPKHH_POS                        (1U)
-#define TMR4_OCMRUH_OCFPKHH                            ((uint16_t)0x0002U)
-#define TMR4_OCMRUH_OCFUCHH_POS                        (2U)
-#define TMR4_OCMRUH_OCFUCHH                            ((uint16_t)0x0004U)
-#define TMR4_OCMRUH_OCFZRHH_POS                        (3U)
-#define TMR4_OCMRUH_OCFZRHH                            ((uint16_t)0x0008U)
-#define TMR4_OCMRUH_OPDCHH_POS                         (4U)
-#define TMR4_OCMRUH_OPDCHH                             ((uint16_t)0x0030U)
-#define TMR4_OCMRUH_OPDCHH_0                           ((uint16_t)0x0010U)
-#define TMR4_OCMRUH_OPDCHH_1                           ((uint16_t)0x0020U)
-#define TMR4_OCMRUH_OPPKHH_POS                         (6U)
-#define TMR4_OCMRUH_OPPKHH                             ((uint16_t)0x00C0U)
-#define TMR4_OCMRUH_OPPKHH_0                           ((uint16_t)0x0040U)
-#define TMR4_OCMRUH_OPPKHH_1                           ((uint16_t)0x0080U)
-#define TMR4_OCMRUH_OPUCHH_POS                         (8U)
-#define TMR4_OCMRUH_OPUCHH                             ((uint16_t)0x0300U)
-#define TMR4_OCMRUH_OPUCHH_0                           ((uint16_t)0x0100U)
-#define TMR4_OCMRUH_OPUCHH_1                           ((uint16_t)0x0200U)
-#define TMR4_OCMRUH_OPZRHH_POS                         (10U)
-#define TMR4_OCMRUH_OPZRHH                             ((uint16_t)0x0C00U)
-#define TMR4_OCMRUH_OPZRHH_0                           ((uint16_t)0x0400U)
-#define TMR4_OCMRUH_OPZRHH_1                           ((uint16_t)0x0800U)
-#define TMR4_OCMRUH_OPNPKHH_POS                        (12U)
-#define TMR4_OCMRUH_OPNPKHH                            ((uint16_t)0x3000U)
-#define TMR4_OCMRUH_OPNPKHH_0                          ((uint16_t)0x1000U)
-#define TMR4_OCMRUH_OPNPKHH_1                          ((uint16_t)0x2000U)
-#define TMR4_OCMRUH_OPNZRHH_POS                        (14U)
-#define TMR4_OCMRUH_OPNZRHH                            ((uint16_t)0xC000U)
-#define TMR4_OCMRUH_OPNZRHH_0                          ((uint16_t)0x4000U)
-#define TMR4_OCMRUH_OPNZRHH_1                          ((uint16_t)0x8000U)
-
-/*  Bit definition for TMR4_OCMRUL register  */
-#define TMR4_OCMRUL_OCFDCLL_POS                        (0U)
-#define TMR4_OCMRUL_OCFDCLL                            ((uint32_t)0x00000001U)
-#define TMR4_OCMRUL_OCFPKLL_POS                        (1U)
-#define TMR4_OCMRUL_OCFPKLL                            ((uint32_t)0x00000002U)
-#define TMR4_OCMRUL_OCFUCLL_POS                        (2U)
-#define TMR4_OCMRUL_OCFUCLL                            ((uint32_t)0x00000004U)
-#define TMR4_OCMRUL_OCFZRLL_POS                        (3U)
-#define TMR4_OCMRUL_OCFZRLL                            ((uint32_t)0x00000008U)
-#define TMR4_OCMRUL_OPDCLL_POS                         (4U)
-#define TMR4_OCMRUL_OPDCLL                             ((uint32_t)0x00000030U)
-#define TMR4_OCMRUL_OPDCLL_0                           ((uint32_t)0x00000010U)
-#define TMR4_OCMRUL_OPDCLL_1                           ((uint32_t)0x00000020U)
-#define TMR4_OCMRUL_OPPKLL_POS                         (6U)
-#define TMR4_OCMRUL_OPPKLL                             ((uint32_t)0x000000C0U)
-#define TMR4_OCMRUL_OPPKLL_0                           ((uint32_t)0x00000040U)
-#define TMR4_OCMRUL_OPPKLL_1                           ((uint32_t)0x00000080U)
-#define TMR4_OCMRUL_OPUCLL_POS                         (8U)
-#define TMR4_OCMRUL_OPUCLL                             ((uint32_t)0x00000300U)
-#define TMR4_OCMRUL_OPUCLL_0                           ((uint32_t)0x00000100U)
-#define TMR4_OCMRUL_OPUCLL_1                           ((uint32_t)0x00000200U)
-#define TMR4_OCMRUL_OPZRLL_POS                         (10U)
-#define TMR4_OCMRUL_OPZRLL                             ((uint32_t)0x00000C00U)
-#define TMR4_OCMRUL_OPZRLL_0                           ((uint32_t)0x00000400U)
-#define TMR4_OCMRUL_OPZRLL_1                           ((uint32_t)0x00000800U)
-#define TMR4_OCMRUL_OPNPKLL_POS                        (12U)
-#define TMR4_OCMRUL_OPNPKLL                            ((uint32_t)0x00003000U)
-#define TMR4_OCMRUL_OPNPKLL_0                          ((uint32_t)0x00001000U)
-#define TMR4_OCMRUL_OPNPKLL_1                          ((uint32_t)0x00002000U)
-#define TMR4_OCMRUL_OPNZRLL_POS                        (14U)
-#define TMR4_OCMRUL_OPNZRLL                            ((uint32_t)0x0000C000U)
-#define TMR4_OCMRUL_OPNZRLL_0                          ((uint32_t)0x00004000U)
-#define TMR4_OCMRUL_OPNZRLL_1                          ((uint32_t)0x00008000U)
-#define TMR4_OCMRUL_EOPNDCLL_POS                       (16U)
-#define TMR4_OCMRUL_EOPNDCLL                           ((uint32_t)0x00030000U)
-#define TMR4_OCMRUL_EOPNDCLL_0                         ((uint32_t)0x00010000U)
-#define TMR4_OCMRUL_EOPNDCLL_1                         ((uint32_t)0x00020000U)
-#define TMR4_OCMRUL_EOPNUCLL_POS                       (18U)
-#define TMR4_OCMRUL_EOPNUCLL                           ((uint32_t)0x000C0000U)
-#define TMR4_OCMRUL_EOPNUCLL_0                         ((uint32_t)0x00040000U)
-#define TMR4_OCMRUL_EOPNUCLL_1                         ((uint32_t)0x00080000U)
-#define TMR4_OCMRUL_EOPDCLL_POS                        (20U)
-#define TMR4_OCMRUL_EOPDCLL                            ((uint32_t)0x00300000U)
-#define TMR4_OCMRUL_EOPDCLL_0                          ((uint32_t)0x00100000U)
-#define TMR4_OCMRUL_EOPDCLL_1                          ((uint32_t)0x00200000U)
-#define TMR4_OCMRUL_EOPPKLL_POS                        (22U)
-#define TMR4_OCMRUL_EOPPKLL                            ((uint32_t)0x00C00000U)
-#define TMR4_OCMRUL_EOPPKLL_0                          ((uint32_t)0x00400000U)
-#define TMR4_OCMRUL_EOPPKLL_1                          ((uint32_t)0x00800000U)
-#define TMR4_OCMRUL_EOPUCLL_POS                        (24U)
-#define TMR4_OCMRUL_EOPUCLL                            ((uint32_t)0x03000000U)
-#define TMR4_OCMRUL_EOPUCLL_0                          ((uint32_t)0x01000000U)
-#define TMR4_OCMRUL_EOPUCLL_1                          ((uint32_t)0x02000000U)
-#define TMR4_OCMRUL_EOPZRLL_POS                        (26U)
-#define TMR4_OCMRUL_EOPZRLL                            ((uint32_t)0x0C000000U)
-#define TMR4_OCMRUL_EOPZRLL_0                          ((uint32_t)0x04000000U)
-#define TMR4_OCMRUL_EOPZRLL_1                          ((uint32_t)0x08000000U)
-#define TMR4_OCMRUL_EOPNPKLL_POS                       (28U)
-#define TMR4_OCMRUL_EOPNPKLL                           ((uint32_t)0x30000000U)
-#define TMR4_OCMRUL_EOPNPKLL_0                         ((uint32_t)0x10000000U)
-#define TMR4_OCMRUL_EOPNPKLL_1                         ((uint32_t)0x20000000U)
-#define TMR4_OCMRUL_EOPNZRLL_POS                       (30U)
-#define TMR4_OCMRUL_EOPNZRLL                           ((uint32_t)0xC0000000U)
-#define TMR4_OCMRUL_EOPNZRLL_0                         ((uint32_t)0x40000000U)
-#define TMR4_OCMRUL_EOPNZRLL_1                         ((uint32_t)0x80000000U)
-
-/*  Bit definition for TMR4_OCMRVH register  */
-#define TMR4_OCMRVH_OCFDCHH_POS                        (0U)
-#define TMR4_OCMRVH_OCFDCHH                            ((uint16_t)0x0001U)
-#define TMR4_OCMRVH_OCFPKHH_POS                        (1U)
-#define TMR4_OCMRVH_OCFPKHH                            ((uint16_t)0x0002U)
-#define TMR4_OCMRVH_OCFUCHH_POS                        (2U)
-#define TMR4_OCMRVH_OCFUCHH                            ((uint16_t)0x0004U)
-#define TMR4_OCMRVH_OCFZRHH_POS                        (3U)
-#define TMR4_OCMRVH_OCFZRHH                            ((uint16_t)0x0008U)
-#define TMR4_OCMRVH_OPDCHH_POS                         (4U)
-#define TMR4_OCMRVH_OPDCHH                             ((uint16_t)0x0030U)
-#define TMR4_OCMRVH_OPDCHH_0                           ((uint16_t)0x0010U)
-#define TMR4_OCMRVH_OPDCHH_1                           ((uint16_t)0x0020U)
-#define TMR4_OCMRVH_OPPKHH_POS                         (6U)
-#define TMR4_OCMRVH_OPPKHH                             ((uint16_t)0x00C0U)
-#define TMR4_OCMRVH_OPPKHH_0                           ((uint16_t)0x0040U)
-#define TMR4_OCMRVH_OPPKHH_1                           ((uint16_t)0x0080U)
-#define TMR4_OCMRVH_OPUCHH_POS                         (8U)
-#define TMR4_OCMRVH_OPUCHH                             ((uint16_t)0x0300U)
-#define TMR4_OCMRVH_OPUCHH_0                           ((uint16_t)0x0100U)
-#define TMR4_OCMRVH_OPUCHH_1                           ((uint16_t)0x0200U)
-#define TMR4_OCMRVH_OPZRHH_POS                         (10U)
-#define TMR4_OCMRVH_OPZRHH                             ((uint16_t)0x0C00U)
-#define TMR4_OCMRVH_OPZRHH_0                           ((uint16_t)0x0400U)
-#define TMR4_OCMRVH_OPZRHH_1                           ((uint16_t)0x0800U)
-#define TMR4_OCMRVH_OPNPKHH_POS                        (12U)
-#define TMR4_OCMRVH_OPNPKHH                            ((uint16_t)0x3000U)
-#define TMR4_OCMRVH_OPNPKHH_0                          ((uint16_t)0x1000U)
-#define TMR4_OCMRVH_OPNPKHH_1                          ((uint16_t)0x2000U)
-#define TMR4_OCMRVH_OPNZRHH_POS                        (14U)
-#define TMR4_OCMRVH_OPNZRHH                            ((uint16_t)0xC000U)
-#define TMR4_OCMRVH_OPNZRHH_0                          ((uint16_t)0x4000U)
-#define TMR4_OCMRVH_OPNZRHH_1                          ((uint16_t)0x8000U)
-
-/*  Bit definition for TMR4_OCMRVL register  */
-#define TMR4_OCMRVL_OCFDCLL_POS                        (0U)
-#define TMR4_OCMRVL_OCFDCLL                            ((uint32_t)0x00000001U)
-#define TMR4_OCMRVL_OCFPKLL_POS                        (1U)
-#define TMR4_OCMRVL_OCFPKLL                            ((uint32_t)0x00000002U)
-#define TMR4_OCMRVL_OCFUCLL_POS                        (2U)
-#define TMR4_OCMRVL_OCFUCLL                            ((uint32_t)0x00000004U)
-#define TMR4_OCMRVL_OCFZRLL_POS                        (3U)
-#define TMR4_OCMRVL_OCFZRLL                            ((uint32_t)0x00000008U)
-#define TMR4_OCMRVL_OPDCLL_POS                         (4U)
-#define TMR4_OCMRVL_OPDCLL                             ((uint32_t)0x00000030U)
-#define TMR4_OCMRVL_OPDCLL_0                           ((uint32_t)0x00000010U)
-#define TMR4_OCMRVL_OPDCLL_1                           ((uint32_t)0x00000020U)
-#define TMR4_OCMRVL_OPPKLL_POS                         (6U)
-#define TMR4_OCMRVL_OPPKLL                             ((uint32_t)0x000000C0U)
-#define TMR4_OCMRVL_OPPKLL_0                           ((uint32_t)0x00000040U)
-#define TMR4_OCMRVL_OPPKLL_1                           ((uint32_t)0x00000080U)
-#define TMR4_OCMRVL_OPUCLL_POS                         (8U)
-#define TMR4_OCMRVL_OPUCLL                             ((uint32_t)0x00000300U)
-#define TMR4_OCMRVL_OPUCLL_0                           ((uint32_t)0x00000100U)
-#define TMR4_OCMRVL_OPUCLL_1                           ((uint32_t)0x00000200U)
-#define TMR4_OCMRVL_OPZRLL_POS                         (10U)
-#define TMR4_OCMRVL_OPZRLL                             ((uint32_t)0x00000C00U)
-#define TMR4_OCMRVL_OPZRLL_0                           ((uint32_t)0x00000400U)
-#define TMR4_OCMRVL_OPZRLL_1                           ((uint32_t)0x00000800U)
-#define TMR4_OCMRVL_OPNPKLL_POS                        (12U)
-#define TMR4_OCMRVL_OPNPKLL                            ((uint32_t)0x00003000U)
-#define TMR4_OCMRVL_OPNPKLL_0                          ((uint32_t)0x00001000U)
-#define TMR4_OCMRVL_OPNPKLL_1                          ((uint32_t)0x00002000U)
-#define TMR4_OCMRVL_OPNZRLL_POS                        (14U)
-#define TMR4_OCMRVL_OPNZRLL                            ((uint32_t)0x0000C000U)
-#define TMR4_OCMRVL_OPNZRLL_0                          ((uint32_t)0x00004000U)
-#define TMR4_OCMRVL_OPNZRLL_1                          ((uint32_t)0x00008000U)
-#define TMR4_OCMRVL_EOPNDCLL_POS                       (16U)
-#define TMR4_OCMRVL_EOPNDCLL                           ((uint32_t)0x00030000U)
-#define TMR4_OCMRVL_EOPNDCLL_0                         ((uint32_t)0x00010000U)
-#define TMR4_OCMRVL_EOPNDCLL_1                         ((uint32_t)0x00020000U)
-#define TMR4_OCMRVL_EOPNUCLL_POS                       (18U)
-#define TMR4_OCMRVL_EOPNUCLL                           ((uint32_t)0x000C0000U)
-#define TMR4_OCMRVL_EOPNUCLL_0                         ((uint32_t)0x00040000U)
-#define TMR4_OCMRVL_EOPNUCLL_1                         ((uint32_t)0x00080000U)
-#define TMR4_OCMRVL_EOPDCLL_POS                        (20U)
-#define TMR4_OCMRVL_EOPDCLL                            ((uint32_t)0x00300000U)
-#define TMR4_OCMRVL_EOPDCLL_0                          ((uint32_t)0x00100000U)
-#define TMR4_OCMRVL_EOPDCLL_1                          ((uint32_t)0x00200000U)
-#define TMR4_OCMRVL_EOPPKLL_POS                        (22U)
-#define TMR4_OCMRVL_EOPPKLL                            ((uint32_t)0x00C00000U)
-#define TMR4_OCMRVL_EOPPKLL_0                          ((uint32_t)0x00400000U)
-#define TMR4_OCMRVL_EOPPKLL_1                          ((uint32_t)0x00800000U)
-#define TMR4_OCMRVL_EOPUCLL_POS                        (24U)
-#define TMR4_OCMRVL_EOPUCLL                            ((uint32_t)0x03000000U)
-#define TMR4_OCMRVL_EOPUCLL_0                          ((uint32_t)0x01000000U)
-#define TMR4_OCMRVL_EOPUCLL_1                          ((uint32_t)0x02000000U)
-#define TMR4_OCMRVL_EOPZRLL_POS                        (26U)
-#define TMR4_OCMRVL_EOPZRLL                            ((uint32_t)0x0C000000U)
-#define TMR4_OCMRVL_EOPZRLL_0                          ((uint32_t)0x04000000U)
-#define TMR4_OCMRVL_EOPZRLL_1                          ((uint32_t)0x08000000U)
-#define TMR4_OCMRVL_EOPNPKLL_POS                       (28U)
-#define TMR4_OCMRVL_EOPNPKLL                           ((uint32_t)0x30000000U)
-#define TMR4_OCMRVL_EOPNPKLL_0                         ((uint32_t)0x10000000U)
-#define TMR4_OCMRVL_EOPNPKLL_1                         ((uint32_t)0x20000000U)
-#define TMR4_OCMRVL_EOPNZRLL_POS                       (30U)
-#define TMR4_OCMRVL_EOPNZRLL                           ((uint32_t)0xC0000000U)
-#define TMR4_OCMRVL_EOPNZRLL_0                         ((uint32_t)0x40000000U)
-#define TMR4_OCMRVL_EOPNZRLL_1                         ((uint32_t)0x80000000U)
-
-/*  Bit definition for TMR4_OCMRWH register  */
-#define TMR4_OCMRWH_OCFDCHH_POS                        (0U)
-#define TMR4_OCMRWH_OCFDCHH                            ((uint16_t)0x0001U)
-#define TMR4_OCMRWH_OCFPKHH_POS                        (1U)
-#define TMR4_OCMRWH_OCFPKHH                            ((uint16_t)0x0002U)
-#define TMR4_OCMRWH_OCFUCHH_POS                        (2U)
-#define TMR4_OCMRWH_OCFUCHH                            ((uint16_t)0x0004U)
-#define TMR4_OCMRWH_OCFZRHH_POS                        (3U)
-#define TMR4_OCMRWH_OCFZRHH                            ((uint16_t)0x0008U)
-#define TMR4_OCMRWH_OPDCHH_POS                         (4U)
-#define TMR4_OCMRWH_OPDCHH                             ((uint16_t)0x0030U)
-#define TMR4_OCMRWH_OPDCHH_0                           ((uint16_t)0x0010U)
-#define TMR4_OCMRWH_OPDCHH_1                           ((uint16_t)0x0020U)
-#define TMR4_OCMRWH_OPPKHH_POS                         (6U)
-#define TMR4_OCMRWH_OPPKHH                             ((uint16_t)0x00C0U)
-#define TMR4_OCMRWH_OPPKHH_0                           ((uint16_t)0x0040U)
-#define TMR4_OCMRWH_OPPKHH_1                           ((uint16_t)0x0080U)
-#define TMR4_OCMRWH_OPUCHH_POS                         (8U)
-#define TMR4_OCMRWH_OPUCHH                             ((uint16_t)0x0300U)
-#define TMR4_OCMRWH_OPUCHH_0                           ((uint16_t)0x0100U)
-#define TMR4_OCMRWH_OPUCHH_1                           ((uint16_t)0x0200U)
-#define TMR4_OCMRWH_OPZRHH_POS                         (10U)
-#define TMR4_OCMRWH_OPZRHH                             ((uint16_t)0x0C00U)
-#define TMR4_OCMRWH_OPZRHH_0                           ((uint16_t)0x0400U)
-#define TMR4_OCMRWH_OPZRHH_1                           ((uint16_t)0x0800U)
-#define TMR4_OCMRWH_OPNPKHH_POS                        (12U)
-#define TMR4_OCMRWH_OPNPKHH                            ((uint16_t)0x3000U)
-#define TMR4_OCMRWH_OPNPKHH_0                          ((uint16_t)0x1000U)
-#define TMR4_OCMRWH_OPNPKHH_1                          ((uint16_t)0x2000U)
-#define TMR4_OCMRWH_OPNZRHH_POS                        (14U)
-#define TMR4_OCMRWH_OPNZRHH                            ((uint16_t)0xC000U)
-#define TMR4_OCMRWH_OPNZRHH_0                          ((uint16_t)0x4000U)
-#define TMR4_OCMRWH_OPNZRHH_1                          ((uint16_t)0x8000U)
+/*  Bit definition for TMR4_OCMRH register  */
+#define TMR4_OCMRH_OCFDCH_POS                          (0U)
+#define TMR4_OCMRH_OCFDCH                              ((uint16_t)0x0001U)
+#define TMR4_OCMRH_OCFPKH_POS                          (1U)
+#define TMR4_OCMRH_OCFPKH                              ((uint16_t)0x0002U)
+#define TMR4_OCMRH_OCFUCH_POS                          (2U)
+#define TMR4_OCMRH_OCFUCH                              ((uint16_t)0x0004U)
+#define TMR4_OCMRH_OCFZRH_POS                          (3U)
+#define TMR4_OCMRH_OCFZRH                              ((uint16_t)0x0008U)
+#define TMR4_OCMRH_OPDCH_POS                           (4U)
+#define TMR4_OCMRH_OPDCH                               ((uint16_t)0x0030U)
+#define TMR4_OCMRH_OPDCH_0                             ((uint16_t)0x0010U)
+#define TMR4_OCMRH_OPDCH_1                             ((uint16_t)0x0020U)
+#define TMR4_OCMRH_OPPKH_POS                           (6U)
+#define TMR4_OCMRH_OPPKH                               ((uint16_t)0x00C0U)
+#define TMR4_OCMRH_OPPKH_0                             ((uint16_t)0x0040U)
+#define TMR4_OCMRH_OPPKH_1                             ((uint16_t)0x0080U)
+#define TMR4_OCMRH_OPUCH_POS                           (8U)
+#define TMR4_OCMRH_OPUCH                               ((uint16_t)0x0300U)
+#define TMR4_OCMRH_OPUCH_0                             ((uint16_t)0x0100U)
+#define TMR4_OCMRH_OPUCH_1                             ((uint16_t)0x0200U)
+#define TMR4_OCMRH_OPZRH_POS                           (10U)
+#define TMR4_OCMRH_OPZRH                               ((uint16_t)0x0C00U)
+#define TMR4_OCMRH_OPZRH_0                             ((uint16_t)0x0400U)
+#define TMR4_OCMRH_OPZRH_1                             ((uint16_t)0x0800U)
+#define TMR4_OCMRH_OPNPKH_POS                          (12U)
+#define TMR4_OCMRH_OPNPKH                              ((uint16_t)0x3000U)
+#define TMR4_OCMRH_OPNPKH_0                            ((uint16_t)0x1000U)
+#define TMR4_OCMRH_OPNPKH_1                            ((uint16_t)0x2000U)
+#define TMR4_OCMRH_OPNZRH_POS                          (14U)
+#define TMR4_OCMRH_OPNZRH                              ((uint16_t)0xC000U)
+#define TMR4_OCMRH_OPNZRH_0                            ((uint16_t)0x4000U)
+#define TMR4_OCMRH_OPNZRH_1                            ((uint16_t)0x8000U)
 
 /*  Bit definition for TMR4_OCMRL register  */
-#define TMR4_OCMRL_OCFDCLL_POS                         (0U)
-#define TMR4_OCMRL_OCFDCLL                             ((uint32_t)0x00000001U)
-#define TMR4_OCMRL_OCFPKLL_POS                         (1U)
-#define TMR4_OCMRL_OCFPKLL                             ((uint32_t)0x00000002U)
-#define TMR4_OCMRL_OCFUCLL_POS                         (2U)
-#define TMR4_OCMRL_OCFUCLL                             ((uint32_t)0x00000004U)
-#define TMR4_OCMRL_OCFZRLL_POS                         (3U)
-#define TMR4_OCMRL_OCFZRLL                             ((uint32_t)0x00000008U)
-#define TMR4_OCMRL_OPDCLL_POS                          (4U)
-#define TMR4_OCMRL_OPDCLL                              ((uint32_t)0x00000030U)
-#define TMR4_OCMRL_OPDCLL_0                            ((uint32_t)0x00000010U)
-#define TMR4_OCMRL_OPDCLL_1                            ((uint32_t)0x00000020U)
-#define TMR4_OCMRL_OPPKLL_POS                          (6U)
-#define TMR4_OCMRL_OPPKLL                              ((uint32_t)0x000000C0U)
-#define TMR4_OCMRL_OPPKLL_0                            ((uint32_t)0x00000040U)
-#define TMR4_OCMRL_OPPKLL_1                            ((uint32_t)0x00000080U)
-#define TMR4_OCMRL_OPUCLL_POS                          (8U)
-#define TMR4_OCMRL_OPUCLL                              ((uint32_t)0x00000300U)
-#define TMR4_OCMRL_OPUCLL_0                            ((uint32_t)0x00000100U)
-#define TMR4_OCMRL_OPUCLL_1                            ((uint32_t)0x00000200U)
-#define TMR4_OCMRL_OPZRLL_POS                          (10U)
-#define TMR4_OCMRL_OPZRLL                              ((uint32_t)0x00000C00U)
-#define TMR4_OCMRL_OPZRLL_0                            ((uint32_t)0x00000400U)
-#define TMR4_OCMRL_OPZRLL_1                            ((uint32_t)0x00000800U)
-#define TMR4_OCMRL_OPNPKLL_POS                         (12U)
-#define TMR4_OCMRL_OPNPKLL                             ((uint32_t)0x00003000U)
-#define TMR4_OCMRL_OPNPKLL_0                           ((uint32_t)0x00001000U)
-#define TMR4_OCMRL_OPNPKLL_1                           ((uint32_t)0x00002000U)
-#define TMR4_OCMRL_OPNZRLL_POS                         (14U)
-#define TMR4_OCMRL_OPNZRLL                             ((uint32_t)0x0000C000U)
-#define TMR4_OCMRL_OPNZRLL_0                           ((uint32_t)0x00004000U)
-#define TMR4_OCMRL_OPNZRLL_1                           ((uint32_t)0x00008000U)
-#define TMR4_OCMRL_EOPNDCLL_POS                        (16U)
-#define TMR4_OCMRL_EOPNDCLL                            ((uint32_t)0x00030000U)
-#define TMR4_OCMRL_EOPNDCLL_0                          ((uint32_t)0x00010000U)
-#define TMR4_OCMRL_EOPNDCLL_1                          ((uint32_t)0x00020000U)
-#define TMR4_OCMRL_EOPNUCLL_POS                        (18U)
-#define TMR4_OCMRL_EOPNUCLL                            ((uint32_t)0x000C0000U)
-#define TMR4_OCMRL_EOPNUCLL_0                          ((uint32_t)0x00040000U)
-#define TMR4_OCMRL_EOPNUCLL_1                          ((uint32_t)0x00080000U)
-#define TMR4_OCMRL_EOPDCLL_POS                         (20U)
-#define TMR4_OCMRL_EOPDCLL                             ((uint32_t)0x00300000U)
-#define TMR4_OCMRL_EOPDCLL_0                           ((uint32_t)0x00100000U)
-#define TMR4_OCMRL_EOPDCLL_1                           ((uint32_t)0x00200000U)
-#define TMR4_OCMRL_EOPPKLL_POS                         (22U)
-#define TMR4_OCMRL_EOPPKLL                             ((uint32_t)0x00C00000U)
-#define TMR4_OCMRL_EOPPKLL_0                           ((uint32_t)0x00400000U)
-#define TMR4_OCMRL_EOPPKLL_1                           ((uint32_t)0x00800000U)
-#define TMR4_OCMRL_EOPUCLL_POS                         (24U)
-#define TMR4_OCMRL_EOPUCLL                             ((uint32_t)0x03000000U)
-#define TMR4_OCMRL_EOPUCLL_0                           ((uint32_t)0x01000000U)
-#define TMR4_OCMRL_EOPUCLL_1                           ((uint32_t)0x02000000U)
-#define TMR4_OCMRL_EOPZRLL_POS                         (26U)
-#define TMR4_OCMRL_EOPZRLL                             ((uint32_t)0x0C000000U)
-#define TMR4_OCMRL_EOPZRLL_0                           ((uint32_t)0x04000000U)
-#define TMR4_OCMRL_EOPZRLL_1                           ((uint32_t)0x08000000U)
-#define TMR4_OCMRL_EOPNPKLL_POS                        (28U)
-#define TMR4_OCMRL_EOPNPKLL                            ((uint32_t)0x30000000U)
-#define TMR4_OCMRL_EOPNPKLL_0                          ((uint32_t)0x10000000U)
-#define TMR4_OCMRL_EOPNPKLL_1                          ((uint32_t)0x20000000U)
-#define TMR4_OCMRL_EOPNZRLL_POS                        (30U)
-#define TMR4_OCMRL_EOPNZRLL                            ((uint32_t)0xC0000000U)
-#define TMR4_OCMRL_EOPNZRLL_0                          ((uint32_t)0x40000000U)
-#define TMR4_OCMRL_EOPNZRLL_1                          ((uint32_t)0x80000000U)
+#define TMR4_OCMRL_OCFDCL_POS                          (0U)
+#define TMR4_OCMRL_OCFDCL                              ((uint32_t)0x00000001U)
+#define TMR4_OCMRL_OCFPKL_POS                          (1U)
+#define TMR4_OCMRL_OCFPKL                              ((uint32_t)0x00000002U)
+#define TMR4_OCMRL_OCFUCL_POS                          (2U)
+#define TMR4_OCMRL_OCFUCL                              ((uint32_t)0x00000004U)
+#define TMR4_OCMRL_OCFZRL_POS                          (3U)
+#define TMR4_OCMRL_OCFZRL                              ((uint32_t)0x00000008U)
+#define TMR4_OCMRL_OPDCL_POS                           (4U)
+#define TMR4_OCMRL_OPDCL                               ((uint32_t)0x00000030U)
+#define TMR4_OCMRL_OPDCL_0                             ((uint32_t)0x00000010U)
+#define TMR4_OCMRL_OPDCL_1                             ((uint32_t)0x00000020U)
+#define TMR4_OCMRL_OPPKL_POS                           (6U)
+#define TMR4_OCMRL_OPPKL                               ((uint32_t)0x000000C0U)
+#define TMR4_OCMRL_OPPKL_0                             ((uint32_t)0x00000040U)
+#define TMR4_OCMRL_OPPKL_1                             ((uint32_t)0x00000080U)
+#define TMR4_OCMRL_OPUCL_POS                           (8U)
+#define TMR4_OCMRL_OPUCL                               ((uint32_t)0x00000300U)
+#define TMR4_OCMRL_OPUCL_0                             ((uint32_t)0x00000100U)
+#define TMR4_OCMRL_OPUCL_1                             ((uint32_t)0x00000200U)
+#define TMR4_OCMRL_OPZRL_POS                           (10U)
+#define TMR4_OCMRL_OPZRL                               ((uint32_t)0x00000C00U)
+#define TMR4_OCMRL_OPZRL_0                             ((uint32_t)0x00000400U)
+#define TMR4_OCMRL_OPZRL_1                             ((uint32_t)0x00000800U)
+#define TMR4_OCMRL_OPNPKL_POS                          (12U)
+#define TMR4_OCMRL_OPNPKL                              ((uint32_t)0x00003000U)
+#define TMR4_OCMRL_OPNPKL_0                            ((uint32_t)0x00001000U)
+#define TMR4_OCMRL_OPNPKL_1                            ((uint32_t)0x00002000U)
+#define TMR4_OCMRL_OPNZRL_POS                          (14U)
+#define TMR4_OCMRL_OPNZRL                              ((uint32_t)0x0000C000U)
+#define TMR4_OCMRL_OPNZRL_0                            ((uint32_t)0x00004000U)
+#define TMR4_OCMRL_OPNZRL_1                            ((uint32_t)0x00008000U)
+#define TMR4_OCMRL_EOPNDCL_POS                         (16U)
+#define TMR4_OCMRL_EOPNDCL                             ((uint32_t)0x00030000U)
+#define TMR4_OCMRL_EOPNDCL_0                           ((uint32_t)0x00010000U)
+#define TMR4_OCMRL_EOPNDCL_1                           ((uint32_t)0x00020000U)
+#define TMR4_OCMRL_EOPNUCL_POS                         (18U)
+#define TMR4_OCMRL_EOPNUCL                             ((uint32_t)0x000C0000U)
+#define TMR4_OCMRL_EOPNUCL_0                           ((uint32_t)0x00040000U)
+#define TMR4_OCMRL_EOPNUCL_1                           ((uint32_t)0x00080000U)
+#define TMR4_OCMRL_EOPDCL_POS                          (20U)
+#define TMR4_OCMRL_EOPDCL                              ((uint32_t)0x00300000U)
+#define TMR4_OCMRL_EOPDCL_0                            ((uint32_t)0x00100000U)
+#define TMR4_OCMRL_EOPDCL_1                            ((uint32_t)0x00200000U)
+#define TMR4_OCMRL_EOPPKL_POS                          (22U)
+#define TMR4_OCMRL_EOPPKL                              ((uint32_t)0x00C00000U)
+#define TMR4_OCMRL_EOPPKL_0                            ((uint32_t)0x00400000U)
+#define TMR4_OCMRL_EOPPKL_1                            ((uint32_t)0x00800000U)
+#define TMR4_OCMRL_EOPUCL_POS                          (24U)
+#define TMR4_OCMRL_EOPUCL                              ((uint32_t)0x03000000U)
+#define TMR4_OCMRL_EOPUCL_0                            ((uint32_t)0x01000000U)
+#define TMR4_OCMRL_EOPUCL_1                            ((uint32_t)0x02000000U)
+#define TMR4_OCMRL_EOPZRL_POS                          (26U)
+#define TMR4_OCMRL_EOPZRL                              ((uint32_t)0x0C000000U)
+#define TMR4_OCMRL_EOPZRL_0                            ((uint32_t)0x04000000U)
+#define TMR4_OCMRL_EOPZRL_1                            ((uint32_t)0x08000000U)
+#define TMR4_OCMRL_EOPNPKL_POS                         (28U)
+#define TMR4_OCMRL_EOPNPKL                             ((uint32_t)0x30000000U)
+#define TMR4_OCMRL_EOPNPKL_0                           ((uint32_t)0x10000000U)
+#define TMR4_OCMRL_EOPNPKL_1                           ((uint32_t)0x20000000U)
+#define TMR4_OCMRL_EOPNZRL_POS                         (30U)
+#define TMR4_OCMRL_EOPNZRL                             ((uint32_t)0xC0000000U)
+#define TMR4_OCMRL_EOPNZRL_0                           ((uint32_t)0x40000000U)
+#define TMR4_OCMRL_EOPNZRL_1                           ((uint32_t)0x80000000U)
 
 /*  Bit definition for TMR4_CPSR register  */
 #define TMR4_CPSR                                      ((uint16_t)0xFFFFU)
@@ -6705,50 +6409,35 @@ typedef struct
 /*  Bit definition for TMR4_PDBRW register  */
 #define TMR4_PDBRW                                     ((uint16_t)0xFFFFU)
 
-/*  Bit definition for TMR4_POCRU register  */
-#define TMR4_POCRU_DIVCK_POS                           (0U)
-#define TMR4_POCRU_DIVCK                               ((uint16_t)0x0007U)
-#define TMR4_POCRU_DIVCK_0                             ((uint16_t)0x0001U)
-#define TMR4_POCRU_DIVCK_1                             ((uint16_t)0x0002U)
-#define TMR4_POCRU_DIVCK_2                             ((uint16_t)0x0004U)
-#define TMR4_POCRU_PWMMD_POS                           (4U)
-#define TMR4_POCRU_PWMMD                               ((uint16_t)0x0030U)
-#define TMR4_POCRU_PWMMD_0                             ((uint16_t)0x0010U)
-#define TMR4_POCRU_PWMMD_1                             ((uint16_t)0x0020U)
-#define TMR4_POCRU_LVLS_POS                            (6U)
-#define TMR4_POCRU_LVLS                                ((uint16_t)0x00C0U)
-#define TMR4_POCRU_LVLS_0                              ((uint16_t)0x0040U)
-#define TMR4_POCRU_LVLS_1                              ((uint16_t)0x0080U)
+/*  Bit definition for TMR4_POCR register  */
+#define TMR4_POCR_DIVCK_POS                            (0U)
+#define TMR4_POCR_DIVCK                                ((uint16_t)0x0007U)
+#define TMR4_POCR_DIVCK_0                              ((uint16_t)0x0001U)
+#define TMR4_POCR_DIVCK_1                              ((uint16_t)0x0002U)
+#define TMR4_POCR_DIVCK_2                              ((uint16_t)0x0004U)
+#define TMR4_POCR_PWMMD_POS                            (4U)
+#define TMR4_POCR_PWMMD                                ((uint16_t)0x0030U)
+#define TMR4_POCR_PWMMD_0                              ((uint16_t)0x0010U)
+#define TMR4_POCR_PWMMD_1                              ((uint16_t)0x0020U)
+#define TMR4_POCR_LVLS_POS                             (6U)
+#define TMR4_POCR_LVLS                                 ((uint16_t)0x00C0U)
+#define TMR4_POCR_LVLS_0                               ((uint16_t)0x0040U)
+#define TMR4_POCR_LVLS_1                               ((uint16_t)0x0080U)
 
-/*  Bit definition for TMR4_POCRV register  */
-#define TMR4_POCRV_DIVCK_POS                           (0U)
-#define TMR4_POCRV_DIVCK                               ((uint16_t)0x0007U)
-#define TMR4_POCRV_DIVCK_0                             ((uint16_t)0x0001U)
-#define TMR4_POCRV_DIVCK_1                             ((uint16_t)0x0002U)
-#define TMR4_POCRV_DIVCK_2                             ((uint16_t)0x0004U)
-#define TMR4_POCRV_PWMMD_POS                           (4U)
-#define TMR4_POCRV_PWMMD                               ((uint16_t)0x0030U)
-#define TMR4_POCRV_PWMMD_0                             ((uint16_t)0x0010U)
-#define TMR4_POCRV_PWMMD_1                             ((uint16_t)0x0020U)
-#define TMR4_POCRV_LVLS_POS                            (6U)
-#define TMR4_POCRV_LVLS                                ((uint16_t)0x00C0U)
-#define TMR4_POCRV_LVLS_0                              ((uint16_t)0x0040U)
-#define TMR4_POCRV_LVLS_1                              ((uint16_t)0x0080U)
-
-/*  Bit definition for TMR4_POCRW register  */
-#define TMR4_POCRW_DIVCK_POS                           (0U)
-#define TMR4_POCRW_DIVCK                               ((uint16_t)0x0007U)
-#define TMR4_POCRW_DIVCK_0                             ((uint16_t)0x0001U)
-#define TMR4_POCRW_DIVCK_1                             ((uint16_t)0x0002U)
-#define TMR4_POCRW_DIVCK_2                             ((uint16_t)0x0004U)
-#define TMR4_POCRW_PWMMD_POS                           (4U)
-#define TMR4_POCRW_PWMMD                               ((uint16_t)0x0030U)
-#define TMR4_POCRW_PWMMD_0                             ((uint16_t)0x0010U)
-#define TMR4_POCRW_PWMMD_1                             ((uint16_t)0x0020U)
-#define TMR4_POCRW_LVLS_POS                            (6U)
-#define TMR4_POCRW_LVLS                                ((uint16_t)0x00C0U)
-#define TMR4_POCRW_LVLS_0                              ((uint16_t)0x0040U)
-#define TMR4_POCRW_LVLS_1                              ((uint16_t)0x0080U)
+/*  Bit definition for POCR register  */
+#define POCR_DIVCK_POS                                 (0U)
+#define POCR_DIVCK                                     ((uint16_t)0x0007U)
+#define POCR_DIVCK_0                                   ((uint16_t)0x0001U)
+#define POCR_DIVCK_1                                   ((uint16_t)0x0002U)
+#define POCR_DIVCK_2                                   ((uint16_t)0x0004U)
+#define POCR_PWMMD_POS                                 (4U)
+#define POCR_PWMMD                                     ((uint16_t)0x0030U)
+#define POCR_PWMMD_0                                   ((uint16_t)0x0010U)
+#define POCR_PWMMD_1                                   ((uint16_t)0x0020U)
+#define POCR_LVLS_POS                                  (6U)
+#define POCR_LVLS                                      ((uint16_t)0x00C0U)
+#define POCR_LVLS_0                                    ((uint16_t)0x0040U)
+#define POCR_LVLS_1                                    ((uint16_t)0x0080U)
 
 /*  Bit definition for TMR4_RCSR register  */
 #define TMR4_RCSR_RTIDU_POS                            (0U)
@@ -6800,227 +6489,42 @@ typedef struct
 /*  Bit definition for TMR4_SCCRWL register  */
 #define TMR4_SCCRWL                                    ((uint16_t)0xFFFFU)
 
-/*  Bit definition for TMR4_SCSRUH register  */
-#define TMR4_SCSRUH_BUFENH_POS                         (0U)
-#define TMR4_SCSRUH_BUFENH                             ((uint16_t)0x0003U)
-#define TMR4_SCSRUH_BUFENH_0                           ((uint16_t)0x0001U)
-#define TMR4_SCSRUH_BUFENH_1                           ((uint16_t)0x0002U)
-#define TMR4_SCSRUH_EVTOSH_POS                         (2U)
-#define TMR4_SCSRUH_EVTOSH                             ((uint16_t)0x001CU)
-#define TMR4_SCSRUH_EVTOSH_0                           ((uint16_t)0x0004U)
-#define TMR4_SCSRUH_EVTOSH_1                           ((uint16_t)0x0008U)
-#define TMR4_SCSRUH_EVTOSH_2                           ((uint16_t)0x0010U)
-#define TMR4_SCSRUH_LMCH_POS                           (5U)
-#define TMR4_SCSRUH_LMCH                               ((uint16_t)0x0020U)
-#define TMR4_SCSRUH_EVTMSH_POS                         (8U)
-#define TMR4_SCSRUH_EVTMSH                             ((uint16_t)0x0100U)
-#define TMR4_SCSRUH_EVTDSH_POS                         (9U)
-#define TMR4_SCSRUH_EVTDSH                             ((uint16_t)0x0200U)
-#define TMR4_SCSRUH_DENH_POS                           (12U)
-#define TMR4_SCSRUH_DENH                               ((uint16_t)0x1000U)
-#define TMR4_SCSRUH_PENH_POS                           (13U)
-#define TMR4_SCSRUH_PENH                               ((uint16_t)0x2000U)
-#define TMR4_SCSRUH_UENH_POS                           (14U)
-#define TMR4_SCSRUH_UENH                               ((uint16_t)0x4000U)
-#define TMR4_SCSRUH_ZENH_POS                           (15U)
-#define TMR4_SCSRUH_ZENH                               ((uint16_t)0x8000U)
+/*  Bit definition for TMR4_SCSR register  */
+#define TMR4_SCSR_BUFEN_POS                            (0U)
+#define TMR4_SCSR_BUFEN                                ((uint16_t)0x0003U)
+#define TMR4_SCSR_BUFEN_0                              ((uint16_t)0x0001U)
+#define TMR4_SCSR_BUFEN_1                              ((uint16_t)0x0002U)
+#define TMR4_SCSR_EVTOS_POS                            (2U)
+#define TMR4_SCSR_EVTOS                                ((uint16_t)0x001CU)
+#define TMR4_SCSR_EVTOS_0                              ((uint16_t)0x0004U)
+#define TMR4_SCSR_EVTOS_1                              ((uint16_t)0x0008U)
+#define TMR4_SCSR_EVTOS_2                              ((uint16_t)0x0010U)
+#define TMR4_SCSR_LMC_POS                              (5U)
+#define TMR4_SCSR_LMC                                  ((uint16_t)0x0020U)
+#define TMR4_SCSR_EVTMS_POS                            (8U)
+#define TMR4_SCSR_EVTMS                                ((uint16_t)0x0100U)
+#define TMR4_SCSR_EVTDS_POS                            (9U)
+#define TMR4_SCSR_EVTDS                                ((uint16_t)0x0200U)
+#define TMR4_SCSR_DEN_POS                              (12U)
+#define TMR4_SCSR_DEN                                  ((uint16_t)0x1000U)
+#define TMR4_SCSR_PEN_POS                              (13U)
+#define TMR4_SCSR_PEN                                  ((uint16_t)0x2000U)
+#define TMR4_SCSR_UEN_POS                              (14U)
+#define TMR4_SCSR_UEN                                  ((uint16_t)0x4000U)
+#define TMR4_SCSR_ZEN_POS                              (15U)
+#define TMR4_SCSR_ZEN                                  ((uint16_t)0x8000U)
 
-/*  Bit definition for TMR4_SCMRUH register  */
-#define TMR4_SCMRUH_AMCH_POS                           (0U)
-#define TMR4_SCMRUH_AMCH                               ((uint16_t)0x000FU)
-#define TMR4_SCMRUH_AMCH_0                             ((uint16_t)0x0001U)
-#define TMR4_SCMRUH_AMCH_1                             ((uint16_t)0x0002U)
-#define TMR4_SCMRUH_AMCH_2                             ((uint16_t)0x0004U)
-#define TMR4_SCMRUH_AMCH_3                             ((uint16_t)0x0008U)
-#define TMR4_SCMRUH_MZCEH_POS                          (6U)
-#define TMR4_SCMRUH_MZCEH                              ((uint16_t)0x0040U)
-#define TMR4_SCMRUH_MPCEH_POS                          (7U)
-#define TMR4_SCMRUH_MPCEH                              ((uint16_t)0x0080U)
-
-/*  Bit definition for TMR4_SCSRUL register  */
-#define TMR4_SCSRUL_BUFENL_POS                         (0U)
-#define TMR4_SCSRUL_BUFENL                             ((uint16_t)0x0003U)
-#define TMR4_SCSRUL_BUFENL_0                           ((uint16_t)0x0001U)
-#define TMR4_SCSRUL_BUFENL_1                           ((uint16_t)0x0002U)
-#define TMR4_SCSRUL_EVTOSL_POS                         (2U)
-#define TMR4_SCSRUL_EVTOSL                             ((uint16_t)0x001CU)
-#define TMR4_SCSRUL_EVTOSL_0                           ((uint16_t)0x0004U)
-#define TMR4_SCSRUL_EVTOSL_1                           ((uint16_t)0x0008U)
-#define TMR4_SCSRUL_EVTOSL_2                           ((uint16_t)0x0010U)
-#define TMR4_SCSRUL_LMCL_POS                           (5U)
-#define TMR4_SCSRUL_LMCL                               ((uint16_t)0x0020U)
-#define TMR4_SCSRUL_EVTMSL_POS                         (8U)
-#define TMR4_SCSRUL_EVTMSL                             ((uint16_t)0x0100U)
-#define TMR4_SCSRUL_EVTDSL_POS                         (9U)
-#define TMR4_SCSRUL_EVTDSL                             ((uint16_t)0x0200U)
-#define TMR4_SCSRUL_DENL_POS                           (12U)
-#define TMR4_SCSRUL_DENL                               ((uint16_t)0x1000U)
-#define TMR4_SCSRUL_PENL_POS                           (13U)
-#define TMR4_SCSRUL_PENL                               ((uint16_t)0x2000U)
-#define TMR4_SCSRUL_UENL_POS                           (14U)
-#define TMR4_SCSRUL_UENL                               ((uint16_t)0x4000U)
-#define TMR4_SCSRUL_ZENL_POS                           (15U)
-#define TMR4_SCSRUL_ZENL                               ((uint16_t)0x8000U)
-
-/*  Bit definition for TMR4_SCMRUL register  */
-#define TMR4_SCMRUL_AMCL_POS                           (0U)
-#define TMR4_SCMRUL_AMCL                               ((uint16_t)0x000FU)
-#define TMR4_SCMRUL_AMCL_0                             ((uint16_t)0x0001U)
-#define TMR4_SCMRUL_AMCL_1                             ((uint16_t)0x0002U)
-#define TMR4_SCMRUL_AMCL_2                             ((uint16_t)0x0004U)
-#define TMR4_SCMRUL_AMCL_3                             ((uint16_t)0x0008U)
-#define TMR4_SCMRUL_MZCEL_POS                          (6U)
-#define TMR4_SCMRUL_MZCEL                              ((uint16_t)0x0040U)
-#define TMR4_SCMRUL_MPCEL_POS                          (7U)
-#define TMR4_SCMRUL_MPCEL                              ((uint16_t)0x0080U)
-
-/*  Bit definition for TMR4_SCSRVH register  */
-#define TMR4_SCSRVH_BUFENH_POS                         (0U)
-#define TMR4_SCSRVH_BUFENH                             ((uint16_t)0x0003U)
-#define TMR4_SCSRVH_BUFENH_0                           ((uint16_t)0x0001U)
-#define TMR4_SCSRVH_BUFENH_1                           ((uint16_t)0x0002U)
-#define TMR4_SCSRVH_EVTOSH_POS                         (2U)
-#define TMR4_SCSRVH_EVTOSH                             ((uint16_t)0x001CU)
-#define TMR4_SCSRVH_EVTOSH_0                           ((uint16_t)0x0004U)
-#define TMR4_SCSRVH_EVTOSH_1                           ((uint16_t)0x0008U)
-#define TMR4_SCSRVH_EVTOSH_2                           ((uint16_t)0x0010U)
-#define TMR4_SCSRVH_LMCH_POS                           (5U)
-#define TMR4_SCSRVH_LMCH                               ((uint16_t)0x0020U)
-#define TMR4_SCSRVH_EVTMSH_POS                         (8U)
-#define TMR4_SCSRVH_EVTMSH                             ((uint16_t)0x0100U)
-#define TMR4_SCSRVH_EVTDSH_POS                         (9U)
-#define TMR4_SCSRVH_EVTDSH                             ((uint16_t)0x0200U)
-#define TMR4_SCSRVH_DENH_POS                           (12U)
-#define TMR4_SCSRVH_DENH                               ((uint16_t)0x1000U)
-#define TMR4_SCSRVH_PENH_POS                           (13U)
-#define TMR4_SCSRVH_PENH                               ((uint16_t)0x2000U)
-#define TMR4_SCSRVH_UENH_POS                           (14U)
-#define TMR4_SCSRVH_UENH                               ((uint16_t)0x4000U)
-#define TMR4_SCSRVH_ZENH_POS                           (15U)
-#define TMR4_SCSRVH_ZENH                               ((uint16_t)0x8000U)
-
-/*  Bit definition for TMR4_SCMRVH register  */
-#define TMR4_SCMRVH_AMCH_POS                           (0U)
-#define TMR4_SCMRVH_AMCH                               ((uint16_t)0x000FU)
-#define TMR4_SCMRVH_AMCH_0                             ((uint16_t)0x0001U)
-#define TMR4_SCMRVH_AMCH_1                             ((uint16_t)0x0002U)
-#define TMR4_SCMRVH_AMCH_2                             ((uint16_t)0x0004U)
-#define TMR4_SCMRVH_AMCH_3                             ((uint16_t)0x0008U)
-#define TMR4_SCMRVH_MZCEH_POS                          (6U)
-#define TMR4_SCMRVH_MZCEH                              ((uint16_t)0x0040U)
-#define TMR4_SCMRVH_MPCEH_POS                          (7U)
-#define TMR4_SCMRVH_MPCEH                              ((uint16_t)0x0080U)
-
-/*  Bit definition for TMR4_SCSRVL register  */
-#define TMR4_SCSRVL_BUFENL_POS                         (0U)
-#define TMR4_SCSRVL_BUFENL                             ((uint16_t)0x0003U)
-#define TMR4_SCSRVL_BUFENL_0                           ((uint16_t)0x0001U)
-#define TMR4_SCSRVL_BUFENL_1                           ((uint16_t)0x0002U)
-#define TMR4_SCSRVL_EVTOSL_POS                         (2U)
-#define TMR4_SCSRVL_EVTOSL                             ((uint16_t)0x001CU)
-#define TMR4_SCSRVL_EVTOSL_0                           ((uint16_t)0x0004U)
-#define TMR4_SCSRVL_EVTOSL_1                           ((uint16_t)0x0008U)
-#define TMR4_SCSRVL_EVTOSL_2                           ((uint16_t)0x0010U)
-#define TMR4_SCSRVL_LMCL_POS                           (5U)
-#define TMR4_SCSRVL_LMCL                               ((uint16_t)0x0020U)
-#define TMR4_SCSRVL_EVTMSL_POS                         (8U)
-#define TMR4_SCSRVL_EVTMSL                             ((uint16_t)0x0100U)
-#define TMR4_SCSRVL_EVTDSL_POS                         (9U)
-#define TMR4_SCSRVL_EVTDSL                             ((uint16_t)0x0200U)
-#define TMR4_SCSRVL_DENL_POS                           (12U)
-#define TMR4_SCSRVL_DENL                               ((uint16_t)0x1000U)
-#define TMR4_SCSRVL_PENL_POS                           (13U)
-#define TMR4_SCSRVL_PENL                               ((uint16_t)0x2000U)
-#define TMR4_SCSRVL_UENL_POS                           (14U)
-#define TMR4_SCSRVL_UENL                               ((uint16_t)0x4000U)
-#define TMR4_SCSRVL_ZENL_POS                           (15U)
-#define TMR4_SCSRVL_ZENL                               ((uint16_t)0x8000U)
-
-/*  Bit definition for TMR4_SCMRVL register  */
-#define TMR4_SCMRVL_AMCL_POS                           (0U)
-#define TMR4_SCMRVL_AMCL                               ((uint16_t)0x000FU)
-#define TMR4_SCMRVL_AMCL_0                             ((uint16_t)0x0001U)
-#define TMR4_SCMRVL_AMCL_1                             ((uint16_t)0x0002U)
-#define TMR4_SCMRVL_AMCL_2                             ((uint16_t)0x0004U)
-#define TMR4_SCMRVL_AMCL_3                             ((uint16_t)0x0008U)
-#define TMR4_SCMRVL_MZCEL_POS                          (6U)
-#define TMR4_SCMRVL_MZCEL                              ((uint16_t)0x0040U)
-#define TMR4_SCMRVL_MPCEL_POS                          (7U)
-#define TMR4_SCMRVL_MPCEL                              ((uint16_t)0x0080U)
-
-/*  Bit definition for TMR4_SCSRWH register  */
-#define TMR4_SCSRWH_BUFENH_POS                         (0U)
-#define TMR4_SCSRWH_BUFENH                             ((uint16_t)0x0003U)
-#define TMR4_SCSRWH_BUFENH_0                           ((uint16_t)0x0001U)
-#define TMR4_SCSRWH_BUFENH_1                           ((uint16_t)0x0002U)
-#define TMR4_SCSRWH_EVTOSH_POS                         (2U)
-#define TMR4_SCSRWH_EVTOSH                             ((uint16_t)0x001CU)
-#define TMR4_SCSRWH_EVTOSH_0                           ((uint16_t)0x0004U)
-#define TMR4_SCSRWH_EVTOSH_1                           ((uint16_t)0x0008U)
-#define TMR4_SCSRWH_EVTOSH_2                           ((uint16_t)0x0010U)
-#define TMR4_SCSRWH_LMCH_POS                           (5U)
-#define TMR4_SCSRWH_LMCH                               ((uint16_t)0x0020U)
-#define TMR4_SCSRWH_EVTMSH_POS                         (8U)
-#define TMR4_SCSRWH_EVTMSH                             ((uint16_t)0x0100U)
-#define TMR4_SCSRWH_EVTDSH_POS                         (9U)
-#define TMR4_SCSRWH_EVTDSH                             ((uint16_t)0x0200U)
-#define TMR4_SCSRWH_DENH_POS                           (12U)
-#define TMR4_SCSRWH_DENH                               ((uint16_t)0x1000U)
-#define TMR4_SCSRWH_PENH_POS                           (13U)
-#define TMR4_SCSRWH_PENH                               ((uint16_t)0x2000U)
-#define TMR4_SCSRWH_UENH_POS                           (14U)
-#define TMR4_SCSRWH_UENH                               ((uint16_t)0x4000U)
-#define TMR4_SCSRWH_ZENH_POS                           (15U)
-#define TMR4_SCSRWH_ZENH                               ((uint16_t)0x8000U)
-
-/*  Bit definition for TMR4_SCMRWH register  */
-#define TMR4_SCMRWH_AMCH_POS                           (0U)
-#define TMR4_SCMRWH_AMCH                               ((uint16_t)0x000FU)
-#define TMR4_SCMRWH_AMCH_0                             ((uint16_t)0x0001U)
-#define TMR4_SCMRWH_AMCH_1                             ((uint16_t)0x0002U)
-#define TMR4_SCMRWH_AMCH_2                             ((uint16_t)0x0004U)
-#define TMR4_SCMRWH_AMCH_3                             ((uint16_t)0x0008U)
-#define TMR4_SCMRWH_MZCEH_POS                          (6U)
-#define TMR4_SCMRWH_MZCEH                              ((uint16_t)0x0040U)
-#define TMR4_SCMRWH_MPCEH_POS                          (7U)
-#define TMR4_SCMRWH_MPCEH                              ((uint16_t)0x0080U)
-
-/*  Bit definition for TMR4_SCSRWL register  */
-#define TMR4_SCSRWL_BUFENL_POS                         (0U)
-#define TMR4_SCSRWL_BUFENL                             ((uint16_t)0x0003U)
-#define TMR4_SCSRWL_BUFENL_0                           ((uint16_t)0x0001U)
-#define TMR4_SCSRWL_BUFENL_1                           ((uint16_t)0x0002U)
-#define TMR4_SCSRWL_EVTOSL_POS                         (2U)
-#define TMR4_SCSRWL_EVTOSL                             ((uint16_t)0x001CU)
-#define TMR4_SCSRWL_EVTOSL_0                           ((uint16_t)0x0004U)
-#define TMR4_SCSRWL_EVTOSL_1                           ((uint16_t)0x0008U)
-#define TMR4_SCSRWL_EVTOSL_2                           ((uint16_t)0x0010U)
-#define TMR4_SCSRWL_LMCL_POS                           (5U)
-#define TMR4_SCSRWL_LMCL                               ((uint16_t)0x0020U)
-#define TMR4_SCSRWL_EVTMSL_POS                         (8U)
-#define TMR4_SCSRWL_EVTMSL                             ((uint16_t)0x0100U)
-#define TMR4_SCSRWL_EVTDSL_POS                         (9U)
-#define TMR4_SCSRWL_EVTDSL                             ((uint16_t)0x0200U)
-#define TMR4_SCSRWL_DENL_POS                           (12U)
-#define TMR4_SCSRWL_DENL                               ((uint16_t)0x1000U)
-#define TMR4_SCSRWL_PENL_POS                           (13U)
-#define TMR4_SCSRWL_PENL                               ((uint16_t)0x2000U)
-#define TMR4_SCSRWL_UENL_POS                           (14U)
-#define TMR4_SCSRWL_UENL                               ((uint16_t)0x4000U)
-#define TMR4_SCSRWL_ZENL_POS                           (15U)
-#define TMR4_SCSRWL_ZENL                               ((uint16_t)0x8000U)
-
-/*  Bit definition for TMR4_SCMRWL register  */
-#define TMR4_SCMRWL_AMCL_POS                           (0U)
-#define TMR4_SCMRWL_AMCL                               ((uint16_t)0x000FU)
-#define TMR4_SCMRWL_AMCL_0                             ((uint16_t)0x0001U)
-#define TMR4_SCMRWL_AMCL_1                             ((uint16_t)0x0002U)
-#define TMR4_SCMRWL_AMCL_2                             ((uint16_t)0x0004U)
-#define TMR4_SCMRWL_AMCL_3                             ((uint16_t)0x0008U)
-#define TMR4_SCMRWL_MZCEL_POS                          (6U)
-#define TMR4_SCMRWL_MZCEL                              ((uint16_t)0x0040U)
-#define TMR4_SCMRWL_MPCEL_POS                          (7U)
-#define TMR4_SCMRWL_MPCEL                              ((uint16_t)0x0080U)
+/*  Bit definition for TMR4_SCMR register  */
+#define TMR4_SCMR_AMC_POS                              (0U)
+#define TMR4_SCMR_AMC                                  ((uint16_t)0x000FU)
+#define TMR4_SCMR_AMC_0                                ((uint16_t)0x0001U)
+#define TMR4_SCMR_AMC_1                                ((uint16_t)0x0002U)
+#define TMR4_SCMR_AMC_2                                ((uint16_t)0x0004U)
+#define TMR4_SCMR_AMC_3                                ((uint16_t)0x0008U)
+#define TMR4_SCMR_MZCE_POS                             (6U)
+#define TMR4_SCMR_MZCE                                 ((uint16_t)0x0040U)
+#define TMR4_SCMR_MPCE_POS                             (7U)
+#define TMR4_SCMR_MPCE                                 ((uint16_t)0x0080U)
 
 /*  Bit definition for TMR4_PSCR register  */
 #define TMR4_PSCR_OEUH_POS                             (0U)
@@ -14563,7 +14067,7 @@ typedef struct
     __IO uint32_t OCFH;
     __IO uint32_t OCFL;
     uint32_t RESERVED0[8];
-} stc_tmr4_ocsru_bit_t;
+} stc_tmr4_ocsr_bit_t;
 
 typedef struct
 {
@@ -14582,238 +14086,62 @@ typedef struct
     __IO uint32_t MCECH;
     __IO uint32_t MCECL;
     uint32_t RESERVED0[2];
-} stc_tmr4_oceru_bit_t;
+} stc_tmr4_ocer_bit_t;
 
 typedef struct
 {
-    __IO uint32_t OCEH;
-    __IO uint32_t OCEL;
-    __IO uint32_t OCPH;
-    __IO uint32_t OCPL;
-    __IO uint32_t OCIEH;
-    __IO uint32_t OCIEL;
-    __IO uint32_t OCFH;
-    __IO uint32_t OCFL;
-    uint32_t RESERVED0[8];
-} stc_tmr4_ocsrv_bit_t;
+    __IO uint32_t OCFDCH;
+    __IO uint32_t OCFPKH;
+    __IO uint32_t OCFUCH;
+    __IO uint32_t OCFZRH;
+    __IO uint32_t OPDCH0;
+    __IO uint32_t OPDCH1;
+    __IO uint32_t OPPKH0;
+    __IO uint32_t OPPKH1;
+    __IO uint32_t OPUCH0;
+    __IO uint32_t OPUCH1;
+    __IO uint32_t OPZRH0;
+    __IO uint32_t OPZRH1;
+    __IO uint32_t OPNPKH0;
+    __IO uint32_t OPNPKH1;
+    __IO uint32_t OPNZRH0;
+    __IO uint32_t OPNZRH1;
+} stc_tmr4_ocmrh_bit_t;
 
 typedef struct
 {
-    __IO uint32_t CHBUFEN0;
-    __IO uint32_t CHBUFEN1;
-    __IO uint32_t CLBUFEN0;
-    __IO uint32_t CLBUFEN1;
-    __IO uint32_t MHBUFEN0;
-    __IO uint32_t MHBUFEN1;
-    __IO uint32_t MLBUFEN0;
-    __IO uint32_t MLBUFEN1;
-    __IO uint32_t LMCH;
-    __IO uint32_t LMCL;
-    __IO uint32_t LMMH;
-    __IO uint32_t LMML;
-    __IO uint32_t MCECH;
-    __IO uint32_t MCECL;
-    uint32_t RESERVED0[2];
-} stc_tmr4_ocerv_bit_t;
-
-typedef struct
-{
-    __IO uint32_t OCEH;
-    __IO uint32_t OCEL;
-    __IO uint32_t OCPH;
-    __IO uint32_t OCPL;
-    __IO uint32_t OCIEH;
-    __IO uint32_t OCIEL;
-    __IO uint32_t OCFH;
-    __IO uint32_t OCFL;
-    uint32_t RESERVED0[8];
-} stc_tmr4_ocsrw_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CHBUFEN0;
-    __IO uint32_t CHBUFEN1;
-    __IO uint32_t CLBUFEN0;
-    __IO uint32_t CLBUFEN1;
-    __IO uint32_t MHBUFEN0;
-    __IO uint32_t MHBUFEN1;
-    __IO uint32_t MLBUFEN0;
-    __IO uint32_t MLBUFEN1;
-    __IO uint32_t LMCH;
-    __IO uint32_t LMCL;
-    __IO uint32_t LMMH;
-    __IO uint32_t LMML;
-    __IO uint32_t MCECH;
-    __IO uint32_t MCECL;
-    uint32_t RESERVED0[2];
-} stc_tmr4_ocerw_bit_t;
-
-typedef struct
-{
-    __IO uint32_t OCFDCHH;
-    __IO uint32_t OCFPKHH;
-    __IO uint32_t OCFUCHH;
-    __IO uint32_t OCFZRHH;
-    __IO uint32_t OPDCHH0;
-    __IO uint32_t OPDCHH1;
-    __IO uint32_t OPPKHH0;
-    __IO uint32_t OPPKHH1;
-    __IO uint32_t OPUCHH0;
-    __IO uint32_t OPUCHH1;
-    __IO uint32_t OPZRHH0;
-    __IO uint32_t OPZRHH1;
-    __IO uint32_t OPNPKHH0;
-    __IO uint32_t OPNPKHH1;
-    __IO uint32_t OPNZRHH0;
-    __IO uint32_t OPNZRHH1;
-} stc_tmr4_ocmruh_bit_t;
-
-typedef struct
-{
-    __IO uint32_t OCFDCLL;
-    __IO uint32_t OCFPKLL;
-    __IO uint32_t OCFUCLL;
-    __IO uint32_t OCFZRLL;
-    __IO uint32_t OPDCLL0;
-    __IO uint32_t OPDCLL1;
-    __IO uint32_t OPPKLL0;
-    __IO uint32_t OPPKLL1;
-    __IO uint32_t OPUCLL0;
-    __IO uint32_t OPUCLL1;
-    __IO uint32_t OPZRLL0;
-    __IO uint32_t OPZRLL1;
-    __IO uint32_t OPNPKLL0;
-    __IO uint32_t OPNPKLL1;
-    __IO uint32_t OPNZRLL0;
-    __IO uint32_t OPNZRLL1;
-    __IO uint32_t EOPNDCLL0;
-    __IO uint32_t EOPNDCLL1;
-    __IO uint32_t EOPNUCLL0;
-    __IO uint32_t EOPNUCLL1;
-    __IO uint32_t EOPDCLL0;
-    __IO uint32_t EOPDCLL1;
-    __IO uint32_t EOPPKLL0;
-    __IO uint32_t EOPPKLL1;
-    __IO uint32_t EOPUCLL0;
-    __IO uint32_t EOPUCLL1;
-    __IO uint32_t EOPZRLL0;
-    __IO uint32_t EOPZRLL1;
-    __IO uint32_t EOPNPKLL0;
-    __IO uint32_t EOPNPKLL1;
-    __IO uint32_t EOPNZRLL0;
-    __IO uint32_t EOPNZRLL1;
-} stc_tmr4_ocmrul_bit_t;
-
-typedef struct
-{
-    __IO uint32_t OCFDCHH;
-    __IO uint32_t OCFPKHH;
-    __IO uint32_t OCFUCHH;
-    __IO uint32_t OCFZRHH;
-    __IO uint32_t OPDCHH0;
-    __IO uint32_t OPDCHH1;
-    __IO uint32_t OPPKHH0;
-    __IO uint32_t OPPKHH1;
-    __IO uint32_t OPUCHH0;
-    __IO uint32_t OPUCHH1;
-    __IO uint32_t OPZRHH0;
-    __IO uint32_t OPZRHH1;
-    __IO uint32_t OPNPKHH0;
-    __IO uint32_t OPNPKHH1;
-    __IO uint32_t OPNZRHH0;
-    __IO uint32_t OPNZRHH1;
-} stc_tmr4_ocmrvh_bit_t;
-
-typedef struct
-{
-    __IO uint32_t OCFDCLL;
-    __IO uint32_t OCFPKLL;
-    __IO uint32_t OCFUCLL;
-    __IO uint32_t OCFZRLL;
-    __IO uint32_t OPDCLL0;
-    __IO uint32_t OPDCLL1;
-    __IO uint32_t OPPKLL0;
-    __IO uint32_t OPPKLL1;
-    __IO uint32_t OPUCLL0;
-    __IO uint32_t OPUCLL1;
-    __IO uint32_t OPZRLL0;
-    __IO uint32_t OPZRLL1;
-    __IO uint32_t OPNPKLL0;
-    __IO uint32_t OPNPKLL1;
-    __IO uint32_t OPNZRLL0;
-    __IO uint32_t OPNZRLL1;
-    __IO uint32_t EOPNDCLL0;
-    __IO uint32_t EOPNDCLL1;
-    __IO uint32_t EOPNUCLL0;
-    __IO uint32_t EOPNUCLL1;
-    __IO uint32_t EOPDCLL0;
-    __IO uint32_t EOPDCLL1;
-    __IO uint32_t EOPPKLL0;
-    __IO uint32_t EOPPKLL1;
-    __IO uint32_t EOPUCLL0;
-    __IO uint32_t EOPUCLL1;
-    __IO uint32_t EOPZRLL0;
-    __IO uint32_t EOPZRLL1;
-    __IO uint32_t EOPNPKLL0;
-    __IO uint32_t EOPNPKLL1;
-    __IO uint32_t EOPNZRLL0;
-    __IO uint32_t EOPNZRLL1;
-} stc_tmr4_ocmrvl_bit_t;
-
-typedef struct
-{
-    __IO uint32_t OCFDCHH;
-    __IO uint32_t OCFPKHH;
-    __IO uint32_t OCFUCHH;
-    __IO uint32_t OCFZRHH;
-    __IO uint32_t OPDCHH0;
-    __IO uint32_t OPDCHH1;
-    __IO uint32_t OPPKHH0;
-    __IO uint32_t OPPKHH1;
-    __IO uint32_t OPUCHH0;
-    __IO uint32_t OPUCHH1;
-    __IO uint32_t OPZRHH0;
-    __IO uint32_t OPZRHH1;
-    __IO uint32_t OPNPKHH0;
-    __IO uint32_t OPNPKHH1;
-    __IO uint32_t OPNZRHH0;
-    __IO uint32_t OPNZRHH1;
-} stc_tmr4_ocmrwh_bit_t;
-
-typedef struct
-{
-    __IO uint32_t OCFDCLL;
-    __IO uint32_t OCFPKLL;
-    __IO uint32_t OCFUCLL;
-    __IO uint32_t OCFZRLL;
-    __IO uint32_t OPDCLL0;
-    __IO uint32_t OPDCLL1;
-    __IO uint32_t OPPKLL0;
-    __IO uint32_t OPPKLL1;
-    __IO uint32_t OPUCLL0;
-    __IO uint32_t OPUCLL1;
-    __IO uint32_t OPZRLL0;
-    __IO uint32_t OPZRLL1;
-    __IO uint32_t OPNPKLL0;
-    __IO uint32_t OPNPKLL1;
-    __IO uint32_t OPNZRLL0;
-    __IO uint32_t OPNZRLL1;
-    __IO uint32_t EOPNDCLL0;
-    __IO uint32_t EOPNDCLL1;
-    __IO uint32_t EOPNUCLL0;
-    __IO uint32_t EOPNUCLL1;
-    __IO uint32_t EOPDCLL0;
-    __IO uint32_t EOPDCLL1;
-    __IO uint32_t EOPPKLL0;
-    __IO uint32_t EOPPKLL1;
-    __IO uint32_t EOPUCLL0;
-    __IO uint32_t EOPUCLL1;
-    __IO uint32_t EOPZRLL0;
-    __IO uint32_t EOPZRLL1;
-    __IO uint32_t EOPNPKLL0;
-    __IO uint32_t EOPNPKLL1;
-    __IO uint32_t EOPNZRLL0;
-    __IO uint32_t EOPNZRLL1;
+    __IO uint32_t OCFDCL;
+    __IO uint32_t OCFPKL;
+    __IO uint32_t OCFUCL;
+    __IO uint32_t OCFZRL;
+    __IO uint32_t OPDCL0;
+    __IO uint32_t OPDCL1;
+    __IO uint32_t OPPKL0;
+    __IO uint32_t OPPKL1;
+    __IO uint32_t OPUCL0;
+    __IO uint32_t OPUCL1;
+    __IO uint32_t OPZRL0;
+    __IO uint32_t OPZRL1;
+    __IO uint32_t OPNPKL0;
+    __IO uint32_t OPNPKL1;
+    __IO uint32_t OPNZRL0;
+    __IO uint32_t OPNZRL1;
+    __IO uint32_t EOPNDCL0;
+    __IO uint32_t EOPNDCL1;
+    __IO uint32_t EOPNUCL0;
+    __IO uint32_t EOPNUCL1;
+    __IO uint32_t EOPDCL0;
+    __IO uint32_t EOPDCL1;
+    __IO uint32_t EOPPKL0;
+    __IO uint32_t EOPPKL1;
+    __IO uint32_t EOPUCL0;
+    __IO uint32_t EOPUCL1;
+    __IO uint32_t EOPZRL0;
+    __IO uint32_t EOPZRL1;
+    __IO uint32_t EOPNPKL0;
+    __IO uint32_t EOPNPKL1;
+    __IO uint32_t EOPNZRL0;
+    __IO uint32_t EOPNZRL1;
 } stc_tmr4_ocmrl_bit_t;
 
 typedef struct
@@ -15085,7 +14413,7 @@ typedef struct
     __IO uint32_t LVLS0;
     __IO uint32_t LVLS1;
     uint32_t RESERVED1[8];
-} stc_tmr4_pocru_bit_t;
+} stc_tmr4_pocr_bit_t;
 
 typedef struct
 {
@@ -15098,20 +14426,7 @@ typedef struct
     __IO uint32_t LVLS0;
     __IO uint32_t LVLS1;
     uint32_t RESERVED1[8];
-} stc_tmr4_pocrv_bit_t;
-
-typedef struct
-{
-    __IO uint32_t DIVCK0;
-    __IO uint32_t DIVCK1;
-    __IO uint32_t DIVCK2;
-    uint32_t RESERVED0[1];
-    __IO uint32_t PWMMD0;
-    __IO uint32_t PWMMD1;
-    __IO uint32_t LVLS0;
-    __IO uint32_t LVLS1;
-    uint32_t RESERVED1[8];
-} stc_tmr4_pocrw_bit_t;
+} stc_pocr_bit_t;
 
 typedef struct
 {
@@ -15255,183 +14570,33 @@ typedef struct
 
 typedef struct
 {
-    __IO uint32_t BUFENH0;
-    __IO uint32_t BUFENH1;
-    __IO uint32_t EVTOSH0;
-    __IO uint32_t EVTOSH1;
-    __IO uint32_t EVTOSH2;
-    __IO uint32_t LMCH;
+    __IO uint32_t BUFEN0;
+    __IO uint32_t BUFEN1;
+    __IO uint32_t EVTOS0;
+    __IO uint32_t EVTOS1;
+    __IO uint32_t EVTOS2;
+    __IO uint32_t LMC;
     uint32_t RESERVED0[2];
-    __IO uint32_t EVTMSH;
-    __IO uint32_t EVTDSH;
+    __IO uint32_t EVTMS;
+    __IO uint32_t EVTDS;
     uint32_t RESERVED1[2];
-    __IO uint32_t DENH;
-    __IO uint32_t PENH;
-    __IO uint32_t UENH;
-    __IO uint32_t ZENH;
-} stc_tmr4_scsruh_bit_t;
+    __IO uint32_t DEN;
+    __IO uint32_t PEN;
+    __IO uint32_t UEN;
+    __IO uint32_t ZEN;
+} stc_tmr4_scsr_bit_t;
 
 typedef struct
 {
-    __IO uint32_t AMCH0;
-    __IO uint32_t AMCH1;
-    __IO uint32_t AMCH2;
-    __IO uint32_t AMCH3;
+    __IO uint32_t AMC0;
+    __IO uint32_t AMC1;
+    __IO uint32_t AMC2;
+    __IO uint32_t AMC3;
     uint32_t RESERVED0[2];
-    __IO uint32_t MZCEH;
-    __IO uint32_t MPCEH;
+    __IO uint32_t MZCE;
+    __IO uint32_t MPCE;
     uint32_t RESERVED1[8];
-} stc_tmr4_scmruh_bit_t;
-
-typedef struct
-{
-    __IO uint32_t BUFENL0;
-    __IO uint32_t BUFENL1;
-    __IO uint32_t EVTOSL0;
-    __IO uint32_t EVTOSL1;
-    __IO uint32_t EVTOSL2;
-    __IO uint32_t LMCL;
-    uint32_t RESERVED0[2];
-    __IO uint32_t EVTMSL;
-    __IO uint32_t EVTDSL;
-    uint32_t RESERVED1[2];
-    __IO uint32_t DENL;
-    __IO uint32_t PENL;
-    __IO uint32_t UENL;
-    __IO uint32_t ZENL;
-} stc_tmr4_scsrul_bit_t;
-
-typedef struct
-{
-    __IO uint32_t AMCL0;
-    __IO uint32_t AMCL1;
-    __IO uint32_t AMCL2;
-    __IO uint32_t AMCL3;
-    uint32_t RESERVED0[2];
-    __IO uint32_t MZCEL;
-    __IO uint32_t MPCEL;
-    uint32_t RESERVED1[8];
-} stc_tmr4_scmrul_bit_t;
-
-typedef struct
-{
-    __IO uint32_t BUFENH0;
-    __IO uint32_t BUFENH1;
-    __IO uint32_t EVTOSH0;
-    __IO uint32_t EVTOSH1;
-    __IO uint32_t EVTOSH2;
-    __IO uint32_t LMCH;
-    uint32_t RESERVED0[2];
-    __IO uint32_t EVTMSH;
-    __IO uint32_t EVTDSH;
-    uint32_t RESERVED1[2];
-    __IO uint32_t DENH;
-    __IO uint32_t PENH;
-    __IO uint32_t UENH;
-    __IO uint32_t ZENH;
-} stc_tmr4_scsrvh_bit_t;
-
-typedef struct
-{
-    __IO uint32_t AMCH0;
-    __IO uint32_t AMCH1;
-    __IO uint32_t AMCH2;
-    __IO uint32_t AMCH3;
-    uint32_t RESERVED0[2];
-    __IO uint32_t MZCEH;
-    __IO uint32_t MPCEH;
-    uint32_t RESERVED1[8];
-} stc_tmr4_scmrvh_bit_t;
-
-typedef struct
-{
-    __IO uint32_t BUFENL0;
-    __IO uint32_t BUFENL1;
-    __IO uint32_t EVTOSL0;
-    __IO uint32_t EVTOSL1;
-    __IO uint32_t EVTOSL2;
-    __IO uint32_t LMCL;
-    uint32_t RESERVED0[2];
-    __IO uint32_t EVTMSL;
-    __IO uint32_t EVTDSL;
-    uint32_t RESERVED1[2];
-    __IO uint32_t DENL;
-    __IO uint32_t PENL;
-    __IO uint32_t UENL;
-    __IO uint32_t ZENL;
-} stc_tmr4_scsrvl_bit_t;
-
-typedef struct
-{
-    __IO uint32_t AMCL0;
-    __IO uint32_t AMCL1;
-    __IO uint32_t AMCL2;
-    __IO uint32_t AMCL3;
-    uint32_t RESERVED0[2];
-    __IO uint32_t MZCEL;
-    __IO uint32_t MPCEL;
-    uint32_t RESERVED1[8];
-} stc_tmr4_scmrvl_bit_t;
-
-typedef struct
-{
-    __IO uint32_t BUFENH0;
-    __IO uint32_t BUFENH1;
-    __IO uint32_t EVTOSH0;
-    __IO uint32_t EVTOSH1;
-    __IO uint32_t EVTOSH2;
-    __IO uint32_t LMCH;
-    uint32_t RESERVED0[2];
-    __IO uint32_t EVTMSH;
-    __IO uint32_t EVTDSH;
-    uint32_t RESERVED1[2];
-    __IO uint32_t DENH;
-    __IO uint32_t PENH;
-    __IO uint32_t UENH;
-    __IO uint32_t ZENH;
-} stc_tmr4_scsrwh_bit_t;
-
-typedef struct
-{
-    __IO uint32_t AMCH0;
-    __IO uint32_t AMCH1;
-    __IO uint32_t AMCH2;
-    __IO uint32_t AMCH3;
-    uint32_t RESERVED0[2];
-    __IO uint32_t MZCEH;
-    __IO uint32_t MPCEH;
-    uint32_t RESERVED1[8];
-} stc_tmr4_scmrwh_bit_t;
-
-typedef struct
-{
-    __IO uint32_t BUFENL0;
-    __IO uint32_t BUFENL1;
-    __IO uint32_t EVTOSL0;
-    __IO uint32_t EVTOSL1;
-    __IO uint32_t EVTOSL2;
-    __IO uint32_t LMCL;
-    uint32_t RESERVED0[2];
-    __IO uint32_t EVTMSL;
-    __IO uint32_t EVTDSL;
-    uint32_t RESERVED1[2];
-    __IO uint32_t DENL;
-    __IO uint32_t PENL;
-    __IO uint32_t UENL;
-    __IO uint32_t ZENL;
-} stc_tmr4_scsrwl_bit_t;
-
-typedef struct
-{
-    __IO uint32_t AMCL0;
-    __IO uint32_t AMCL1;
-    __IO uint32_t AMCL2;
-    __IO uint32_t AMCL3;
-    uint32_t RESERVED0[2];
-    __IO uint32_t MZCEL;
-    __IO uint32_t MPCEL;
-    uint32_t RESERVED1[8];
-} stc_tmr4_scmrwl_bit_t;
+} stc_tmr4_scmr_bit_t;
 
 typedef struct
 {
@@ -16969,21 +16134,21 @@ typedef struct
     stc_tmr4_occrwh_bit_t                    OCCRWH_b;
     uint32_t                                 RESERVED5[16];
     stc_tmr4_occrwl_bit_t                    OCCRWL_b;
-    stc_tmr4_ocsru_bit_t                     OCSRU_b;
-    stc_tmr4_oceru_bit_t                     OCERU_b;
-    stc_tmr4_ocsrv_bit_t                     OCSRV_b;
-    stc_tmr4_ocerv_bit_t                     OCERV_b;
-    stc_tmr4_ocsrw_bit_t                     OCSRW_b;
-    stc_tmr4_ocerw_bit_t                     OCERW_b;
-    stc_tmr4_ocmruh_bit_t                    OCMRUH_b;
+    stc_tmr4_ocsr_bit_t                      OCSRU_b;
+    stc_tmr4_ocer_bit_t                      OCERU_b;
+    stc_tmr4_ocsr_bit_t                      OCSRV_b;
+    stc_tmr4_ocer_bit_t                      OCERV_b;
+    stc_tmr4_ocsr_bit_t                      OCSRW_b;
+    stc_tmr4_ocer_bit_t                      OCERW_b;
+    stc_tmr4_ocmrh_bit_t                     OCMRHUH_b;
     uint32_t                                 RESERVED6[16];
-    stc_tmr4_ocmrul_bit_t                    OCMRUL_b;
-    stc_tmr4_ocmrvh_bit_t                    OCMRVH_b;
+    stc_tmr4_ocmrl_bit_t                     OCMRLUL_b;
+    stc_tmr4_ocmrh_bit_t                     OCMRHVH_b;
     uint32_t                                 RESERVED7[16];
-    stc_tmr4_ocmrvl_bit_t                    OCMRVL_b;
-    stc_tmr4_ocmrwh_bit_t                    OCMRWH_b;
+    stc_tmr4_ocmrl_bit_t                     OCMRLVL_b;
+    stc_tmr4_ocmrh_bit_t                     OCMRHWH_b;
     uint32_t                                 RESERVED8[16];
-    stc_tmr4_ocmrl_bit_t                     OCMRL_b;
+    stc_tmr4_ocmrl_bit_t                     OCMRLWL_b;
     uint32_t                                 RESERVED9[48];
     stc_tmr4_cpsr_bit_t                      CPSR_b;
     uint32_t                                 RESERVED10[16];
@@ -17002,11 +16167,11 @@ typedef struct
     stc_tmr4_pfsrw_bit_t                     PFSRW_b;
     stc_tmr4_pdarw_bit_t                     PDARW_b;
     stc_tmr4_pdbrw_bit_t                     PDBRW_b;
-    stc_tmr4_pocru_bit_t                     POCRU_b;
+    stc_tmr4_pocr_bit_t                      POCRU_b;
     uint32_t                                 RESERVED14[16];
-    stc_tmr4_pocrv_bit_t                     POCRV_b;
+    stc_pocr_bit_t                           _b;
     uint32_t                                 RESERVED15[16];
-    stc_tmr4_pocrw_bit_t                     POCRW_b;
+    stc_pocr_bit_t                           _b;
     uint32_t                                 RESERVED16[16];
     stc_tmr4_rcsr_bit_t                      RCSR_b;
     uint32_t                                 RESERVED17[96];
@@ -17021,18 +16186,18 @@ typedef struct
     stc_tmr4_sccrwh_bit_t                    SCCRWH_b;
     uint32_t                                 RESERVED22[16];
     stc_tmr4_sccrwl_bit_t                    SCCRWL_b;
-    stc_tmr4_scsruh_bit_t                    SCSRUH_b;
-    stc_tmr4_scmruh_bit_t                    SCMRUH_b;
-    stc_tmr4_scsrul_bit_t                    SCSRUL_b;
-    stc_tmr4_scmrul_bit_t                    SCMRUL_b;
-    stc_tmr4_scsrvh_bit_t                    SCSRVH_b;
-    stc_tmr4_scmrvh_bit_t                    SCMRVH_b;
-    stc_tmr4_scsrvl_bit_t                    SCSRVL_b;
-    stc_tmr4_scmrvl_bit_t                    SCMRVL_b;
-    stc_tmr4_scsrwh_bit_t                    SCSRWH_b;
-    stc_tmr4_scmrwh_bit_t                    SCMRWH_b;
-    stc_tmr4_scsrwl_bit_t                    SCSRWL_b;
-    stc_tmr4_scmrwl_bit_t                    SCMRWL_b;
+    stc_tmr4_scsr_bit_t                      SCSRUH_b;
+    stc_tmr4_scmr_bit_t                      SCMRUH_b;
+    stc_tmr4_scsr_bit_t                      SCSRUL_b;
+    stc_tmr4_scmr_bit_t                      SCMRUL_b;
+    stc_tmr4_scsr_bit_t                      SCSRVH_b;
+    stc_tmr4_scmr_bit_t                      SCMRVH_b;
+    stc_tmr4_scsr_bit_t                      SCSRVL_b;
+    stc_tmr4_scmr_bit_t                      SCMRVL_b;
+    stc_tmr4_scsr_bit_t                      SCSRWH_b;
+    stc_tmr4_scmr_bit_t                      SCMRWH_b;
+    stc_tmr4_scsr_bit_t                      SCSRWL_b;
+    stc_tmr4_scmr_bit_t                      SCMRWL_b;
     stc_tmr4_pscr_bit_t                      PSCR_b;
     stc_tmr4_scer_bit_t                      SCER_b;
 } bM4_TMR4_TypeDef;
