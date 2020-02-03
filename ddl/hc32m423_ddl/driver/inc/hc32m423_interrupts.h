@@ -193,16 +193,6 @@ typedef struct
  */
 
 /**
- * @defgroup INTC_Register_Protect INTC Registers Protect Code
- * @{
- */
-#define INTC_REG_UNPROTECT          ((uint8_t)0xA5U)
-#define INTC_REG_PROTECT            ((uint8_t)0x00U)
-/**
- * @}
- */
-
-/**
  * @defgroup NMI_FilterClock_Sel NMI pin filter selection
  * @{
  */
@@ -238,12 +228,17 @@ typedef struct
  * @defgroup NMI_TriggerSrc_Sel NMI trigger source selection
  * @{
  */
-#define NMI_SRC_NMI_PIN             (uint8_t)(1U << INTC_NMIER_NMIEN_POS)
-#define NMI_SRC_XTAL_STP            (uint8_t)(1U << INTC_NMIER_XTALSTPEN_POS)
-#define NMI_SRC_SWDT                (uint8_t)(1U << INTC_NMIER_SWDTEN_POS)
-#define NMI_SRC_LVD                 (uint8_t)(1U << INTC_NMIER_PVDEN_POS)
-#define NMI_SRC_MASK                (NMI_SRC_NMI_PIN | NMI_SRC_XTAL_STP |       \
-                                    NMI_SRC_SWDT | NMI_SRC_LVD)
+#define NMI_SRC_NMI_PIN             (uint32_t)(1UL << INTC_NMIER_NMIENR_POS)
+#define NMI_SRC_SWDT                (uint32_t)(1UL << INTC_NMIER_SWDTENR_POS)
+#define NMI_SRC_LVD1                (uint32_t)(1UL << INTC_NMIER_PVD1ENR_POS)
+#define NMI_SRC_LVD2                (uint32_t)(1UL << INTC_NMIER_PVD2ENR_POS)
+#define NMI_SRC_XTAL_STP            (uint32_t)(1UL << INTC_NMIER_XTALSTPENR_POS)
+#define NMI_SRC_RAMPE               (uint32_t)(1UL << INTC_NMIER_REPENR_POS)
+#define NMI_SRC_WDT                 (uint32_t)(1UL << INTC_NMIER_WDTENR_POS)
+#define NMI_SRC_MASK                (NMI_SRC_NMI_PIN    | NMI_SRC_SWDT  |       \
+                                    NMI_SRC_LVD1        | NMI_SRC_LVD2  |       \
+                                    NMI_SRC_XTAL_STP    | NMI_SRC_RAMPE |       \
+                                    NMI_SRC_WDT)
 /**
  * @}
  */
@@ -252,14 +247,21 @@ typedef struct
  * @defgroup MNI_Register_Msk NMI register mask
  * @{
  */
-#define INTC_NMICR_MASK     (uint8_t)(INTC_NMICR_NMITRG | INTC_NMICR_NMIFCLK   |\
-                            INTC_NMICR_NMIFEN)
-#define INTC_NMIER_MASK     (uint8_t)(INTC_NMIER_NMIEN  | INTC_NMIER_XTALSTPEN |\
-                            INTC_NMIER_SWDTEN  | INTC_NMIER_PVDEN)
-#define INTC_NMIFR_MASK     (uint8_t)(INTC_NMIFR_NMIF   | INTC_NMIFR_XTALSTPF  |\
-                            INTC_NMIFR_SWDTF   | INTC_NMIFR_PVDF)
-#define INTC_NMICLR_MASK    (uint8_t)(INTC_NMICLR_NMICL | INTC_NMICLR_XTALSTPCL|\
-                            INTC_NMICLR_SWDTCL | INTC_NMICLR_PVDCL)
+#define INTC_NMICR_MASK     (uint32_t)(INTC_NMICR_NMITRG | INTC_NMICR_NMIFCLK   |\
+                            INTC_NMICR_NMIFEN | INTC_NMICR_NOCSEL | \
+                            INTC_NMICR_NOCEN)
+#define INTC_NMIER_MASK     (uint32_t)(INTC_NMIER_NMIENR  | INTC_NMIER_SWDTENR |\
+                            INTC_NMIER_PVD1ENR  | INTC_NMIER_PVD2ENR | \
+                            INTC_NMIER_XTALSTPENR | INTC_NMIER_REPENR |\
+                            INTC_NMIER_WDTENR)
+#define INTC_NMIFR_MASK     (uint32_t)(INTC_NMIFR_NMIFR   | INTC_NMIFR_SWDTFR  |\
+                            INTC_NMIFR_PVD1FR   | INTC_NMIFR_PVD2FR |\
+                              INTC_NMIFR_XTALSTPFR | INTC_NMIFR_REPFR |\
+                              INTC_NMIFR_WDTFR)
+#define INTC_NMICFR_MASK    (uint32_t)(INTC_NMICFR_NMICFR | INTC_NMICFR_SWDTCFR|\
+                            INTC_NMICFR_PVD1CFR | INTC_NMICFR_PVD2CFR |\
+                             INTC_NMICFR_XTALSTPCFR | INTC_NMICFR_REPCFR |\
+                             INTC_NMICFR_WDTCFR  )
 /**
  * @}
  */
@@ -286,8 +288,8 @@ typedef struct
  * @defgroup EXINT_FilterClock_Sel External interrupt filter function selection
  * @{
  */
-#define EXINT_FILTER_OFF            (uint8_t)(0U << INTC_EIRQCR_EIRQFEN_POS)
-#define EXINT_FILTER_ON             (uint8_t)(1U << INTC_EIRQCR_EIRQFEN_POS)
+#define EXINT_FILTER_OFF            (uint8_t)(0U << INTC_EIRQCR0_EFEN_POS)
+#define EXINT_FILTER_ON             (uint8_t)(1U << INTC_EIRQCR0_EFEN_POS)
 /**
  * @}
  */
@@ -296,10 +298,10 @@ typedef struct
  * @defgroup EXINT_FilterClock_Div External interrupt filtersampling  clock division selection
  * @{
  */
-#define EXINT_FCLK_HCLK_DIV1        (uint8_t)(0U << INTC_EIRQCR_EIRQFCLK_POS)
-#define EXINT_FCLK_HCLK_DIV8        (uint8_t)(1U << INTC_EIRQCR_EIRQFCLK_POS)
-#define EXINT_FCLK_HCLK_DIV32       (uint8_t)(2U << INTC_EIRQCR_EIRQFCLK_POS)
-#define EXINT_FCLK_HCLK_DIV64       (uint8_t)(3U << INTC_EIRQCR_EIRQFCLK_POS)
+#define EXINT_FCLK_HCLK_DIV1        (uint8_t)(0U << INTC_EIRQCR0_EISMPCLK_POS)
+#define EXINT_FCLK_HCLK_DIV8        (uint8_t)(1U << INTC_EIRQCR0_EISMPCLK_POS)
+#define EXINT_FCLK_HCLK_DIV32       (uint8_t)(2U << INTC_EIRQCR0_EISMPCLK_POS)
+#define EXINT_FCLK_HCLK_DIV64       (uint8_t)(3U << INTC_EIRQCR0_EISMPCLK_POS)
 /**
  * @}
  */
@@ -308,10 +310,10 @@ typedef struct
  * @defgroup EXINT_Trigger_Sel External interrupt trigger method selection
  * @{
  */
-#define EXINT_TRIGGER_LOW           (uint8_t)(0U << INTC_EIRQCR_EIRQTRG_POS)
-#define EXINT_TRIGGER_RISING        (uint8_t)(1U << INTC_EIRQCR_EIRQTRG_POS)
-#define EXINT_TRIGGER_FALLING       (uint8_t)(2U << INTC_EIRQCR_EIRQTRG_POS)
-#define EXINT_TRIGGER_BOTH          (uint8_t)(3U << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_LOW           (uint8_t)(0U << INTC_EIRQCR0_EIRQTRG_POS)
+#define EXINT_TRIGGER_RISING        (uint8_t)(1U << INTC_EIRQCR0_EIRQTRG_POS)
+#define EXINT_TRIGGER_FALLING       (uint8_t)(2U << INTC_EIRQCR0_EIRQTRG_POS)
+#define EXINT_TRIGGER_BOTH          (uint8_t)(3U << INTC_EIRQCR0_EIRQTRG_POS)
 /**
  * @}
  */
@@ -320,24 +322,8 @@ typedef struct
  * @defgroup EXINT_Register_Msk EXINT register mask
  * @{
  */
-#define INTC_EIRQF_MASK             (INTC_EIRQFR_EIRQF)
-#define INTC_EIRQCLR_MASK           (INTC_EIRQCLR_EIRQCL)
-/**
- * @}
- */
-
-/**
- * @defgroup INTC_EKEY_Channel INTC EKEY channel selection
- * @{
- */
-#define INTC_EKEY0                  (uint8_t)(1U << INTC_EKEYCR_EKEY0EN_POS)
-#define INTC_EKEY1                  (uint8_t)(1U << INTC_EKEYCR_EKEY1EN_POS)
-#define INTC_EKEY2                  (uint8_t)(1U << INTC_EKEYCR_EKEY2EN_POS)
-#define INTC_EKEY3                  (uint8_t)(1U << INTC_EKEYCR_EKEY3EN_POS)
-#define INTC_EKEY4                  (uint8_t)(1U << INTC_EKEYCR_EKEY4EN_POS)
-#define INTC_EKEY5                  (uint8_t)(1U << INTC_EKEYCR_EKEY5EN_POS)
-#define INTC_EKEY_MASK              (INTC_EKEY0 | INTC_EKEY1 | INTC_EKEY2 |     \
-                                     INTC_EKEY3 | INTC_EKEY4 | INTC_EKEY5)
+#define INTC_EIRQF_MASK             (INTC_EIRQFR_INT_EIRQFR)
+#define INTC_EIRQCLR_MASK           (INTC_EIRQCFR_INT_EIRQCFR)
 /**
  * @}
  */
@@ -365,46 +351,23 @@ typedef struct
  */
 __STATIC_INLINE void AOS_SW_Trigger(void)
 {
-    WRITE_REG32(bM0P_AOS->INTC_STRGCR_b.STRG, Set);
+    WRITE_REG32(bM4_AOS->INTC_STRGCR_b.STRG, Set);
 }
 
-/**
- * @brief  INTC lock, register write disable
- * @param  None
- * @retval None
- */
-__STATIC_INLINE void INTC_Lock(void)
-{
-    WRITE_REG32(M0P_INTC->FPRCR, INTC_REG_PROTECT);
-}
-
-/**
- * @brief  INTC unlock, register write enable
- * @param  None
- * @retval None
- */
-__STATIC_INLINE void INTC_Unlock(void)
-{
-    WRITE_REG32(M0P_INTC->FPRCR, INTC_REG_UNPROTECT);
-}
-
-en_result_t INTC_IrqRegistration(const stc_irq_regi_config_t *pstcIrqRegiConfig);
-void INTC_IrqResign(IRQn_Type enIRQn);
-en_result_t INTC_ShareIrqCmd(en_int_src_t enIntSrc, en_functional_state_t enNewState);
+en_result_t INTC_IrqSignIn(const stc_irq_regi_config_t *pstcIrqRegiConfig);
+en_result_t INTC_IrqSignOut(IRQn_Type enIRQn);
 void INTC_WakeupSrcCmd(uint32_t u32WakeupSrc, en_functional_state_t enNewState);
-void INTC_EventCmd(uint8_t u8Event, en_functional_state_t enNewState);
+void INTC_EventCmd(uint32_t u32Event, en_functional_state_t enNewState);
 
 en_result_t NMI_Init(const stc_nmi_config_t *pstcNmiConfig);
 en_result_t NMI_StructInit(stc_nmi_config_t *pstcNmiConfig);
-en_flag_status_t NMI_GetNmiSrc(uint8_t u8NmiSrc);
-void NMI_ClrNmiSrc(uint8_t u8NmiSrc);
+en_flag_status_t NMI_GetNmiSrc(uint32_t u32NmiSrc);
+void NMI_ClrNmiSrc(uint32_t u32NmiSrc);
 
 en_result_t EXINT_Init(const stc_exint_config_t *pstcExIntConfig);
 en_result_t EXINT_StructInit(stc_exint_config_t *pstcExintConfig);
 en_flag_status_t EXINT_GetExIntSrc(uint16_t u16ExIntCh);
 void EXINT_ClrExIntSrc(uint16_t u16ExIntCh);
-
-void INTC_EKeyCmd(uint8_t u8EKey, en_functional_state_t enNewState);
 
 __WEAKDEF void NMI_IrqHandler(void);
 __WEAKDEF void HardFault_IrqHandler(void);

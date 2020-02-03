@@ -7,7 +7,7 @@
    Change Logs:
    Date             Author          Notes
    2020-02-01       Zhangxl         First version
-   2020-01-22       Zhangxl         Modify exclusive IRQ request process for 
+   2020-01-22       Zhangxl         Modify exclusive IRQ request process for
                                     share handler
  @endverbatim
  *******************************************************************************
@@ -87,7 +87,7 @@
 /**
  * @brief   Maximum IRQ handler number
  */
-#define IRQ_NUM_MAX         16U
+#define IRQ_NUM_MAX         8U
 
 /**
  * @defgroup INTC_Check_Parameters_Validity INTC Check Parameters Validity
@@ -95,18 +95,21 @@
  */
 /*  Parameter validity check for wakeup source from stop mode. */
 #define IS_INTC_WKUP_SRC(src)                                                   \
-(   ((src) & (INTC_WUPENR_EIRQWUEN      | INTC_WUPENR_SWDTWUEN      |           \
-             INTC_WUPENR_EKEYWUEN       | INTC_WUPENR_TMR0CMPWUEN   |           \
-             INTC_WUPENR_TMR2CMPWUEN    | INTC_WUPENR_TMR2OVFWUEN   |           \
-             INTC_WUPENR_CMPWUEN        | INTC_WUPENR_PVDWUEN))                 \
-             != (uint32_t)0x00000000UL)
+(   ((src) & (INTC_WUPEN_EIRQWUEN   | INTC_WUPEN_SWDTWUEN   |                   \
+             INTC_WUPEN_PVD1WUEN    | INTC_WUPEN_PVD2WUEN   |                   \
+             INTC_WUPEN_CMPI0WUEN   | INTC_WUPEN_TMR0WUEN   |                   \
+             INTC_WUPEN_RXWUEN)) != (uint32_t)0x00000000UL)
 
 /*  Parameter validity check for event number. */
 #define IS_INTC_EVENT(event)                                                    \
-(   ((event) & (INTC_EVTER_EVTEN0   | INTC_EVTER_EVTEN1                 |       \
-                INTC_EVTER_EVTEN2   | INTC_EVTER_EVTEN3                 |       \
-                INTC_EVTER_EVTEN4   | INTC_EVTER_EVTEN5                 |       \
-                INTC_EVTER_EVTEN6   | INTC_EVTER_EVTEN7)) != (uint8_t)0x00U)
+(   ((event) & (INTC_EVTER_EVTE0    | INTC_EVTER_EVTE1      |                   \
+                INTC_EVTER_EVTE2    | INTC_EVTER_EVTE3      |                   \
+                INTC_EVTER_EVTE4    | INTC_EVTER_EVTE5      |                   \
+                INTC_EVTER_EVTE6    | INTC_EVTER_EVTE7      |                   \
+                INTC_EVTER_EVTE8    | INTC_EVTER_EVTE9      |                   \
+                INTC_EVTER_EVTE10   | INTC_EVTER_EVTE11     |                   \
+                INTC_EVTER_EVTE12   | INTC_EVTER_EVTE13     |                   \
+                INTC_EVTER_EVTE14   | INTC_EVTER_EVTE15)) != (uint32_t)0x00000000UL)
 
 /*  Parameter validity check for NMI pin filter function. */
 #define IS_NMI_FE(fe)                                                           \
@@ -126,14 +129,16 @@
     ((trigger) == NMI_TRIGGER_RISING))
 
 /*  Parameter validity check for NMI trigger souce. */
-#define IS_NMI_SRC(src) (((src) & NMI_SRC_MASK) != (uint8_t)0x00U)
+#define IS_NMI_SRC(src) (((src) & NMI_SRC_MASK) != (uint32_t)0x00000000UL)
 
 /*  Parameter validity check for get NMI trigger source. */
 #define IS_GET_NMI_SRC(src)                                                     \
-(   ((src) == NMI_SRC_NMI_PIN)                  ||                              \
+(   ((src) == NMI_SRC_SWDT)                     ||                              \
+    ((src) == NMI_SRC_LVD1)                     ||                              \
+    ((src) == NMI_SRC_LVD2)                     ||                              \
     ((src) == NMI_SRC_XTAL_STP)                 ||                              \
-    ((src) == NMI_SRC_SWDT)                     ||                              \
-    ((src) == NMI_SRC_LVD))
+    ((src) == NMI_SRC_RAMPE)                    ||                              \
+    ((src) == NMI_SRC_WDT))
 
 /*  Parameter validity check for EXINT filter function. */
 #define IS_EXINT_FE(fe)                                                         \
@@ -168,8 +173,6 @@
     ((ch) == EXINT_CH06)                        ||                              \
     ((ch) == EXINT_CH07))
 
-/*  Parameter validity check for EKEY. */
-#define IS_INTC_EKEY(ekey)  (((ekey) & INTC_EKEY_MASK) != (uint8_t)0x00U)
 /**
  * @}
  */
@@ -207,19 +210,19 @@ static func_ptr_t pfnNmiCallback;
  * @{
  */
 /**
- * @brief  IRQ registration function
+ * @brief  IRQ sign in function
  * @param  [in] pstcIrqRegiConfig: pointer of IRQ registration structure
- *   @arg  enIntSrc: can be any value except INT_PORT_EIRQ0~7 @ref en_int_src_t
- *   @arg  enIRQn: can be any value from Int008~Int023 @ref IRQn_Type
+ *   @arg  enIntSrc: can be any value @ref en_int_src_t
+ *   @arg  enIRQn: can be any value from Int000~Int007 @ref IRQn_Type
  *   @arg  pfnCallback: Callback function
  * @retval Ok: IRQ register successfully
  *         ErrorInvalidParameter: IRQ No. and Peripheral Int source are not match;
  *                                Input peripheral Int source cannot be configure;
  *                                NULL pointer.
  */
-en_result_t INTC_IrqRegistration(const stc_irq_regi_config_t *pstcIrqRegiConfig)
+en_result_t INTC_IrqSignIn(const stc_irq_regi_config_t *pstcIrqRegiConfig)
 {
-    __IO stc_intc_iselar_field_t *stcIntSel;
+    __IO uint32_t *INTC_SELx;
     en_result_t enRet = Ok;
 
     /* Check if pointer is NULL */
@@ -229,68 +232,34 @@ en_result_t INTC_IrqRegistration(const stc_irq_regi_config_t *pstcIrqRegiConfig)
     }
     else
     {
-        /* Checking validity for Interrupt source of Group 0~7 and IRQ No. */
-        if (((pstcIrqRegiConfig->enIntSrc / 0x10U)*2U + 8U != pstcIrqRegiConfig->enIRQn) && \
-            ((pstcIrqRegiConfig->enIntSrc / 0x10U)*2U + 9U != pstcIrqRegiConfig->enIRQn))
-        {
-            enRet = ErrorInvalidParameter;
-        }
-        else
-        {
-            /* EIRQ0~7 are fixed allocation of IRQ handler 0~7 */
-            if ((0U == pstcIrqRegiConfig->enIntSrc % 0x10U) || (pstcIrqRegiConfig->enIRQn < 8U))
-            {
-                enRet = ErrorInvalidParameter;
-            }
-            else
-            {
-                INTC_Unlock();
-                stcIntSel = (stc_intc_iselar_field_t *)((uint32_t)(&M0P_INTC->ISELAR8) +    \
-                                                     (4U * (pstcIrqRegiConfig->enIRQn - 8U)));
-                stcIntSel->ISEL = (pstcIrqRegiConfig->enIntSrc) % 0x10U;
-
-                /* Callback function */
-                pfnIrqHandler[pstcIrqRegiConfig->enIRQn-8U] = pstcIrqRegiConfig->pfnCallback;
-
-                INTC_Lock();
-            }
-        }
+        INTC_SELx = (uint32_t *)((uint32_t)(&M4_INTC->SEL0) + (4U * (pstcIrqRegiConfig->enIRQn)));
+        *INTC_SELx = (pstcIrqRegiConfig->enIntSrc);
+        /* Callback function */
+        pfnIrqHandler[pstcIrqRegiConfig->enIRQn] = pstcIrqRegiConfig->pfnCallback;
     }
     return enRet;
 }
 
 /**
- * @brief  Share IRQ configure
- * @param  [in] enIntSrc: Peripheral interrupt source @ref en_int_src_t
- * @param  [in] enNewState:
- *   @arg  Enable: Enable corresponding peripheral interrupt in share IRQ handler
- *   @arg  Disable: Disable corresponding peripheral interrupt in share IRQ handler
- * @retval Ok: Share IRQ configure successfully
- *         ErrorInvalidParameter: EXINT00~07 cannot be configured into share IRQ handler
+ * @brief  IRQ sign out function
+ * @param  [in] enIRQn: can be any value from Int000_IRQn ~ Int127_IRQn @ref IRQn_Type
+ * @retval Ok: IRQ sign out successfully
+ *         ErrorInvalidParameter: IRQ No. is out of range
  */
-en_result_t INTC_ShareIrqCmd(en_int_src_t enIntSrc, en_functional_state_t enNewState)
+en_result_t INTC_IrqSignOut(IRQn_Type enIRQn)
 {
-    __IO uint32_t *ISELRx;
+    uint32_t *INTC_SELx;
     en_result_t enRet = Ok;
 
-    /* EXINT0~7 cannot be configured into share IRQ */
-    if (0U == enIntSrc % 0x10U)
+    if ((enIRQn < Int000_IRQn) || (enIRQn > AdcSEQCMP_IRQn))
     {
         enRet = ErrorInvalidParameter;
     }
     else
     {
-        INTC_Unlock();
-        ISELRx = (uint32_t *)(((uint32_t)&M0P_INTC->ISELBR24) + (4U * (enIntSrc / 16U)));
-        if (Enable == enNewState)
-        {
-            SET_REG32_BIT(*ISELRx, (1UL << (enIntSrc % 16UL)));
-        }
-        else
-        {
-            CLEAR_REG32_BIT(*ISELRx, (1UL << (enIntSrc % 16UL)));
-        }
-        INTC_Lock();
+        INTC_SELx = (uint32_t *)((uint32_t)(&M4_INTC->SEL0) + (4UL * enIRQn));
+        WRITE_REG32(*INTC_SELx, 0x1FFUL);
+        pfnIrqHandler[enIRQn] = NULL;
     }
     return enRet;
 }
@@ -326,16 +295,14 @@ void INTC_WakeupSrcCmd(uint32_t u32WakeupSrc, en_functional_state_t enNewState)
     DDL_ASSERT(IS_INTC_WKUP_SRC(u32WakeupSrc));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    INTC_Unlock();
     if (Enable == enNewState)
     {
-        SET_REG32_BIT(M0P_INTC->WUPENR, u32WakeupSrc);
+        SET_REG32_BIT(M4_INTC->WUPEN, u32WakeupSrc);
     }
     else
     {
-        CLEAR_REG32_BIT(M0P_INTC->WUPENR, u32WakeupSrc);
+        CLEAR_REG32_BIT(M4_INTC->WUPEN, u32WakeupSrc);
     }
-    INTC_Lock();
 }
 
 /**
@@ -349,26 +316,32 @@ void INTC_WakeupSrcCmd(uint32_t u32WakeupSrc, en_functional_state_t enNewState)
  *   @arg  INTC_EVTER_EVTEN5
  *   @arg  INTC_EVTER_EVTEN6
  *   @arg  INTC_EVTER_EVTEN7
+ *   @arg  INTC_EVTER_EVTEN8
+ *   @arg  INTC_EVTER_EVTEN9
+ *   @arg  INTC_EVTER_EVTEN10
+ *   @arg  INTC_EVTER_EVTEN11
+ *   @arg  INTC_EVTER_EVTEN12
+ *   @arg  INTC_EVTER_EVTEN13
+ *   @arg  INTC_EVTER_EVTEN14
+ *   @arg  INTC_EVTER_EVTEN15
  * @param  [in] enNewState
  *   @arg  Enable: Enable corresponding event to NVIC
  *   @arg  Disable: Disable corresponding event but interrupt to NVIC
  * @retval None
  */
-void INTC_EventCmd(uint8_t u8Event, en_functional_state_t enNewState)
+void INTC_EventCmd(uint32_t u32Event, en_functional_state_t enNewState)
 {
     /* Parameter validity checking */
-    DDL_ASSERT(IS_INTC_EVENT(u8Event));
+    DDL_ASSERT(IS_INTC_EVENT(u32Event));
 
-    INTC_Unlock();
     if (Enable == enNewState)
     {
-        SET_REG8_BIT(M0P_INTC->EVTER, u8Event);
+        SET_REG32_BIT(M4_INTC->EVTER, u32Event);
     }
     else
     {
-        CLEAR_REG8_BIT(M0P_INTC->EVTER, u8Event);
+        CLEAR_REG32_BIT(M4_INTC->EVTER, u32Event);
     }
-    INTC_Lock();
 }
 
 /**
@@ -423,63 +396,63 @@ en_result_t NMI_Init(const stc_nmi_config_t *pstcNmiConfig)
         DDL_ASSERT(IS_NMI_TRIGGER(pstcNmiConfig->u8NmiTigger));
         DDL_ASSERT(IS_NMI_SRC(pstcNmiConfig->u8NmiSrc));
 
-        INTC_Unlock();
-
         /* NMI pin interrupt configure */
-        WRITE_REG8(M0P_INTC->NMICR,                                             \
+        WRITE_REG8(M4_INTC->NMICR,                                             \
                   (pstcNmiConfig->u8NmiFE         |                             \
                    pstcNmiConfig->u8NmiFClk       |                             \
                    pstcNmiConfig->u8NmiTigger));
 
         /* Clear all NMI trigger source before set */
-        WRITE_REG8(M0P_INTC->NMICLR, INTC_NMICLR_MASK);
+        WRITE_REG32(M4_INTC->NMICFR, INTC_NMICFR_MASK);
 
         /* NMI trigger source configure */
-        WRITE_REG8(M0P_INTC->NMIER, pstcNmiConfig->u8NmiSrc);
+        WRITE_REG8(M4_INTC->NMIER, pstcNmiConfig->u8NmiSrc);
 
         /* NMI callback function configure */
         pfnNmiCallback = pstcNmiConfig->pfnNmiCallback;
-
-        INTC_Lock();
     }
     return enRet;
 }
 
 /**
  * @brief  Get NMI trigger source
- * @param  [in] u8NmiSrc: NMI trigger source, @ref NMI_TriggerSrc_Sel for details
+ * @param  [in] u32NmiSrc: NMI trigger source, @ref NMI_TriggerSrc_Sel for details
  *   @arg  NMI_SRC_NMI_PIN
- *   @arg  NMI_SRC_XTAL_STP
  *   @arg  NMI_SRC_SWDT
- *   @arg  NMI_SRC_LVD
+ *   @arg  NMI_SRC_LVD1
+ *   @arg  NMI_SRC_LVD2
+ *   @arg  NMI_SRC_XTAL_STP
+ *   @arg  NMI_SRC_RAMPE
+ *   @arg  NMI_SRC_WDT
  * @retval Set: NMI is triggered by corresponding source
  *         Reset: NMI is not triggered by corresponding source
  */
-en_flag_status_t NMI_GetNmiSrc(uint8_t u8NmiSrc)
+en_flag_status_t NMI_GetNmiSrc(uint32_t u32NmiSrc)
 {
     /* Parameter validity checking */
-    DDL_ASSERT(IS_GET_NMI_SRC(u8NmiSrc));
+    DDL_ASSERT(IS_GET_NMI_SRC(u32NmiSrc));
 
-    return ((READ_REG8(M0P_INTC->NMIFR) & u8NmiSrc)) ? Set : Reset;
+    return ((READ_REG32(M4_INTC->NMIFR) & u32NmiSrc)) ? Set : Reset;
 }
 
 /**
  * @brief  Clear specified NMI trigger source
- * @param  [in] u8NmiSrc: NMI trigger source, @ref NMI_TriggerSrc_Sel for details
+ * @param  [in] u32NmiSrc: NMI trigger source, @ref NMI_TriggerSrc_Sel for details
  *   @arg  NMI_SRC_NMI_PIN
- *   @arg  NMI_SRC_XTAL_STP
  *   @arg  NMI_SRC_SWDT
- *   @arg  NMI_SRC_LVD
+ *   @arg  NMI_SRC_LVD1
+ *   @arg  NMI_SRC_LVD2
+ *   @arg  NMI_SRC_XTAL_STP
+ *   @arg  NMI_SRC_RAMPE
+ *   @arg  NMI_SRC_WDT
  * @retval None
  */
-void NMI_ClrNmiSrc(uint8_t u8NmiSrc)
+void NMI_ClrNmiSrc(uint32_t u32NmiSrc)
 {
     /* Parameter validity checking */
-    DDL_ASSERT(IS_NMI_SRC(u8NmiSrc));
+    DDL_ASSERT(IS_NMI_SRC(u32NmiSrc));
 
-    INTC_Unlock();
-    MODIFY_REG8(M0P_INTC->NMICLR, INTC_NMICLR_MASK, u8NmiSrc);
-    INTC_Lock();
+    MODIFY_REG32(M4_INTC->NMICFR, INTC_NMICFR_MASK, u32NmiSrc);
 }
 
 /**
@@ -520,18 +493,16 @@ en_result_t EXINT_Init(const stc_exint_config_t *pstcExIntConfig)
         DDL_ASSERT(IS_EXINT_TRIGGER(pstcExIntConfig->u8ExIntLvl));
         DDL_ASSERT(IS_EXINT_CH(pstcExIntConfig->u16ExIntCh));
 
-        INTC_Unlock();
         for (u8ExIntPos = 0U; u8ExIntPos < 10U; u8ExIntPos++)
         {
             if (pstcExIntConfig->u16ExIntCh & (1UL << u8ExIntPos))
             {
-                WRITE_REG8(*(uint8_t *)((uint32_t)(&M0P_INTC->EIRQCR0) + 4U*u8ExIntPos),\
+                WRITE_REG8(*(uint8_t *)((uint32_t)(&M4_INTC->EIRQCR0) + 4U*u8ExIntPos),\
                           (pstcExIntConfig->u8ExIntFE         |                         \
                            pstcExIntConfig->u8ExIntFClk       |                         \
                            pstcExIntConfig->u8ExIntLvl));
             }
         }
-        INTC_Lock();
     }
     return enRet;
 }
@@ -583,9 +554,8 @@ void EXINT_ClrExIntSrc(uint16_t u16ExIntCh)
     /* Parameter validity checking */
     DDL_ASSERT(IS_EXINT_CH(u16ExIntCh));
 
-    INTC_Unlock();
-    SET_REG16_BIT(M0P_INTC->EIRQCLR, u16ExIntCh);
-    INTC_Lock();
+    SET_REG16_BIT(M4_INTC->EIRQCFR, u16ExIntCh);
+
 }
 
 /**
@@ -609,39 +579,7 @@ en_flag_status_t EXINT_GetExIntSrc(uint16_t u16ExIntCh)
     /* Parameter validity checking */
     DDL_ASSERT(IS_EXINT_CH(u16ExIntCh));
 
-    return (READ_REG16(M0P_INTC->EIRQFR) & u16ExIntCh) ? Set : Reset;
-}
-
-/**
- * @brief  Configure the specified EKEY
- * @param  [in] u8EKey: EKEY channel, @ref INTC_EKEY_Channel for details
- *   @arg  INTC_EKEY0
- *   @arg  INTC_EKEY1
- *   @arg  INTC_EKEY2
- *   @arg  INTC_EKEY3
- *   @arg  INTC_EKEY4
- *   @arg  INTC_EKEY5
- * @param  [in] enNewState
- *   @arg  Enable: Enable corresponding EKEY
- *   @arg  Disable: Disable corresponding EKEY
- * @retval None
- */
-void INTC_EKeyCmd(uint8_t u8EKey, en_functional_state_t enNewState)
-{
-    /* Parameter validity checking */
-    DDL_ASSERT(IS_INTC_EKEY(u8EKey));
-    DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
-
-    INTC_Unlock();
-    if (Enable == enNewState)
-    {
-        SET_REG8_BIT(M0P_INTC->EKEYCR, u8EKey);
-    }
-    else
-    {
-        CLEAR_REG8_BIT(M0P_INTC->EKEYCR, u8EKey);
-    }
-    INTC_Lock();
+    return (READ_REG16(M4_INTC->EIRQFR) & u16ExIntCh) ? Set : Reset;
 }
 
 /**
