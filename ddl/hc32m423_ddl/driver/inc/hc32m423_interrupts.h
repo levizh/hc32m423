@@ -89,9 +89,9 @@ extern "C"
  */
 typedef struct
 {
-    en_int_src_t    enIntSrc;   /*!< Peripheral interrupt number, can be any value @ref en_int_src_t */
-    IRQn_Type       enIRQn;     /*!< Peripheral IRQ type, can be any value @ref IRQn_Type */
-    func_ptr_t      pfnCallback;/*!< Callback function for corresponding peripheral IRQ */
+    en_int_src_t enIntSrc;    /*!< Peripheral interrupt number, can be any value @ref en_int_src_t */
+    IRQn_Type    enIRQn;      /*!< Peripheral IRQ type, can be any value @ref IRQn_Type */
+    func_ptr_t   pfnCallback; /*!< Callback function for corresponding peripheral IRQ */
 }stc_irq_regi_config_t;
 
 /**
@@ -99,13 +99,13 @@ typedef struct
  */
 typedef struct
 {
-    uint32_t     u32NmiFAE;        /*!< NMI pin filter function, @ref NMI_FilterAClock_Sel for details          */
-    uint32_t     u32NmiFAClk;      /*!< NMI pin filter clock  division, @ref NMI_FilterAClock_Div for details   */
-    uint32_t     u32NmiFBE;        /*!< NMI pin filter function, @ref NMI_FilterBClock_Sel for details          */
-    uint32_t     u32NmiFBTime;    /*!< Nmi/ExInt filter B time, @ref NMI_EXINT_FilterBTim_Sel for details*/
-    uint32_t     u32NmiTigger;    /*!< NMI pin trigger edge, @ref NMI_Trigger_Sel for details                 */
-    uint32_t     u32NmiSrc;       /*!< NMI trigger source, @ref NMI_TriggerSrc_Sel for details                */
-    func_ptr_t  pfnNmiCallback; /*!< NMI Callback function pointers                                         */
+    uint32_t   u32NmiFAE;       /*!< NMI pin filter A function, @ref NMI_FilterAClock_Sel for details */
+    uint32_t   u32NmiFAClk;     /*!< NMI pin filter A clock  division, @ref NMI_FilterAClock_Div for details */
+    uint32_t   u32NmiFBE;       /*!< NMI pin filter B function, @ref NMI_FilterBClock_Sel for details */
+    uint32_t   u32NmiFBTime;    /*!< Nmi/ExInt filter B time, @ref NMI_EXINT_FilterBTim_Sel for details*/
+    uint32_t   u32NmiTigger;    /*!< NMI pin trigger edge, @ref NMI_Trigger_Sel for details */
+    uint32_t   u32NmiSrc;       /*!< NMI trigger source, @ref NMI_TriggerSrc_Sel for details */
+    func_ptr_t pfnNmiCallback;  /*!< NMI Callback function pointers */
 }stc_nmi_config_t;
 
 /**
@@ -113,12 +113,12 @@ typedef struct
  */
 typedef struct
 {
-    uint32_t u32ExIntCh;     /*!< ExInt CH.0~7 @ref EXINT_Channel_Sel                                */
-    uint32_t u32ExIntFAE;      /*!< ExInt filter clock, @ref EXINT_FilterAClock_Sel for details         */
-    uint32_t u32ExIntFAClk;    /*!< ExInt filter clock division, @ref EXINT_FilterAClock_Div for details*/
-    uint32_t u32ExIntFBE;      /*!< ExInt filter clock, @ref EXINT_FilterBClock_Sel for details         */
-    uint32_t u32ExIntFBTime;    /*!< Nmi/ExInt filter B time, @ref NMI_EXINT_FilterBTim_Sel for details*/
-    uint32_t u32ExIntLvl;     /*!< ExInt trigger edge, @ref EXINT_Trigger_Sel for details             */
+    uint32_t u32ExIntCh;    /*!< ExInt CH.0~7 @ref EXINT_Channel_Sel */
+    uint32_t u32ExIntFAE;   /*!< ExInt filter clock, @ref EXINT_FilterAClock_Sel for details */
+    uint32_t u32ExIntFAClk; /*!< ExInt filter clock division, @ref EXINT_FilterAClock_Div for details */
+    uint32_t u32ExIntFBE;   /*!< ExInt filter clock, @ref EXINT_FilterBClock_Sel for details */
+    uint32_t u32ExIntFBTime;/*!< Nmi/ExInt filter B time, @ref NMI_EXINT_FilterBTim_Sel for details */
+    uint32_t u32ExIntLvl;   /*!< ExInt trigger edge, @ref EXINT_Trigger_Sel for details */
 }stc_exint_config_t;
 
 /**
@@ -271,21 +271,20 @@ typedef struct
  * @defgroup MNI_Register_Msk NMI register mask
  * @{
  */
-#define INTC_NMICR_MASK     (uint32_t)(INTC_NMICR_NMITRG | INTC_NMICR_NMIFCLK   |\
-                            INTC_NMICR_NMIFEN | INTC_NMICR_NOCSEL | \
-                            INTC_NMICR_NOCEN)
-#define INTC_NMIER_MASK     (uint32_t)(INTC_NMIER_NMIENR  | INTC_NMIER_SWDTENR |\
-                            INTC_NMIER_PVD1ENR  | INTC_NMIER_PVD2ENR | \
-                            INTC_NMIER_XTALSTPENR | INTC_NMIER_REPENR |\
+#define INTC_NMICR_MASK     (uint32_t)(INTC_NMICR_NMITRG | INTC_NMICR_NMIFCLK | \
+                            INTC_NMICR_NMIFEN | INTC_NMICR_NOCSEL | INTC_NMICR_NOCEN)
+#define INTC_NMIER_MASK     (uint32_t)(INTC_NMIER_NMIENR | INTC_NMIER_SWDTENR | \
+                            INTC_NMIER_PVD1ENR    | INTC_NMIER_PVD2ENR |        \
+                            INTC_NMIER_XTALSTPENR | INTC_NMIER_REPENR  |        \
                             INTC_NMIER_WDTENR)
-#define INTC_NMIFR_MASK     (uint32_t)(INTC_NMIFR_NMIFR   | INTC_NMIFR_SWDTFR  |\
-                            INTC_NMIFR_PVD1FR   | INTC_NMIFR_PVD2FR |\
-                              INTC_NMIFR_XTALSTPFR | INTC_NMIFR_REPFR |\
-                              INTC_NMIFR_WDTFR)
-#define INTC_NMICFR_MASK    (uint32_t)(INTC_NMICFR_NMICFR | INTC_NMICFR_SWDTCFR|\
-                            INTC_NMICFR_PVD1CFR | INTC_NMICFR_PVD2CFR |\
-                             INTC_NMICFR_XTALSTPCFR | INTC_NMICFR_REPCFR |\
-                             INTC_NMICFR_WDTCFR  )
+#define INTC_NMIFR_MASK     (uint32_t)(INTC_NMIFR_NMIFR  | INTC_NMIFR_SWDTFR  | \
+                            INTC_NMIFR_PVD1FR     | INTC_NMIFR_PVD2FR  |        \
+                            INTC_NMIFR_XTALSTPFR  | INTC_NMIFR_REPFR   |        \
+                            INTC_NMIFR_WDTFR)
+#define INTC_NMICFR_MASK    (uint32_t)(INTC_NMICFR_NMICFR| INTC_NMICFR_SWDTCFR| \
+                            INTC_NMICFR_PVD1CFR   | INTC_NMICFR_PVD2CFR|        \
+                            INTC_NMICFR_XTALSTPCFR| INTC_NMICFR_REPCFR |        \
+                             INTC_NMICFR_WDTCFR)
 /**
  * @}
  */
@@ -341,7 +340,7 @@ typedef struct
  */
 
 /**
- * @defgroup NMI_EXINT_FilterBTim_Sel External interrupt filter B time selection
+ * @defgroup NMI_EXINT_FilterBTim_Sel NMI/External pin interrupt filter B time selection
  * @{
  */
 #define NMI_EXINT_FBTIM_500NS       (uint32_t)(0UL << INTC_NMICR_NOCSEL_POS)
