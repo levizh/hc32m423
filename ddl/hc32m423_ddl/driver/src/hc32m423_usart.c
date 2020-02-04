@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-03       Hongjh          First version
+   2020-02-03       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -87,9 +87,10 @@
  */
 
 #define IS_USART_INSTANCE(x)                                                   \
-(   (M0P_USART1 == (x))                         ||                             \
-    (M0P_USART2 == (x))                         ||                             \
-    (M0P_USART3 == (x)))
+(   (M4_USART1 == (x))                          ||                             \
+    (M4_USART2 == (x))                          ||                             \
+    (M4_USART3 == (x))                          ||                             \
+    (M4_USART4 == (x)))
 
 #define IS_USART_FLAG(x)                                                       \
 (   (x) & (USART_FLAG_PE | USART_FLAG_FE | USART_FLAG_TC |                     \
@@ -193,15 +194,16 @@
  * @brief  Initialize UART function.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] pstcInit                Pointer to a @ref stc_uart_init_t structure (USARTx unit UART function configuration data structure).
  * @retval An en_result_t enumeration value:
  *           - Ok: Initialize successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance or pstcInit == NULL
  */
-en_result_t USART_UartInit(M0P_USART_TypeDef *USARTx,
+en_result_t USART_UartInit(M4_USART_TypeDef *USARTx,
                             const stc_uart_init_t *pstcInit)
 {
     en_result_t enRet = ErrorInvalidParameter;
@@ -253,15 +255,16 @@ en_result_t USART_UartInit(M0P_USART_TypeDef *USARTx,
  * @brief  Initialize UART half dulplex function.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] pstcInit                Pointer to a @ref stc_uart_init_t structure (USARTx unit UART half dulplex function configuration data structure).
  * @retval An en_result_t enumeration value:
  *           - Ok: Initialize successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance or pstcInit == NULL
  */
-en_result_t USART_HalfDuplexInit(M0P_USART_TypeDef *USARTx,
+en_result_t USART_HalfDuplexInit(M4_USART_TypeDef *USARTx,
                                             const stc_uart_init_t *pstcInit)
 {
     en_result_t enRet = ErrorInvalidParameter;
@@ -344,15 +347,16 @@ en_result_t USART_UartStructInit(stc_uart_init_t *pstcInit)
  * @brief  Initialize UART multiple processor function.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] pstcInit                Pointer to a @ref stc_uart_multiprocessor_init_t structure (USARTx unit UART multiple processor function configuration data structure).
  * @retval An en_result_t enumeration value:
  *           - Ok: Initialize successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance or pstcInit == NULL
  */
-en_result_t USART_MultiProcessorInit(M0P_USART_TypeDef *USARTx,
+en_result_t USART_MultiProcessorInit(M4_USART_TypeDef *USARTx,
                                 const stc_uart_multiprocessor_init_t *pstcInit)
 {
     en_result_t enRet = ErrorInvalidParameter;
@@ -430,99 +434,19 @@ en_result_t UART_MultiProcessorStructInit(stc_uart_multiprocessor_init_t *pstcIn
 }
 
 /**
- * @brief  Initialize LIN function.
- * @param  [in] USARTx                  Pointer to USART instance register base
- *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
- * @param  [in] pstcInit                Pointer to a @ref stc_lin_init_t structure (USARTx unit LIN function configuration data structure).
- * @retval An en_result_t enumeration value:
- *           - Ok: Initialize success
- *           - ErrorInvalidParameter: USARTx is invalid instance or pstcInit == NULL
- */
-en_result_t USART_LinInit(M0P_USART_TypeDef *USARTx,
-                                const stc_lin_init_t *pstcInit)
-{
-    en_result_t enRet = ErrorInvalidParameter;
-
-    /* Check USARTx instance and pstcInit */
-    if ((IS_USART_INSTANCE(USARTx)) && (NULL != pstcInit))
-    {
-        /* Check parameters */
-        DDL_ASSERT(IS_USART_CLOCK_MODE(pstcInit->u32ClkMode));
-        DDL_ASSERT(IS_USART_NOISE_FILTER(pstcInit->u32NoiseFilterState));
-        DDL_ASSERT(IS_USART_CLOCK_PRESCALER_DIV(pstcInit->u32ClkPrescaler));
-        DDL_ASSERT(IS_USART_OVERSAMPLING_BITS(pstcInit->u32OversamplingBits));
-        DDL_ASSERT(IS_USART_SB_DETECT_POLARITY(pstcInit->u32SbDetectPolarity));
-
-        /* Disbale TX/RX && clear interrupt flag */
-        WRITE_REG32(USARTx->CR1, (USART_CR1_CPE | USART_CR1_CFE | USART_CR1_CORE));
-
-        /* Set CR1 */
-        MODIFY_REG32(USARTx->CR1,
-                     (USART_CR1_SLME | USART_CR1_PS | USART_CR1_PCE |          \
-                      USART_CR1_M | USART_CR1_OVER8 | USART_CR1_MS  |          \
-                      USART_CR1_ML | USART_CR1_NFE | USART_CR1_SBS),           \
-                     (USART_MODE_UART | pstcInit->u32OversamplingBits |        \
-                      pstcInit->u32NoiseFilterState | pstcInit->u32SbDetectPolarity));
-
-        /* Set CR2 */
-        WRITE_REG32(USARTx->CR2, (pstcInit->u32ClkMode | USART_CR2_LINEN));
-
-        /* Set CR3 */
-        WRITE_REG32(USARTx->CR3, pstcInit->u32HwFlowCtrl);
-
-        /* Set PR */
-        WRITE_REG32(USARTx->PR, pstcInit->u32ClkPrescaler);
-
-        /* Set baudrate */
-        enRet = USART_SetBaudrate(USARTx, pstcInit->u32Baudrate, NULL);
-    }
-
-    return enRet;
-}
-
-/**
- * @brief  Set the fields of structure stc_lin_init_t to default values.
- * @param  [out] pstcInit               Pointer to a @ref stc_lin_init_t structure (USARTx unit LIN function configuration data structure).
- * @retval An en_result_t enumeration value:
- *           - Ok: Initialize success
- *           - ErrorInvalidParameter: UpstcInit == NULL
- */
-en_result_t USART_LinStructInit(stc_lin_init_t *pstcInit)
-{
-    en_result_t enRet = ErrorInvalidParameter;
-
-    /* Check parameters */
-    if (NULL != pstcInit)
-    {
-        pstcInit->u32Baudrate = 9600UL;
-        pstcInit->u32ClkMode = USART_INTCLK_NONE_OUTPUT;
-        pstcInit->u32ClkPrescaler = USART_CLK_PRESCALER_DIV1;
-        pstcInit->u32NoiseFilterState = USART_NOISE_FILTER_DISABLE;
-        pstcInit->u32OversamplingBits = USART_OVERSAMPLING_BITS_16;
-        pstcInit->u32SbDetectPolarity = USART_SB_DETECT_LOW;
-        pstcInit->u32HwFlowCtrl = USART_HWFLOWCTRL_RTS;
-        enRet = Ok;
-    }
-
-    return enRet;
-}
-
-/**
  * @brief  Initialize CLKSYNC function.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] pstcInit                Pointer to a @ref stc_clksync_init_t structure (USARTx unit CLKSYNC function configuration data structure).
  * @retval An en_result_t enumeration value:
  *           - Ok: Initialize successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance or pstcInit == NULL
  */
-en_result_t USART_ClkSyncInit(M0P_USART_TypeDef *USARTx,
+en_result_t USART_ClkSyncInit(M4_USART_TypeDef *USARTx,
                                         const stc_clksync_init_t *pstcInit)
 {
     en_result_t enRet = ErrorInvalidParameter;
@@ -591,14 +515,15 @@ en_result_t USART_ClkSyncStructInit(stc_clksync_init_t *pstcInit)
  * @brief  De-Initialize USART function.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval An en_result_t enumeration value:
  *           - Ok: De-Initialize successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_DeInit(M0P_USART_TypeDef *USARTx)
+en_result_t USART_DeInit(M4_USART_TypeDef *USARTx)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -622,9 +547,10 @@ en_result_t USART_DeInit(M0P_USART_TypeDef *USARTx)
  * @brief  Enable/disable USART Transmit/Receive Function.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32Func                 USART function type
  *         This parameter can be any composed value of the following values:
  *           @arg USART_RX:             USART RX function
@@ -638,7 +564,7 @@ en_result_t USART_DeInit(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_FuncCmd(M0P_USART_TypeDef *USARTx,
+en_result_t USART_FuncCmd(M4_USART_TypeDef *USARTx,
                             uint32_t u32Func,
                             en_functional_state_t enNewSta)
 {
@@ -662,9 +588,10 @@ en_result_t USART_FuncCmd(M0P_USART_TypeDef *USARTx,
  * @brief  Get USART interrupt state.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32Func                 USART function type
  *         This parameter can be one of the following values:
  *           @arg USART_TX:             USART TX function
@@ -675,7 +602,7 @@ en_result_t USART_FuncCmd(M0P_USART_TypeDef *USARTx,
  *           - Enable: Enable function
  *           - Disable: Disable function
  */
-en_functional_state_t USART_GetFuncState(M0P_USART_TypeDef *USARTx,
+en_functional_state_t USART_GetFuncState(M4_USART_TypeDef *USARTx,
                             uint32_t u32Func)
 {
     /* Check parameters */
@@ -689,9 +616,10 @@ en_functional_state_t USART_GetFuncState(M0P_USART_TypeDef *USARTx,
  * @brief  Get USART flag.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32Flag                 USART flag type
  *         This parameter can be one of the following values:
  *           @arg USART_FLAG_PE:        Parity error flag
@@ -705,7 +633,7 @@ en_functional_state_t USART_GetFuncState(M0P_USART_TypeDef *USARTx,
  *           - Set: Flag is set
  *           - Reset: Flag is reset
  */
-en_flag_status_t USART_GetFlag(M0P_USART_TypeDef *USARTx, uint32_t u32Flag)
+en_flag_status_t USART_GetFlag(M4_USART_TypeDef *USARTx, uint32_t u32Flag)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -718,9 +646,10 @@ en_flag_status_t USART_GetFlag(M0P_USART_TypeDef *USARTx, uint32_t u32Flag)
  * @brief  Get USART flag.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32Flag                 USART flag type
  *         This parameter can be any composed value of the following values:
  *           @arg USART_CLEAR_FLAG_PE:  Clear Parity error flag
@@ -730,7 +659,7 @@ en_flag_status_t USART_GetFlag(M0P_USART_TypeDef *USARTx, uint32_t u32Flag)
  *           - Ok: Clear successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_ClearFlag(M0P_USART_TypeDef *USARTx, uint32_t u32Flag)
+en_result_t USART_ClearFlag(M4_USART_TypeDef *USARTx, uint32_t u32Flag)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -751,16 +680,17 @@ en_result_t USART_ClearFlag(M0P_USART_TypeDef *USARTx, uint32_t u32Flag)
  * @brief  Set USART silence mode.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] enNewSta                The function new state.
  *           @arg  This parameter can be: Enable or Disable.
  * @retval An en_result_t enumeration value:
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SilenceModeCmd(M0P_USART_TypeDef *USARTx, en_functional_state_t enNewSta)
+en_result_t USART_SilenceModeCmd(M4_USART_TypeDef *USARTx, en_functional_state_t enNewSta)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -781,14 +711,15 @@ en_result_t USART_SilenceModeCmd(M0P_USART_TypeDef *USARTx, en_functional_state_
  * @brief  Get USART silence mode.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg Enable:               UART silence mode
  *           @arg Disable:              UART normal mode
  */
-en_functional_state_t USART_GetSilenceModeState(M0P_USART_TypeDef *USARTx)
+en_functional_state_t USART_GetSilenceModeState(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -800,9 +731,10 @@ en_functional_state_t USART_GetSilenceModeState(M0P_USART_TypeDef *USARTx)
  * @brief  Set USART transmission type.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32Type                 USART transmission content type
  *         This parameter can be one of the following values:
  *           @arg USART_TRANSMISSION_ID     USART transmission content type is processor ID
@@ -811,7 +743,7 @@ en_functional_state_t USART_GetSilenceModeState(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetTransmissionType(M0P_USART_TypeDef *USARTx, uint32_t u32Type)
+en_result_t USART_SetTransmissionType(M4_USART_TypeDef *USARTx, uint32_t u32Type)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -832,14 +764,15 @@ en_result_t USART_SetTransmissionType(M0P_USART_TypeDef *USARTx, uint32_t u32Typ
  * @brief  Get USART transmission type.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_TRANSMISSION_ID     USART transmission content type is processor ID
  *           @arg USART_TRANSMISSION_DATA   USART transmission content type is frame data
  */
-uint32_t USART_GetTransmissionType(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetTransmissionType(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -851,9 +784,10 @@ uint32_t USART_GetTransmissionType(M0P_USART_TypeDef *USARTx)
  * @brief  Set USART parity.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32Parity               USART parity
  *         This parameter can be one of the following values:
  *           @arg USART_PARITY_NONE:    Parity control disabled
@@ -863,7 +797,7 @@ uint32_t USART_GetTransmissionType(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetParity(M0P_USART_TypeDef *USARTx, uint32_t u32Parity)
+en_result_t USART_SetParity(M4_USART_TypeDef *USARTx, uint32_t u32Parity)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -884,15 +818,16 @@ en_result_t USART_SetParity(M0P_USART_TypeDef *USARTx, uint32_t u32Parity)
  * @brief  Get USART parity.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_PARITY_NONE:    Parity control disabled
  *           @arg USART_PARITY_ODD:     Parity control enabled and Odd Parity is selected
  *           @arg USART_PARITY_EVEN:    Parity control enabled and Even Parity is selected
  */
-uint32_t USART_GetParity(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetParity(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -904,9 +839,10 @@ uint32_t USART_GetParity(M0P_USART_TypeDef *USARTx)
  * @brief  Set USART data width.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32DataWidth            USART data width
  *         This parameter can be one of the following values:
  *           @arg USART_DATA_WIDTH_BITS_8:  8 bits word length : Start bit, 8 data bits, n stop bits
@@ -915,7 +851,7 @@ uint32_t USART_GetParity(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetDataWidth(M0P_USART_TypeDef *USARTx, uint32_t u32DataWidth)
+en_result_t USART_SetDataWidth(M4_USART_TypeDef *USARTx, uint32_t u32DataWidth)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -936,14 +872,15 @@ en_result_t USART_SetDataWidth(M0P_USART_TypeDef *USARTx, uint32_t u32DataWidth)
  * @brief  Get USART data width.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_DATA_WIDTH_BITS_8:  8 bits word length : Start bit, 8 data bits, n stop bits
  *           @arg USART_DATA_WIDTH_BITS_9:  9 bits word length : Start bit, 9 data bits, n stop bits
  */
-uint32_t USART_GetDataWidth(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetDataWidth(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -955,9 +892,10 @@ uint32_t USART_GetDataWidth(M0P_USART_TypeDef *USARTx)
  * @brief  Set USART oversampling bits.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32OversamplingBits     USART oversampling bits
  *         This parameter can be one of the following values:
  *           @arg USART_OVERSAMPLING_BITS_8:    Oversampling by 8 bits
@@ -966,7 +904,7 @@ uint32_t USART_GetDataWidth(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetOversmaplingBits(M0P_USART_TypeDef *USARTx, uint32_t u32OversamplingBits)
+en_result_t USART_SetOversmaplingBits(M4_USART_TypeDef *USARTx, uint32_t u32OversamplingBits)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -987,14 +925,15 @@ en_result_t USART_SetOversmaplingBits(M0P_USART_TypeDef *USARTx, uint32_t u32Ove
  * @brief  Get USART oversampling bits.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_OVERSAMPLING_BITS_8:    Oversampling by 8 bits
  *           @arg USART_OVERSAMPLING_BITS_16:   Oversampling by 16 bits
  */
-uint32_t USART_GetOversmaplingBits(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetOversmaplingBits(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -1006,9 +945,10 @@ uint32_t USART_GetOversmaplingBits(M0P_USART_TypeDef *USARTx)
  * @brief  Set USART mode.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32Mode                 USART mode
  *         This parameter can be one of the following values:
  *           @arg USART_MODE_UART:      UART mode
@@ -1017,7 +957,7 @@ uint32_t USART_GetOversmaplingBits(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetMode(M0P_USART_TypeDef *USARTx, uint32_t u32Mode)
+en_result_t USART_SetMode(M4_USART_TypeDef *USARTx, uint32_t u32Mode)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -1038,14 +978,15 @@ en_result_t USART_SetMode(M0P_USART_TypeDef *USARTx, uint32_t u32Mode)
  * @brief  Get USART mode.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_MODE_UART:      UART mode
  *           @arg USART_MODE_CLKSYNC:   Clock synchronization
  */
-uint32_t USART_GetMode(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetMode(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -1057,9 +998,10 @@ uint32_t USART_GetMode(M0P_USART_TypeDef *USARTx)
  * @brief  Set USART bit direction.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32BitDir               USART bit direction
  *         This parameter can be one of the following values:
  *           @arg USART_MSB:            MSB(Most Significant Bit)
@@ -1068,7 +1010,7 @@ uint32_t USART_GetMode(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetBitDirection(M0P_USART_TypeDef *USARTx,
+en_result_t USART_SetBitDirection(M4_USART_TypeDef *USARTx,
                                         uint32_t u32BitDir)
 {
     en_result_t enRet = ErrorInvalidParameter;
@@ -1090,14 +1032,15 @@ en_result_t USART_SetBitDirection(M0P_USART_TypeDef *USARTx,
  * @brief  Get USART bit direction.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_MSB:            MSB(Most Significant Bit)
  *           @arg USART_LSB:            LSB(Least Significant Bit)
  */
-uint32_t USART_GetBitDirection(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetBitDirection(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -1109,9 +1052,10 @@ uint32_t USART_GetBitDirection(M0P_USART_TypeDef *USARTx)
  * @brief  Set USART start bit detect polarity.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32Polarity             USART start bit detect polarity
  *         This parameter can be one of the following values:
  *           @arg USART_SB_DETECT_LOW:      Detect RX pin low level
@@ -1120,7 +1064,7 @@ uint32_t USART_GetBitDirection(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetSbDetectPolarity(M0P_USART_TypeDef *USARTx,
+en_result_t USART_SetSbDetectPolarity(M4_USART_TypeDef *USARTx,
                                             uint32_t u32Polarity)
 {
     en_result_t enRet = ErrorInvalidParameter;
@@ -1142,14 +1086,15 @@ en_result_t USART_SetSbDetectPolarity(M0P_USART_TypeDef *USARTx,
  * @brief  Get USART start bit detect polarity.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_SB_DETECT_LOW:      Detect RX pin low level
  *           @arg USART_SB_DETECT_FALLING:  Detect RX pin falling edge
  */
-uint32_t USART_GetSbDetectPolarity(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetSbDetectPolarity(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -1161,9 +1106,10 @@ uint32_t USART_GetSbDetectPolarity(M0P_USART_TypeDef *USARTx)
  * @brief  Set USART clock mode.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32ClkMode              USART clock mode
  *         This parameter can be one of the following values:
  *           @arg USART_EXTCLK:             Select external clock source.
@@ -1173,7 +1119,7 @@ uint32_t USART_GetSbDetectPolarity(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetClockMode(M0P_USART_TypeDef *USARTx, uint32_t u32ClkMode)
+en_result_t USART_SetClockMode(M4_USART_TypeDef *USARTx, uint32_t u32ClkMode)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -1194,15 +1140,16 @@ en_result_t USART_SetClockMode(M0P_USART_TypeDef *USARTx, uint32_t u32ClkMode)
  * @brief  Get USART clock mode.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_EXTCLK:             Select external clock source.
  *           @arg USART_INTCLK_OUTPUT:      Select internal clock source and output clock.
  *           @arg USART_INTCLK_NONE_OUTPUT: Select internal clock source and don't output clock
  */
-uint32_t USART_GetClockMode(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetClockMode(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -1214,9 +1161,10 @@ uint32_t USART_GetClockMode(M0P_USART_TypeDef *USARTx)
  * @brief  Set USART stop bits.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32StopBits             USART stop bits
  *         This parameter can be one of the following values:
  *           @arg USART_STOP_BITS_1:    1 stop bit
@@ -1225,7 +1173,7 @@ uint32_t USART_GetClockMode(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetStopBits(M0P_USART_TypeDef *USARTx, uint32_t u32StopBits)
+en_result_t USART_SetStopBits(M4_USART_TypeDef *USARTx, uint32_t u32StopBits)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -1246,14 +1194,15 @@ en_result_t USART_SetStopBits(M0P_USART_TypeDef *USARTx, uint32_t u32StopBits)
  * @brief  Get USART clock mode.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_STOP_BITS_1:    1 stop bit
  *           @arg USART_STOP_BITS_2:    2 stop bits
  */
-uint32_t USART_GetStopBits(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetStopBits(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -1265,9 +1214,10 @@ uint32_t USART_GetStopBits(M0P_USART_TypeDef *USARTx)
  * @brief  Set UART half/full duplex selection.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32Mode                 USART half/full duplex selection
  *         This parameter can be one of the following values:
  *           @arg USART_HALFDUPLEX_MODE:USART half-duplex mode
@@ -1276,7 +1226,7 @@ uint32_t USART_GetStopBits(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetDuplexMode(M0P_USART_TypeDef *USARTx,
+en_result_t USART_SetDuplexMode(M4_USART_TypeDef *USARTx,
                                 uint32_t u32Mode)
 {
     en_result_t enRet = ErrorInvalidParameter;
@@ -1298,14 +1248,15 @@ en_result_t USART_SetDuplexMode(M0P_USART_TypeDef *USARTx,
  * @brief  Get USART half/full duplex.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_HALFDUPLEX_MODE:USART half-duplex mode
  *           @arg USART_FULLDUPLEX_MODE:USART full-duplex mode
  */
-uint32_t USART_GetDuplexMode(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetDuplexMode(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -1317,9 +1268,10 @@ uint32_t USART_GetDuplexMode(M0P_USART_TypeDef *USARTx)
  * @brief  Set UART hardware flow control CTS/RTS selection.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32HwFlowCtrl           USART hardware flow control CTS/RTS selection
  *         This parameter can be one of the following values:
  *           @arg USART_HWFLOWCTRL_CTS: UART hardware flow control CTS mode
@@ -1328,7 +1280,7 @@ uint32_t USART_GetDuplexMode(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetHwFlowCtrl(M0P_USART_TypeDef *USARTx,
+en_result_t USART_SetHwFlowCtrl(M4_USART_TypeDef *USARTx,
                                 uint32_t u32HwFlowCtrl)
 {
     en_result_t enRet = ErrorInvalidParameter;
@@ -1350,14 +1302,15 @@ en_result_t USART_SetHwFlowCtrl(M0P_USART_TypeDef *USARTx,
  * @brief  Get USART hardware flow control CTS/RTS selection.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_HWFLOWCTRL_CTS: UART hardware flow control CTS mode
  *           @arg USART_HWFLOWCTRL_RTS: UART hardware flow control RTS mode
  */
-uint32_t USART_GetHwFlowCtrl(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetHwFlowCtrl(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -1369,9 +1322,10 @@ uint32_t USART_GetHwFlowCtrl(M0P_USART_TypeDef *USARTx)
  * @brief  Set USART clock prescaler division.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32PrescalerDiv         USART clock prescaler division.
  *         This parameter can be one of the following values:
  *           @arg USART_CLK_PRESCALER_DIV1:     PCLK
@@ -1382,7 +1336,7 @@ uint32_t USART_GetHwFlowCtrl(M0P_USART_TypeDef *USARTx)
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance
  */
-en_result_t USART_SetClkPrescaler(M0P_USART_TypeDef *USARTx,
+en_result_t USART_SetClkPrescaler(M4_USART_TypeDef *USARTx,
                                     uint32_t u32PrescalerDiv)
 {
     en_result_t enRet = ErrorInvalidParameter;
@@ -1404,16 +1358,17 @@ en_result_t USART_SetClkPrescaler(M0P_USART_TypeDef *USARTx,
  * @brief  Get USART clock prescaler division.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @retval Returned value can be one of the following values:
  *           @arg USART_CLK_PRESCALER_DIV1:     PCLK
  *           @arg USART_CLK_PRESCALER_DIV4:     PCLK/4
  *           @arg USART_CLK_PRESCALER_DIV16:    PCLK/16
  *           @arg USART_CLK_PRESCALER_DIV64:    PCLK/64
  */
-uint32_t USART_GetClkPrescaler(M0P_USART_TypeDef *USARTx)
+uint32_t USART_GetClkPrescaler(M4_USART_TypeDef *USARTx)
 {
     /* Check parameters */
     DDL_ASSERT(IS_USART_INSTANCE(USARTx));
@@ -1425,16 +1380,17 @@ uint32_t USART_GetClkPrescaler(M0P_USART_TypeDef *USARTx)
  * @brief  Set USART baudrate.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:            USART unit 1 instance register base
+ *           @arg M4_USART2:            USART unit 2 instance register base
+ *           @arg M4_USART3:            USART unit 3 instance register base
+ *           @arg M4_USART4:            USART unit 4 instance register base
  * @param  [in] u32Baudrate             UART baudrate
  * @param  [in] pf32Err                 E(%) baudrate error rate
  * @retval An en_result_t enumeration value:
  *           - Ok: Set successfully
  *           - ErrorInvalidParameter: USARTx is invalid instance or DIV_Integer is out of range
  */
-en_result_t USART_SetBaudrate(M0P_USART_TypeDef *USARTx,
+en_result_t USART_SetBaudrate(M4_USART_TypeDef *USARTx,
                                     uint32_t u32Baudrate,
                                     float32_t *pf32Err)
 {

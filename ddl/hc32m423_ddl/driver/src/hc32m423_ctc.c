@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-03       Hongjh          First version
+   2020-02-03       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -176,7 +176,7 @@ en_result_t CTC_Init(const stc_ctc_init_t *pstcInit)
     en_result_t enRet = ErrorNotReady;
 
     /* Check CTC status */
-    if (!(READ_REG32_BIT(M0P_CTC->STR, CTC_FLAG_BUSY)))
+    if (!(READ_REG32_BIT(M4_CTC->STR, CTC_FLAG_BUSY)))
     {
         enRet = ErrorInvalidParameter;
 
@@ -212,13 +212,13 @@ en_result_t CTC_Init(const stc_ctc_init_t *pstcInit)
             if ((IS_CTC_OFFSET_VAL(u32OffsetVal)) && (IS_CTC_RELOAD_VAL(u32ReloadVal)))
             {
                 /* Set CR1 */
-                WRITE_REG32(M0P_CTC->CR1,                                      \
+                WRITE_REG32(M4_CTC->CR1,                                       \
                             (pstcInit->u32RefclkPrescaler |                    \
                              pstcInit->u32RefClkSel       |                    \
                              (pstcInit->u32TrmVal << CTC_CR1_TRMVAL_POS)));
 
                 /* Set CR2 */
-                WRITE_REG32(M0P_CTC->CR2, ((u32ReloadVal << CTC_CR2_RLDVAL_POS) | u32OffsetVal));
+                WRITE_REG32(M4_CTC->CR2, ((u32ReloadVal << CTC_CR2_RLDVAL_POS) | u32OffsetVal));
                 enRet = Ok;
             }
         }
@@ -264,11 +264,11 @@ en_result_t CTC_DeInit(void)
     en_result_t enRet = ErrorNotReady;
 
     /* Check CTC status */
-    if (!(READ_REG32_BIT(M0P_CTC->STR, CTC_FLAG_BUSY)))
+    if (!(READ_REG32_BIT(M4_CTC->STR, CTC_FLAG_BUSY)))
     {
         /* Configures the registers to reset value. */
-        WRITE_REG32(M0P_CTC->CR1, 0x80000000UL);
-        WRITE_REG32(M0P_CTC->CR2, 0x00000000UL);
+        WRITE_REG32(M4_CTC->CR1, 0x80000000UL);
+        WRITE_REG32(M4_CTC->CR2, 0x00000000UL);
         enRet = Ok;
     }
 
@@ -294,7 +294,7 @@ void CTC_SetRefClkPrescaler(uint32_t u32Prescaler)
     /* Check parameters */
     DDL_ASSERT(IS_CTC_REFCLK_PRESCALER_DIV(u32Prescaler));
 
-    MODIFY_REG32(M0P_CTC->CR1, CTC_CR1_REFPSC, u32Prescaler);
+    MODIFY_REG32(M4_CTC->CR1, CTC_CR1_REFPSC, u32Prescaler);
 }
 
 /**
@@ -312,7 +312,7 @@ void CTC_SetRefClkPrescaler(uint32_t u32Prescaler)
  */
 uint32_t CTC_GetRefClkPrescaler(void)
 {
-    return READ_REG32_BIT(M0P_CTC->CR1, CTC_CR1_REFPSC);
+    return READ_REG32_BIT(M4_CTC->CR1, CTC_CR1_REFPSC);
 }
 
 /**
@@ -328,7 +328,7 @@ void CTC_SetRefClkSource(uint32_t u32RefClk)
     /* Check parameters */
     DDL_ASSERT(IS_CTC_REFCLK_SEL(u32RefClk));
 
-    MODIFY_REG32(M0P_CTC->CR1, CTC_CR1_REFCKS, u32RefClk);
+    MODIFY_REG32(M4_CTC->CR1, CTC_CR1_REFCKS, u32RefClk);
 }
 
 /**
@@ -340,7 +340,7 @@ void CTC_SetRefClkSource(uint32_t u32RefClk)
  */
 uint32_t CTC_GetRefClkSource(void)
 {
-    return READ_REG32_BIT(M0P_CTC->CR1, CTC_CR1_REFCKS);
+    return READ_REG32_BIT(M4_CTC->CR1, CTC_CR1_REFCKS);
 }
 
 /**
@@ -357,7 +357,7 @@ uint32_t CTC_GetRefClkSource(void)
  */
 en_flag_status_t CTC_GetFlag(uint32_t u32Flag)
 {
-    return ((u32Flag == READ_REG32_BIT(M0P_CTC->STR, u32Flag)) ? Set : Reset);
+    return ((u32Flag == READ_REG32_BIT(M4_CTC->STR, u32Flag)) ? Set : Reset);
 }
 
 /**
@@ -371,7 +371,7 @@ void CTC_SetTrmVal(uint8_t u8TrmVal)
     /* Check parameters */
     DDL_ASSERT(IS_CTC_TRM_VAL(u8TrmVal));
 
-    MODIFY_REG32(M0P_CTC->CR1, CTC_CR1_TRMVAL, (((uint32_t)u8TrmVal) << CTC_CR1_TRMVAL_POS));
+    MODIFY_REG32(M4_CTC->CR1, CTC_CR1_TRMVAL, (((uint32_t)u8TrmVal) << CTC_CR1_TRMVAL_POS));
 }
 
 /**
@@ -381,7 +381,7 @@ void CTC_SetTrmVal(uint8_t u8TrmVal)
  */
 uint8_t CTC_GetTrmVal(void)
 {
-    return ((uint8_t)(READ_REG32(M0P_CTC->CR1) >> CTC_CR1_TRMVAL_POS));
+    return ((uint8_t)(READ_REG32(M4_CTC->CR1) >> CTC_CR1_TRMVAL_POS));
 }
 
 /**
@@ -392,7 +392,7 @@ uint8_t CTC_GetTrmVal(void)
  */
 void CTC_SetReloadVal(uint16_t u16ReloadVal)
 {
-    MODIFY_REG32(M0P_CTC->CR2, CTC_CR2_RLDVAL, (((uint32_t)u16ReloadVal) << CTC_CR2_RLDVAL_POS));
+    MODIFY_REG32(M4_CTC->CR2, CTC_CR2_RLDVAL, (((uint32_t)u16ReloadVal) << CTC_CR2_RLDVAL_POS));
 }
 
 /**
@@ -402,7 +402,7 @@ void CTC_SetReloadVal(uint16_t u16ReloadVal)
  */
 uint16_t CTC_GetReloadVal(void)
 {
-    return ((uint16_t)(READ_REG32(M0P_CTC->CR2) >> CTC_CR2_RLDVAL_POS));
+    return ((uint16_t)(READ_REG32(M4_CTC->CR2) >> CTC_CR2_RLDVAL_POS));
 }
 
 /**
@@ -413,7 +413,7 @@ uint16_t CTC_GetReloadVal(void)
  */
 void CTC_SetOffsetVal(uint8_t u8OffsetVal)
 {
-    MODIFY_REG32(M0P_CTC->CR2, CTC_CR2_OFSVAL, (((uint32_t)u8OffsetVal) << CTC_CR2_OFSVAL_POS));
+    MODIFY_REG32(M4_CTC->CR2, CTC_CR2_OFSVAL, (((uint32_t)u8OffsetVal) << CTC_CR2_OFSVAL_POS));
 }
 
 /**
@@ -423,7 +423,7 @@ void CTC_SetOffsetVal(uint8_t u8OffsetVal)
  */
 uint8_t CTC_GetOffsetVal(void)
 {
-    return ((uint8_t)(READ_REG32(M0P_CTC->CR2) >> CTC_CR2_OFSVAL_POS));
+    return ((uint8_t)(READ_REG32(M4_CTC->CR2) >> CTC_CR2_OFSVAL_POS));
 }
 
 /**

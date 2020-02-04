@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-24       Hongjh          First version
+   2020-02-03       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -134,6 +134,10 @@
 (   ((x) == TIMER4_CNT_FLAG_ZERO)               ||                             \
     ((x) == TIMER4_CNT_FLAG_PEAK))
 
+#define IS_VALID_TIMER4_CNT_DIRSIG(x)                                          \
+(   ((x) == TIMER4_CNT_CNTDIRSIG_OUTPUT_ENABLE) ||                             \
+    ((x) == TIMER4_CNT_CNTDIRSIG_OUTPUT_DISABLE))
+
 #define IS_VALID_TIMER4_OCO_CH(x)                                              \
 (   ((x) == TIMER4_OCO_UH)                      ||                             \
     ((x) == TIMER4_OCO_UL)                      ||                             \
@@ -187,6 +191,14 @@
     ((x) == TIMER4_PWM_V)                       ||                             \
     ((x) == TIMER4_PWM_W))
 
+#define IS_VALID_TIMER4_PWM_PORT(x)                                            \
+(   ((x) == TIMER4_PWM_PORT_OUH)                ||                             \
+    ((x) == TIMER4_PWM_PORT_OUL)                ||                             \
+    ((x) == TIMER4_PWM_PORT_OVH)                ||                             \
+    ((x) == TIMER4_PWM_PORT_OVL)                ||                             \
+    ((x) == TIMER4_PWM_PORT_OWH)                ||                             \
+    ((x) == TIMER4_PWM_PORT_OWL))
+
 #define IS_VALID_TIMER4_PWM_MODE(x)                                            \
 (   ((x) == TIMER4_PWM_THROUGH_MODE)            ||                             \
     ((x) == TIMER4_PWM_DEAD_TIMER_MODE)         ||                             \
@@ -207,6 +219,17 @@
     ((x) == TIMER4_PWM_CLK_DIV32)               ||                             \
     ((x) == TIMER4_PWM_CLK_DIV64)               ||                             \
     ((x) == TIMER4_PWM_CLK_DIV128))
+
+#define IS_VALID_TIMER4_PWM_PORT_OUTPUT_STATE(x)                               \
+(   ((x) == TIMER4_PWM_PORT_OUTPUT_NORMAL)      ||                             \
+    ((x) == TIMER4_PWM_PORT_OUTPUT_HIZ)         ||                             \
+    ((x) == TIMER4_PWM_PORT_OUTPUT_LOW)         ||                             \
+    ((x) == TIMER4_PWM_PORT_OUTPUT_HIGH))
+
+#define IS_VALID_TIMER4_PWM_PORT_ENBIT_EFFECT(x)                               \
+(   ((x) == TIMER4_PWM_PORT_ENBIT_EFFECT_IMMEDIATE)     ||                     \
+    ((x) == TIMER4_PWM_PORT_ENBIT_EFFECT_CNTUVF)        ||                     \
+    ((x) == TIMER4_PWM_PORT_ENBIT_EFFECT_CNTOVF))
 
 #define IS_VALID_TIMER4_SEVT_CH(x)                                             \
 (   ((x) == TIMER4_SEVT_UH)                     ||                             \
@@ -252,12 +275,14 @@
     ((x) == TIMER4_SEVT_BUF_CNT_PEAK)           ||                             \
     ((x) == TIMER4_SEVT_BUF_CNT_ZERO_OR_PEAK))
 
-#define IS_VALID_TIMER4_EMB_PWM_OP(x)                                          \
-(   ((x) == TIMER4_EMB_TRIG_PWM_OP_NORMAL)      ||                             \
-    ((x) == TIMER4_EMB_TRIG_PWM_OP_HOLD)        ||                             \
-    ((x) == TIMER4_EMB_TRIG_PWM_OP_HIZ)         ||                             \
-    ((x) == TIMER4_EMB_TRIG_PWM_OP_LOW)         ||                             \
-    ((x) == TIMER4_EMB_TRIG_PWM_OP_HIGH))
+#define IS_VALID_TIMER4_SEVT_EVTSIG_OUTPUT(x)                                  \
+(   ((x) == TIMER4_SEVT_EVTSIG0_OUTPUT)         ||                             \
+    ((x) == TIMER4_SEVT_EVTSIG1_OUTPUT)         ||                             \
+    ((x) == TIMER4_SEVT_EVTSIG2_OUTPUT)         ||                             \
+    ((x) == TIMER4_SEVT_EVTSIG3_OUTPUT)         ||                             \
+    ((x) == TIMER4_SEVT_EVTSIG4_OUTPUT)         ||                             \
+    ((x) == TIMER4_SEVT_EVTSIG5_OUTPUT)         ||                             \
+    ((x) == TIMER4_SEVT_EVTSIGx_OUTPUT_DISABLE))
 
 /**
  * @}
@@ -381,11 +406,11 @@ en_result_t TIMER4_CNT_Init(const stc_timer4_cnt_init_t *pstcInit)
         DDL_ASSERT(IS_VALID_TIMER4_CNT_INT_MSK(pstcInit->u16PeakIntMask));
 
         /* Set default value */
-        WRITE_REG16(M0P_TMR4->CCSR, 0x0050U);
-        WRITE_REG16(M0P_TMR4->CVPR, 0x0000U);
+        WRITE_REG16(M4_TMR4->CCSR, 0x0050U);
+        WRITE_REG16(M4_TMR4->CVPR, 0x0000U);
 
         /* Set count clock div && cnt mode && buffer enable bit && external clock enable bit && interrupt enable bit */
-        WRITE_REG16(M0P_TMR4->CCSR, \
+        WRITE_REG16(M4_TMR4->CCSR, \
                     (pstcInit->u16ClkDiv  | \
                      pstcInit->u16ClkSrc  | \
                      pstcInit->u16CntMode | \
@@ -395,10 +420,10 @@ en_result_t TIMER4_CNT_Init(const stc_timer4_cnt_init_t *pstcInit)
                      (uint16_t)((uint16_t)pstcInit->enPeakIntCmd << TMR4_CCSR_IRQPEN_POS)));
 
         /* set interrupt mask times */
-        WRITE_REG16(M0P_TMR4->CVPR, (pstcInit->u16ZeroIntMask | ((uint16_t)(pstcInit->u16PeakIntMask << TMR4_CVPR_PIM_POS))));
+        WRITE_REG16(M4_TMR4->CVPR, (pstcInit->u16ZeroIntMask | ((uint16_t)(pstcInit->u16PeakIntMask << TMR4_CVPR_PIM_POS))));
 
         /* Set Timer4 cycle */
-        WRITE_REG16(M0P_TMR4->CPSR, pstcInit->u16CycleVal);
+        WRITE_REG16(M4_TMR4->CPSR, pstcInit->u16CycleVal);
         enRet = Ok;
     }
 
@@ -407,7 +432,7 @@ en_result_t TIMER4_CNT_Init(const stc_timer4_cnt_init_t *pstcInit)
 
 /**
  * @brief  Set the fields of structure stc_timer4_cnt_init_t to default values
- * @param  [out] pstcInit               Pointer to a @ref stc_timer4_cnt_init_t structure (M0P_TMR4 unit base function configuration data structure)
+ * @param  [out] pstcInit               Pointer to a @ref stc_timer4_cnt_init_t structure (M4_TMR4 unit base function configuration data structure)
  * @retval An en_result_t enumeration value:
  *           - Ok: Initialize successfully
  *           - ErrorInvalidParameter: pstcInit = NULL
@@ -442,9 +467,9 @@ en_result_t TIMER4_CNT_StructInit(stc_timer4_cnt_init_t *pstcInit)
 en_result_t TIMER4_CNT_DeInit(void)
 {
     /* Configures the registers to reset value. */
-    WRITE_REG16(M0P_TMR4->CCSR, 0x0050U);
-    WRITE_REG16(M0P_TMR4->CPSR, 0xFFFFu);
-    WRITE_REG16(M0P_TMR4->CVPR, 0x0000U);
+    WRITE_REG16(M4_TMR4->CCSR, 0x0050U);
+    WRITE_REG16(M4_TMR4->CPSR, 0xFFFFu);
+    WRITE_REG16(M4_TMR4->CVPR, 0x0000U);
 
     return Ok;
 }
@@ -471,7 +496,7 @@ void TIMER4_CNT_SetClkDiv(uint16_t u16Div)
     /* Check parameters */
     DDL_ASSERT(IS_VALID_TIMER4_CNT_CLK_DIV(u16Div));
 
-    MODIFY_REG16(M0P_TMR4->CCSR, TMR4_CCSR_CKDIV, u16Div);
+    MODIFY_REG16(M4_TMR4->CCSR, TMR4_CCSR_CKDIV, u16Div);
 }
 
 /**
@@ -492,7 +517,7 @@ void TIMER4_CNT_SetClkDiv(uint16_t u16Div)
  */
 uint16_t TIMER4_CNT_GetClkDiv(void)
 {
-    return READ_REG16_BIT(M0P_TMR4->CCSR, TMR4_CCSR_CKDIV);
+    return READ_REG16_BIT(M4_TMR4->CCSR, TMR4_CCSR_CKDIV);
 }
 
 /**
@@ -514,10 +539,10 @@ void TIMER4_CNT_IntCmd(uint16_t u16IntSource, en_functional_state_t enNewSta)
     switch (u16IntSource)
     {
         case TIMER4_CNT_IT_ZERO:
-            bM0P_TMR4->CCSR_b.IRQZEN = enNewSta;
+            bM4_TMR4->CCSR_b.IRQZEN = enNewSta;
             break;
         case TIMER4_CNT_IT_PEAK:
-            bM0P_TMR4->CCSR_b.IRQPEN = enNewSta;
+            bM4_TMR4->CCSR_b.IRQPEN = enNewSta;
             break;
         default:
             break;
@@ -559,10 +584,10 @@ void TIMER4_CNT_SetIntMaskTimes(uint16_t u16IntSource,
     switch (u16IntSource)
     {
         case TIMER4_CNT_IT_ZERO:
-            MODIFY_REG16(M0P_TMR4->CVPR, TMR4_CVPR_ZIM, (uint16_t)(u16MaskTimes << TMR4_CVPR_ZIM_POS));
+            MODIFY_REG16(M4_TMR4->CVPR, TMR4_CVPR_ZIM, (uint16_t)(u16MaskTimes << TMR4_CVPR_ZIM_POS));
             break;
         case TIMER4_CNT_IT_PEAK:
-            MODIFY_REG16(M0P_TMR4->CVPR, TMR4_CVPR_PIM, (uint16_t)(u16MaskTimes << TMR4_CVPR_PIM_POS));
+            MODIFY_REG16(M4_TMR4->CVPR, TMR4_CVPR_PIM, (uint16_t)(u16MaskTimes << TMR4_CVPR_PIM_POS));
             break;
         default:
             break;
@@ -604,10 +629,10 @@ uint16_t TIMER4_CNT_GetIntMaskTimes(uint16_t u16IntSource)
     switch (u16IntSource)
     {
         case TIMER4_CNT_IT_ZERO:
-            u16MaskTimes = (uint16_t)(READ_REG16_BIT(M0P_TMR4->CVPR, TMR4_CVPR_ZIM) >> TMR4_CVPR_ZIM_POS);
+            u16MaskTimes = (uint16_t)(READ_REG16_BIT(M4_TMR4->CVPR, TMR4_CVPR_ZIM) >> TMR4_CVPR_ZIM_POS);
             break;
         case TIMER4_CNT_IT_PEAK:
-            u16MaskTimes = (uint16_t)(READ_REG16_BIT(M0P_TMR4->CVPR, TMR4_CVPR_PIM) >> TMR4_CVPR_PIM_POS);
+            u16MaskTimes = (uint16_t)(READ_REG16_BIT(M4_TMR4->CVPR, TMR4_CVPR_PIM) >> TMR4_CVPR_PIM_POS);
             break;
         default:
             u16MaskTimes = TIMER4_RESULT_ERROR;
@@ -652,10 +677,10 @@ uint16_t TIMER4_CNT_GetIntMaskCurrenTimes(uint16_t u16IntSource)
     switch (u16IntSource)
     {
         case TIMER4_CNT_IT_ZERO:
-            u16MaskTimes = (uint16_t)(READ_REG16_BIT(M0P_TMR4->CVPR, TMR4_CVPR_ZIC) >> TMR4_CVPR_ZIC_POS);
+            u16MaskTimes = (uint16_t)(READ_REG16_BIT(M4_TMR4->CVPR, TMR4_CVPR_ZIC) >> TMR4_CVPR_ZIC_POS);
             break;
         case TIMER4_CNT_IT_PEAK:
-            u16MaskTimes = (uint16_t)(READ_REG16_BIT(M0P_TMR4->CVPR, TMR4_CVPR_PIC) >> TMR4_CVPR_PIC_POS);
+            u16MaskTimes = (uint16_t)(READ_REG16_BIT(M4_TMR4->CVPR, TMR4_CVPR_PIC) >> TMR4_CVPR_PIC_POS);
             break;
         default:
             u16MaskTimes = TIMER4_RESULT_ERROR;
@@ -664,6 +689,22 @@ uint16_t TIMER4_CNT_GetIntMaskCurrenTimes(uint16_t u16IntSource)
 
     return u16MaskTimes;
 }
+
+/**
+ * @brief  Set Timer4 CNT count direction signal output to port
+ * @param  [in] u16CntDirSig         Timer4 CNT count direction signal selection
+ *         This parameter can be one of the following values:
+ *           @arg TIMER4_CNT_CNTDIRSIG_OUTPUT_DISABLE:  Disable output count direction signal
+ *           @arg TIMER4_CNT_CNTDIRSIG_OUTPUT_ENABLE:   Enable output count direction signal
+ * @retval None
+ */
+void TIMER4_CNT_SetCntDirSigOutput(uint16_t u16CntDirSig)
+{
+    DDL_ASSERT(IS_VALID_TIMER4_CNT_DIRSIG(u16CntDirSig));
+
+    WRITE_REG32(bM4_TMR4->SCER_b.PCTS, (u16CntDirSig == TIMER4_CNT_CNTDIRSIG_OUTPUT_ENABLE) ? 1UL : 0UL);
+}
+
 /**
  * @}
  */
@@ -710,9 +751,9 @@ en_result_t TIMER4_OCO_Init(uint32_t u32Ch,
 
         enRet = Ok;
         /* Get pointer of current channel OCO register address */
-        TMR4_OCSR = TMR4_OCSRx(M0P_TMR4, u32Ch);
-        TMR4_OCER = TMR4_OCERx(M0P_TMR4, u32Ch);
-        TMR4_OCCR = TMR4_OCCRx(M0P_TMR4, u32Ch);
+        TMR4_OCSR = TMR4_OCSRx(M4_TMR4, u32Ch);
+        TMR4_OCER = TMR4_OCERx(M4_TMR4, u32Ch);
+        TMR4_OCCR = TMR4_OCCRx(M4_TMR4, u32Ch);
 
         /* Set OCMR and OCCR buffer mode */
         if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch)) /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
@@ -822,8 +863,8 @@ en_result_t TIMER4_OCO_DeInit(uint32_t u32Ch)
     en_result_t enRet = Ok;
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCSR = TMR4_OCSRx(M0P_TMR4, u32Ch);
-    TMR4_OCER = TMR4_OCERx(M0P_TMR4, u32Ch);
+    TMR4_OCSR = TMR4_OCSRx(M4_TMR4, u32Ch);
+    TMR4_OCER = TMR4_OCERx(M4_TMR4, u32Ch);
 
     /* Set OCMR and OCCR buffer mode */
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch)) /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
@@ -892,7 +933,7 @@ en_result_t TIMER4_OCO_SetOccrBufMode(uint32_t u32Ch,
     DDL_ASSERT(IS_VALID_TIMER4_OCO_OCCR_BUF_MODE(u16OccrBufMode));
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCER = TMR4_OCERx(M0P_TMR4, u32Ch);
+    TMR4_OCER = TMR4_OCERx(M4_TMR4, u32Ch);
 
     /* Set OCCR buffer mode */
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
@@ -934,7 +975,7 @@ uint16_t TIMER4_OCO_GetOccrBufMode(uint32_t u32Ch)
     __IO uint16_t *TMR4_OCER;
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCER = TMR4_OCERx(M0P_TMR4, u32Ch);
+    TMR4_OCER = TMR4_OCERx(M4_TMR4, u32Ch);
 
     /* Get OCCR buffer mode */
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
@@ -979,7 +1020,7 @@ en_result_t TIMER4_OCO_OccrLinkTransferCmd(uint32_t u32Ch,
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCER = TMR4_OCERx(M0P_TMR4, u32Ch);
+    TMR4_OCER = TMR4_OCERx(M4_TMR4, u32Ch);
 
     /* Set OCCR link transfer */
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
@@ -1028,7 +1069,7 @@ en_result_t TIMER4_OCO_SetOcmrBufMode(uint32_t u32Ch,
     DDL_ASSERT(IS_VALID_TIMER4_OCO_OCMR_BUF_MODE(u16OcmrBufMode));
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCER = TMR4_OCERx(M0P_TMR4, u32Ch);
+    TMR4_OCER = TMR4_OCERx(M4_TMR4, u32Ch);
 
     /* Set OCMR buffer mode */
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
@@ -1071,7 +1112,7 @@ uint16_t TIMER4_OCO_GetOcmrBufMode(uint32_t u32Ch)
     __IO uint16_t *TMR4_OCER;
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCER = TMR4_OCERx(M0P_TMR4, u32Ch);
+    TMR4_OCER = TMR4_OCERx(M4_TMR4, u32Ch);
 
     /* Get OCMR buffer mode */
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
@@ -1116,7 +1157,7 @@ en_result_t TIMER4_OCO_OcmrLinkTransferCmd(uint32_t u32Ch,
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCER = TMR4_OCERx(M0P_TMR4, u32Ch);
+    TMR4_OCER = TMR4_OCERx(M4_TMR4, u32Ch);
 
     /* Set OCCR link transfer */
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
@@ -1161,7 +1202,7 @@ en_result_t TIMER4_OCO_ExtMatchCondCmd(uint32_t u32Ch,
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCER = TMR4_OCERx(M0P_TMR4, u32Ch);
+    TMR4_OCER = TMR4_OCERx(M4_TMR4, u32Ch);
 
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
     {
@@ -1205,8 +1246,8 @@ en_result_t TIMER4_OCO_SetHighChCompareMode(uint32_t u32Ch,
         DDL_ASSERT(IS_FUNCTIONAL_STATE(pstcMode->enExtendMatchCondCmd));
 
         /* Get pointer of current channel OCO register address */
-        TMR4_OCER = TMR4_OCERx(M0P_TMR4, u32Ch);
-        TMR4_OCMR = TMR4_OCMRx(M0P_TMR4, u32Ch);
+        TMR4_OCER = TMR4_OCERx(M4_TMR4, u32Ch);
+        TMR4_OCMR = TMR4_OCMRx(M4_TMR4, u32Ch);
 
         WRITE_REG16(*TMR4_OCMR, pstcMode->OCMRx);
         MODIFY_REG16(*TMR4_OCER, TMR4_OCER_MCECH, ((uint16_t)pstcMode->enExtendMatchCondCmd << TMR4_OCER_MCECH_POS));
@@ -1242,8 +1283,8 @@ en_result_t TIMER4_OCO_SetLowChCompareMode(uint32_t u32Ch,
         DDL_ASSERT(IS_FUNCTIONAL_STATE(pstcMode->enExtendMatchCondCmd));
 
         /* Get pointer of current channel OCO register address */
-        TMR4_OCER = TMR4_OCERx(M0P_TMR4, u32Ch);
-        TMR4_OCMR = (__IO uint32_t*)TMR4_OCMRx(M0P_TMR4, u32Ch);
+        TMR4_OCER = TMR4_OCERx(M4_TMR4, u32Ch);
+        TMR4_OCMR = (__IO uint32_t*)TMR4_OCMRx(M4_TMR4, u32Ch);
 
         WRITE_REG32(*TMR4_OCMR, pstcMode->OCMRx);
         MODIFY_REG16(*TMR4_OCER, TMR4_OCER_MCECL, ((uint16_t)pstcMode->enExtendMatchCondCmd << TMR4_OCER_MCECL_POS));
@@ -1279,7 +1320,7 @@ en_result_t TIMER4_OCO_OutputCompareCmd(uint32_t u32Ch,
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCSR = TMR4_OCSRx(M0P_TMR4, u32Ch);
+    TMR4_OCSR = TMR4_OCSRx(M4_TMR4, u32Ch);
 
     /* Set OCO valid */
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
@@ -1324,7 +1365,7 @@ en_result_t TIMER4_OCO_IntCmd(uint32_t u32Ch,
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCSR = TMR4_OCSRx(M0P_TMR4, u32Ch);
+    TMR4_OCSR = TMR4_OCSRx(M4_TMR4, u32Ch);
 
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
     {
@@ -1362,7 +1403,7 @@ en_flag_status_t TIMER4_OCO_GetFlag(uint32_t u32Ch)
     __IO uint16_t *TMR4_OCSR;
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCSR = TMR4_OCSRx(M0P_TMR4, u32Ch);
+    TMR4_OCSR = TMR4_OCSRx(M4_TMR4, u32Ch);
 
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
     {
@@ -1400,7 +1441,7 @@ en_result_t TIMER4_OCO_ClearFlag(uint32_t u32Ch)
     en_result_t enRet = Ok;
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCSR = TMR4_OCSRx(M0P_TMR4, u32Ch);
+    TMR4_OCSR = TMR4_OCSRx(M4_TMR4, u32Ch);
 
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
     {
@@ -1446,7 +1487,7 @@ en_result_t TIMER4_OCO_SetOcoInvalidOp(uint32_t u32Ch,
     DDL_ASSERT(IS_VALID_TIMER4_OCO_PORT_INVALID_OP(u16OutputPolarity));
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCSR = TMR4_OCSRx(M0P_TMR4, u32Ch);
+    TMR4_OCSR = TMR4_OCSRx(M4_TMR4, u32Ch);
 
     /* Set OCCR buffer mode */
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
@@ -1486,7 +1527,7 @@ uint16_t TIMER4_OCO_GetOutputPolarity(uint32_t u32Ch)
     uint16_t u16OutputPolarity;
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCSR = TMR4_OCSRx(M0P_TMR4, u32Ch);
+    TMR4_OCSR = TMR4_OCSRx(M4_TMR4, u32Ch);
 
     /* Get OCCR buffer mode */
     if (IS_VALID_TIMER4_OCO_HIGH_CH(u32Ch))     /* channel: TIMER4_OCO_UH, TIMER4_OCO_VH, TIMER4_OCO_WH */
@@ -1526,7 +1567,7 @@ void TIMER4_OCO_SetOccrVal(uint32_t u32Ch, uint16_t u16OccrVal)
     DDL_ASSERT(IS_VALID_TIMER4_OCO_CH(u32Ch));
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCCR = TMR4_OCCRx(M0P_TMR4, u32Ch);
+    TMR4_OCCR = TMR4_OCCRx(M4_TMR4, u32Ch);
 
     WRITE_REG16(*TMR4_OCCR, u16OccrVal);
 }
@@ -1550,7 +1591,7 @@ uint16_t TIMER4_OCO_GetOccrVal(uint32_t u32Ch)
     DDL_ASSERT(IS_VALID_TIMER4_OCO_CH(u32Ch));
 
     /* Get pointer of current channel OCO register address */
-    TMR4_OCCR = TMR4_OCCRx(M0P_TMR4, u32Ch);
+    TMR4_OCCR = TMR4_OCCRx(M4_TMR4, u32Ch);
 
     return READ_REG16(*TMR4_OCCR);
 }
@@ -1593,8 +1634,8 @@ en_result_t TIMER4_PWM_Init(uint32_t u32Ch,
         DDL_ASSERT(IS_VALID_TIMER4_PWM_OUTPUT_POLARITY(pstcInit->u16PwmOutputPolarity));
 
         /* Get pointer of current channel PWM register address */
-        TMR4_POCR = TMR4_POCRx(M0P_TMR4, u32Ch);
-        TMR4_RCSR = TMR4_RCSRx(M0P_TMR4);
+        TMR4_POCR = TMR4_POCRx(M4_TMR4, u32Ch);
+        TMR4_RCSR = TMR4_RCSRx(M4_TMR4);
 
         /* Set POCR register */
         WRITE_REG16(*TMR4_POCR, (pstcInit->u16ClkDiv | pstcInit->u16Mode | pstcInit->u16PwmOutputPolarity));
@@ -1655,8 +1696,8 @@ en_result_t TIMER4_PWM_DeInit(uint32_t u32Ch)
     if (IS_VALID_TIMER4_PWM_CH(u32Ch))
     {
         /* Get pointer of current channel PWM register address */
-        TMR4_POCR = TMR4_POCRx(M0P_TMR4, u32Ch);
-        TMR4_RCSR = TMR4_RCSRx(M0P_TMR4);
+        TMR4_POCR = TMR4_POCRx(M4_TMR4, u32Ch);
+        TMR4_RCSR = TMR4_RCSRx(M4_TMR4);
 
         /* Set POCR register */
         WRITE_REG16(*TMR4_POCR, (TIMER4_PWM_CLK_DIV1 | TIMER4_PWM_THROUGH_MODE | TIMER4_PWM_OP_OXH_HOLD_OXL_HOLD));
@@ -1700,7 +1741,7 @@ en_result_t TIMER4_PWM_SetOutputPolarity(uint32_t u32Ch,
         DDL_ASSERT(IS_VALID_TIMER4_PWM_OUTPUT_POLARITY(u16OutputPolarity));
 
         /* Get pointer of current channel PWM register address */
-        TMR4_POCR = TMR4_POCRx(M0P_TMR4, u32Ch);
+        TMR4_POCR = TMR4_POCRx(M4_TMR4, u32Ch);
 
         MODIFY_REG16(*TMR4_POCR, TMR4_POCR_LVLS, u16OutputPolarity);
         enRet = Ok;
@@ -1730,7 +1771,7 @@ uint16_t TIMER4_PWM_GetOutputPolarity(uint32_t u32Ch)
     DDL_ASSERT(IS_VALID_TIMER4_PWM_CH(u32Ch));
 
     /* Get pointer of current channel PWM register address */
-    TMR4_POCR = TMR4_POCRx(M0P_TMR4, u32Ch);
+    TMR4_POCR = TMR4_POCRx(M4_TMR4, u32Ch);
 
     return READ_REG16_BIT(*TMR4_POCR, TMR4_POCR_LVLS);
 }
@@ -1753,13 +1794,13 @@ en_result_t TIMER4_PWM_StartReloadTimer(uint32_t u32Ch)
     switch (u32Ch)
     {
         case TIMER4_PWM_U:
-            bM0P_TMR4->RCSR_b.RTEU = 1UL;
+            bM4_TMR4->RCSR_b.RTEU = 1UL;
             break;
         case TIMER4_PWM_V:
-            bM0P_TMR4->RCSR_b.RTEV = 1UL;
+            bM4_TMR4->RCSR_b.RTEV = 1UL;
             break;
         case TIMER4_PWM_W:
-            bM0P_TMR4->RCSR_b.RTEW = 1UL;
+            bM4_TMR4->RCSR_b.RTEW = 1UL;
             break;
         default:
             enRet = ErrorInvalidParameter;
@@ -1787,13 +1828,13 @@ en_result_t TIMER4_PWM_StopReloadTimer(uint32_t u32Ch)
     switch (u32Ch)
     {
         case TIMER4_PWM_U:
-            bM0P_TMR4->RCSR_b.RTSU = 1UL;
+            bM4_TMR4->RCSR_b.RTSU = 1UL;
             break;
         case TIMER4_PWM_V:
-            bM0P_TMR4->RCSR_b.RTSV = 1UL;
+            bM4_TMR4->RCSR_b.RTSV = 1UL;
             break;
         case TIMER4_PWM_W:
-            bM0P_TMR4->RCSR_b.RTSW = 1UL;
+            bM4_TMR4->RCSR_b.RTSW = 1UL;
             break;
         default:
             enRet = ErrorInvalidParameter;
@@ -1821,16 +1862,18 @@ en_result_t TIMER4_PWM_IntCmd(uint32_t u32Ch,
 {
     en_result_t enRet = Ok;
 
+    DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
+
     switch (u32Ch)
     {
         case TIMER4_PWM_U:
-            bM0P_TMR4->RCSR_b.RTIDU = enNewSta;
+            bM4_TMR4->RCSR_b.RTIDU = enNewSta;
             break;
         case TIMER4_PWM_V:
-            bM0P_TMR4->RCSR_b.RTIDV = enNewSta;
+            bM4_TMR4->RCSR_b.RTIDV = enNewSta;
             break;
         case TIMER4_PWM_W:
-            bM0P_TMR4->RCSR_b.RTIDW = enNewSta;
+            bM4_TMR4->RCSR_b.RTIDW = enNewSta;
             break;
         default:
             enRet = ErrorInvalidParameter;
@@ -1859,7 +1902,7 @@ en_flag_status_t TIMER4_PWM_GetFlag(uint32_t u32Ch)
     DDL_ASSERT(IS_VALID_TIMER4_PWM_CH(u32Ch));
 
     /* Get pointer of current channel PWM register address */
-    TMR4_RCSR = TMR4_RCSRx(M0P_TMR4);
+    TMR4_RCSR = TMR4_RCSRx(M4_TMR4);
 
     return (READ_REG16_BIT(*TMR4_RCSR, TMR4_RCSR_RTIFx(u32Ch)) ? Set : Reset);
 }
@@ -1882,13 +1925,13 @@ en_result_t TIMER4_PWM_ClearFlag(uint32_t u32Ch)
     switch (u32Ch)
     {
         case TIMER4_PWM_U:
-            bM0P_TMR4->RCSR_b.RTICU = 1UL;
+            bM4_TMR4->RCSR_b.RTICU = 1UL;
             break;
         case TIMER4_PWM_V:
-            bM0P_TMR4->RCSR_b.RTICV = 1UL;
+            bM4_TMR4->RCSR_b.RTICV = 1UL;
             break;
         case TIMER4_PWM_W:
-            bM0P_TMR4->RCSR_b.RTICW = 1UL;
+            bM4_TMR4->RCSR_b.RTICW = 1UL;
             break;
         default:
             enRet = ErrorInvalidParameter;
@@ -1925,8 +1968,8 @@ en_result_t TIMER4_PWM_SetDeadRegionValue(uint32_t u32Ch,
     if (IS_VALID_TIMER4_PWM_CH(u32Ch))
     {
         /* Get pointer of current channel PWM register address */
-        TMR4_PDAR = TMR4_PDARx(M0P_TMR4, u32Ch);
-        TMR4_PDBR = TMR4_PDBRx(M0P_TMR4, u32Ch);
+        TMR4_PDAR = TMR4_PDARx(M4_TMR4, u32Ch);
+        TMR4_PDBR = TMR4_PDBRx(M4_TMR4, u32Ch);
 
         WRITE_REG16(*TMR4_PDAR, u16PDAR);
         WRITE_REG16(*TMR4_PDBR, u16PDBR);
@@ -1963,8 +2006,8 @@ en_result_t TIMER4_PWM_GetDeadRegionValue(uint32_t u32Ch,
     if (IS_VALID_TIMER4_PWM_CH(u32Ch))
     {
         /* Get pointer of current channel PWM register address */
-        TMR4_PDAR = TMR4_PDARx(M0P_TMR4, u32Ch);
-        TMR4_PDBR = TMR4_PDBRx(M0P_TMR4, u32Ch);
+        TMR4_PDAR = TMR4_PDARx(M4_TMR4, u32Ch);
+        TMR4_PDBR = TMR4_PDBRx(M4_TMR4, u32Ch);
 
         *pu16PDAR = READ_REG16(*TMR4_PDAR);
         *pu16PDBR = READ_REG16(*TMR4_PDBR);
@@ -1997,13 +2040,105 @@ en_result_t TIMER4_PWM_SetFilterCountValue(uint32_t u32Ch,
     if (IS_VALID_TIMER4_PWM_CH(u32Ch))
     {
         /* Get pointer of current channel PWM register address */
-        TMR4_PFSR = TMR4_PFSRx(M0P_TMR4, u32Ch);
+        TMR4_PFSR = TMR4_PFSRx(M4_TMR4, u32Ch);
 
         WRITE_REG16(*TMR4_PFSR, u16Count);
         enRet = Ok;
     }
 
     return enRet;
+}
+
+/**
+ * @brief Set Timer4 PWM port function
+ * @param  [in] u32Ch               Timer4 PWM channel
+ *         This parameter can be one of the following values:
+ *           @arg TIMER4_PWM_PORT_OUH:     Timer4 PWM port: TIM4_<t>_OUH
+ *           @arg TIMER4_PWM_PORT_OUL:     Timer4 PWM port: TIM4_<t>_OUL
+ *           @arg TIMER4_PWM_PORT_OVH:     Timer4 PWM port: TIM4_<t>_OVH
+ *           @arg TIMER4_PWM_PORT_OVL:     Timer4 PWM port: TIM4_<t>_OVL
+ *           @arg TIMER4_PWM_PORT_OWH:     Timer4 PWM port: TIM4_<t>_OWH
+ *           @arg TIMER4_PWM_PORT_OWL:     Timer4 PWM port: TIM4_<t>_OWL
+ * @param  [in] enNewSta            The function new state
+ *           @arg  This parameter can be: Enable or Disable
+ * @retval An en_result_t enumeration value:
+ *           - Ok: Set successfully
+ *           - ErrorInvalidParameter: u32PwmPort is invalid
+ */
+en_result_t TIMER4_PWM_PortOutputCmd(uint32_t u32PwmPort,
+                                                en_functional_state_t enNewSta)
+{
+    en_result_t enRet = Ok;
+
+    switch (u32PwmPort)
+    {
+        case TIMER4_PWM_PORT_OUH:
+            bM4_TMR4->PSCR_b.OEUH = enNewSta;
+            break;
+        case TIMER4_PWM_PORT_OUL:
+            bM4_TMR4->PSCR_b.OEUL = enNewSta;
+            break;
+        case TIMER4_PWM_PORT_OVH:
+            bM4_TMR4->PSCR_b.OEVH = enNewSta;
+            break;
+        case TIMER4_PWM_PORT_OVL:
+            bM4_TMR4->PSCR_b.OEVL = enNewSta;
+            break;
+        case TIMER4_PWM_PORT_OWH:
+            bM4_TMR4->PSCR_b.OEWH = enNewSta;
+            break;
+        case TIMER4_PWM_PORT_OWL:
+            bM4_TMR4->PSCR_b.OEWL = enNewSta;
+            break;
+        default:
+            enRet = ErrorInvalidParameter;
+            break;
+    }
+
+    return enRet;
+}
+
+/**
+ * @brief Set Timer4 PWM port state
+ * @param  [in] u32PwmPort          Timer4 PWM channel
+ *         This parameter can be one of the following values:
+ *           @arg TIMER4_PWM_PORT_ENBIT_EFFECT_IMMEDIATE:  TIMER4 PWM Port Enable Bit Effective Time: immediate
+ *           @arg TIMER4_PWM_PORT_ENBIT_EFFECT_CNTUVF:  TIMER4 PWM Port Enable Bit Effective Time: Timer4 counter underflow
+ *           @arg TIMER4_PWM_PORT_ENBIT_EFFECT_CNTOVF:  TIMER4 PWM Port Enable Bit Effective Time: Timer4 counter overflow
+ * @retval None
+ */
+void TIMER4_PWM_SetPortEnBitEffectTime(uint32_t u32EffectTime)
+{
+    DDL_ASSERT(IS_VALID_TIMER4_PWM_PORT_ENBIT_EFFECT(u32EffectTime));
+
+    MODIFY_REG32(M4_TMR4->PSCR, TMR4_PSCR_ODT, u32EffectTime);
+}
+
+/**
+ * @brief Set Timer4 PWM port state
+ * @param  [in] u32PwmPort          Timer4 PWM channel
+ *         This parameter can be one of the following values:
+ *           @arg TIMER4_PWM_PORT_OUH:  Timer4 PWM port: TIM4_<t>_OUH
+ *           @arg TIMER4_PWM_PORT_OUL:  Timer4 PWM port: TIM4_<t>_OUL
+ *           @arg TIMER4_PWM_PORT_OVH:  Timer4 PWM port: TIM4_<t>_OVH
+ *           @arg TIMER4_PWM_PORT_OVL:  Timer4 PWM port: TIM4_<t>_OVL
+ *           @arg TIMER4_PWM_PORT_OWH:  Timer4 PWM port: TIM4_<t>_OWH
+ *           @arg TIMER4_PWM_PORT_OWL:  Timer4 PWM port: TIM4_<t>_OWL
+ * @param  [in] u32State            The port new state
+ *         This parameter can be one of the following values:
+ *           @arg TIMER4_PWM_PORT_OUTPUT_NORMAL:TIM4_<t>_Oxy output normal
+ *           @arg TIMER4_PWM_PORT_OUTPUT_HIZ:   TIM4_<t>_Oxy output Hi-z
+ *           @arg TIMER4_PWM_PORT_OUTPUT_LOW    TIM4_<t>_Oxy output low level
+ *           @arg TIMER4_PWM_PORT_OUTPUT_HIGH:  TIM4_<t>_Oxy output high level
+ * @retval None
+ */
+void TIMER4_PWM_SetPortOutputState(uint32_t u32PwmPort,
+                                                uint32_t u32State)
+{
+    DDL_ASSERT(IS_VALID_TIMER4_PWM_PORT(u32PwmPort));
+    DDL_ASSERT(IS_VALID_TIMER4_PWM_PORT_OUTPUT_STATE(u32State));
+
+    MODIFY_REG32(M4_TMR4->PSCR, (uint32_t)(TMR4_PSCR_OSUH << u32PwmPort), (uint32_t)(u32State << u32PwmPort));
 }
 
 /**
@@ -2055,9 +2190,9 @@ en_result_t TIMER4_SEVT_Init(uint32_t u32Ch,
         DDL_ASSERT(IS_VALID_TIMER4_SEVT_MASK(pstcInit->stcTriggerCond.u16MaskTimes));
 
         /* Get actual address of register list of current channel */
-        TMR4_SCCR = TMR4_SCCRx(M0P_TMR4, u32Ch);
-        TMR4_SCSR = TMR4_SCSRx(M0P_TMR4, u32Ch);
-        TMR4_SCMR = TMR4_SCMRx(M0P_TMR4, u32Ch);
+        TMR4_SCCR = TMR4_SCCRx(M4_TMR4, u32Ch);
+        TMR4_SCSR = TMR4_SCSRx(M4_TMR4, u32Ch);
+        TMR4_SCMR = TMR4_SCMRx(M4_TMR4, u32Ch);
 
         /* Configure default parameter */
         WRITE_REG16(*TMR4_SCSR, 0x0000U);
@@ -2145,9 +2280,9 @@ en_result_t TIMER4_SEVT_DeInit(uint32_t u32Ch)
     if (IS_VALID_TIMER4_SEVT_CH(u32Ch))
     {
         /* Get actual address of register list of current channel */
-        TMR4_SCCR = TMR4_SCCRx(M0P_TMR4, u32Ch);
-        TMR4_SCSR = TMR4_SCSRx(M0P_TMR4, u32Ch);
-        TMR4_SCMR = TMR4_SCMRx(M0P_TMR4, u32Ch);
+        TMR4_SCCR = TMR4_SCCRx(M4_TMR4, u32Ch);
+        TMR4_SCSR = TMR4_SCSRx(M4_TMR4, u32Ch);
+        TMR4_SCMR = TMR4_SCMRx(M4_TMR4, u32Ch);
 
         /* Configure default parameter */
         WRITE_REG16(*TMR4_SCCR, 0x0U);
@@ -2194,7 +2329,7 @@ en_result_t TIMER4_SEVT_SetTriggerEvent(uint32_t u32Ch,
         DDL_ASSERT(IS_VALID_TIMER4_SEVT_TRIG_EVT(u16Event));
 
         /* Get actual address of register list of current channel */
-        TMR4_SCSR = TMR4_SCSRx(M0P_TMR4, u32Ch);
+        TMR4_SCSR = TMR4_SCSRx(M4_TMR4, u32Ch);
 
         /* Set SCSR register */
         MODIFY_REG16(*TMR4_SCSR, TMR4_SCSR_EVTOS, u16Event);
@@ -2239,8 +2374,8 @@ en_result_t TIMER4_SEVT_SetTriggerCondition(uint32_t u32Ch,
         DDL_ASSERT(IS_VALID_TIMER4_SEVT_MASK(pstcTriggerCond->u16MaskTimes));
 
         /* Get actual address of register list of current channel */
-        TMR4_SCSR = TMR4_SCSRx(M0P_TMR4, u32Ch);
-        TMR4_SCMR = TMR4_SCMRx(M0P_TMR4, u32Ch);
+        TMR4_SCSR = TMR4_SCSRx(M4_TMR4, u32Ch);
+        TMR4_SCMR = TMR4_SCMRx(M4_TMR4, u32Ch);
 
         /* Set SCSR register */
         MODIFY_REG16(*TMR4_SCSR,                      \
@@ -2289,7 +2424,7 @@ en_result_t TIMER4_SEVT_SetDelayObject(uint32_t u32Ch, uint16_t u16DelayObject)
     if (IS_VALID_TIMER4_SEVT_CH(u32Ch))
     {
         /* Get actual address of register list of current channel */
-        TMR4_SCSR = TMR4_SCSRx(M0P_TMR4, u32Ch);
+        TMR4_SCSR = TMR4_SCSRx(M4_TMR4, u32Ch);
 
         /* Set SCSR register */
         MODIFY_REG16(*TMR4_SCSR, TMR4_SCSR_EVTDS, u16DelayObject);
@@ -2321,7 +2456,7 @@ uint16_t TIMER4_SEVT_GetDelayObject(uint32_t u32Ch)
     DDL_ASSERT(IS_VALID_TIMER4_SEVT_CH(u32Ch));
 
     /* Get actual address of register list of current channel */
-    TMR4_SCSR = TMR4_SCSRx(M0P_TMR4, u32Ch);
+    TMR4_SCSR = TMR4_SCSRx(M4_TMR4, u32Ch);
 
     return READ_REG16_BIT(*TMR4_SCSR, TMR4_SCSR_EVTDS);
 }
@@ -2352,7 +2487,7 @@ en_result_t TIMER4_SEVT_SetSccrVal(uint32_t u32Ch,
     if (IS_VALID_TIMER4_SEVT_CH(u32Ch))
     {
         /* Get actual address of register list of current channel */
-        TMR4_SCCR = TMR4_SCCRx(M0P_TMR4, u32Ch);
+        TMR4_SCCR = TMR4_SCCRx(M4_TMR4, u32Ch);
 
         /* Set SCCR register */
         WRITE_REG16(*TMR4_SCCR, u16SccrVal);
@@ -2382,7 +2517,7 @@ uint16_t TIMER4_SEVT_GetSccrVal(uint32_t u32Ch)
     DDL_ASSERT(IS_VALID_TIMER4_SEVT_CH(u32Ch));
 
     /* Get actual address of register list of current channel */
-    TMR4_SCCR = TMR4_SCCRx(M0P_TMR4, u32Ch);
+    TMR4_SCCR = TMR4_SCCRx(M4_TMR4, u32Ch);
 
     return READ_REG16(*TMR4_SCCR);
 }
@@ -2430,7 +2565,7 @@ en_result_t TIMER4_SEVT_SetMaskTimes(uint32_t u32Ch,
         /* Check parameters */
         DDL_ASSERT(IS_VALID_TIMER4_SEVT_MASK(u16MaskTimes));
         /* Get actual address of register list of current channel */
-        TMR4_SCMR = TMR4_SCMRx(M0P_TMR4, u32Ch);
+        TMR4_SCMR = TMR4_SCMRx(M4_TMR4, u32Ch);
 
         /* Set SCMR register */
         MODIFY_REG16(*TMR4_SCMR, TMR4_SCMR_AMC, u16MaskTimes);
@@ -2476,51 +2611,29 @@ uint16_t TIMER4_SEVT_GetMaskTimes(uint32_t u32Ch)
     DDL_ASSERT(IS_VALID_TIMER4_SEVT_CH(u32Ch));
 
     /* Get actual address of register list of current channel */
-    TMR4_SCMR = TMR4_SCMRx(M0P_TMR4, u32Ch);
+    TMR4_SCMR = TMR4_SCMRx(M4_TMR4, u32Ch);
 
     return READ_REG16_BIT(*TMR4_SCMR, TMR4_SCMR_AMC);
 }
 
 /**
- * @}
- */
-
-/**
- * @defgroup TIMER4_EMB_Global_Functions TIMER4 EMB Global Functions
- * @{
- */
-
-/**
- * @brief  Set Timer4 EMB PWM port polarity when EMB signal occurs
- * @param  [in] u32PortPolarity         Timer4 EMB PWM port polarity
+ * @brief  Set Timer4 SEVT event signal output to port
+ * @param  [in] u16EvtSig         Timer4 SEVT event signal selection
  *         This parameter can be one of the following values:
- *           @arg TIMER4_EMB_TRIG_PWM_OP_NORMAL PWM output signal normally when EMB signal occurs
- *           @arg TIMER4_EMB_TRIG_PWM_OP_HOLD   Hold PWM output when EMB signal occurs
- *           @arg TIMER4_EMB_TRIG_PWM_OP_HIZ    PWM output Hiz signal when EMB signal occurs
- *           @arg TIMER4_EMB_TRIG_PWM_OP_LOW    PWM output low level signal when EMB signal occurs
- *           @arg TIMER4_EMB_TRIG_PWM_OP_HIGH   PWM output high level signal when EMB signal occurs
+ *           @arg TIMER4_SEVT_EVTSIGx_OUTPUT_DISABLE: Disable output event signal of Timer4 Special-EVT
+ *           @arg TIMER4_SEVT_EVTSIG0_OUTPUT:   Output the specified event signal 0 of Timer4 Special-EVT
+ *           @arg TIMER4_SEVT_EVTSIG1_OUTPUT:   Output the specified event signal 1 of Timer4 Special-EVT
+ *           @arg TIMER4_SEVT_EVTSIG2_OUTPUT:   Output the specified event signal 2 of Timer4 Special-EVT
+ *           @arg TIMER4_SEVT_EVTSIG3_OUTPUT:   Output the specified event signal 3 of Timer4 Special-EVT
+ *           @arg TIMER4_SEVT_EVTSIG4_OUTPUT:   Output the specified event signal 4 of Timer4 Special-EVT
+ *           @arg TIMER4_SEVT_EVTSIG5_OUTPUT:   Output the specified event signal 5 of Timer4 Special-EVT
  * @retval None
  */
-void TIMER4_EMB_SetPwmPortPolarity(uint32_t u32PortPolarity)
+void TIMER4_SEVT_SetEvtSigOutput(uint16_t u16EvtSig)
 {
-    DDL_ASSERT(IS_VALID_TIMER4_EMB_PWM_OP(u32PortPolarity));
+    DDL_ASSERT(IS_VALID_TIMER4_SEVT_EVTSIG_OUTPUT(u16EvtSig));
 
-    WRITE_REG32(*TMR4_ESCRx(M0P_TMR4), u32PortPolarity);
-}
-
-/**
- * @brief  Get PWM port polarity when EMB signal occurs
- * @param  None
- * @retval Returned value can be one of the following values:
- *           @arg TIMER4_EMB_TRIG_PWM_OP_NORMAL PWM output signal normally when EMB signal occurs
- *           @arg TIMER4_EMB_TRIG_PWM_OP_HOLD   Hold PWM output when EMB signal occurs
- *           @arg TIMER4_EMB_TRIG_PWM_OP_HIZ    PWM output Hiz signal when EMB signal occurs
- *           @arg TIMER4_EMB_TRIG_PWM_OP_LOW    PWM output low level signal when EMB signal occurs
- *           @arg TIMER4_EMB_TRIG_PWM_OP_HIGH   PWM output high level signal when EMB signal occurs
- */
-uint32_t TIMER4_EMB_GetPwmPortPolarity(void)
-{
-    return READ_REG32(*TMR4_ESCRx(M0P_TMR4));
+    MODIFY_REG16(M4_TMR4->SCER, TMR4_SCER_EVTRS, u16EvtSig);
 }
 
 /**
