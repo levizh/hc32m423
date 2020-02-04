@@ -7,8 +7,6 @@
    Change Logs:
    Date             Author          Notes
    2020-02-01       Zhangxl         First version
-   2020-01-22       Zhangxl         Modify exclusive IRQ request process for
-                                    share handler
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -70,8 +68,7 @@
  * @{
  */
 
-#if (DDL_INTERRUPTS_ENABLE == DDL_ON) || (DDL_EXINT_NMI_ENABLE == DDL_ON) ||    \
-    (DDL_EKEY_ENABLE == DDL_ON)
+#if (DDL_INTERRUPTS_ENABLE == DDL_ON) || (DDL_EXINT_NMI_ENABLE == DDL_ON)
 
 /*******************************************************************************
  * Local type definitions ('typedef')
@@ -113,24 +110,24 @@
 
 /*  Parameter validity check for interrupt index. */
 #define IS_INTC_INT(int)                                                        \
-(   ((int) &    (INTC_IER_IER0      | INTC_IER_IER1                     |       \
-                INTC_IER_IER2       | INTC_IER_IER3                     |       \
-                INTC_IER_IER4       | INTC_IER_IER5                     |       \
-                INTC_IER_IER6       | INTC_IER_IER7                     |       \
-                INTC_IER_IER8       | INTC_IER_IER9                     |       \
-                INTC_IER_IER10      | INTC_IER_IER11                    |       \
-                INTC_IER_IER12      | INTC_IER_IER13                    |       \
+(   ((int) &    (INTC_IER_IER0      | INTC_IER_IER1         |                   \
+                INTC_IER_IER2       | INTC_IER_IER3         |                   \
+                INTC_IER_IER4       | INTC_IER_IER5         |                   \
+                INTC_IER_IER6       | INTC_IER_IER7         |                   \
+                INTC_IER_IER8       | INTC_IER_IER9         |                   \
+                INTC_IER_IER10      | INTC_IER_IER11        |                   \
+                INTC_IER_IER12      | INTC_IER_IER13        |                   \
                 INTC_IER_IER14      | INTC_IER_IER15)) != (uint32_t)0x00000000UL)
 
 /*  Parameter validity check for software interrupt index. */
 #define IS_INTC_SWI(swi)                                                        \
-(   ((swi) &   (INTC_SWIER_SWIE0    | INTC_SWIER_SWIE1                  |       \
-                INTC_SWIER_SWIE2    | INTC_SWIER_SWIE3                  |       \
-                INTC_SWIER_SWIE4    | INTC_SWIER_SWIE5                  |       \
-                INTC_SWIER_SWIE6    | INTC_SWIER_SWIE7                  |       \
-                INTC_SWIER_SWIE8    | INTC_SWIER_SWIE9                  |       \
-                INTC_SWIER_SWIE10   | INTC_SWIER_SWIE11                 |       \
-                INTC_SWIER_SWIE12   | INTC_SWIER_SWIE13                 |       \
+(   ((swi) &   (INTC_SWIER_SWIE0    | INTC_SWIER_SWIE1      |                   \
+                INTC_SWIER_SWIE2    | INTC_SWIER_SWIE3      |                   \
+                INTC_SWIER_SWIE4    | INTC_SWIER_SWIE5      |                   \
+                INTC_SWIER_SWIE6    | INTC_SWIER_SWIE7      |                   \
+                INTC_SWIER_SWIE8    | INTC_SWIER_SWIE9      |                   \
+                INTC_SWIER_SWIE10   | INTC_SWIER_SWIE11     |                   \
+                INTC_SWIER_SWIE12   | INTC_SWIER_SWIE13     |                   \
                 INTC_SWIER_SWIE14   | INTC_SWIER_SWIE15)) != (uint32_t)0x00000000UL)
 
 /*  Parameter validity check for NMI pin filter A function. */
@@ -281,7 +278,7 @@ en_result_t INTC_IrqSignIn(const stc_irq_regi_config_t *pstcIrqRegiConfig)
 
 /**
  * @brief  IRQ sign out function
- * @param  [in] enIRQn: can be any value from Int000_IRQn ~ Int127_IRQn @ref IRQn_Type
+ * @param  [in] enIRQn: can be any value from Int000~Int007 @ref IRQn_Type
  * @retval Ok: IRQ sign out successfully
  *         ErrorInvalidParameter: IRQ No. is out of range
  */
@@ -290,7 +287,7 @@ en_result_t INTC_IrqSignOut(IRQn_Type enIRQn)
     uint32_t *INTC_SELx;
     en_result_t enRet = Ok;
 
-    if ((enIRQn < Int000_IRQn) || (enIRQn > AdcSEQCMP_IRQn))
+    if ((enIRQn < Int000_IRQn) || (enIRQn > Int007_IRQn))
     {
         enRet = ErrorInvalidParameter;
     }
@@ -306,23 +303,21 @@ en_result_t INTC_IrqSignOut(IRQn_Type enIRQn)
 /**
  * @brief  Stop mode wake-up source configure
  * @param  [in] u32WakeupSrc: Wake-up source
- *   @arg  INTC_WUPENR_EIRQWUEN
- *   @arg  INTC_WUPENR_EIRQWUEN_0
- *   @arg  INTC_WUPENR_EIRQWUEN_1
- *   @arg  INTC_WUPENR_EIRQWUEN_2
- *   @arg  INTC_WUPENR_EIRQWUEN_3
- *   @arg  INTC_WUPENR_EIRQWUEN_4
- *   @arg  INTC_WUPENR_EIRQWUEN_5
- *   @arg  INTC_WUPENR_EIRQWUEN_6
- *   @arg  INTC_WUPENR_EIRQWUEN_7
- *   @arg  INTC_WUPENR_EIRQWUEN_8
- *   @arg  INTC_WUPENR_EIRQWUEN_9
- *   @arg  INTC_WUPENR_SWDTWUEN
- *   @arg  INTC_WUPENR_EKEYWUEN
- *   @arg  INTC_WUPENR_TMR0CMPWUEN
- *   @arg  INTC_WUPENR_PVDWUEN
- *   @arg  INTC_WUPENR_RTCALMWUEN
- *   @arg  INTC_WUPENR_RTCPRDWUEN
+ *   @arg  INTC_WUPEN_EIRQWUEN
+ *   @arg  INTC_WUPEN_EIRQWUEN_0 
+ *   @arg  INTC_WUPEN_EIRQWUEN_1
+ *   @arg  INTC_WUPEN_EIRQWUEN_2
+ *   @arg  INTC_WUPEN_EIRQWUEN_3
+ *   @arg  INTC_WUPEN_EIRQWUEN_4
+ *   @arg  INTC_WUPEN_EIRQWUEN_5
+ *   @arg  INTC_WUPEN_EIRQWUEN_6
+ *   @arg  INTC_WUPEN_EIRQWUEN_7
+ *   @arg  INTC_WUPEN_SWDTWUEN
+ *   @arg  INTC_WUPEN_PVD1WUEN
+ *   @arg  INTC_WUPEN_PVD2WUEN
+ *   @arg  INTC_WUPEN_CMPI0WUEN
+ *   @arg  INTC_WUPEN_TMR0WUEN
+ *   @arg  INTC_WUPEN_RXWUEN
  * @param  [in] enNewState
  *   @arg  Enable: Enable corresponding wake up source
  *   @arg  Disable: Disable corresponding wake up source
