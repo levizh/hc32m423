@@ -2,7 +2,7 @@
  *******************************************************************************
  * @file  hc32m423_icg.c
  * @brief This file provides firmware functions to manage the Initial
- *          Configuration(ICG).
+ *        Configuration(ICG).
  @verbatim
    Change Logs:
    Date             Author          Notes
@@ -107,10 +107,11 @@ __root const uint32_t u32ICG[] @ 0x240 =
     ICG1_REGISTER_CONSTANT,
     ICG2_REGISTER_CONSTANT,
     ICG3_REGISTER_CONSTANT,
-    /* ICG 4~ 6 */
+    /* ICG 4~ 7 */
     ICG4_REGISTER_CONSTANT,
     ICG5_REGISTER_CONSTANT,
     ICG6_REGISTER_CONSTANT,
+    ICG7_REGISTER_CONSTANT,
 };
 
 /*******************************************************************************
