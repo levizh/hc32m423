@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-21       Zhangxl         First version
+   2020-02-03       Zhangxl         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -75,8 +75,7 @@ extern "C"
  * @{
  */
 
-#if (DDL_INTERRUPTS_ENABLE == DDL_ON) || (DDL_EXINT_NMI_ENABLE == DDL_ON) ||    \
-    (DDL_EKEY_ENABLE == DDL_ON)
+#if (DDL_INTERRUPTS_ENABLE == DDL_ON) || (DDL_EXINT_NMI_ENABLE == DDL_ON)
 
 /*******************************************************************************
  * Global type definitions ('typedef')
@@ -90,10 +89,9 @@ extern "C"
  */
 typedef struct
 {
-    en_int_src_t    enIntSrc;   /*!< Peripheral interrupt number,
-                                     can be any value except INT_PORT_EIRQ0~7 @ref en_int_src_t         */
-    IRQn_Type       enIRQn;     /*!< Peripheral IRQ type, can be Int008_IRQn~Int023_IRQn @ref IRQn_Type */
-    func_ptr_t      pfnCallback;/*!< Callback function for corresponding peripheral IRQ                 */
+    en_int_src_t    enIntSrc;   /*!< Peripheral interrupt number, can be any value @ref en_int_src_t */
+    IRQn_Type       enIRQn;     /*!< Peripheral IRQ type, can be any value @ref IRQn_Type */
+    func_ptr_t      pfnCallback;/*!< Callback function for corresponding peripheral IRQ */
 }stc_irq_regi_config_t;
 
 /**
@@ -132,22 +130,34 @@ typedef struct
  */
 /**
  * @defgroup INTC_DefaultPriority_Sel Interrupt default priority level
- * Possible values are 0 (high priority) to 3 (low priority)
+ * Possible values are 0 (high priority) to 15 (low priority)
  * @{
  */
-#define DDL_IRQ_PRIORITY_DEFAULT    (3U)
+#define DDL_IRQ_PRIORITY_DEFAULT    (0x15U)
 /**
  * @}
  */
 
 /**
- * @defgroup INTC_Priority_Sel Interrupt priority level 00 ~ 03
+ * @defgroup INTC_Priority_Sel Interrupt priority level 00 ~ 15
  * @{
  */
-#define DDL_IRQ_PRIORITY_00         (0U)
-#define DDL_IRQ_PRIORITY_01         (1U)
-#define DDL_IRQ_PRIORITY_02         (2U)
-#define DDL_IRQ_PRIORITY_03         (3U)
+#define DDL_IRQ_PRIORITY_00         (0x00U)
+#define DDL_IRQ_PRIORITY_01         (0x01U)
+#define DDL_IRQ_PRIORITY_02         (0x02U)
+#define DDL_IRQ_PRIORITY_03         (0x03U)
+#define DDL_IRQ_PRIORITY_04         (0x04U)
+#define DDL_IRQ_PRIORITY_05         (0x05U)
+#define DDL_IRQ_PRIORITY_06         (0x06U)
+#define DDL_IRQ_PRIORITY_07         (0x07U)
+#define DDL_IRQ_PRIORITY_08         (0x08U)
+#define DDL_IRQ_PRIORITY_09         (0x09U)
+#define DDL_IRQ_PRIORITY_10         (0x10U)
+#define DDL_IRQ_PRIORITY_11         (0x11U)
+#define DDL_IRQ_PRIORITY_12         (0x12U)
+#define DDL_IRQ_PRIORITY_13         (0x13U)
+#define DDL_IRQ_PRIORITY_14         (0x14U)
+#define DDL_IRQ_PRIORITY_15         (0x15U)
 /**
  * @}
  */
@@ -270,14 +280,14 @@ typedef struct
  * @defgroup EXINT_Channel_Sel External interrupt channel selection
  * @{
  */
-#define EXINT_CH00                  (uint16_t)(1UL << 0U)
-#define EXINT_CH01                  (uint16_t)(1UL << 1U)
-#define EXINT_CH02                  (uint16_t)(1UL << 2U)
-#define EXINT_CH03                  (uint16_t)(1UL << 3U)
-#define EXINT_CH04                  (uint16_t)(1UL << 4U)
-#define EXINT_CH05                  (uint16_t)(1UL << 5U)
-#define EXINT_CH06                  (uint16_t)(1UL << 6U)
-#define EXINT_CH07                  (uint16_t)(1UL << 7U)
+#define EXINT_CH00                  (uint32_t)(1UL << 0U)
+#define EXINT_CH01                  (uint32_t)(1UL << 1U)
+#define EXINT_CH02                  (uint32_t)(1UL << 2U)
+#define EXINT_CH03                  (uint32_t)(1UL << 3U)
+#define EXINT_CH04                  (uint32_t)(1UL << 4U)
+#define EXINT_CH05                  (uint32_t)(1UL << 5U)
+#define EXINT_CH06                  (uint32_t)(1UL << 6U)
+#define EXINT_CH07                  (uint32_t)(1UL << 7U)
 #define EXINT_CH_MASK   (EXINT_CH00 | EXINT_CH01 | EXINT_CH02 | EXINT_CH03 |    \
                          EXINT_CH04 | EXINT_CH05 | EXINT_CH06 | EXINT_CH07)
 /**
@@ -288,8 +298,8 @@ typedef struct
  * @defgroup EXINT_FilterClock_Sel External interrupt filter function selection
  * @{
  */
-#define EXINT_FILTER_OFF            (uint8_t)(0U << INTC_EIRQCR0_EFEN_POS)
-#define EXINT_FILTER_ON             (uint8_t)(1U << INTC_EIRQCR0_EFEN_POS)
+#define EXINT_FILTER_OFF            (uint8_t)(0U << INTC_EIRQCR_EFEN_POS)
+#define EXINT_FILTER_ON             (uint8_t)(1U << INTC_EIRQCR_EFEN_POS)
 /**
  * @}
  */
@@ -298,10 +308,10 @@ typedef struct
  * @defgroup EXINT_FilterClock_Div External interrupt filtersampling  clock division selection
  * @{
  */
-#define EXINT_FCLK_HCLK_DIV1        (uint8_t)(0U << INTC_EIRQCR0_EISMPCLK_POS)
-#define EXINT_FCLK_HCLK_DIV8        (uint8_t)(1U << INTC_EIRQCR0_EISMPCLK_POS)
-#define EXINT_FCLK_HCLK_DIV32       (uint8_t)(2U << INTC_EIRQCR0_EISMPCLK_POS)
-#define EXINT_FCLK_HCLK_DIV64       (uint8_t)(3U << INTC_EIRQCR0_EISMPCLK_POS)
+#define EXINT_FCLK_HCLK_DIV1        (uint8_t)(0U << INTC_EIRQCR_EISMPCLK_POS)
+#define EXINT_FCLK_HCLK_DIV8        (uint8_t)(1U << INTC_EIRQCR_EISMPCLK_POS)
+#define EXINT_FCLK_HCLK_DIV32       (uint8_t)(2U << INTC_EIRQCR_EISMPCLK_POS)
+#define EXINT_FCLK_HCLK_DIV64       (uint8_t)(3U << INTC_EIRQCR_EISMPCLK_POS)
 /**
  * @}
  */
@@ -310,10 +320,10 @@ typedef struct
  * @defgroup EXINT_Trigger_Sel External interrupt trigger method selection
  * @{
  */
-#define EXINT_TRIGGER_LOW           (uint8_t)(0U << INTC_EIRQCR0_EIRQTRG_POS)
-#define EXINT_TRIGGER_RISING        (uint8_t)(1U << INTC_EIRQCR0_EIRQTRG_POS)
-#define EXINT_TRIGGER_FALLING       (uint8_t)(2U << INTC_EIRQCR0_EIRQTRG_POS)
-#define EXINT_TRIGGER_BOTH          (uint8_t)(3U << INTC_EIRQCR0_EIRQTRG_POS)
+#define EXINT_TRIGGER_LOW           (uint8_t)(0U << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_RISING        (uint8_t)(1U << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_FALLING       (uint8_t)(2U << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_BOTH          (uint8_t)(3U << INTC_EIRQCR_EIRQTRG_POS)
 /**
  * @}
  */
@@ -322,8 +332,8 @@ typedef struct
  * @defgroup EXINT_Register_Msk EXINT register mask
  * @{
  */
-#define INTC_EIRQF_MASK             (INTC_EIRQFR_INT_EIRQFR)
-#define INTC_EIRQCLR_MASK           (INTC_EIRQCFR_INT_EIRQCFR)
+#define INTC_EIRQF_MASK             (INTC_EIRQFR_EIRQFR)
+#define INTC_EIRQCLR_MASK           (INTC_EIRQCFR_EIRQCFR)
 /**
  * @}
  */
