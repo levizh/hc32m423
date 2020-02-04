@@ -148,60 +148,34 @@ typedef struct
  * @}
  */
 
-/** @defgroup CMP1_CVSL_Source CMP compare voltage selection for CMP1
+/** @defgroup CMPx_CVSL_Source CMP compare voltage selection for CMP1/CMP2/CMP3
   * @{
   */
 /* Don't input compare voltage */
-#define CMP1_CVSL_NONE           0U
-/* Select pin VCMP1_0 as compare voltage */
-#define CMP1_CVSL_VCMP1_0        (CMP_VSR_CVSL_0)
-/* Select pin VCMP1_1 as compare voltage */
-#define CMP1_CVSL_VCMP1_1        (CMP_VSR_CVSL_1)
-/* Select pin VCMP2_0 as compare voltage */
-#define CMP1_CVSL_VCMP2_0        (CMP_VSR_CVSL_2)
+#define CMP_CVSL_NONE           0U
+/* Select pin IVCMP1_0/IVCMP2_0/IVCMP3_0 as compare voltage */
+#define CMP_CVSL_IVCMPx_0        (CMP_VSR_CVSL_0)
+/* Select pin IVCMP1_1/IVCMP2_1/IVCMP3_1 as compare voltage */
+#define CMP_CVSL_IVCMPx_1        (CMP_VSR_CVSL_1)
+/* Select pin IVCMP1_2/IVCMP2_2/IVCMP3_2 as compare voltage */
+#define CMP_CVSL_IVCMPx_2        (CMP_VSR_CVSL_2)
+/* Select pin Vref as compare voltage */
+#define CMP_CVSL_VREF           (CMP_VSR_CVSL_3)
 /**
  * @}
  */
 
-/** @defgroup CMP2_CVSL_Source CMP compare voltage selection for CMP2
-  * @{
-  */
-/* Don't input compare voltage */
-#define CMP2_CVSL_NONE           0U
-/* Select pin VCMP2_0 as compare voltage */
-#define CMP2_CVSL_VCMP2_0        (CMP_VSR_CVSL_0)
-/* Select pin VCMP2_1 as compare voltage */
-#define CMP2_CVSL_VCMP2_1        (CMP_VSR_CVSL_1)
-/* Select pin VCMP2_2 as compare voltage */
-#define CMP2_CVSL_VCMP2_2        (CMP_VSR_CVSL_2)
-/**
- * @}
- */
-
-/** @defgroup CMP1_RVSL_Source CMP reference voltage selection for CMP1
+/** @defgroup CMP_RVSL_Source CMP reference voltage selection for CMP1/CMP2/CMP3
   * @{
   */
 /* Don't input reference voltage */
-#define CMP1_RVSL_NONE           0U
+#define CMP_RVSL_NONE           0U
 /* Select pin IVREF1 as reference voltage */
-#define CMP1_RVSL_IVREF1         (CMP_VSR_RVSL_0)
-/* Select internal reference voltage (Vref) as reference voltage */
-#define CMP1_RVSL_VREF           (CMP_VSR_RVSL_1)
-/**
- * @}
- */
-
-/** @defgroup CMP2_RVSL_Source CMP reference voltage selection for CMP2
-  * @{
-  */
-/* Don't input reference voltage */
-#define CMP2_RVSL_NONE           0U
+#define CMP_RVSL_IVREF1         (CMP_VSR_RVSL_0)
 /* Select pin IVREF2 as reference voltage */
-#define CMP2_RVSL_IVREF2         (CMP_VSR_RVSL_0)
-/* Select internal reference voltage (Vref) as reference voltage */
-#define CMP2_RVSL_VREF           (CMP_VSR_RVSL_1)
-/* Select pin IVCMP2_2 as reference voltage */
-#define CMP2_RVSL_IVCMP2_2       (CMP_VSR_RVSL_2)
+#define CMP_RVSL_IVREF2         (CMP_VSR_RVSL_1)
+/* Select 8 bit DAC as reference voltage */
+#define CMP_RVSL_DAC            (CMP_VSR_RVSL_2)
 /**
  * @}
  */
@@ -248,32 +222,27 @@ typedef struct
  * @}
  */
 
-/** @defgroup CMP1_TimerWin_Select CMP output timer windows function control signal definition for CMP1
+/** @defgroup CMP_TimerWin_Select CMP output timer windows function control signal definition for CMP1
   * @{
   */
-#define CMP1_TIMERWIN_TIMB_1_PWM     (CMP_TWR1_CTWS0)
-#define CMP1_TIMERWIN_TIMB_2_PWM     (CMP_TWR1_CTWS1)
-#define CMP1_TIMERWIN_TIM4_OWL       (CMP_TWR1_CTWS2)
-#define CMP1_TIMERWIN_TIM4_OWH       (CMP_TWR1_CTWS3)
-#define CMP1_TIMERWIN_TIM4_OVL       (CMP_TWR1_CTWS4)
-#define CMP1_TIMERWIN_TIM4_OVH       (CMP_TWR1_CTWS5)
-#define CMP1_TIMERWIN_TIM4_OUL       (CMP_TWR1_CTWS6)
-#define CMP1_TIMERWIN_TIM4_OUH       (CMP_TWR1_CTWS7)
-/**
- * @}
- */
-
-/** @defgroup CMP2_TimerWin_Select CMP output timer windows function control signal definition for CMP2
-  * @{
-  */
-#define CMP2_TIMERWIN_TIMB_3_PWM     (CMP_TWR1_CTWS0)
-#define CMP2_TIMERWIN_TIMB_4_PWM     (CMP_TWR1_CTWS1)
-#define CMP2_TIMERWIN_TIM4_OWL       (CMP_TWR1_CTWS2)
-#define CMP2_TIMERWIN_TIM4_OWH       (CMP_TWR1_CTWS3)
-#define CMP2_TIMERWIN_TIM4_OVL       (CMP_TWR1_CTWS4)
-#define CMP2_TIMERWIN_TIM4_OVH       (CMP_TWR1_CTWS5)
-#define CMP2_TIMERWIN_TIM4_OUL       (CMP_TWR1_CTWS6)
-#define CMP2_TIMERWIN_TIM4_OUH       (CMP_TWR1_CTWS7)
+/* CMP1 chose TIMB_1_PWM1 as timer window signal; CMP2 chose TIMB_1_PWM3 as
+   timer window signal; CMP3 chose TIMB_1_PWM5 as timer window signal */
+#define CMP_TIMERWIN_TIMB_1_PWM1_3_5  (CMP_TWR1_CTWS0)
+/* CMP1 chose TIMB_1_PWM2 as timer window signal; CMP2 chose TIMB_1_PWM4 as
+   timer window signal; CMP3 chose TIMB_1_PWM6 as timer window signal */
+#define CMP_TIMERWIN_TIMB_1_PWM2_4_6  (CMP_TWR1_CTWS1)
+/* Chose TIM4_OWL as timer window signal */
+#define CMP_TIMERWIN_TIM4_OWL         (CMP_TWR1_CTWS2)
+/* Chose TIM4_OWH as timer window signal */
+#define CMP_TIMERWIN_TIM4_OWH         (CMP_TWR1_CTWS3)
+/* Chose TIM4_OVL as timer window signal */
+#define CMP_TIMERWIN_TIM4_OVL         (CMP_TWR1_CTWS4)
+/* Chose TIM4_OVH as timer window signal */
+#define CMP_TIMERWIN_TIM4_OVH         (CMP_TWR1_CTWS5)
+/* Chose TIM4_OUL as timer window signal */
+#define CMP_TIMERWIN_TIM4_OUL         (CMP_TWR1_CTWS6)
+/* Chose TIM4_OUH as timer window signal */
+#define CMP_TIMERWIN_TIM4_OUH         (CMP_TWR1_CTWS7)
 /**
  * @}
  */
@@ -312,20 +281,20 @@ typedef struct
  * @{
  */
 en_result_t CMP_StructInit(stc_cmp_init_t* pstcCMP_InitStruct);
-en_result_t CMP_DeInit(M0P_CMP_TypeDef *CMPx);
-en_result_t CMP_NormalModeInit(M0P_CMP_TypeDef *CMPx,
+en_result_t CMP_DeInit(M4_CMP_TypeDef *CMPx);
+en_result_t CMP_NormalModeInit(M4_CMP_TypeDef *CMPx,
                      const stc_cmp_init_t* pstcCMP_InitStruct);
 en_result_t CMP_WindowModeInit(const stc_cmp_init_t* pstcCMP_InitStruct);
 
-en_result_t CMP_TimerWindowsCfg(M0P_CMP_TypeDef *CMPx,
+en_result_t CMP_TimerWindowsCfg(M4_CMP_TypeDef *CMPx,
                                  const stc_cmp_timerwindows_t* pstcCMP_TimerWinStruct);
 
-en_result_t CMP_FuncCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta);
-en_result_t CMP_IntCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta);
-en_result_t CMP_OutputCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta);
-en_result_t CMP_VCOUTCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta);
+en_result_t CMP_FuncCmd(M4_CMP_TypeDef *CMPx, en_functional_state_t enNewSta);
+en_result_t CMP_IntCmd(M4_CMP_TypeDef *CMPx, en_functional_state_t enNewSta);
+en_result_t CMP_OutputCmd(M4_CMP_TypeDef *CMPx, en_functional_state_t enNewSta);
+en_result_t CMP_VCOUTCmd(M4_CMP_TypeDef *CMPx, en_functional_state_t enNewSta);
 
-en_result_t CMP_ResultGet(M0P_CMP_TypeDef *CMPx, en_flag_status_t* penFunSta);
+en_result_t CMP_ResultGet(M4_CMP_TypeDef *CMPx, en_flag_status_t* penFunSta);
 
 /**
  * @}

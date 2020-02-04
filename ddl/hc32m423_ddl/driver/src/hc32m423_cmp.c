@@ -89,35 +89,26 @@
  */
 
 #define IS_CMP_INSTANCE(x)                                                     \
-(   (M0P_CMP1 == (x))                             ||                             \
-    (M0P_CMP2 == (x)))
+(   (M4_CMP1 == (x))                            ||                             \
+    (M4_CMP2 == (x))                            ||                             \
+    (M4_CMP3 == (x)))
 
 #define IS_CMP_MODE(x)                                                         \
 (   (CMP_MODE_NORMAL == (x))                    ||                             \
     (CMP_MODE_WINDOW == (x)))
 
-#define IS_CMP1_CVSL(x)                                                        \
-(   (CMP1_CVSL_NONE == (x))                     ||                             \
-    (CMP1_CVSL_VCMP1_0 == (x))                  ||                             \
-    (CMP1_CVSL_VCMP1_1 == (x))                  ||                             \
-    (CMP1_CVSL_VCMP2_0 == (x)))
+#define IS_CMP_CVSL(x)                                                         \
+(   (CMP_CVSL_NONE == (x))                      ||                             \
+    (CMP_CVSL_IVCMPx_0 == (x))                  ||                             \
+    (CMP_CVSL_IVCMPx_1 == (x))                  ||                             \
+    (CMP_CVSL_IVCMPx_2 == (x))                  ||                             \
+    (CMP_CVSL_VREF == (x)))
 
-#define IS_CMP2_CVSL(x)                                                        \
-(   (CMP2_CVSL_NONE == (x))                     ||                             \
-    (CMP2_CVSL_VCMP2_0 == (x))                  ||                             \
-    (CMP2_CVSL_VCMP2_1 == (x))                  ||                             \
-    (CMP2_CVSL_VCMP2_2 == (x)))
-
-#define IS_CMP1_RVSL(x)                                                        \
-(   (CMP1_RVSL_NONE == (x))                     ||                             \
-    (CMP1_RVSL_IVREF1 == (x))                   ||                             \
-    (CMP1_RVSL_VREF == (x)))
-
-#define IS_CMP2_RVSL(x)                                                        \
-(   (CMP2_RVSL_NONE == (x))                     ||                             \
-    (CMP2_RVSL_IVREF2 == (x))                   ||                             \
-    (CMP2_RVSL_VREF == (x))                     ||                             \
-    (CMP2_RVSL_IVCMP2_2 == (x)))
+#define IS_CMP_RVSL(x)                                                         \
+(   (CMP_RVSL_NONE == (x))                      ||                             \
+    (CMP_RVSL_IVREF1 == (x))                    ||                             \
+    (CMP_RVSL_IVREF2 == (x))                    ||                             \
+    (CMP_RVSL_DAC == (x)))
 
 #define IS_CMP_OUT_POLARITY(x)                                                 \
 (   (CMP_OUT_REVERSE_OFF == (x))                ||                             \
@@ -139,25 +130,15 @@
 (   (CMP_TIMERWIN_OFF == (x))                   ||                             \
     (CMP_TIMERWIN_ON == (x)))
 
-#define IS_CMP1_TIMWIN_SELECT(x)                                               \
-(   (CMP1_TIMERWIN_TIMB_1_PWM == (x))           ||                             \
-    (CMP1_TIMERWIN_TIMB_2_PWM == (x))           ||                             \
-    (CMP1_TIMERWIN_TIM4_OWL == (x))             ||                             \
-    (CMP1_TIMERWIN_TIM4_OWH == (x))             ||                             \
-    (CMP1_TIMERWIN_TIM4_OVL == (x))             ||                             \
-    (CMP1_TIMERWIN_TIM4_OVH == (x))             ||                             \
-    (CMP1_TIMERWIN_TIM4_OUL == (x))             ||                             \
-    (CMP1_TIMERWIN_TIM4_OUH == (x)))
-
-#define IS_CMP2_TIMWIN_SELECT(x)                                               \
-(   (CMP2_TIMERWIN_TIMB_3_PWM == (x))           ||                             \
-    (CMP2_TIMERWIN_TIMB_4_PWM == (x))           ||                             \
-    (CMP2_TIMERWIN_TIM4_OWL == (x))             ||                             \
-    (CMP2_TIMERWIN_TIM4_OWH == (x))             ||                             \
-    (CMP2_TIMERWIN_TIM4_OVL == (x))             ||                             \
-    (CMP2_TIMERWIN_TIM4_OVH == (x))             ||                             \
-    (CMP2_TIMERWIN_TIM4_OUL == (x))             ||                             \
-    (CMP2_TIMERWIN_TIM4_OUH == (x)))
+#define IS_CMP_TIMWIN_SELECT(x)                                                \
+(   (CMP_TIMERWIN_TIMB_1_PWM1_3_5 == (x))       ||                             \
+    (CMP_TIMERWIN_TIMB_1_PWM2_4_6 == (x))       ||                             \
+    (CMP_TIMERWIN_TIM4_OWL == (x))              ||                             \
+    (CMP_TIMERWIN_TIM4_OWH == (x))              ||                             \
+    (CMP_TIMERWIN_TIM4_OVL == (x))              ||                             \
+    (CMP_TIMERWIN_TIM4_OVH == (x))              ||                             \
+    (CMP_TIMERWIN_TIM4_OUL == (x))              ||                             \
+    (CMP_TIMERWIN_TIM4_OUH == (x)))
 
 #define IS_CMP_TIMWIN_INVALIDLEVEL(x)                                          \
 (   (CMP_TIMERWIN_INVALID_LEVEL_LOW == (x))     ||                             \
@@ -201,15 +182,16 @@ static void CMP_Delay300ns(void);
  * @brief  Voltage compare function command
  * @param  [in] CMPx              Pointer to CMP instance register base,This
  *                                parameter can be one of the following values:
- *              @arg M0P_CMP1:   CMP unit 1 instance register base
- *              @arg M0P_CMP2:   CMP unit 2 instance register base
+ *              @arg M4_CMP1:     CMP unit 1 instance register base
+ *              @arg M4_CMP2:     CMP unit 2 instance register base
+ *              @arg M4_CMP3:     CMP unit 3 instance register base
  * @param  [in] enNewSta          The function new state.
  *              @arg              This parameter can be: Enable or Disable.
  * @retval An en_result_t enumeration value:
  *              - Ok:             Set successfully
  *              - ErrorInvalidParameter: CMPx is invalid instance
  */
-en_result_t CMP_FuncCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
+en_result_t CMP_FuncCmd(M4_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
 {
     en_result_t enRet = Ok;
     /* Check CMPx instance */
@@ -240,15 +222,16 @@ en_result_t CMP_FuncCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
  * @brief  Voltage compare interrupt function command
  * @param  [in] CMPx              Pointer to CMP instance register base,This
  *                                parameter can be one of the following values:
- *              @arg M0P_CMP1:   CMP unit 1 instance register base
- *              @arg M0P_CMP2:   CMP unit 2 instance register base
+ *              @arg M4_CMP1:     CMP unit 1 instance register base
+ *              @arg M4_CMP2:     CMP unit 2 instance register base
+ *              @arg M4_CMP3:     CMP unit 3 instance register base
  * @param  [in] enNewSta          The function new state.
  *              @arg              This parameter can be: Enable or Disable.
  * @retval An en_result_t enumeration value:
  *              - Ok:             Set successfully
  *              - ErrorInvalidParameter: CMPx is invalid instance
  */
-en_result_t CMP_IntCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
+en_result_t CMP_IntCmd(M4_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
 {
     en_result_t enRet = Ok;
     /* Check CMPx instance */
@@ -272,15 +255,16 @@ en_result_t CMP_IntCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
  * @brief  Voltage compare output command
  * @param  [in] CMPx              Pointer to CMP instance register base,This
  *                                parameter can be one of the following values:
- *              @arg M0P_CMP1:   CMP unit 1 instance register base
- *              @arg M0P_CMP2:   CMP unit 2 instance register base
+ *              @arg M4_CMP1:     CMP unit 1 instance register base
+ *              @arg M4_CMP2:     CMP unit 2 instance register base
+ *              @arg M4_CMP3:     CMP unit 3 instance register base
  * @param  [in] enNewSta          The function new state.
  *              @arg              This parameter can be: Enable or Disable.
  * @retval An en_result_t enumeration value:
  *              - Ok:             Set successfully
  *              - ErrorInvalidParameter: CMPx is invalid instance
  */
-en_result_t CMP_OutputCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
+en_result_t CMP_OutputCmd(M4_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
 {
     en_result_t enRet = Ok;
     /* Check CMPx instance */
@@ -304,15 +288,16 @@ en_result_t CMP_OutputCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
  * @brief  Voltage compare output port VCOUT function command
  * @param  [in] CMPx              Pointer to CMP instance register base,This
  *                                parameter can be one of the following values:
- *              @arg M0P_CMP1:   CMP unit 1 instance register base
- *              @arg M0P_CMP2:   CMP unit 2 instance register base
+ *              @arg M4_CMP1:     CMP unit 1 instance register base
+ *              @arg M4_CMP2:     CMP unit 2 instance register base
+ *              @arg M4_CMP3:     CMP unit 3 instance register base
  * @param  [in] enNewSta          The function new state.
  *              @arg              This parameter can be: Enable or Disable.
  * @retval An en_result_t enumeration value:
  *              - Ok:             Set successfully
  *              - ErrorInvalidParameter: CMPx is invalid instance
  */
-en_result_t CMP_VCOUTCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
+en_result_t CMP_VCOUTCmd(M4_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
 {
     en_result_t enRet = Ok;
     /* Check CMPx instance */
@@ -336,8 +321,9 @@ en_result_t CMP_VCOUTCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
  * @brief  Voltage compare result flag read
  * @param  [in] CMPx              Pointer to CMP instance register base,This
  *                                parameter can be one of the following values:
- *              @arg M0P_CMP1:   CMP unit 1 instance register base
- *              @arg M0P_CMP2:   CMP unit 2 instance register base
+ *              @arg M4_CMP1:     CMP unit 1 instance register base
+ *              @arg M4_CMP2:     CMP unit 2 instance register base
+ *              @arg M4_CMP3:     CMP unit 3 instance register base
  * @param  [out] penFunSta        Return the CMON flag status.
  *              @arg  This parameter can be: Set or Reset.
  *              In normal mode
@@ -352,7 +338,7 @@ en_result_t CMP_VCOUTCmd(M0P_CMP_TypeDef *CMPx, en_functional_state_t enNewSta)
  *              - Ok:             Read successfully
  *              - ErrorInvalidParameter: CMPx is invalid instance
  */
-en_result_t CMP_ResultGet(M0P_CMP_TypeDef *CMPx, en_flag_status_t* penFunSta)
+en_result_t CMP_ResultGet(M4_CMP_TypeDef *CMPx, en_flag_status_t* penFunSta)
 {
     en_result_t enRet = Ok;
     /* Check CMPx instance */
@@ -372,8 +358,9 @@ en_result_t CMP_ResultGet(M0P_CMP_TypeDef *CMPx, en_flag_status_t* penFunSta)
  * @brief  Voltage compare timer windows function configuration
  * @param  [in] CMPx              Pointer to CMP instance register base,This
  *                                parameter can be one of the following values:
- *              @arg M0P_CMP1:   CMP unit 1 instance register base
- *              @arg M0P_CMP2:   CMP unit 2 instance register base
+ *              @arg M4_CMP1:     CMP unit 1 instance register base
+ *              @arg M4_CMP2:     CMP unit 2 instance register base
+ *              @arg M4_CMP3:     CMP unit 3 instance register base
  * @param  [in] pstcCMP_TimerWinStruct Configuration structure for timer windows function
  *              pstcCMP_TimerWinStruct->u8TWMode
  *                                Timer windows mode on or off @ref CMP_TimerWin_func
@@ -382,26 +369,8 @@ en_result_t CMP_ResultGet(M0P_CMP_TypeDef *CMPx, en_flag_status_t* penFunSta)
  *                                The output level when timer windows valid.@ref CMP_TimerWin_Invalid_Level
  *              @arg              This parameter can be: CMP_TIMERWIN_INVALID_LEVEL_LOW or CMP_TIMERWIN_INVALID_LEVEL_HIGH.
  *              pstcCMP_TimerWinStruct->u8TWSelect
- *                                The timer event for timer windows function.@ref CMP1_TimerWin_Select or @ref CMP2_TimerWin_Select
- *              @arg              This parameter can be one of the following values:
- *              For CMP1:
- *              - CMP1_TIMERWIN_TIMB_1_PWM
- *              - CMP1_TIMERWIN_TIMB_2_PWM
- *              - CMP1_TIMERWIN_TIM4_OWL
- *              - CMP1_TIMERWIN_TIM4_OWH
- *              - CMP1_TIMERWIN_TIM4_OVL
- *              - CMP1_TIMERWIN_TIM4_OVH
- *              - CMP1_TIMERWIN_TIM4_OUL
- *              - CMP1_TIMERWIN_TIM4_OUH
- *              For CMP2:
- *              - CMP2_TIMERWIN_TIMB_3_PWM
- *              - CMP2_TIMERWIN_TIMB_4_PWM
- *              - CMP2_TIMERWIN_TIM4_OWL
- *              - CMP2_TIMERWIN_TIM4_OWH
- *              - CMP2_TIMERWIN_TIM4_OVL
- *              - CMP2_TIMERWIN_TIM4_OVH
- *              - CMP2_TIMERWIN_TIM4_OUL
- *              - CMP2_TIMERWIN_TIM4_OUH
+ *                                The timer event for timer windows function.
+ *              @arg              This parameter can be one of the values @ref CMP_TimerWin_Select
  *              pstcCMP_TimerWinStruct->u8TWOutLevel
  *                                Timer windows mode output level.@ref CMP_TimerWin_output_Level
  *              @arg              This parameter can be: CMP_TIMERWIN_OUT_LEVEL_LOW or CMP_TIMERWIN_OUT_LEVEL_HIGH.
@@ -409,7 +378,7 @@ en_result_t CMP_ResultGet(M0P_CMP_TypeDef *CMPx, en_flag_status_t* penFunSta)
  *              - Ok:             Successfully
  *              - ErrorInvalidParameter: CMPx or pointer of structure is invalid
  */
-en_result_t CMP_TimerWindowsCfg(M0P_CMP_TypeDef *CMPx,
+en_result_t CMP_TimerWindowsCfg(M4_CMP_TypeDef *CMPx,
                                  const stc_cmp_timerwindows_t* pstcCMP_TimerWinStruct)
 {
     en_result_t enRet = Ok;
@@ -424,7 +393,7 @@ en_result_t CMP_TimerWindowsCfg(M0P_CMP_TypeDef *CMPx,
         DDL_ASSERT(IS_CMP_TIMWIN_INVALIDLEVEL(pstcCMP_TimerWinStruct->u8TWInvalidLevel));
         DDL_ASSERT(IS_CMP_TIMWIN_FUNC(pstcCMP_TimerWinStruct->u8TWMode));
         DDL_ASSERT(IS_CMP_TIMWIN_OUT_LEVEL(pstcCMP_TimerWinStruct->u8TWOutLevel));
-        DDL_ASSERT(IS_CMP1_TIMWIN_SELECT(pstcCMP_TimerWinStruct->u8TWSelect));
+        DDL_ASSERT(IS_CMP_TIMWIN_SELECT(pstcCMP_TimerWinStruct->u8TWSelect));
 
         /* Write TWR2 register and TWR1 register */
         pstcCMP_TimerWinStruct->u8TWOutLevel ?
@@ -446,13 +415,14 @@ en_result_t CMP_TimerWindowsCfg(M0P_CMP_TypeDef *CMPx,
  * @brief  CMP normal mode initialize
  * @param  [in] CMPx              Pointer to CMP instance register base,This
  *                                parameter can be one of the following values:
- *              @arg M0P_CMP1:   CMP unit 1 instance register base
- *              @arg M0P_CMP2:   CMP unit 2 instance register base
+ *              @arg M4_CMP1:     CMP unit 1 instance register base
+ *              @arg M4_CMP2:     CMP unit 2 instance register base
+ *              @arg M4_CMP3:     CMP unit 3 instance register base
  * @param  [in] pstcCMP_InitStruct Configuration structure for normal mode initialize
  *              pstcCMP_InitStruct->u8CmpVol
- *                                Compare voltage, @ref CMP1_CVSL_Source or @ref CMP2_CVSL_Source
+ *                                Compare voltage, @ref CMP_CVSL_Source
  *              pstcCMP_InitStruct->u8RefVol
- *                                Reference voltage, @ref CMP1_RVSL_Source or @ref CMP2_RVSL_Source
+ *                                Reference voltage, @ref CMP_RVSL_Source
  *              pstcCMP_InitStruct->u8OutPolarity
  *                                Output polarity select, @ref CMP_Out_Polarity_Select
  *              pstcCMP_InitStruct->u8OutDetectEdges
@@ -464,7 +434,7 @@ en_result_t CMP_TimerWindowsCfg(M0P_CMP_TypeDef *CMPx,
  *              - Ok:             Successfully
  *              - ErrorInvalidParameter: CMPx or pointer of structure is invalid
  */
-en_result_t CMP_NormalModeInit(M0P_CMP_TypeDef *CMPx,
+en_result_t CMP_NormalModeInit(M4_CMP_TypeDef *CMPx,
                      const stc_cmp_init_t* pstcCMP_InitStruct)
 {
     en_result_t enRet = Ok;
@@ -479,16 +449,8 @@ en_result_t CMP_NormalModeInit(M0P_CMP_TypeDef *CMPx,
         DDL_ASSERT(IS_CMP_OUT_DETECT_EDGE(pstcCMP_InitStruct->u8OutDetectEdges));
         DDL_ASSERT(IS_CMP_OUT_FILTER(pstcCMP_InitStruct->u8OutFilter));
         DDL_ASSERT(IS_CMP_OUT_POLARITY(pstcCMP_InitStruct->u8OutPolarity));
-        if(M0P_CMP1 == CMPx)
-        {
-            DDL_ASSERT(IS_CMP1_CVSL(pstcCMP_InitStruct->u8CmpVol));
-            DDL_ASSERT(IS_CMP1_RVSL(pstcCMP_InitStruct->u8RefVol));
-        }
-        else
-        {
-            DDL_ASSERT(IS_CMP2_CVSL(pstcCMP_InitStruct->u8CmpVol));
-            DDL_ASSERT(IS_CMP2_RVSL(pstcCMP_InitStruct->u8RefVol));
-        }
+        DDL_ASSERT(IS_CMP_CVSL(pstcCMP_InitStruct->u8CmpVol));
+        DDL_ASSERT(IS_CMP_RVSL(pstcCMP_InitStruct->u8RefVol));
 
         /* Stop CMP compare */
         WRITE_REG(CMPx->MDR, 0x00U);
@@ -517,10 +479,10 @@ en_result_t CMP_NormalModeInit(M0P_CMP_TypeDef *CMPx,
  * @param  [in] pstcCMP_InitStruct Configuration structure for window mode initialize
  *              pstcCMP_InitStruct->u8WinVolLow
  *                                CMP reference low voltage for window mode,
- *                                @ref CMP1_RVSL_Source
+ *                                @ref CMP_RVSL_Source
  *              pstcCMP_InitStruct->u8WinVolHigh
  *                                CMP reference high voltage for window mode,
- *                                @ref CMP2_RVSL_Source
+ *                                @ref CMP_RVSL_Source
  *              pstcCMP_InitStruct->u8OutPolarity
  *                                Output polarity select, @ref CMP_Out_Polarity_Select
  *              pstcCMP_InitStruct->u8OutDetectEdges
@@ -546,22 +508,22 @@ en_result_t CMP_WindowModeInit(const stc_cmp_init_t* pstcCMP_InitStruct)
         DDL_ASSERT(IS_CMP_OUT_DETECT_EDGE(pstcCMP_InitStruct->u8OutDetectEdges));
         DDL_ASSERT(IS_CMP_OUT_FILTER(pstcCMP_InitStruct->u8OutFilter));
         DDL_ASSERT(IS_CMP_OUT_POLARITY(pstcCMP_InitStruct->u8OutPolarity));
-        DDL_ASSERT(IS_CMP1_RVSL(pstcCMP_InitStruct->u8WinVolLow));
-        DDL_ASSERT(IS_CMP2_RVSL(pstcCMP_InitStruct->u8WinVolHigh));
+        DDL_ASSERT(IS_CMP_RVSL(pstcCMP_InitStruct->u8WinVolLow));
+        DDL_ASSERT(IS_CMP_RVSL(pstcCMP_InitStruct->u8WinVolHigh));
 
         /* Stop CMP compare */
-        WRITE_REG(M0P_CMP1->MDR, 0x00U);
-        WRITE_REG(M0P_CMP2->MDR, 0x00U);
+        WRITE_REG(M4_CMP2->MDR, 0x00U);
+        WRITE_REG(M4_CMP3->MDR, 0x00U);
 
         /* Set compare voltage and reference voltage */
-        WRITE_REG(M0P_CMP1->VSR,
-                  CMP1_CVSL_VCMP2_0 | pstcCMP_InitStruct->u8WinVolLow);
+        WRITE_REG(M4_CMP3->VSR,
+                  CMP_CVSL_IVCMPx_2 | pstcCMP_InitStruct->u8WinVolLow);
         WRITE_REG(M0P_CMP2->VSR,
-                  CMP2_CVSL_VCMP2_0 | pstcCMP_InitStruct->u8WinVolHigh);
+                  CMP_CVSL_IVCMPx_2 | pstcCMP_InitStruct->u8WinVolHigh);
 
         /* Select window compare mode and start CMP compare function */
         WRITE_REG(M0P_CMP2->MDR, CMP_MDR_CENB | CMP_MDR_CWDE);
-        WRITE_REG(M0P_CMP1->MDR, CMP_MDR_CENB);
+        WRITE_REG(M0P_CMP3->MDR, CMP_MDR_CENB);
         /* Delay 300ns*/
         CMP_Delay300ns();
 
@@ -577,13 +539,14 @@ en_result_t CMP_WindowModeInit(const stc_cmp_init_t* pstcCMP_InitStruct)
  * @brief  De-initialize CMP unit
  * @param  [in] CMPx              Pointer to CMP instance register base,This
  *                                parameter can be one of the following values:
- *              @arg M0P_CMP1:   CMP unit 1 instance register base
- *              @arg M0P_CMP2:   CMP unit 2 instance register base
+ *              @arg M4_CMP1:     CMP unit 1 instance register base
+ *              @arg M4_CMP2:     CMP unit 2 instance register base
+ *              @arg M4_CMP3:     CMP unit 3 instance register base
  * @retval An en_result_t enumeration value:
  *              - Ok:             Successfully
  *              - ErrorInvalidParameter: CMPx or pointer of structure is invalid
  */
-en_result_t CMP_DeInit(M0P_CMP_TypeDef *CMPx)
+en_result_t CMP_DeInit(M4_CMP_TypeDef *CMPx)
 {
     en_result_t enRet = Ok;
     /* Check CMPx instance */
@@ -619,13 +582,13 @@ en_result_t CMP_StructInit(stc_cmp_init_t* pstcCMP_InitStruct)
     }
     else
     {
-        pstcCMP_InitStruct->u8CmpVol = CMP1_CVSL_NONE;
-        pstcCMP_InitStruct->u8RefVol = CMP1_RVSL_NONE;
+        pstcCMP_InitStruct->u8CmpVol = CMP_CVSL_NONE;
+        pstcCMP_InitStruct->u8RefVol = CMP_RVSL_NONE;
         pstcCMP_InitStruct->u8OutDetectEdges = (uint8_t)CMP_DETECT_EDGS_NONE;
         pstcCMP_InitStruct->u8OutFilter = CMP_OUT_FILTER_NONE;
         pstcCMP_InitStruct->u8OutPolarity = CMP_OUT_REVERSE_OFF;
-        pstcCMP_InitStruct->u8WinVolLow = CMP1_RVSL_NONE;
-        pstcCMP_InitStruct->u8WinVolHigh = CMP2_RVSL_NONE;
+        pstcCMP_InitStruct->u8WinVolLow = CMP_RVSL_NONE;
+        pstcCMP_InitStruct->u8WinVolHigh = CMP_RVSL_NONE;
     }
     return enRet;
 }
