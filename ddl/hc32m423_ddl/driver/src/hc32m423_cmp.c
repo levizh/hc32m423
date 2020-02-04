@@ -148,6 +148,13 @@
 (   (CMP_TIMERWIN_OUT_LEVEL_LOW == (x))         ||                             \
     (CMP_TIMERWIN_OUT_LEVEL_HIGH == (x)))
 
+#define IS_CMP_DAC_DATA(x)                                                     \
+(   (x) <= 0xFFU )
+
+#define IS_CMP_DAC_ALIGN_MODE(x)                                               \
+(   (CMP_DAC_ALIGN_RIGHT == (x))                ||                             \
+    (CMP_DAC_ALIGN_LEFT == (x)))
+
 /**
  * @}
  */
@@ -518,21 +525,69 @@ en_result_t CMP_WindowModeInit(const stc_cmp_init_t* pstcCMP_InitStruct)
         /* Set compare voltage and reference voltage */
         WRITE_REG(M4_CMP3->VSR,
                   CMP_CVSL_IVCMPx_2 | pstcCMP_InitStruct->u8WinVolLow);
-        WRITE_REG(M0P_CMP2->VSR,
+        WRITE_REG(M4_CMP2->VSR,
                   CMP_CVSL_IVCMPx_2 | pstcCMP_InitStruct->u8WinVolHigh);
 
         /* Select window compare mode and start CMP compare function */
-        WRITE_REG(M0P_CMP2->MDR, CMP_MDR_CENB | CMP_MDR_CWDE);
-        WRITE_REG(M0P_CMP3->MDR, CMP_MDR_CENB);
+        WRITE_REG(M4_CMP2->MDR, CMP_MDR_CENB | CMP_MDR_CWDE);
+        WRITE_REG(M4_CMP3->MDR, CMP_MDR_CENB);
         /* Delay 300ns*/
         CMP_Delay300ns();
 
         /* Set output filter and output detect edge and output polarity */
-        WRITE_REG(M0P_CMP2->FIR,
+        WRITE_REG(M4_CMP2->FIR,
                   pstcCMP_InitStruct->u8OutFilter | pstcCMP_InitStruct->u8OutDetectEdges);
-        WRITE_REG(M0P_CMP2->OCR, pstcCMP_InitStruct->u8OutPolarity);
+        WRITE_REG(M4_CMP2->OCR, pstcCMP_InitStruct->u8OutPolarity);
     }
     return enRet;
+}
+
+/**
+ * @brief  CMP 8 bit DAC reference voltage configuration
+ * @param  [in] u8DACData         DAC voltage data
+ *              @arg              This parameter can be one data range 0x00~0xFF
+ *                                DAC Voltage = VCCA x u8DACData / 255
+ * @param  [in] u8AlignMode       DAC data register align mode
+ *              @arg              This parameter @ref CMP_DAC_Align_mode
+ * @retval An en_result_t enumeration value:
+ *              - Ok:             Set successfully
+ */
+en_result_t CMP_8BitDACCfg(uint8_t u8DACData, uint8_t u8AlignMode)
+{
+    /* Check parameters */
+    DDL_ASSERT(IS_CMP_DAC_DATA(u8DACData));
+    DDL_ASSERT(IS_CMP_DAC_ALIGN_MODE(u8AlignMode));
+
+    if(CMP_DAC_ALIGN_RIGHT == u8AlignMode)
+    {
+        WRITE_REG16(M4_DAC->DADR1, u8DACData);
+        CLEAR_REG16_BIT(M4_DAC->DACR1, CMP_DACR1_ALGN);
+    }
+    else
+    {
+        WRITE_REG16(M4_DAC->DADR1, u8DACData<<8U);
+        SET_REG16_BIT(M4_DAC->DACR1, CMP_DACR1_ALGN);
+    }
+    return Ok;
+}
+
+/**
+ * @brief  CMP 8 bit DAC reference voltage function command
+ * @param  [in] enNewSta          The function new state.
+ *              @arg              This parameter can be: Enable or Disable.
+ * @retval An en_result_t enumeration value:
+ *              - Ok:             Set successfully
+ */
+en_result_t CMP_8BitDACCmd(en_functional_state_t enNewSta)
+{
+    /* Check parameters */
+    DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
+
+    (Enable == enNewSta) ?
+      SET_REG16_BIT(M4_DAC->DACR1, CMP_DACR1_DAEN) :
+       CLEAR_REG16_BIT(M4_DAC->DACR1, CMP_DACR1_DAEN);
+
+    return Ok;
 }
 
 /**

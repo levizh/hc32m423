@@ -265,6 +265,16 @@ typedef struct
  * @}
  */
 
+/** @defgroup CMP_DAC_Align_mode CMP DAC data align mode
+  * @{
+  */
+#define CMP_DAC_ALIGN_RIGHT             0U
+#define CMP_DAC_ALIGN_LEFT              (CMP_DACR1_ALGN)
+/**
+ * @}
+ */
+
+
 /**
  * @}
  */
@@ -295,6 +305,9 @@ en_result_t CMP_OutputCmd(M4_CMP_TypeDef *CMPx, en_functional_state_t enNewSta);
 en_result_t CMP_VCOUTCmd(M4_CMP_TypeDef *CMPx, en_functional_state_t enNewSta);
 
 en_result_t CMP_ResultGet(M4_CMP_TypeDef *CMPx, en_flag_status_t* penFunSta);
+
+en_result_t CMP_8BitDACCfg(uint8_t u8DACData, uint8_t u8AlignMode);
+en_result_t CMP_8BitDACCmd(en_functional_state_t enNewSta);
 
 /**
  * @}
