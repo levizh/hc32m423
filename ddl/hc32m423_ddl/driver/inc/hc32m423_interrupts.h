@@ -99,10 +99,12 @@ typedef struct
  */
 typedef struct
 {
-    uint8_t     u8NmiFE;        /*!< NMI pin filter function, @ref NMI_FilterClock_Sel for details          */
-    uint8_t     u8NmiFClk;      /*!< NMI pin filter clock  division, @ref NMI_FilterClock_Div for details   */
-    uint8_t     u8NmiTigger;    /*!< NMI pin trigger edge, @ref NMI_Trigger_Sel for details                 */
-    uint8_t     u8NmiSrc;       /*!< NMI trigger source, @ref NMI_TriggerSrc_Sel for details                */
+    uint32_t     u32NmiFAE;        /*!< NMI pin filter function, @ref NMI_FilterAClock_Sel for details          */
+    uint32_t     u32NmiFAClk;      /*!< NMI pin filter clock  division, @ref NMI_FilterAClock_Div for details   */
+    uint32_t     u32NmiFBE;        /*!< NMI pin filter function, @ref NMI_FilterBClock_Sel for details          */
+    uint32_t     u32NmiFBTime;    /*!< Nmi/ExInt filter B time, @ref NMI_EXINT_FilterBTim_Sel for details*/
+    uint32_t     u32NmiTigger;    /*!< NMI pin trigger edge, @ref NMI_Trigger_Sel for details                 */
+    uint32_t     u32NmiSrc;       /*!< NMI trigger source, @ref NMI_TriggerSrc_Sel for details                */
     func_ptr_t  pfnNmiCallback; /*!< NMI Callback function pointers                                         */
 }stc_nmi_config_t;
 
@@ -111,10 +113,12 @@ typedef struct
  */
 typedef struct
 {
-    uint16_t    u16ExIntCh;     /*!< ExInt CH.0~9 @ref EXINT_Channel_Sel                                */
-    uint8_t     u8ExIntFE;      /*!< ExInt filter clock, @ref EXINT_FilterClock_Sel for details         */
-    uint8_t     u8ExIntFClk;    /*!< ExInt filter clock division, @ref EXINT_FilterClock_Div for details*/
-    uint8_t     u8ExIntLvl;     /*!< ExInt trigger edge, @ref EXINT_Trigger_Sel for details             */
+    uint32_t u32ExIntCh;     /*!< ExInt CH.0~7 @ref EXINT_Channel_Sel                                */
+    uint32_t u32ExIntFAE;      /*!< ExInt filter clock, @ref EXINT_FilterAClock_Sel for details         */
+    uint32_t u32ExIntFAClk;    /*!< ExInt filter clock division, @ref EXINT_FilterAClock_Div for details*/
+    uint32_t u32ExIntFBE;      /*!< ExInt filter clock, @ref EXINT_FilterBClock_Sel for details         */
+    uint32_t u32ExIntFBTime;    /*!< Nmi/ExInt filter B time, @ref NMI_EXINT_FilterBTim_Sel for details*/
+    uint32_t u32ExIntLvl;     /*!< ExInt trigger edge, @ref EXINT_Trigger_Sel for details             */
 }stc_exint_config_t;
 
 /**
@@ -133,31 +137,31 @@ typedef struct
  * Possible values are 0 (high priority) to 15 (low priority)
  * @{
  */
-#define DDL_IRQ_PRIORITY_DEFAULT    (0x15U)
+#define DDL_IRQ_PRIORITY_DEFAULT    (15U)
 /**
  * @}
  */
 
 /**
- * @defgroup INTC_Priority_Sel Interrupt priority level 00 ~ 15
+ * @defgroup INTC_Priority_Sel Interrupt priority level 0 ~ 15
  * @{
  */
-#define DDL_IRQ_PRIORITY_00         (0x00U)
-#define DDL_IRQ_PRIORITY_01         (0x01U)
-#define DDL_IRQ_PRIORITY_02         (0x02U)
-#define DDL_IRQ_PRIORITY_03         (0x03U)
-#define DDL_IRQ_PRIORITY_04         (0x04U)
-#define DDL_IRQ_PRIORITY_05         (0x05U)
-#define DDL_IRQ_PRIORITY_06         (0x06U)
-#define DDL_IRQ_PRIORITY_07         (0x07U)
-#define DDL_IRQ_PRIORITY_08         (0x08U)
-#define DDL_IRQ_PRIORITY_09         (0x09U)
-#define DDL_IRQ_PRIORITY_10         (0x10U)
-#define DDL_IRQ_PRIORITY_11         (0x11U)
-#define DDL_IRQ_PRIORITY_12         (0x12U)
-#define DDL_IRQ_PRIORITY_13         (0x13U)
-#define DDL_IRQ_PRIORITY_14         (0x14U)
-#define DDL_IRQ_PRIORITY_15         (0x15U)
+#define DDL_IRQ_PRIORITY_00         (0U)
+#define DDL_IRQ_PRIORITY_01         (1U)
+#define DDL_IRQ_PRIORITY_02         (2U)
+#define DDL_IRQ_PRIORITY_03         (3U)
+#define DDL_IRQ_PRIORITY_04         (4U)
+#define DDL_IRQ_PRIORITY_05         (5U)
+#define DDL_IRQ_PRIORITY_06         (6U)
+#define DDL_IRQ_PRIORITY_07         (7U)
+#define DDL_IRQ_PRIORITY_08         (8U)
+#define DDL_IRQ_PRIORITY_09         (9U)
+#define DDL_IRQ_PRIORITY_10         (10U)
+#define DDL_IRQ_PRIORITY_11         (11U)
+#define DDL_IRQ_PRIORITY_12         (12U)
+#define DDL_IRQ_PRIORITY_13         (13U)
+#define DDL_IRQ_PRIORITY_14         (14U)
+#define DDL_IRQ_PRIORITY_15         (15U)
 /**
  * @}
  */
@@ -203,23 +207,33 @@ typedef struct
  */
 
 /**
- * @defgroup NMI_FilterClock_Sel NMI pin filter selection
+ * @defgroup NMI_FilterAClock_Sel NMI pin filter A selection
  * @{
  */
-#define NMI_FILTER_OFF              (uint8_t)(0U << INTC_NMICR_NMIFEN_POS)
-#define NMI_FILTER_ON               (uint8_t)(1U << INTC_NMICR_NMIFEN_POS)
+#define NMI_FILTER_A_OFF            (uint32_t)(0UL << INTC_NMICR_NMIFEN_POS)
+#define NMI_FILTER_A_ON             (uint32_t)(1UL << INTC_NMICR_NMIFEN_POS)
 /**
  * @}
  */
 
 /**
- * @defgroup NMI_FilterClock_Div NMI pin filter sampling clock division selection
+ * @defgroup NMI_FilterBClock_Sel External interrupt filter B function selection
  * @{
  */
-#define NMI_FCLK_HCLK_DIV1          (uint8_t)(0U << INTC_NMICR_NMIFCLK_POS)
-#define NMI_FCLK_HCLK_DIV8          (uint8_t)(1U << INTC_NMICR_NMIFCLK_POS)
-#define NMI_FCLK_HCLK_DIV32         (uint8_t)(2U << INTC_NMICR_NMIFCLK_POS)
-#define NMI_FCLK_HCLK_DIV64         (uint8_t)(3U << INTC_NMICR_NMIFCLK_POS)
+#define NMI_FILTER_B_OFF           (uint32_t)(0UL << INTC_NMICR_NOCEN_POS)
+#define NMI_FILTER_B_ON            (uint32_t)(1UL << INTC_NMICR_NOCEN_POS)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup NMI_FilterAClock_Div NMI pin filter A sampling clock division selection
+ * @{
+ */
+#define NMI_FACLK_HCLK_DIV1         (uint32_t)(0UL << INTC_NMICR_NMIFCLK_POS)
+#define NMI_FACLK_HCLK_DIV8         (uint32_t)(1UL << INTC_NMICR_NMIFCLK_POS)
+#define NMI_FACLK_HCLK_DIV32        (uint32_t)(2UL << INTC_NMICR_NMIFCLK_POS)
+#define NMI_FACLK_HCLK_DIV64        (uint32_t)(3UL << INTC_NMICR_NMIFCLK_POS)
 /**
  * @}
  */
@@ -228,8 +242,8 @@ typedef struct
  * @defgroup NMI_Trigger_Sel NMI pin trigger method selection
  * @{
  */
-#define NMI_TRIGGER_FALLING         (uint8_t)(0U << INTC_NMICR_NMITRG_POS)
-#define NMI_TRIGGER_RISING          (uint8_t)(1U << INTC_NMICR_NMITRG_POS)
+#define NMI_TRIGGER_FALLING         (uint32_t)(0UL << INTC_NMICR_NMITRG_POS)
+#define NMI_TRIGGER_RISING          (uint32_t)(1UL << INTC_NMICR_NMITRG_POS)
 /**
  * @}
  */
@@ -295,23 +309,45 @@ typedef struct
  */
 
 /**
- * @defgroup EXINT_FilterClock_Sel External interrupt filter function selection
+ * @defgroup EXINT_FilterAClock_Sel External interrupt filter A function selection
  * @{
  */
-#define EXINT_FILTER_OFF            (uint8_t)(0U << INTC_EIRQCR_EFEN_POS)
-#define EXINT_FILTER_ON             (uint8_t)(1U << INTC_EIRQCR_EFEN_POS)
+#define EXINT_FILTER_A_OFF          (uint32_t)(0UL << INTC_EIRQCR_EFEN_POS)
+#define EXINT_FILTER_A_ON           (uint32_t)(1UL << INTC_EIRQCR_EFEN_POS)
 /**
  * @}
  */
 
 /**
- * @defgroup EXINT_FilterClock_Div External interrupt filtersampling  clock division selection
+ * @defgroup EXINT_FilterBClock_Sel External interrupt filter B function selection
  * @{
  */
-#define EXINT_FCLK_HCLK_DIV1        (uint8_t)(0U << INTC_EIRQCR_EISMPCLK_POS)
-#define EXINT_FCLK_HCLK_DIV8        (uint8_t)(1U << INTC_EIRQCR_EISMPCLK_POS)
-#define EXINT_FCLK_HCLK_DIV32       (uint8_t)(2U << INTC_EIRQCR_EISMPCLK_POS)
-#define EXINT_FCLK_HCLK_DIV64       (uint8_t)(3U << INTC_EIRQCR_EISMPCLK_POS)
+#define EXINT_FILTER_B_OFF          (uint32_t)(0UL << INTC_EIRQCR_NOCEN_POS)
+#define EXINT_FILTER_B_ON           (uint32_t)(1UL << INTC_EIRQCR_NOCEN_POS)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EXINT_FilterAClock_Div External interrupt filter A sampling clock division selection
+ * @{
+ */
+#define EXINT_FACLK_HCLK_DIV1        (uint32_t)(0UL << INTC_EIRQCR_EISMPCLK_POS)
+#define EXINT_FACLK_HCLK_DIV8        (uint32_t)(1UL << INTC_EIRQCR_EISMPCLK_POS)
+#define EXINT_FACLK_HCLK_DIV32       (uint32_t)(2UL << INTC_EIRQCR_EISMPCLK_POS)
+#define EXINT_FACLK_HCLK_DIV64       (uint32_t)(3UL << INTC_EIRQCR_EISMPCLK_POS)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup NMI_EXINT_FilterBTim_Sel External interrupt filter B time selection
+ * @{
+ */
+#define NMI_EXINT_FBTIM_500NS       (uint32_t)(0UL << INTC_NMICR_NOCSEL_POS)
+#define NMI_EXINT_FBTIM_1US         (uint32_t)(1UL << INTC_NMICR_NOCSEL_POS)
+#define NMI_EXINT_FBTIM_2US         (uint32_t)(2UL << INTC_NMICR_NOCSEL_POS)
+#define NMI_EXINT_FBTIM_4US         (uint32_t)(3UL << INTC_NMICR_NOCSEL_POS)
 /**
  * @}
  */
@@ -320,10 +356,10 @@ typedef struct
  * @defgroup EXINT_Trigger_Sel External interrupt trigger method selection
  * @{
  */
-#define EXINT_TRIGGER_LOW           (uint8_t)(0U << INTC_EIRQCR_EIRQTRG_POS)
-#define EXINT_TRIGGER_RISING        (uint8_t)(1U << INTC_EIRQCR_EIRQTRG_POS)
-#define EXINT_TRIGGER_FALLING       (uint8_t)(2U << INTC_EIRQCR_EIRQTRG_POS)
-#define EXINT_TRIGGER_BOTH          (uint8_t)(3U << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_FALLING       (uint32_t)(0UL << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_RISING        (uint32_t)(1UL << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_BOTH          (uint32_t)(2UL << INTC_EIRQCR_EIRQTRG_POS)
+#define EXINT_TRIGGER_LOW           (uint32_t)(3UL << INTC_EIRQCR_EIRQTRG_POS)
 /**
  * @}
  */
@@ -368,6 +404,8 @@ en_result_t INTC_IrqSignIn(const stc_irq_regi_config_t *pstcIrqRegiConfig);
 en_result_t INTC_IrqSignOut(IRQn_Type enIRQn);
 void INTC_WakeupSrcCmd(uint32_t u32WakeupSrc, en_functional_state_t enNewState);
 void INTC_EventCmd(uint32_t u32Event, en_functional_state_t enNewState);
+void INTC_IntCmd(uint32_t u32Int, en_functional_state_t enNewState);
+void INTC_SWICmd(uint32_t u32SWI, en_functional_state_t enNewState);
 
 en_result_t NMI_Init(const stc_nmi_config_t *pstcNmiConfig);
 en_result_t NMI_StructInit(stc_nmi_config_t *pstcNmiConfig);
@@ -376,8 +414,8 @@ void NMI_ClrNmiSrc(uint32_t u32NmiSrc);
 
 en_result_t EXINT_Init(const stc_exint_config_t *pstcExIntConfig);
 en_result_t EXINT_StructInit(stc_exint_config_t *pstcExintConfig);
-en_flag_status_t EXINT_GetExIntSrc(uint16_t u16ExIntCh);
-void EXINT_ClrExIntSrc(uint16_t u16ExIntCh);
+en_flag_status_t EXINT_GetExIntSrc(uint32_t u32ExIntCh);
+void EXINT_ClrExIntSrc(uint32_t u32ExIntCh);
 
 __WEAKDEF void NMI_IrqHandler(void);
 __WEAKDEF void HardFault_IrqHandler(void);

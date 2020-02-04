@@ -111,17 +111,44 @@
                 INTC_EVTER_EVTE12   | INTC_EVTER_EVTE13     |                   \
                 INTC_EVTER_EVTE14   | INTC_EVTER_EVTE15)) != (uint32_t)0x00000000UL)
 
-/*  Parameter validity check for NMI pin filter function. */
-#define IS_NMI_FE(fe)                                                           \
-(   ((fe) == NMI_FILTER_OFF)                    ||                              \
-    ((fe) == NMI_FILTER_ON))
+/*  Parameter validity check for interrupt index. */
+#define IS_INTC_INT(int)                                                        \
+(   ((int) &    (INTC_IER_IER0      | INTC_IER_IER1                     |       \
+                INTC_IER_IER2       | INTC_IER_IER3                     |       \
+                INTC_IER_IER4       | INTC_IER_IER5                     |       \
+                INTC_IER_IER6       | INTC_IER_IER7                     |       \
+                INTC_IER_IER8       | INTC_IER_IER9                     |       \
+                INTC_IER_IER10      | INTC_IER_IER11                    |       \
+                INTC_IER_IER12      | INTC_IER_IER13                    |       \
+                INTC_IER_IER14      | INTC_IER_IER15)) != (uint32_t)0x00000000UL)
 
-/*  Parameter validity check for MNI pin filter clock division. */
-#define IS_NMI_FCLK(fclk)                                                       \
-(   ((fclk) == NMI_FCLK_HCLK_DIV1)              ||                              \
-    ((fclk) == NMI_FCLK_HCLK_DIV8)              ||                              \
-    ((fclk) == NMI_FCLK_HCLK_DIV32)             ||                              \
-    ((fclk) == NMI_FCLK_HCLK_DIV64))
+/*  Parameter validity check for software interrupt index. */
+#define IS_INTC_SWI(swi)                                                        \
+(   ((swi) &   (INTC_SWIER_SWIE0    | INTC_SWIER_SWIE1                  |       \
+                INTC_SWIER_SWIE2    | INTC_SWIER_SWIE3                  |       \
+                INTC_SWIER_SWIE4    | INTC_SWIER_SWIE5                  |       \
+                INTC_SWIER_SWIE6    | INTC_SWIER_SWIE7                  |       \
+                INTC_SWIER_SWIE8    | INTC_SWIER_SWIE9                  |       \
+                INTC_SWIER_SWIE10   | INTC_SWIER_SWIE11                 |       \
+                INTC_SWIER_SWIE12   | INTC_SWIER_SWIE13                 |       \
+                INTC_SWIER_SWIE14   | INTC_SWIER_SWIE15)) != (uint32_t)0x00000000UL)
+
+/*  Parameter validity check for NMI pin filter A function. */
+#define IS_NMI_FAE(fae)                                                         \
+(   ((fae) == NMI_FILTER_A_OFF)                 ||                              \
+    ((fae) == NMI_FILTER_A_ON))
+
+/*  Parameter validity check for NMI pin filter B function. */
+#define IS_NMI_FBE(fbe)                                                         \
+(   ((fbe) == NMI_FILTER_B_OFF)                 ||                              \
+    ((fbe) == NMI_FILTER_B_ON))
+
+/*  Parameter validity check for MNI pin filter A clock division. */
+#define IS_NMI_FACLK(faclk)                                                     \
+(   ((faclk) == NMI_FACLK_HCLK_DIV1)            ||                              \
+    ((faclk) == NMI_FACLK_HCLK_DIV8)            ||                              \
+    ((faclk) == NMI_FACLK_HCLK_DIV32)           ||                              \
+    ((faclk) == NMI_FACLK_HCLK_DIV64))
 
 /*  Parameter validity check for NMI pin trigger edge. */
 #define IS_NMI_TRIGGER(trigger)                                                 \
@@ -140,17 +167,29 @@
     ((src) == NMI_SRC_RAMPE)                    ||                              \
     ((src) == NMI_SRC_WDT))
 
-/*  Parameter validity check for EXINT filter function. */
-#define IS_EXINT_FE(fe)                                                         \
-(   ((fe) == EXINT_FILTER_OFF)                  ||                              \
-    ((fe) == EXINT_FILTER_ON))
+/*  Parameter validity check for EXINT filter A function. */
+#define IS_EXINT_FAE(fae)                                                       \
+(   ((fae) == EXINT_FILTER_A_OFF)               ||                              \
+    ((fae) == EXINT_FILTER_A_ON))
+
+/*  Parameter validity check for EXINT filter B function. */
+#define IS_EXINT_FBE(fbe)                                                       \
+(   ((fbe) == EXINT_FILTER_B_OFF)               ||                              \
+    ((fbe) == EXINT_FILTER_B_ON))
 
 /*  Parameter validity check for EXINT filter clock division. */
-#define IS_EXINT_FCLK(fclk)                                                     \
-(   ((fclk) == EXINT_FCLK_HCLK_DIV1)            ||                              \
-    ((fclk) == EXINT_FCLK_HCLK_DIV8)            ||                              \
-    ((fclk) == EXINT_FCLK_HCLK_DIV32)           ||                              \
-    ((fclk) == EXINT_FCLK_HCLK_DIV64))
+#define IS_EXINT_FACLK(faclk)                                                   \
+(   ((faclk) == EXINT_FACLK_HCLK_DIV1)           ||                             \
+    ((faclk) == EXINT_FACLK_HCLK_DIV8)           ||                             \
+    ((faclk) == EXINT_FACLK_HCLK_DIV32)          ||                             \
+    ((faclk) == EXINT_FACLK_HCLK_DIV64))
+
+/*  Parameter validity check for EXINT filter clock division. */
+#define IS_NMI_EXINT_FBTIM(fbtim)                                               \
+(   ((fbtim) == NMI_EXINT_FBTIM_500NS)           ||                             \
+    ((fbtim) == NMI_EXINT_FBTIM_1US)             ||                             \
+    ((fbtim) == NMI_EXINT_FBTIM_2US)             ||                             \
+    ((fbtim) == NMI_EXINT_FBTIM_4US))
 
 /*  Parameter validity check for EXINT trigger edge. */
 #define IS_EXINT_TRIGGER(trigger)                                               \
@@ -308,22 +347,22 @@ void INTC_WakeupSrcCmd(uint32_t u32WakeupSrc, en_functional_state_t enNewState)
 /**
  * @brief  Event or Interrupt output configure
  * @param  [in] u8Event: Event index
- *   @arg  INTC_EVTER_EVTEN0
- *   @arg  INTC_EVTER_EVTEN1
- *   @arg  INTC_EVTER_EVTEN2
- *   @arg  INTC_EVTER_EVTEN3
- *   @arg  INTC_EVTER_EVTEN4
- *   @arg  INTC_EVTER_EVTEN5
- *   @arg  INTC_EVTER_EVTEN6
- *   @arg  INTC_EVTER_EVTEN7
- *   @arg  INTC_EVTER_EVTEN8
- *   @arg  INTC_EVTER_EVTEN9
- *   @arg  INTC_EVTER_EVTEN10
- *   @arg  INTC_EVTER_EVTEN11
- *   @arg  INTC_EVTER_EVTEN12
- *   @arg  INTC_EVTER_EVTEN13
- *   @arg  INTC_EVTER_EVTEN14
- *   @arg  INTC_EVTER_EVTEN15
+ *   @arg  INTC_EVTER_EVTE0
+ *   @arg  INTC_EVTER_EVTE1
+ *   @arg  INTC_EVTER_EVTE2
+ *   @arg  INTC_EVTER_EVTE3
+ *   @arg  INTC_EVTER_EVTE4
+ *   @arg  INTC_EVTER_EVTE5
+ *   @arg  INTC_EVTER_EVTE6
+ *   @arg  INTC_EVTER_EVTE7
+ *   @arg  INTC_EVTER_EVTE8
+ *   @arg  INTC_EVTER_EVTE9
+ *   @arg  INTC_EVTER_EVTE10
+ *   @arg  INTC_EVTER_EVTE11
+ *   @arg  INTC_EVTER_EVTE12
+ *   @arg  INTC_EVTER_EVTE13
+ *   @arg  INTC_EVTER_EVTE14
+ *   @arg  INTC_EVTER_EVTE15
  * @param  [in] enNewState
  *   @arg  Enable: Enable corresponding event to NVIC
  *   @arg  Disable: Disable corresponding event but interrupt to NVIC
@@ -341,6 +380,84 @@ void INTC_EventCmd(uint32_t u32Event, en_functional_state_t enNewState)
     else
     {
         CLEAR_REG32_BIT(M4_INTC->EVTER, u32Event);
+    }
+}
+
+/**
+ * @brief  Interrupt function configure
+ * @param  [in] u32Int: Interrupt index
+ *   @arg  INTC_IER_IER0
+ *   @arg  INTC_IER_IER1
+ *   @arg  INTC_IER_IER2
+ *   @arg  INTC_IER_IER3
+ *   @arg  INTC_IER_IER4
+ *   @arg  INTC_IER_IER5
+ *   @arg  INTC_IER_IER6
+ *   @arg  INTC_IER_IER7
+ *   @arg  INTC_IER_IER8
+ *   @arg  INTC_IER_IER9
+ *   @arg  INTC_IER_IER10
+ *   @arg  INTC_IER_IER11
+ *   @arg  INTC_IER_IER12
+ *   @arg  INTC_IER_IER13
+ *   @arg  INTC_IER_IER14
+ *   @arg  INTC_IER_IER15
+ * @param  [in] enNewState
+ *   @arg  Enable: Enable corresponding interrupt to NVIC
+ *   @arg  Disable: Disable corresponding interrupt to NVIC
+ * @retval None
+ */
+void INTC_IntCmd(uint32_t u32Int, en_functional_state_t enNewState)
+{
+    /* Parameter validity checking */
+    DDL_ASSERT(IS_INTC_INT(u32Int));
+
+    if (Enable == enNewState)
+    {
+        SET_REG32_BIT(M4_INTC->IER, u32Int);
+    }
+    else
+    {
+        CLEAR_REG32_BIT(M4_INTC->IER, u32Int);
+    }
+}
+
+/**
+ * @brief  Software Interrupt function configure
+ * @param  [in] u32SWI: Software Interrupt index
+ *   @arg  INTC_SWIER_SWIE0
+ *   @arg  INTC_SWIER_SWIE1
+ *   @arg  INTC_SWIER_SWIE2
+ *   @arg  INTC_SWIER_SWIE3
+ *   @arg  INTC_SWIER_SWIE4
+ *   @arg  INTC_SWIER_SWIE5
+ *   @arg  INTC_SWIER_SWIE6
+ *   @arg  INTC_SWIER_SWIE7
+ *   @arg  INTC_SWIER_SWIE8
+ *   @arg  INTC_SWIER_SWIE9
+ *   @arg  INTC_SWIER_SWIE10
+ *   @arg  INTC_SWIER_SWIE11
+ *   @arg  INTC_SWIER_SWIE12
+ *   @arg  INTC_SWIER_SWIE13
+ *   @arg  INTC_SWIER_SWIE14
+ *   @arg  INTC_SWIER_SWIE15
+ * @param  [in] enNewState
+ *   @arg  Enable: Enable corresponding software interrupt
+ *   @arg  Disable: Disable corresponding software interrupt
+ * @retval None
+ */
+void INTC_SWICmd(uint32_t u32SWI, en_functional_state_t enNewState)
+{
+    /* Parameter validity checking */
+    DDL_ASSERT(IS_INTC_SWI(u32SWI));
+
+    if (Enable == enNewState)
+    {
+        SET_REG32_BIT(M4_INTC->SWIER, u32SWI);
+    }
+    else
+    {
+        CLEAR_REG32_BIT(M4_INTC->SWIER, u32SWI);
     }
 }
 
@@ -363,10 +480,12 @@ en_result_t NMI_StructInit(stc_nmi_config_t *pstcNmiConfig)
     else
     {
         /* Configure to default value */
-        pstcNmiConfig->u8NmiFE          = NMI_FILTER_OFF;
-        pstcNmiConfig->u8NmiFClk        = NMI_FCLK_HCLK_DIV1;
-        pstcNmiConfig->u8NmiTigger      = NMI_TRIGGER_FALLING;
-        pstcNmiConfig->u8NmiSrc         = NMI_SRC_NMI_PIN;
+        pstcNmiConfig->u32NmiFAE        = NMI_FILTER_A_OFF;
+        pstcNmiConfig->u32NmiFAClk      = NMI_FACLK_HCLK_DIV1;
+        pstcNmiConfig->u32NmiFBE        = NMI_FILTER_B_OFF;
+        pstcNmiConfig->u32NmiFBTime     = NMI_EXINT_FBTIM_500NS;
+        pstcNmiConfig->u32NmiTigger     = NMI_TRIGGER_FALLING;
+        pstcNmiConfig->u32NmiSrc        = NMI_SRC_NMI_PIN;
         pstcNmiConfig->pfnNmiCallback   = NULL;
     }
     return enRet;
@@ -391,22 +510,26 @@ en_result_t NMI_Init(const stc_nmi_config_t *pstcNmiConfig)
     else
     {
         /* Parameter validity checking */
-        DDL_ASSERT(IS_NMI_FCLK(pstcNmiConfig->u8NmiFClk));
-        DDL_ASSERT(IS_NMI_FE(pstcNmiConfig->u8NmiFE));
-        DDL_ASSERT(IS_NMI_TRIGGER(pstcNmiConfig->u8NmiTigger));
-        DDL_ASSERT(IS_NMI_SRC(pstcNmiConfig->u8NmiSrc));
+        DDL_ASSERT(IS_NMI_FAE(pstcNmiConfig->u32NmiFAE));
+        DDL_ASSERT(IS_NMI_FACLK(pstcNmiConfig->u32NmiFAClk));
+        DDL_ASSERT(IS_NMI_FBE(pstcNmiConfig->u32NmiFBE));
+        DDL_ASSERT(IS_NMI_EXINT_FBTIM(pstcNmiConfig->u32NmiFBTime));
+        DDL_ASSERT(IS_NMI_TRIGGER(pstcNmiConfig->u32NmiTigger));
+        DDL_ASSERT(IS_NMI_SRC(pstcNmiConfig->u32NmiSrc));
 
         /* NMI pin interrupt configure */
-        WRITE_REG8(M4_INTC->NMICR,                                             \
-                  (pstcNmiConfig->u8NmiFE         |                             \
-                   pstcNmiConfig->u8NmiFClk       |                             \
-                   pstcNmiConfig->u8NmiTigger));
+        WRITE_REG32(M4_INTC->NMICR,                                             \
+                  (pstcNmiConfig->u32NmiFAE         |                           \
+                   pstcNmiConfig->u32NmiFAClk       |                           \
+                   pstcNmiConfig->u32NmiFBE         |                           \
+                   pstcNmiConfig->u32NmiFBTime      |                           \
+                   pstcNmiConfig->u32NmiTigger));
 
         /* Clear all NMI trigger source before set */
         WRITE_REG32(M4_INTC->NMICFR, INTC_NMICFR_MASK);
 
         /* NMI trigger source configure */
-        WRITE_REG8(M4_INTC->NMIER, pstcNmiConfig->u8NmiSrc);
+        WRITE_REG32(M4_INTC->NMIER, pstcNmiConfig->u32NmiSrc);
 
         /* NMI callback function configure */
         pfnNmiCallback = pstcNmiConfig->pfnNmiCallback;
@@ -488,19 +611,23 @@ en_result_t EXINT_Init(const stc_exint_config_t *pstcExIntConfig)
     else
     {
         /* Parameter validity checking */
-        DDL_ASSERT(IS_EXINT_FE(pstcExIntConfig->u8ExIntFE));
-        DDL_ASSERT(IS_EXINT_FCLK(pstcExIntConfig->u8ExIntFClk));
-        DDL_ASSERT(IS_EXINT_TRIGGER(pstcExIntConfig->u8ExIntLvl));
-        DDL_ASSERT(IS_EXINT_CH(pstcExIntConfig->u16ExIntCh));
+        DDL_ASSERT(IS_EXINT_FAE(pstcExIntConfig->u32ExIntFAE));
+        DDL_ASSERT(IS_EXINT_FBE(pstcExIntConfig->u32ExIntFBE));
+        DDL_ASSERT(IS_EXINT_FACLK(pstcExIntConfig->u32ExIntFAClk));
+        DDL_ASSERT(IS_NMI_EXINT_FBTIM(pstcExIntConfig->u32ExIntFBTime));
+        DDL_ASSERT(IS_EXINT_TRIGGER(pstcExIntConfig->u32ExIntLvl));
+        DDL_ASSERT(IS_EXINT_CH(pstcExIntConfig->u32ExIntCh));
 
         for (u8ExIntPos = 0U; u8ExIntPos < 10U; u8ExIntPos++)
         {
-            if (pstcExIntConfig->u16ExIntCh & (1UL << u8ExIntPos))
+            if (pstcExIntConfig->u32ExIntCh & (1UL << u8ExIntPos))
             {
-                WRITE_REG8(*(uint8_t *)((uint32_t)(&M4_INTC->EIRQCR0) + 4U*u8ExIntPos),\
-                          (pstcExIntConfig->u8ExIntFE         |                         \
-                           pstcExIntConfig->u8ExIntFClk       |                         \
-                           pstcExIntConfig->u8ExIntLvl));
+                WRITE_REG32(*(uint32_t *)((uint32_t)(&M4_INTC->EIRQCR0) + 4U*u8ExIntPos),   \
+                          (pstcExIntConfig->u32ExIntFAE         |                           \
+                           pstcExIntConfig->u32ExIntFAClk       |                           \
+                           pstcExIntConfig->u32ExIntFBE         |                           \
+                           pstcExIntConfig->u32ExIntFBTime      |                           \
+                           pstcExIntConfig->u32ExIntLvl));
             }
         }
     }
@@ -526,17 +653,19 @@ en_result_t EXINT_StructInit(stc_exint_config_t *pstcExintConfig)
     else
     {
         /* Configure to default value */
-        pstcExintConfig->u16ExIntCh     = (uint16_t)0UL;
-        pstcExintConfig->u8ExIntFE      = EXINT_FILTER_OFF;
-        pstcExintConfig->u8ExIntFClk    = EXINT_FCLK_HCLK_DIV1;
-        pstcExintConfig->u8ExIntLvl     = EXINT_TRIGGER_FALLING;
+        pstcExintConfig->u32ExIntCh     = (uint16_t)0UL;
+        pstcExintConfig->u32ExIntFAE    = EXINT_FILTER_A_OFF;
+        pstcExintConfig->u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV1;
+        pstcExintConfig->u32ExIntFBE    = EXINT_FILTER_B_OFF;
+        pstcExintConfig->u32ExIntFBTime = NMI_EXINT_FBTIM_500NS;
+        pstcExintConfig->u32ExIntLvl    = EXINT_TRIGGER_FALLING;
     }
     return enRet;
 }
 
 /**
  * @brief  Clear specified External interrupt trigger source
- * @param  [in] u16ExIntCh: External interrupt channel, @ref EXINT_Channel_Sel for details
+ * @param  [in] u32ExIntCh: External interrupt channel, @ref EXINT_Channel_Sel for details
  *   @arg  EXINT_CH00
  *   @arg  EXINT_CH01
  *   @arg  EXINT_CH02
@@ -545,22 +674,20 @@ en_result_t EXINT_StructInit(stc_exint_config_t *pstcExintConfig)
  *   @arg  EXINT_CH05
  *   @arg  EXINT_CH06
  *   @arg  EXINT_CH07
- *   @arg  EXINT_CH08
- *   @arg  EXINT_CH09
  * @retval None
  */
-void EXINT_ClrExIntSrc(uint16_t u16ExIntCh)
+void EXINT_ClrExIntSrc(uint32_t u32ExIntCh)
 {
     /* Parameter validity checking */
-    DDL_ASSERT(IS_EXINT_CH(u16ExIntCh));
+    DDL_ASSERT(IS_EXINT_CH(u32ExIntCh));
 
-    SET_REG16_BIT(M4_INTC->EIRQCFR, u16ExIntCh);
+    SET_REG32_BIT(M4_INTC->EIRQCFR, u32ExIntCh);
 
 }
 
 /**
  * @brief  Get specified External interrupt trigger source
- * @param  [in] u16ExIntCh: External interrupt channel, @ref EXINT_Channel_Sel for details
+ * @param  [in] u32ExIntCh: External interrupt channel, @ref EXINT_Channel_Sel for details
  *   @arg  EXINT_CH00
  *   @arg  EXINT_CH01
  *   @arg  EXINT_CH02
@@ -569,17 +696,15 @@ void EXINT_ClrExIntSrc(uint16_t u16ExIntCh)
  *   @arg  EXINT_CH05
  *   @arg  EXINT_CH06
  *   @arg  EXINT_CH07
- *   @arg  EXINT_CH08
- *   @arg  EXINT_CH09
  * @retval Set: Specified channel of external interrupt is triggered
  *         Reset: Specified channel of external interrupt is not triggered
  */
-en_flag_status_t EXINT_GetExIntSrc(uint16_t u16ExIntCh)
+en_flag_status_t EXINT_GetExIntSrc(uint32_t u32ExIntCh)
 {
     /* Parameter validity checking */
-    DDL_ASSERT(IS_EXINT_CH(u16ExIntCh));
+    DDL_ASSERT(IS_EXINT_CH(u32ExIntCh));
 
-    return (READ_REG16(M4_INTC->EIRQFR) & u16ExIntCh) ? Set : Reset;
+    return (READ_REG32(M4_INTC->EIRQFR) & u32ExIntCh) ? Set : Reset;
 }
 
 /**

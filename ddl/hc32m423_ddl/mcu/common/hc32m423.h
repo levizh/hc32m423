@@ -4339,39 +4339,39 @@ typedef struct
 #define INTC_SEL_ISEL_7                                ((uint32_t)0x00000080U)
 #define INTC_SEL_ISEL_8                                ((uint32_t)0x00000100U)
 
-/*  Bit definition for INT_SWIER register  */
-#define INT_SWIER_SWIE0_POS                            (0U)
-#define INT_SWIER_SWIE0                                ((uint32_t)0x00000001U)
-#define INT_SWIER_SWIE1_POS                            (1U)
-#define INT_SWIER_SWIE1                                ((uint32_t)0x00000002U)
-#define INT_SWIER_SWIE2_POS                            (2U)
-#define INT_SWIER_SWIE2                                ((uint32_t)0x00000004U)
-#define INT_SWIER_SWIE3_POS                            (3U)
-#define INT_SWIER_SWIE3                                ((uint32_t)0x00000008U)
-#define INT_SWIER_SWIE4_POS                            (4U)
-#define INT_SWIER_SWIE4                                ((uint32_t)0x00000010U)
-#define INT_SWIER_SWIE5_POS                            (5U)
-#define INT_SWIER_SWIE5                                ((uint32_t)0x00000020U)
-#define INT_SWIER_SWIE6_POS                            (6U)
-#define INT_SWIER_SWIE6                                ((uint32_t)0x00000040U)
-#define INT_SWIER_SWIE7_POS                            (7U)
-#define INT_SWIER_SWIE7                                ((uint32_t)0x00000080U)
-#define INT_SWIER_SWIE8_POS                            (8U)
-#define INT_SWIER_SWIE8                                ((uint32_t)0x00000100U)
-#define INT_SWIER_SWIE9_POS                            (9U)
-#define INT_SWIER_SWIE9                                ((uint32_t)0x00000200U)
-#define INT_SWIER_SWIE10_POS                           (10U)
-#define INT_SWIER_SWIE10                               ((uint32_t)0x00000400U)
-#define INT_SWIER_SWIE11_POS                           (11U)
-#define INT_SWIER_SWIE11                               ((uint32_t)0x00000800U)
-#define INT_SWIER_SWIE12_POS                           (12U)
-#define INT_SWIER_SWIE12                               ((uint32_t)0x00001000U)
-#define INT_SWIER_SWIE13_POS                           (13U)
-#define INT_SWIER_SWIE13                               ((uint32_t)0x00002000U)
-#define INT_SWIER_SWIE14_POS                           (14U)
-#define INT_SWIER_SWIE14                               ((uint32_t)0x00004000U)
-#define INT_SWIER_SWIE15_POS                           (15U)
-#define INT_SWIER_SWIE15                               ((uint32_t)0x00008000U)
+/*  Bit definition for INTC_SWIER register  */
+#define INTC_SWIER_SWIE0_POS                           (0U)
+#define INTC_SWIER_SWIE0                               ((uint32_t)0x00000001U)
+#define INTC_SWIER_SWIE1_POS                           (1U)
+#define INTC_SWIER_SWIE1                               ((uint32_t)0x00000002U)
+#define INTC_SWIER_SWIE2_POS                           (2U)
+#define INTC_SWIER_SWIE2                               ((uint32_t)0x00000004U)
+#define INTC_SWIER_SWIE3_POS                           (3U)
+#define INTC_SWIER_SWIE3                               ((uint32_t)0x00000008U)
+#define INTC_SWIER_SWIE4_POS                           (4U)
+#define INTC_SWIER_SWIE4                               ((uint32_t)0x00000010U)
+#define INTC_SWIER_SWIE5_POS                           (5U)
+#define INTC_SWIER_SWIE5                               ((uint32_t)0x00000020U)
+#define INTC_SWIER_SWIE6_POS                           (6U)
+#define INTC_SWIER_SWIE6                               ((uint32_t)0x00000040U)
+#define INTC_SWIER_SWIE7_POS                           (7U)
+#define INTC_SWIER_SWIE7                               ((uint32_t)0x00000080U)
+#define INTC_SWIER_SWIE8_POS                           (8U)
+#define INTC_SWIER_SWIE8                               ((uint32_t)0x00000100U)
+#define INTC_SWIER_SWIE9_POS                           (9U)
+#define INTC_SWIER_SWIE9                               ((uint32_t)0x00000200U)
+#define INTC_SWIER_SWIE10_POS                          (10U)
+#define INTC_SWIER_SWIE10                              ((uint32_t)0x00000400U)
+#define INTC_SWIER_SWIE11_POS                          (11U)
+#define INTC_SWIER_SWIE11                              ((uint32_t)0x00000800U)
+#define INTC_SWIER_SWIE12_POS                          (12U)
+#define INTC_SWIER_SWIE12                              ((uint32_t)0x00001000U)
+#define INTC_SWIER_SWIE13_POS                          (13U)
+#define INTC_SWIER_SWIE13                              ((uint32_t)0x00002000U)
+#define INTC_SWIER_SWIE14_POS                          (14U)
+#define INTC_SWIER_SWIE14                              ((uint32_t)0x00004000U)
+#define INTC_SWIER_SWIE15_POS                          (15U)
+#define INTC_SWIER_SWIE15                              ((uint32_t)0x00008000U)
 
 /*  Bit definition for INTC_EVTER register  */
 #define INTC_EVTER_EVTE0_POS                           (0U)
@@ -10713,7 +10713,7 @@ typedef struct
     __IO uint32_t SWIE14;
     __IO uint32_t SWIE15;
     uint32_t RESERVED0[16];
-} stc_int_swier_bit_t;
+} stc_intc_swier_bit_t;
 
 typedef struct
 {
@@ -13158,7 +13158,7 @@ typedef struct
     stc_intc_sel_bit_t                       SEL99_b;
     stc_intc_sel_bit_t                       SEL100_b;
     uint32_t                                 RESERVED1[1376];
-    stc_int_swier_bit_t                      SWIER_b;
+    stc_intc_swier_bit_t                     SWIER_b;
     stc_intc_evter_bit_t                     EVTER_b;
     stc_intc_ier_bit_t                       IER_b;
 } bM4_INTC_TypeDef;
