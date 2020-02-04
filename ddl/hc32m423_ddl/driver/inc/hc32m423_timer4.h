@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-24       Hongjh          First version
+   2020-02-03       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -360,7 +360,7 @@ typedef struct
  * @defgroup TIMER4_Result_Code TIMER4 Result Code
  * @{
  */
-#define TIMER4_RESULT_ERROR                     ((uint16_t)0xFFFFu)
+#define TIMER4_RESULT_ERROR                     ((uint16_t)0xFFFFU)
 /**
  * @}
  */
@@ -472,6 +472,15 @@ typedef struct
  * @}
  */
 
+/** @defgroup TIMER4_CNT_Count_Direction_Signal_Output TIMER4 CNT Count Direction Signal Output
+ * @{
+ */
+#define TIMER4_CNT_CNTDIRSIG_OUTPUT_DISABLE     ((uint16_t)0x0000U)     /*!< Disable output count direction signal */
+#define TIMER4_CNT_CNTDIRSIG_OUTPUT_ENABLE      (TMR4_SCER_PCTS)        /*!< Enable output count direction signal */
+/**
+ * @}
+ */
+
 /**
  * @}
  */
@@ -566,6 +575,19 @@ typedef struct
  * @}
  */
 
+/** @defgroup TIMER4_PWM_Port TIMER4 PWM Port
+ * @{
+ */
+#define TIMER4_PWM_PORT_OUH                     ((uint32_t)0UL)   /*!< Timer4 PWM port: TIM4_<t>_OUH */
+#define TIMER4_PWM_PORT_OUL                     ((uint32_t)1UL)   /*!< Timer4 PWM port: TIM4_<t>_OUL */
+#define TIMER4_PWM_PORT_OVH                     ((uint32_t)2UL)   /*!< Timer4 PWM port: TIM4_<t>_OVH */
+#define TIMER4_PWM_PORT_OVL                     ((uint32_t)3UL)   /*!< Timer4 PWM port: TIM4_<t>_OVL */
+#define TIMER4_PWM_PORT_OWH                     ((uint32_t)4UL)   /*!< Timer4 PWM port: TIM4_<t>_OWH */
+#define TIMER4_PWM_PORT_OWL                     ((uint32_t)5UL)   /*!< Timer4 PWM port: TIM4_<t>_OWL */
+/**
+ * @}
+ */
+
 /** @defgroup TIMER4_PWM_Clock_Division TIMER4 PWM Clock Division
  * @{
  */
@@ -604,6 +626,29 @@ typedef struct
 #define TIMER4_PWM_OP_OXH_INVERT_OXL_HOLD       (TMR4_POCR_LVLS_1)  /*!< Output the PWMH signal reversed, outputs the PWML signal without changing the level. */
 #define TIMER4_PWM_OP_OXH_HOLD_OXL_INVERT       (TMR4_POCR_LVLS)    /*!< Output the PWMH signal without changing the level, Outputs the PWML signal reversed. */
 /**
+ * @}
+ */
+
+/**
+ * @defgroup TIMER4_PWM_Port_State Timer4 PWM Port State
+ * @{
+ */
+#define TIMER4_PWM_PORT_OUTPUT_NORMAL           ((uint32_t)0UL)     /*!< TIM4_<t>_Oxy output normal */
+#define TIMER4_PWM_PORT_OUTPUT_HIZ              (TMR4_PSCR_OSUH_0)  /*!< TIM4_<t>_Oxy output Hi-z */
+#define TIMER4_PWM_PORT_OUTPUT_LOW              (TMR4_PSCR_OSUH_1)  /*!< TIM4_<t>_Oxy output low level */
+#define TIMER4_PWM_PORT_OUTPUT_HIGH             (TMR4_PSCR_OSUH)    /*!< TIM4_<t>_Oxy output high level */
+/**
+ * @}
+ */
+
+/**
+ * @defgroup TIMER4_PWM_Port_Enable_Bit_Effective_Time TIMER4 PWM Port Enable Bit Effective Time
+ * @{
+ */
+#define TIMER4_PWM_PORT_ENBIT_EFFECT_IMMEDIATE  ((uint32_t)0UL)     /*!< TIMER4 PWM Port Enable Bit Effective Time: immediate */
+#define TIMER4_PWM_PORT_ENBIT_EFFECT_CNTUVF     (TMR4_PSCR_ODT_1)   /*!< TIMER4 PWM Port Enable Bit Effective Time: Timer4 counter underflow */
+#define TIMER4_PWM_PORT_ENBIT_EFFECT_CNTOVF     (TMR4_PSCR_ODT)     /*!< TIMER4 PWM Port Enable Bit Effective Time: Timer4 counter overflow */
+ /**
  * @}
  */
 
@@ -710,24 +755,19 @@ typedef struct
  * @}
  */
 
-/**
- * @}
- */
-
-/**
- * @defgroup TIMER4_EMB_Macros TIMER4 Emergency Brake Macros
+/** @defgroup TIMER4_SEVT_Event_Signal_Output TIMER4 SEVT Event Signal Output
  * @{
  */
-
-/** @defgroup TIMER4_EMB_Trigger_PWM_Output_Polarity TIMER4 EMB Trigger PWM Output Polarity
- * @{
- */
-#define TIMER4_EMB_TRIG_PWM_OP_NORMAL           ((uint32_t)0x0000UL)        /*!< PWM output signal normally when EMB signal occurs */
-#define TIMER4_EMB_TRIG_PWM_OP_HOLD             (TMR4_ECSR_EMBVAL_2)        /*!< Hold PWM output when EMB signal occurs */
-#define TIMER4_EMB_TRIG_PWM_OP_HIZ              (TMR4_ECSR_EMBVAL_0)        /*!< PWM output Hiz signal when EMB signal occurs */
-#define TIMER4_EMB_TRIG_PWM_OP_LOW              (TMR4_ECSR_EMBVAL_1)        /*!< PWM output low level signal when EMB signal occurs */
-#define TIMER4_EMB_TRIG_PWM_OP_HIGH             (TMR4_ECSR_EMBVAL_1 | \
-                                                 TMR4_ECSR_EMBVAL_0)        /*!< PWM output high level signal when EMB signal occurs */
+#define TIMER4_SEVT_EVTSIGx_OUTPUT_DISABLE      ((uint16_t)0x0000U)     /*!< Disable output event signal of Timer4 Special-EVT */
+#define TIMER4_SEVT_EVTSIG0_OUTPUT              (TMR4_SCER_EVTRS_0 )    /*!< Output the specified event signal 0 of Timer4 Special-EVT */
+#define TIMER4_SEVT_EVTSIG1_OUTPUT              (TMR4_SCER_EVTRS_1)     /*!< Output the specified event signal 1 of Timer4 Special-EVT */
+#define TIMER4_SEVT_EVTSIG2_OUTPUT              (TMR4_SCER_EVTRS_1 | \
+                                                 TMR4_SCER_EVTRS_0)     /*!< Output the specified event signal 2 of Timer4 Special-EVT */
+#define TIMER4_SEVT_EVTSIG3_OUTPUT              (TMR4_SCER_EVTRS_2)     /*!< Output the specified event signal 3 of Timer4 Special-EVT */
+#define TIMER4_SEVT_EVTSIG4_OUTPUT              (TMR4_SCER_EVTRS_2 | \
+                                                 TMR4_SCER_EVTRS_0)     /*!< Output the specified event signal 4 of Timer4 Special-EVT */
+#define TIMER4_SEVT_EVTSIG5_OUTPUT              (TMR4_SCER_EVTRS_2 | \
+                                                 TMR4_SCER_EVTRS_1)     /*!< Output the specified event signal 5 of Timer4 Special-EVT */
 /**
  * @}
  */
@@ -763,7 +803,7 @@ typedef struct
 __STATIC_INLINE void TIMER4_CNT_SetClock(uint16_t u16ClkSrc)
 {
     /* Set external clock enable bit */
-    bM0P_TMR4->CCSR_b.ECKEN = u16ClkSrc ? 1UL : 0UL;
+    bM4_TMR4->CCSR_b.ECKEN = u16ClkSrc ? 1UL : 0UL;
 }
 
 /**
@@ -776,7 +816,7 @@ __STATIC_INLINE void TIMER4_CNT_SetClock(uint16_t u16ClkSrc)
 __STATIC_INLINE uint16_t TIMER4_CNT_GetClock(void)
 {
     /* Get external clock enable bit */
-    return READ_REG16_BIT(M0P_TMR4->CCSR, TMR4_CCSR_ECKEN);
+    return READ_REG16_BIT(M4_TMR4->CCSR, TMR4_CCSR_ECKEN);
 }
 
 /**
@@ -790,7 +830,7 @@ __STATIC_INLINE uint16_t TIMER4_CNT_GetClock(void)
 __STATIC_INLINE void TIMER4_CNT_SetMode(uint16_t u16Mode)
 {
     /* Set external clock enable bit */
-    bM0P_TMR4->CCSR_b.MODE = (!!u16Mode);
+    bM4_TMR4->CCSR_b.MODE = (!!u16Mode);
 }
 
 /**
@@ -803,7 +843,7 @@ __STATIC_INLINE void TIMER4_CNT_SetMode(uint16_t u16Mode)
 __STATIC_INLINE uint16_t TIMER4_CNT_GetMode(void)
 {
     /* Get external clock enable bit */
-    return READ_REG16_BIT(M0P_TMR4->CCSR, TMR4_CCSR_MODE);
+    return READ_REG16_BIT(M4_TMR4->CCSR, TMR4_CCSR_MODE);
 }
 
 /**
@@ -813,7 +853,7 @@ __STATIC_INLINE uint16_t TIMER4_CNT_GetMode(void)
  */
 __STATIC_INLINE void TIMER4_CNT_Start(void)
 {
-    bM0P_TMR4->CCSR_b.STOP = 0UL;
+    bM4_TMR4->CCSR_b.STOP = 0UL;
 }
 
 /**
@@ -823,7 +863,7 @@ __STATIC_INLINE void TIMER4_CNT_Start(void)
  */
 __STATIC_INLINE void TIMER4_CNT_Stop(void)
 {
-    bM0P_TMR4->CCSR_b.STOP = 1UL;
+    bM4_TMR4->CCSR_b.STOP = 1UL;
 }
 
 /**
@@ -838,7 +878,7 @@ __STATIC_INLINE void TIMER4_CNT_Stop(void)
  */
 __STATIC_INLINE en_flag_status_t TIMER4_CNT_GetFlag(uint16_t u16Flag)
 {
-    return READ_REG16_BIT(M0P_TMR4->CCSR, u16Flag) ? Set : Reset;
+    return READ_REG16_BIT(M4_TMR4->CCSR, u16Flag) ? Set : Reset;
 }
 
 /**
@@ -851,7 +891,7 @@ __STATIC_INLINE en_flag_status_t TIMER4_CNT_GetFlag(uint16_t u16Flag)
  */
 __STATIC_INLINE void TIMER4_CNT_ClearFlag(uint16_t u16Flag)
 {
-    CLEAR_REG16_BIT(M0P_TMR4->CCSR, u16Flag);
+    CLEAR_REG16_BIT(M4_TMR4->CCSR, u16Flag);
 }
 
 /**
@@ -862,7 +902,7 @@ __STATIC_INLINE void TIMER4_CNT_ClearFlag(uint16_t u16Flag)
  */
 __STATIC_INLINE void TIMER4_CNT_SetCycleVal(uint16_t u16CycleVal)
 {
-    WRITE_REG(M0P_TMR4->CPSR, u16CycleVal);
+    WRITE_REG(M4_TMR4->CPSR, u16CycleVal);
 }
 
 /**
@@ -872,7 +912,7 @@ __STATIC_INLINE void TIMER4_CNT_SetCycleVal(uint16_t u16CycleVal)
  */
 __STATIC_INLINE uint16_t TIMER4_CNT_GetCycleVal(void)
 {
-    return READ_REG16(M0P_TMR4->CPSR);
+    return READ_REG16(M4_TMR4->CPSR);
 }
 
 /**
@@ -882,7 +922,7 @@ __STATIC_INLINE uint16_t TIMER4_CNT_GetCycleVal(void)
  */
 __STATIC_INLINE void TIMER4_CNT_ClearCountVal(void)
 {
-    bM0P_TMR4->CCSR_b.CLEAR = 1UL;
+    bM4_TMR4->CCSR_b.CLEAR = 1UL;
 }
 
 /**
@@ -893,7 +933,7 @@ __STATIC_INLINE void TIMER4_CNT_ClearCountVal(void)
  */
 __STATIC_INLINE void TIMER4_CNT_SetCountVal(uint16_t u16CountVal)
 {
-    WRITE_REG16(M0P_TMR4->CNTR, u16CountVal);
+    WRITE_REG16(M4_TMR4->CNTR, u16CountVal);
 }
 
 /**
@@ -903,7 +943,47 @@ __STATIC_INLINE void TIMER4_CNT_SetCountVal(uint16_t u16CountVal)
  */
 __STATIC_INLINE uint16_t TIMER4_CNT_GetCountVal(void)
 {
-    return READ_REG16(M0P_TMR4->CNTR);
+    return READ_REG16(M4_TMR4->CNTR);
+}
+
+/**
+ * @brief Enable Timer4 PWM master output
+ * @param  None
+ * @retval None
+ */
+__STATIC_INLINE void TIMER4_PWM_EnableAutoOutput(void)
+{
+    bM4_TMR4->PSCR_b.AOE = 0UL;
+}
+
+/**
+ * @brief Disable Timer4 PWM master output
+ * @param  None
+ * @retval None
+ */
+__STATIC_INLINE void TIMER4_PWM_DisableAutoOutput(void)
+{
+    bM4_TMR4->PSCR_b.AOE = 1UL;
+}
+
+/**
+ * @brief Enable Timer4 PWM master output
+ * @param  None
+ * @retval None
+ */
+__STATIC_INLINE void TIMER4_PWM_EnableMasterOutput(void)
+{
+    bM4_TMR4->PSCR_b.MOE = 0UL;
+}
+
+/**
+ * @brief Disable Timer4 PWM master output
+ * @param  None
+ * @retval None
+ */
+__STATIC_INLINE void TIMER4_PWM_DisableMasterOutput(void)
+{
+    bM4_TMR4->PSCR_b.MOE = 1UL;
 }
 
 en_result_t TIMER4_CNT_Init(const stc_timer4_cnt_init_t *pstcInit);
@@ -916,6 +996,7 @@ void TIMER4_CNT_SetIntMaskTimes(uint16_t u16IntSource,
                                 uint16_t u16MaskTimes);
 uint16_t TIMER4_CNT_GetIntMaskTimes(uint16_t u16IntSource);
 uint16_t TIMER4_CNT_GetIntMaskCurrenTimes(uint16_t u16IntSource);
+void TIMER4_CNT_SetCntDirSigOutput(uint16_t u16CntDirSig);
 en_result_t TIMER4_OCO_Init(uint32_t u32Ch,
                                 const stc_timer4_oco_init_t *pstcInit);
 en_result_t TIMER4_OCO_StructInit(stc_timer4_oco_init_t *pstcInit);
@@ -968,6 +1049,8 @@ en_result_t TIMER4_PWM_GetDeadRegionValue(uint32_t u32Ch,
                                                 uint16_t *pu16PDBR);
 en_result_t TIMER4_PWM_SetFilterCountValue(uint32_t u32Ch,
                                                         uint16_t u16Count);
+en_result_t TIMER4_PWM_PortOutputCmd(uint32_t u32PwmPort,
+                                                en_functional_state_t enNewSta);
 en_result_t TIMER4_SEVT_Init(uint32_t u32Ch,
                                 const stc_timer4_sevt_init_t *pstcInit);
 en_result_t TIMER4_SEVT_StructInit(stc_timer4_sevt_init_t *pstcInit);
@@ -984,8 +1067,7 @@ uint16_t TIMER4_SEVT_GetSccrVal(uint32_t u32Ch);
 en_result_t TIMER4_SEVT_SetMaskTimes(uint32_t u32Ch,
                                             uint16_t u16MaskTimes);
 uint16_t TIMER4_SEVT_GetMaskTimes(uint32_t u32Ch);
-void TIMER4_EMB_SetPwmPortPolarity(uint32_t u32PortPolarity);
-uint32_t TIMER4_EMB_GetPwmPortPolarity(void);
+void TIMER4_SEVT_SetEvtSigOutput(uint16_t u16EvtSig);
 
 /**
  * @}

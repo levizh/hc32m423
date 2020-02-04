@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-03       Hongjh          First version
+   2020-02-03       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -216,7 +216,7 @@ typedef struct stc_ctc_init
  */
 __STATIC_INLINE void CTC_Cmd(en_functional_state_t enNewSta)
 {
-    bM0P_CTC->CR1_b.CTCEN = enNewSta;
+    bM4_CTC->CR1_b.CTCEN = enNewSta;
 }
 
 /**
@@ -227,7 +227,7 @@ __STATIC_INLINE void CTC_Cmd(en_functional_state_t enNewSta)
  */
 __STATIC_INLINE void CTC_ErrIntCmd(en_functional_state_t enNewSta)
 {
-    bM0P_CTC->CR1_b.ERRIE = enNewSta;
+    bM4_CTC->CR1_b.ERRIE = enNewSta;
 }
 
 en_result_t CTC_Init(const stc_ctc_init_t *pstcInit);
