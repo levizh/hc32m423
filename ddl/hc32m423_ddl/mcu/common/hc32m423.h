@@ -1440,6 +1440,16 @@ typedef struct
     __IO uint32_t PR;
 } M4_USART_TypeDef;
 
+/**
+ * @brief WDT
+ */
+typedef struct
+{
+    __IO uint32_t CR;
+    __IO uint32_t SR;
+    __IO uint32_t RR;
+} M4_WDT_TypeDef;
+
 
 
 /******************************************************************************/
@@ -1481,6 +1491,7 @@ typedef struct
 #define M4_USART2                            ((M4_USART_TypeDef *)0x4001D400UL)
 #define M4_USART3                            ((M4_USART_TypeDef *)0x40021000UL)
 #define M4_USART4                            ((M4_USART_TypeDef *)0x40021400UL)
+#define M4_WDT                               ((M4_WDT_TypeDef *)0x40049000UL)
 
 
 /******************************************************************************/
@@ -6055,6 +6066,76 @@ typedef struct
 #define USART_PR_PSC                                   ((uint32_t)0x00000003U)
 #define USART_PR_PSC_0                                 ((uint32_t)0x00000001U)
 #define USART_PR_PSC_1                                 ((uint32_t)0x00000002U)
+
+
+/*******************************************************************************
+                Bit definition for Peripheral WDT
+*******************************************************************************/
+/*  Bit definition for WDT_CR register  */
+#define WDT_CR_PERI_POS                                (0U)
+#define WDT_CR_PERI                                    ((uint32_t)0x00000003U)
+#define WDT_CR_PERI_0                                  ((uint32_t)0x00000001U)
+#define WDT_CR_PERI_1                                  ((uint32_t)0x00000002U)
+#define WDT_CR_CKS_POS                                 (4U)
+#define WDT_CR_CKS                                     ((uint32_t)0x000000F0U)
+#define WDT_CR_CKS_0                                   ((uint32_t)0x00000010U)
+#define WDT_CR_CKS_1                                   ((uint32_t)0x00000020U)
+#define WDT_CR_CKS_2                                   ((uint32_t)0x00000040U)
+#define WDT_CR_CKS_3                                   ((uint32_t)0x00000080U)
+#define WDT_CR_WDPT_POS                                (8U)
+#define WDT_CR_WDPT                                    ((uint32_t)0x00000F00U)
+#define WDT_CR_WDPT_0                                  ((uint32_t)0x00000100U)
+#define WDT_CR_WDPT_1                                  ((uint32_t)0x00000200U)
+#define WDT_CR_WDPT_2                                  ((uint32_t)0x00000400U)
+#define WDT_CR_WDPT_3                                  ((uint32_t)0x00000800U)
+#define WDT_CR_SLPOFF_POS                              (16U)
+#define WDT_CR_SLPOFF                                  ((uint32_t)0x00010000U)
+#define WDT_CR_ITS_POS                                 (31U)
+#define WDT_CR_ITS                                     ((uint32_t)0x80000000U)
+
+/*  Bit definition for WDT_SR register  */
+#define WDT_SR_CNT_POS                                 (0U)
+#define WDT_SR_CNT                                     ((uint32_t)0x0000FFFFU)
+#define WDT_SR_CNT_0                                   ((uint32_t)0x00000001U)
+#define WDT_SR_CNT_1                                   ((uint32_t)0x00000002U)
+#define WDT_SR_CNT_2                                   ((uint32_t)0x00000004U)
+#define WDT_SR_CNT_3                                   ((uint32_t)0x00000008U)
+#define WDT_SR_CNT_4                                   ((uint32_t)0x00000010U)
+#define WDT_SR_CNT_5                                   ((uint32_t)0x00000020U)
+#define WDT_SR_CNT_6                                   ((uint32_t)0x00000040U)
+#define WDT_SR_CNT_7                                   ((uint32_t)0x00000080U)
+#define WDT_SR_CNT_8                                   ((uint32_t)0x00000100U)
+#define WDT_SR_CNT_9                                   ((uint32_t)0x00000200U)
+#define WDT_SR_CNT_10                                  ((uint32_t)0x00000400U)
+#define WDT_SR_CNT_11                                  ((uint32_t)0x00000800U)
+#define WDT_SR_CNT_12                                  ((uint32_t)0x00001000U)
+#define WDT_SR_CNT_13                                  ((uint32_t)0x00002000U)
+#define WDT_SR_CNT_14                                  ((uint32_t)0x00004000U)
+#define WDT_SR_CNT_15                                  ((uint32_t)0x00008000U)
+#define WDT_SR_UDF_POS                                 (16U)
+#define WDT_SR_UDF                                     ((uint32_t)0x00010000U)
+#define WDT_SR_REF_POS                                 (17U)
+#define WDT_SR_REF                                     ((uint32_t)0x00020000U)
+
+/*  Bit definition for WDT_RR register  */
+#define WDT_RR_RF_POS                                  (0U)
+#define WDT_RR_RF                                      ((uint32_t)0x0000FFFFU)
+#define WDT_RR_RF_0                                    ((uint32_t)0x00000001U)
+#define WDT_RR_RF_1                                    ((uint32_t)0x00000002U)
+#define WDT_RR_RF_2                                    ((uint32_t)0x00000004U)
+#define WDT_RR_RF_3                                    ((uint32_t)0x00000008U)
+#define WDT_RR_RF_4                                    ((uint32_t)0x00000010U)
+#define WDT_RR_RF_5                                    ((uint32_t)0x00000020U)
+#define WDT_RR_RF_6                                    ((uint32_t)0x00000040U)
+#define WDT_RR_RF_7                                    ((uint32_t)0x00000080U)
+#define WDT_RR_RF_8                                    ((uint32_t)0x00000100U)
+#define WDT_RR_RF_9                                    ((uint32_t)0x00000200U)
+#define WDT_RR_RF_10                                   ((uint32_t)0x00000400U)
+#define WDT_RR_RF_11                                   ((uint32_t)0x00000800U)
+#define WDT_RR_RF_12                                   ((uint32_t)0x00001000U)
+#define WDT_RR_RF_13                                   ((uint32_t)0x00002000U)
+#define WDT_RR_RF_14                                   ((uint32_t)0x00004000U)
+#define WDT_RR_RF_15                                   ((uint32_t)0x00008000U)
 
 
 
@@ -12490,6 +12571,69 @@ typedef struct
     uint32_t RESERVED0[30];
 } stc_usart_pr_bit_t;
 
+typedef struct
+{
+    __IO uint32_t PERI0;
+    __IO uint32_t PERI1;
+    uint32_t RESERVED0[2];
+    __IO uint32_t CKS0;
+    __IO uint32_t CKS1;
+    __IO uint32_t CKS2;
+    __IO uint32_t CKS3;
+    __IO uint32_t WDPT0;
+    __IO uint32_t WDPT1;
+    __IO uint32_t WDPT2;
+    __IO uint32_t WDPT3;
+    uint32_t RESERVED1[4];
+    __IO uint32_t SLPOFF;
+    uint32_t RESERVED2[14];
+    __IO uint32_t ITS;
+} stc_wdt_cr_bit_t;
+
+typedef struct
+{
+    __IO uint32_t CNT0;
+    __IO uint32_t CNT1;
+    __IO uint32_t CNT2;
+    __IO uint32_t CNT3;
+    __IO uint32_t CNT4;
+    __IO uint32_t CNT5;
+    __IO uint32_t CNT6;
+    __IO uint32_t CNT7;
+    __IO uint32_t CNT8;
+    __IO uint32_t CNT9;
+    __IO uint32_t CNT10;
+    __IO uint32_t CNT11;
+    __IO uint32_t CNT12;
+    __IO uint32_t CNT13;
+    __IO uint32_t CNT14;
+    __IO uint32_t CNT15;
+    __IO uint32_t UDF;
+    __IO uint32_t REF;
+    uint32_t RESERVED0[14];
+} stc_wdt_sr_bit_t;
+
+typedef struct
+{
+    __IO uint32_t RF0;
+    __IO uint32_t RF1;
+    __IO uint32_t RF2;
+    __IO uint32_t RF3;
+    __IO uint32_t RF4;
+    __IO uint32_t RF5;
+    __IO uint32_t RF6;
+    __IO uint32_t RF7;
+    __IO uint32_t RF8;
+    __IO uint32_t RF9;
+    __IO uint32_t RF10;
+    __IO uint32_t RF11;
+    __IO uint32_t RF12;
+    __IO uint32_t RF13;
+    __IO uint32_t RF14;
+    __IO uint32_t RF15;
+    uint32_t RESERVED0[16];
+} stc_wdt_rr_bit_t;
+
 
 typedef struct
 {
@@ -13353,6 +13497,13 @@ typedef struct
     stc_usart_pr_bit_t                       PR_b;
 } bM4_USART_TypeDef;
 
+typedef struct
+{
+    stc_wdt_cr_bit_t                         CR_b;
+    stc_wdt_sr_bit_t                         SR_b;
+    stc_wdt_rr_bit_t                         RR_b;
+} bM4_WDT_TypeDef;
+
 
 
 /******************************************************************************/
@@ -13392,6 +13543,7 @@ typedef struct
 #define bM4_USART2                           ((bM4_USART_TypeDef *)0x423A8000UL)
 #define bM4_USART3                           ((bM4_USART_TypeDef *)0x42420000UL)
 #define bM4_USART4                           ((bM4_USART_TypeDef *)0x42428000UL)
+#define bM4_WDT                              ((bM4_WDT_TypeDef *)0x42920000UL)
 
 
 #ifdef __cplusplus
