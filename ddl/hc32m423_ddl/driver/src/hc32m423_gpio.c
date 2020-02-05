@@ -85,7 +85,7 @@
  * @defgroup GPIO_Registers_Reset_Value GPIO Registers Reset Value
  * @{
  */
-#define GPIO_PSPCR_RESET_VALUE          ((uint16_t)0x0003U)
+#define GPIO_PSPCR_RESET_VALUE          ((uint16_t)0x001FU)
 #define GPIO_PCCR_RESET_VALUE           ((uint16_t)0x4000U)
 #define GPIO_PINAER_RESET_VALUE         ((uint16_t)0x0000U)
 /**
@@ -102,9 +102,9 @@
     ((state) == PIN_STATE_SET))
 
 /*  Parameter validity check for pin mode. */
-#define IS_GPIO_MODE(mode)                                                      \
-(   ((mode) == PIN_MODE_IN)                     ||                              \
-    ((mode) == PIN_MODE_OUT))
+#define IS_GPIO_DIR(dir)                                                        \
+(   ((dir) == PIN_DIR_IN)                       ||                              \
+    ((dir) == PIN_DIR_OUT))
 
 /*  Parameter validity check for pin output type. */
 #define IS_GPIO_OTYPE(otype)                                                    \
@@ -184,7 +184,7 @@
     ((func) == GPIO_FUNC_7))
 
 /*  Parameter validity check for debug pin definition. */
-#define IS_GPIO_DEBUG_PORT(port)    (((port) & GPIO_PIN_DEBUG) != (uint8_t)0x00)
+#define IS_GPIO_DEBUG_PORT(port)    (((port) & GPIO_PIN_DEBUG_JTAG) != (uint8_t)0x00)
 
 /*  Parameter validity check for pin read wait cycle. */
 #define IS_GPIO_READ_WAIT(wait)                                                 \
@@ -232,7 +232,7 @@
  */
 en_result_t GPIO_Init(uint8_t u8Port, uint8_t u8Pin, const stc_gpio_init_t *pstcGpioInit)
 {
-    uint16_t *PCRx;
+    __IO uint16_t *PCRx;
     uint8_t u8PinPos = 0U;
     uint16_t u16PCRVal;
     en_result_t enRet = Ok;
@@ -248,7 +248,7 @@ en_result_t GPIO_Init(uint8_t u8Port, uint8_t u8Pin, const stc_gpio_init_t *pstc
         DDL_ASSERT(IS_GPIO_PORT_SOURCE(u8Port));
         DDL_ASSERT(IS_GPIO_PIN(u8Pin));
         DDL_ASSERT(IS_GPIO_PIN_STATE(pstcGpioInit->u16PinState));
-        DDL_ASSERT(IS_GPIO_MODE(pstcGpioInit->u16PinMode));
+        DDL_ASSERT(IS_GPIO_DIR(pstcGpioInit->u16PinDir));
         DDL_ASSERT(IS_GPIO_OTYPE(pstcGpioInit->u16PinOType));
         DDL_ASSERT(IS_GPIO_PIN_DRV(pstcGpioInit->u16PinDrv));
         DDL_ASSERT(IS_GPIO_LATCH(pstcGpioInit->u16Latch));
@@ -270,7 +270,7 @@ en_result_t GPIO_Init(uint8_t u8Port, uint8_t u8Pin, const stc_gpio_init_t *pstc
                             pstcGpioInit->u16Invert | pstcGpioInit->u16PullUp   |   \
                             pstcGpioInit->u16Latch  | pstcGpioInit->u16PinDrv   |   \
                             pstcGpioInit->u16PinOType | pstcGpioInit->u16PinState | \
-                            pstcGpioInit->u16PinMode;
+                            pstcGpioInit->u16PinDir;
                 WRITE_REG16(*PCRx, u16PCRVal);
             }
         }
@@ -312,14 +312,16 @@ void GPIO_DeInit(void)
               (GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | \
                GPIO_PIN_5 | GPIO_PIN_6), &stcGpioInit);
     /* PORT9 reset */
-    GPIO_Init(GPIO_PORT_9, (GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4), &stcGpioInit);
+    GPIO_Init(GPIO_PORT_9, (GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4), \
+              &stcGpioInit);
     /* PORTA reset */
-    GPIO_Init(GPIO_PORT_A, (GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5), &stcGpioInit);
+    GPIO_Init(GPIO_PORT_A, (GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5), \
+              &stcGpioInit);
     /* PORTB reset */
     GPIO_Init(GPIO_PORT_B, GPIO_PIN_ALL, &stcGpioInit);
     /* PORTD reset */
     GPIO_Init(GPIO_PORT_D,                                                     \
-              (GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7), \
+              (GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7),\
               &stcGpioInit);
     /* PORTE reset */
     GPIO_Init(GPIO_PORT_E, GPIO_PIN_0, &stcGpioInit);
@@ -352,7 +354,7 @@ en_result_t GPIO_StructInit(stc_gpio_init_t *pstcGpioInit)
     {
         /* Reset GPIO init structure parameters values */
         pstcGpioInit->u16PinState   = PIN_STATE_RESET;
-        pstcGpioInit->u16PinMode    = PIN_MODE_IN;
+        pstcGpioInit->u16PinDir     = PIN_DIR_IN;
         pstcGpioInit->u16PinOType   = PIN_OTYPE_CMOS;
         pstcGpioInit->u16PinDrv     = PIN_NORMAL_DRV;
         pstcGpioInit->u16Latch      = PIN_LATCH_OFF;
@@ -365,16 +367,24 @@ en_result_t GPIO_StructInit(stc_gpio_init_t *pstcGpioInit)
 }
 
 /**
- * @brief  GPIO debug port configure. Set SWDIO/SWCLK to GPIO
+ * @brief  GPIO debug port configure. Set debug pins to GPIO
  * @param  [in] u8DebugPort
  *   @arg  GPIO_PIN_SWDIO
  *   @arg  GPIO_PIN_SWCLK
+ *   @arg  GPIO_PIN_SWO
+ *   @arg  GPIO_PIN_DEBUG_SWD
+ *   @arg  GPIO_PIN_TCK
+ *   @arg  GPIO_PIN_TMS
+ *   @arg  GPIO_PIN_TDO
+ *   @arg  GPIO_PIN_TDI
+ *   @arg  GPIO_PIN_TRST
+ *   @arg  GPIO_PIN_DEBUG_JTAG
  * @param  [in] enNewState
- *   @arg  Enable, set to debug port (SWD)
+ *   @arg  Enable, set to debug port (SWD/JTAG)
  *   @arg  Disable, set to GPIO
  * @retval None
  */
-void GPIO_DebugPortSetting(uint8_t u8DebugPort, en_functional_state_t enNewState)
+void GPIO_SetDebugPort(uint8_t u8DebugPort, en_functional_state_t enNewState)
 {
     /* Parameter validity checking */
     DDL_ASSERT(IS_GPIO_DEBUG_PORT(u8DebugPort));
@@ -384,19 +394,22 @@ void GPIO_DebugPortSetting(uint8_t u8DebugPort, en_functional_state_t enNewState
 
     if (Enable == enNewState)
     {
-        M4_GPIO->PSPCR |= (uint16_t)((uint16_t)u8DebugPort & 0x03U);
+        //M4_GPIO->PSPCR |= (uint16_t)((uint16_t)u8DebugPort & 0x1FU);
+        SET_REG16_BIT(M4_GPIO->PSPCR, (u8DebugPort & GPIO_PSPCR_SPFE));
     }
     else
     {
-        M4_GPIO->PSPCR &= (uint16_t)(~((uint16_t)u8DebugPort & 0x03U));
+        //M4_GPIO->PSPCR &= (uint16_t)(~((uint16_t)u8DebugPort & 0x1FU));
+        CLEAR_REG16_BIT(M4_GPIO->PSPCR, (u8DebugPort & GPIO_PSPCR_SPFE));
     }
 
     GPIO_Lock();
 }
 
+
 /**
  * @brief  Set specified Port Pin function
- * @param  [in] u8Port: GPIO_PORT_x, x can be (0~7, 12~14) to select the GPIO peripheral
+ * @param  [in] u8Port: GPIO_PORT_x, x can be (0~5, A,B,D,E) to select the GPIO peripheral
  * @param  [in] u8Pin: GPIO_PIN_x, x can be (0~7) to select the PIN index
  * @param  [in] u8Func: GPIO_FUNC_x, x can be selected from GPIO function definitions
  * @retval None
@@ -428,7 +441,7 @@ void GPIO_SetFunc(uint8_t u8Port, uint8_t u8Pin, uint8_t u8Func)
 
 /**
  * @brief  Initialize GPIO.
- * @param  [in] u8Port: GPIO_PORT_x, x can be (0~7, 12~14) to select the GPIO peripheral
+ * @param  [in] u8Port: GPIO_PORT_x, x can be (0~5, A,B,D,E) to select the GPIO peripheral
  * @param  [in] u8Pin: GPIO_PIN_x, x can be (0~7) to select the PIN index
  * @param  [in] enNewState
  *   @arg  Enable, set specified pin output enable
@@ -447,11 +460,13 @@ void GPIO_OE(uint8_t u8Port, uint8_t u8Pin, en_functional_state_t enNewState)
     POERx = (uint8_t *)((uint32_t)(&M4_GPIO->POER0) + u8Port);
     if (Enable == enNewState)
     {
-        *POERx |= u8Pin;
+        //*POERx |= u8Pin;
+        SET_REG8_BIT(*POERx, u8Pin);
     }
     else
     {
-        *POERx &= ((~u8Pin) & 0xFFu);
+        //*POERx &= ((~u8Pin) & 0xFFu);
+        CLEAR_REG8_BIT(*POERx, u8Pin);
     }
 }
 
@@ -470,7 +485,8 @@ void GPIO_PortReadWait(uint16_t u16ReadWait)
 
     GPIO_Unlock();
 
-    M4_GPIO->PCCR = u16ReadWait;
+    //M4_GPIO->PCCR = u16ReadWait;
+    MODIFY_REG16(M4_GPIO->PCCR, GPIO_PCCR_RDWT, u16ReadWait);
 
     GPIO_Lock();
 }
@@ -504,11 +520,13 @@ void GPIO_AlwaysOn(uint16_t u16PortIdx, en_functional_state_t enNewState)
 
     if (Enable == enNewState)
     {
-        M4_GPIO->PINAER |= u16PortIdx;
+        //M4_GPIO->PINAER |= u16PortIdx;
+        SET_REG16_BIT(M4_GPIO->PINAER, u16PortIdx);
     }
     else
     {
-        M4_GPIO->PINAER &= (uint16_t)(~u16PortIdx);
+        //M4_GPIO->PINAER &= (uint16_t)(~u16PortIdx);
+        CLEAR_REG16_BIT(M4_GPIO->PINAER, u16PortIdx);
     }
 
     GPIO_Lock();
@@ -516,7 +534,7 @@ void GPIO_AlwaysOn(uint16_t u16PortIdx, en_functional_state_t enNewState)
 
 /**
  * @brief  Read specified GPIO input data port pin
- * @param  [in] u8Port: GPIO_PORT_x, x can be (0~7, 12~14) to select the GPIO peripheral
+ * @param  [in] u8Port: GPIO_PORT_x, x can be (0~5, A,B,D,E) to select the GPIO peripheral
  * @param  [in] u8Pin: GPIO_PIN_x, x can be (0~7) to select the PIN index
  * @retval Specified GPIO port pin input value
  */
@@ -530,12 +548,12 @@ en_pin_state_t GPIO_ReadInputPortPin(uint8_t u8Port, uint8_t u8Pin)
 
     PIDx = (uint8_t *)((uint32_t)(&M4_GPIO->PIDR0) + u8Port);
 
-    return (*PIDx & (u8Pin)) ? Pin_Set : Pin_Reset;
+    return (READ_REG8(*PIDx) & (u8Pin)) ? Pin_Set : Pin_Reset;
 }
 
 /**
  * @brief  Read specified GPIO input data port
- * @param  [in] u8Port: GPIO_PORT_x, x can be (0~7, 12~14) to select the GPIO peripheral
+ * @param  [in] u8Port: GPIO_PORT_x, x can be (0~5, A,B,D,E) to select the GPIO peripheral
  * @retval Specified GPIO port input value
  */
 uint8_t GPIO_ReadInputPort(uint8_t u8Port)
@@ -547,12 +565,12 @@ uint8_t GPIO_ReadInputPort(uint8_t u8Port)
 
     PIDRx = (uint8_t *)((uint32_t)(&M4_GPIO->PIDR0) + u8Port);
 
-    return *PIDRx;
+    return READ_REG8(*PIDRx);
 }
 
 /**
  * @brief  Read specified GPIO output data port pin
- * @param  [in] u8Port: GPIO_PORT_x, x can be (0~7, 12~14) to select the GPIO peripheral
+ * @param  [in] u8Port: GPIO_PORT_x, x can be (0~5, A,B,D,E) to select the GPIO peripheral
  * @param  [in] u8Pin: GPIO_PIN_x, x can be (0~7) to select the PIN index
  * @retval Specified GPIO port pin output value
  */
@@ -566,12 +584,12 @@ en_pin_state_t GPIO_ReadOutputPortPin(uint8_t u8Port, uint8_t u8Pin)
 
     PODx = (uint8_t *)((uint32_t)(&M4_GPIO->PODR0) + u8Port);
 
-    return (*PODx & (u8Pin)) ? Pin_Set : Pin_Reset;
+    return (READ_REG8(*PODx) & (u8Pin)) ? Pin_Set : Pin_Reset;
 }
 
 /**
  * @brief  Read specified GPIO output data port
- * @param  [in] u8Port: GPIO_PORT_x, x can be (0~7, 12~14) to select the GPIO peripheral
+ * @param  [in] u8Port: GPIO_PORT_x, x can be (0~5, A,B,D,E) to select the GPIO peripheral
  * @retval Specified GPIO port output value
  */
 uint8_t GPIO_ReadOutputPort(uint8_t u8Port)
@@ -583,12 +601,12 @@ uint8_t GPIO_ReadOutputPort(uint8_t u8Port)
 
     PODRx = (uint8_t *)((uint32_t)(&M4_GPIO->PODR0) + u8Port);
 
-    return *PODRx;
+    return READ_REG8(*PODRx);
 }
 
 /**
  * @brief  Set specified GPIO output data port pin
- * @param  [in] u8Port: GPIO_PORT_x, x can be (0~7, 12~14) to select the GPIO peripheral
+ * @param  [in] u8Port: GPIO_PORT_x, x can be (0~5, A,B,D,E) to select the GPIO peripheral
  * @param  [in] u8Pin: GPIO_PIN_x, x can be (0~7) to select the PIN index
  * @retval None
  */
@@ -601,12 +619,13 @@ void GPIO_SetPins(uint8_t u8Port, uint8_t u8Pin)
     DDL_ASSERT(IS_GPIO_PIN(u8Pin));
 
     POSRx = (uint8_t *)((uint32_t)(&M4_GPIO->POSR0) + u8Port);
-    *POSRx |= u8Pin;
+    //*POSRx |= u8Pin;
+    SET_REG8_BIT(*POSRx, u8Pin);
 }
 
 /**
  * @brief  Reset specified GPIO output data port pin
- * @param  [in] u8Port: GPIO_PORT_x, x can be (0~7, 12~14) to select the GPIO peripheral
+ * @param  [in] u8Port: GPIO_PORT_x, x can be (0~5, A,B,D,E) to select the GPIO peripheral
  * @param  [in] u8Pin: GPIO_PIN_x, x can be (0~7) to select the PIN index
  * @retval None
  */
@@ -619,12 +638,13 @@ void GPIO_ResetPins(uint8_t u8Port, uint8_t u8Pin)
     DDL_ASSERT(IS_GPIO_PIN(u8Pin));
 
     PORRx = (uint8_t *)((uint32_t)(&M4_GPIO->PORR0) + u8Port);
-    *PORRx |= u8Pin;
+    //*PORRx |= u8Pin;
+    SET_REG8_BIT(*PORRx, u8Pin);
 }
 
 /**
  * @brief  Write specified GPIO data port
- * @param  [in] u8Port: GPIO_PORT_x, x can be (0~7, 12~14) to select the GPIO peripheral
+ * @param  [in] u8Port: GPIO_PORT_x, x can be (0~5, A,B,D,E) to select the GPIO peripheral
  * @param  [in] u8PortVal: Pin output value
  *   @arg  PIN_STATE_RESET
  *   @arg  PIN_STATE_SET
@@ -638,12 +658,13 @@ void GPIO_WritePort(uint8_t u8Port, uint8_t u8PortVal)
     DDL_ASSERT(IS_GPIO_PORT_SOURCE(u8Port));
 
     PODRx = (uint8_t *)((uint32_t)(&M4_GPIO->PODR0) + u8Port);
-    *PODRx = u8PortVal;
+    //*PODRx = u8PortVal;
+    WRITE_REG8(*PODRx, u8PortVal);
 }
 
 /**
  * @brief  Toggle specified GPIO output data port pin
- * @param  [in] u8Port: GPIO_PORT_x, x can be (0~7, 12~14) to select the GPIO peripheral
+ * @param  [in] u8Port: GPIO_PORT_x, x can be (0~5, A,B,D,E) to select the GPIO peripheral
  * @param  [in] u8Pin: GPIO_PIN_x, x can be (0~7) to select the PIN index
  * @retval None
  */
@@ -656,7 +677,8 @@ void GPIO_TogglePins(uint8_t u8Port, uint8_t u8Pin)
     DDL_ASSERT(IS_GPIO_PIN(u8Pin));
 
     POTRx = (uint8_t *)((uint32_t)(&M4_GPIO->POTR0) + u8Port);
-    *POTRx |= u8Pin;
+    //*POTRx |= u8Pin;
+    SET_REG8_BIT(*POTRx, u8Pin);
 }
 
 /**

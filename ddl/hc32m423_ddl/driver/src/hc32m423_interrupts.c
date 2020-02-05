@@ -284,7 +284,7 @@ en_result_t INTC_IrqSignIn(const stc_irq_regi_config_t *pstcIrqRegiConfig)
  */
 en_result_t INTC_IrqSignOut(IRQn_Type enIRQn)
 {
-    uint32_t *INTC_SELx;
+    __IO uint32_t *INTC_SELx;
     en_result_t enRet = Ok;
 
     if ((enIRQn < Int000_IRQn) || (enIRQn > Int007_IRQn))

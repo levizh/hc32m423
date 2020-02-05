@@ -100,7 +100,7 @@ typedef enum
 typedef struct
 {
     uint16_t u16PinState;     /*!< Set pin state to High or Low, @ref GPIO_PinState_Sel for details     */
-    uint16_t u16PinMode;      /*!< Pin mode setting, @ref GPIO_PinMode_Sel for details                  */
+    uint16_t u16PinDir;       /*!< Pin direction setting, @ref GPIO_PinDir_Sel for details                  */
     uint16_t u16PinOType;     /*!< Output type setting, @ref GPIO_PinOutType_Sel for details            */
     uint16_t u16PinDrv;       /*!< Pin drive capacity setting, @ref GPIO_PinDrv_Sel for details         */
     uint16_t u16Latch;        /*!< Pin latch setting, @ref GPIO_PinLatch_Sel for details                */
@@ -278,7 +278,15 @@ typedef struct
  */
 #define GPIO_PIN_SWDIO      ((uint8_t)0x01U)
 #define GPIO_PIN_SWCLK      ((uint8_t)0x02U)
-#define GPIO_PIN_DEBUG      ((uint8_t)0x03U)
+#define GPIO_PIN_SWO        ((uint8_t)0x04U)
+#define GPIO_PIN_DEBUG_SWD  ((uint8_t)0x07U)
+
+#define GPIO_PIN_TCK        ((uint8_t)0x01U)
+#define GPIO_PIN_TMS        ((uint8_t)0x02U)
+#define GPIO_PIN_TDO        ((uint8_t)0x04U)
+#define GPIO_PIN_TDI        ((uint8_t)0x08U)
+#define GPIO_PIN_TRST       ((uint8_t)0x10U)
+#define GPIO_PIN_DEBUG_JTAG ((uint8_t)0x1FU)
 /**
  * @}
  */
@@ -305,11 +313,11 @@ typedef struct
  */
 
 /**
- * @defgroup GPIO_PinMode_Sel GPIO pin input/output mode selection
+ * @defgroup GPIO_PinDir_Sel GPIO pin input/output direction selection
  * @{
  */
-#define PIN_MODE_IN         ((uint16_t)(0UL << GPIO_PCR_POUTE_POS))
-#define PIN_MODE_OUT        ((uint16_t)(1UL << GPIO_PCR_POUTE_POS))
+#define PIN_DIR_IN          ((uint16_t)(0UL << GPIO_PCR_POUTE_POS))
+#define PIN_DIR_OUT         ((uint16_t)(1UL << GPIO_PCR_POUTE_POS))
 /**
  * @}
  */
