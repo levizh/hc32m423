@@ -630,30 +630,30 @@ en_result_t EXINT_Init(const stc_exint_config_t *pstcExIntConfig)
 }
 
 /**
- * @brief  Initialize ExInt. Fill each pstcExintConfig with default value
- * @param  [in] pstcExintConfig: Pointer to a pstcExintConfig structure
+ * @brief  Initialize ExInt. Fill each pstcExIntConfig with default value
+ * @param  [in] pstcExIntConfig: Pointer to a pstcExIntConfig structure
  *                              that contains configuration information.
  * @retval Ok: EXINT structure initialize successful
  *         ErrorInvalidParameter: NULL pointer
  */
-en_result_t EXINT_StructInit(stc_exint_config_t *pstcExintConfig)
+en_result_t EXINT_StructInit(stc_exint_config_t *pstcExIntConfig)
 {
     en_result_t enRet = Ok;
 
     /* Check if pointer is NULL */
-    if (NULL == pstcExintConfig)
+    if (NULL == pstcExIntConfig)
     {
         enRet = ErrorInvalidParameter;
     }
     else
     {
         /* Configure to default value */
-        pstcExintConfig->u32ExIntCh     = (uint16_t)0UL;
-        pstcExintConfig->u32ExIntFAE    = EXINT_FILTER_A_OFF;
-        pstcExintConfig->u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV1;
-        pstcExintConfig->u32ExIntFBE    = EXINT_FILTER_B_OFF;
-        pstcExintConfig->u32ExIntFBTime = NMI_EXINT_FBTIM_500NS;
-        pstcExintConfig->u32ExIntLvl    = EXINT_TRIGGER_FALLING;
+        pstcExIntConfig->u32ExIntCh     = (uint16_t)0UL;
+        pstcExIntConfig->u32ExIntFAE    = EXINT_FILTER_A_OFF;
+        pstcExIntConfig->u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV1;
+        pstcExIntConfig->u32ExIntFBE    = EXINT_FILTER_B_OFF;
+        pstcExIntConfig->u32ExIntFBTime = NMI_EXINT_FBTIM_500NS;
+        pstcExIntConfig->u32ExIntLvl    = EXINT_TRIGGER_FALLING;
     }
     return enRet;
 }
@@ -839,7 +839,7 @@ void IRQ007_Handler(void)
  */
 void IRQ008_Handler(void)
 {
-    EXINT00_IrqHandler();
+    EXINT00_SWINT08_IrqHandler();
 }
 
 /**
@@ -849,7 +849,7 @@ void IRQ008_Handler(void)
  */
 void IRQ009_Handler(void)
 {
-    EXINT01_IrqHandler();
+    EXINT01_SWINT09_IrqHandler();
 }
 
 /**
@@ -859,7 +859,7 @@ void IRQ009_Handler(void)
  */
 void IRQ010_Handler(void)
 {
-    EXINT02_IrqHandler();
+    EXINT02_SWINT10_IrqHandler();
 }
 
 /**
@@ -869,7 +869,7 @@ void IRQ010_Handler(void)
  */
 void IRQ011_Handler(void)
 {
-    EXINT03_IrqHandler();
+    EXINT03_SWINT11_IrqHandler();
 }
 
 /**
@@ -879,7 +879,7 @@ void IRQ011_Handler(void)
  */
 void IRQ012_Handler(void)
 {
-    EXINT04_IrqHandler();
+    EXINT04_SWINT12_IrqHandler();
 }
 
 /**
@@ -889,7 +889,7 @@ void IRQ012_Handler(void)
  */
 void IRQ013_Handler(void)
 {
-    EXINT05_IrqHandler();
+    EXINT05_SWINT13_IrqHandler();
 }
 
 /**
@@ -899,7 +899,7 @@ void IRQ013_Handler(void)
  */
 void IRQ014_Handler(void)
 {
-    EXINT06_IrqHandler();
+    EXINT06_SWINT14_IrqHandler();
 }
 
 /**
@@ -909,7 +909,7 @@ void IRQ014_Handler(void)
  */
 void IRQ015_Handler(void)
 {
-    EXINT07_IrqHandler();
+    EXINT07_SWINT15_IrqHandler();
 }
 
 /**

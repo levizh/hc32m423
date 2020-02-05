@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-03-04       Yangjp          First version
+   2020-02-05       Zhangxl         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.

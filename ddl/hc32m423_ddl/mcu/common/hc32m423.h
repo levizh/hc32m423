@@ -8,7 +8,7 @@
    2020-02-05       levi          First version
  @endverbatim
  *******************************************************************************
- * Copyright (C) 2017, Huada Semiconductor Co.,Ltd. All rights reserved.
+ * Copyright (C) 2016, Huada Semiconductor Co.,Ltd. All rights reserved.
  *
  * This software is owned and published by:
  * Huada Semiconductor Co.,Ltd. ("HDSC").
@@ -98,14 +98,30 @@ typedef enum IRQn
         Int005_IRQn          = 5,
         Int006_IRQn          = 6,
         Int007_IRQn          = 7,
-        ExtIntSWInt0_IRQn    = 8,
-        ExtIntSWInt1_IRQn    = 9,
-        ExtIntSWInt2_IRQn    = 10,
-        ExtIntSWInt3_IRQn    = 11,
-        ExtIntSWInt4_IRQn    = 12,
-        ExtIntSWInt5_IRQn    = 13,
-        ExtIntSWInt6_IRQn    = 14,
-        ExtIntSWInt7_IRQn    = 15,
+        ExInt0_IRQn          = 8,
+        ExInt1_IRQn          = 9,
+        ExInt2_IRQn          = 10,
+        ExInt3_IRQn          = 11,
+        ExInt4_IRQn          = 12,
+        ExInt5_IRQn          = 13,
+        ExInt6_IRQn          = 14,
+        ExInt7_IRQn          = 15,
+        SwInt0_IRQn          = 0,
+        SwInt1_IRQn          = 1,
+        SwInt2_IRQn          = 2,
+        SwInt3_IRQn          = 3,
+        SwInt4_IRQn          = 4,
+        SwInt5_IRQn          = 5,
+        SwInt6_IRQn          = 6,
+        SwInt7_IRQn          = 7,
+        SwInt8_IRQn          = 8,
+        SwInt9_IRQn          = 9,
+        SwInt10_IRQn         = 10,
+        SwInt11_IRQn         = 11,
+        SwInt12_IRQn         = 12,
+        SwInt13_IRQn         = 13,
+        SwInt14_IRQn         = 14,
+        SwInt15_IRQn         = 15,
         DmacTC0_IRQn         = 16,
         DmacTC1_IRQn         = 17,
         DmacTC2_IRQn         = 18,
@@ -5536,8 +5552,6 @@ typedef struct
 #define TMRB_BCSTR_DIR                                 ((uint16_t)0x0002U)
 #define TMRB_BCSTR_MODE_POS                            (2U)
 #define TMRB_BCSTR_MODE                                ((uint16_t)0x0004U)
-#define TMRB_BCSTR_SYNST_POS                           (3U)
-#define TMRB_BCSTR_SYNST                               ((uint16_t)0x0008U)
 #define TMRB_BCSTR_CKDIV_POS                           (4U)
 #define TMRB_BCSTR_CKDIV                               ((uint16_t)0x00F0U)
 #define TMRB_BCSTR_CKDIV_0                             ((uint16_t)0x0010U)
@@ -11801,13 +11815,13 @@ typedef struct
     __IO uint32_t START;
     __IO uint32_t DIR;
     __IO uint32_t MODE;
-    __IO uint32_t SYNST;
+    uint32_t RESERVED0[1];
     __IO uint32_t CKDIV0;
     __IO uint32_t CKDIV1;
     __IO uint32_t CKDIV2;
     __IO uint32_t CKDIV3;
     __IO uint32_t OVSTP;
-    uint32_t RESERVED0[3];
+    uint32_t RESERVED1[3];
     __IO uint32_t INENOVF;
     __IO uint32_t INENUDF;
     __IO uint32_t OVFF;
