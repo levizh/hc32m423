@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-25       Wangmin         First version
+   2020-02-05       Wangmin         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -147,9 +147,6 @@
 #define IS_CMP_TIMWIN_OUT_LEVEL(x)                                             \
 (   (CMP_TIMERWIN_OUT_LEVEL_LOW == (x))         ||                             \
     (CMP_TIMERWIN_OUT_LEVEL_HIGH == (x)))
-
-#define IS_CMP_DAC_DATA(x)                                                     \
-(   (x) <= 0xFFU )
 
 #define IS_CMP_DAC_ALIGN_MODE(x)                                               \
 (   (CMP_DAC_ALIGN_RIGHT == (x))                ||                             \
@@ -552,13 +549,12 @@ en_result_t CMP_WindowModeInit(const stc_cmp_init_t* pstcCMP_InitStruct)
  * @retval An en_result_t enumeration value:
  *              - Ok:             Set successfully
  */
-en_result_t CMP_8BitDACCfg(uint8_t u8DACData, uint8_t u8AlignMode)
+en_result_t CMP_8BitDACCfg(uint8_t u8DACData, uint16_t u16AlignMode)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_CMP_DAC_DATA(u8DACData));
-    DDL_ASSERT(IS_CMP_DAC_ALIGN_MODE(u8AlignMode));
+    DDL_ASSERT(IS_CMP_DAC_ALIGN_MODE(u16AlignMode));
 
-    if(CMP_DAC_ALIGN_RIGHT == u8AlignMode)
+    if(CMP_DAC_ALIGN_RIGHT == u16AlignMode)
     {
         WRITE_REG16(M4_DAC->DADR1, u8DACData);
         CLEAR_REG16_BIT(M4_DAC->DACR1, CMP_DACR1_ALGN);

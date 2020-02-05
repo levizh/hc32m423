@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-08       Wangmin         First version
+   2020-02-05       Wangmin         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -73,28 +73,22 @@
 /*******************************************************************************
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
-#define CMP_TEST_UNIT1                  (M0P_CMP1)
-#define CMP_TEST_UNIT2                  (M0P_CMP2)
+#define CMP_TEST_UNIT2                  (M4_CMP2)
+#define CMP_TEST_UNIT3                  (M4_CMP3)
 
 /* Define port and pin for CMP */
-/* VCOUT1_B*/
-#define CMP_VCOUT1_PORT                 (GPIO_PORT_7)
-#define CMP_VCOUT1_PIN                  (GPIO_PIN_0)
-/* VCOUT2_C*/
-#define CMP_VCOUT2_PORT                 (GPIO_PORT_6)
-#define CMP_VCOUT2_PIN                  (GPIO_PIN_1)
-/* IVCMP1_0 */
-#define VCMP1_0_PORT                    (GPIO_PORT_1)
-#define VCMP1_0_PIN                     (GPIO_PIN_3)
-/* IVCMP1_1 */
-#define VCMP1_1_PORT                    (GPIO_PORT_2)
-#define VCMP1_1_PIN                     (GPIO_PIN_0)
-/* IVCMP_2_0 */
-#define VCMP2_0_PORT                    (GPIO_PORT_2)
-#define VCMP2_0_PIN                     (GPIO_PIN_3)
+/* VCOUT2*/
+#define CMP_VCOUT2_PORT                 (GPIO_PORT_9)
+#define CMP_VCOUT2_PIN                  (GPIO_PIN_4)
+/* IVCMP2_2 */
+#define IVCMP2_2_PORT                   (GPIO_PORT_4)
+#define IVCMP2_2_PIN                    (GPIO_PIN_7)
 /* IREF1 */
 #define IREF1_PORT                      (GPIO_PORT_1)
-#define IREF1_PIN                       (GPIO_PIN_2)
+#define IREF1_PIN                       (GPIO_PIN_1)
+/* IREF2 */
+#define IREF2_PORT                      (GPIO_PORT_1)
+#define IREF2_PIN                       (GPIO_PIN_0)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -128,9 +122,10 @@ int32_t main(void)
     SystemClockConfig();
 
     /* Port function configuration */
-    GPIO_SetFunc(CMP_VCOUT2_PORT, CMP_VCOUT2_PIN, GPIO_FUNC_3_CMP);
-    GPIO_SetFunc(VCMP2_0_PORT, VCMP2_0_PIN, GPIO_FUNC_1_IVCMP);
-    GPIO_SetFunc(IREF1_PORT, IREF1_PIN, GPIO_FUNC_1_IVCMP);
+    GPIO_SetFunc(CMP_VCOUT2_PORT, CMP_VCOUT2_PIN, GPIO_FUNC_1_VCOUT);
+    GPIO_SetFunc(IVCMP2_2_PORT, IVCMP2_2_PIN, GPIO_FUNC_1);
+    GPIO_SetFunc(IREF1_PORT, IREF1_PIN, GPIO_FUNC_1);
+    GPIO_SetFunc(IREF2_PORT, IREF2_PIN, GPIO_FUNC_1);
 
     /* Enable internal Vref*/
     PWC_PwrMonStructInit(&stcPwcIni);
@@ -142,12 +137,12 @@ int32_t main(void)
     /* Clear structure */
     CMP_StructInit(&stcCmpCfg);
     /* De-initialize CMP unit */
-    CMP_DeInit(CMP_TEST_UNIT1);
     CMP_DeInit(CMP_TEST_UNIT2);
+    CMP_DeInit(CMP_TEST_UNIT3);
 
     /* Configuration for normal compare function */
-    stcCmpCfg.u8WinVolLow = CMP1_RVSL_IVREF1;   /* P12 */
-    stcCmpCfg.u8WinVolHigh = CMP2_RVSL_VREF;    /* Vref 1.45V */
+    stcCmpCfg.u8WinVolLow = CMP_RVSL_IVREF1;     /* P11 */
+    stcCmpCfg.u8WinVolHigh = CMP_RVSL_IVREF2;    /* P10 */
 
     stcCmpCfg.u8OutDetectEdges = CMP_DETECT_EDGS_BOTH;
     stcCmpCfg.u8OutFilter = CMP_OUT_FILTER_PCLKDIV32;
@@ -163,7 +158,7 @@ int32_t main(void)
 
     /* Enable CMP output */
     CMP_OutputCmd(CMP_TEST_UNIT2, Enable);
-    CMP_OutputCmd(CMP_TEST_UNIT1, Enable);
+    CMP_OutputCmd(CMP_TEST_UNIT3, Enable);
 
     /*NVIC configuration for interrupt if need*/
 

@@ -91,14 +91,14 @@ extern "C"
 typedef struct
 {
     uint8_t u8CmpVol;              /*!< Compare voltage for normal mode
-                                        @ref CMP1_CVSL_Source or @ref CMP2_CVSL_Source */
+                                        @ref CMP_CVSL_Source */
     uint8_t u8RefVol;              /*!< Reference voltage for normal mode ,
-                                        @ref CMP1_RVSL_Source or @ref CMP2_RVSL_Source*/
+                                        @ref CMP_RVSL_Source*/
 
     uint8_t u8WinVolLow;           /*!< CMP reference low voltage for window mode
-                                        @ref CMP1_RVSL_Source */
+                                        @ref CMP_RVSL_Source */
     uint8_t u8WinVolHigh;          /*!< CMP reference high voltage for window mode
-                                        @ref CMP2_RVSL_Source */
+                                        @ref CMP_RVSL_Source */
 
     uint8_t u8OutPolarity;         /*!< Output polarity select, @ref CMP_Out_Polarity_Select */
     uint8_t u8OutDetectEdges;      /*!< Output detecte edge, @ref CMP_Out_Detect_Edge */
@@ -148,7 +148,7 @@ typedef struct
  * @}
  */
 
-/** @defgroup CMPx_CVSL_Source CMP compare voltage selection for CMP1/CMP2/CMP3
+/** @defgroup CMP_CVSL_Source CMP compare voltage selection for CMP1/CMP2/CMP3
   * @{
   */
 /* Don't input compare voltage */
@@ -306,7 +306,7 @@ en_result_t CMP_VCOUTCmd(M4_CMP_TypeDef *CMPx, en_functional_state_t enNewSta);
 
 en_result_t CMP_ResultGet(M4_CMP_TypeDef *CMPx, en_flag_status_t* penFunSta);
 
-en_result_t CMP_8BitDACCfg(uint8_t u8DACData, uint8_t u8AlignMode);
+en_result_t CMP_8BitDACCfg(uint8_t u8DACData, uint16_t u16AlignMode);
 en_result_t CMP_8BitDACCmd(en_functional_state_t enNewSta);
 
 /**

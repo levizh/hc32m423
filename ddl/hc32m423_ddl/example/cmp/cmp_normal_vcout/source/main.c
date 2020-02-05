@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-08       Wangmin         First version
+   2020-02-05       Wangmin         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -73,24 +73,18 @@
 /*******************************************************************************
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
-#define CMP_TEST_UNIT                   (M0P_CMP1)
+#define CMP_TEST_UNIT                   (M4_CMP1)
 
 /* Define port and pin for CMP */
-/* VCOUT1_B*/
-#define CMP_VCOUT1_PORT                 (GPIO_PORT_7)
-#define CMP_VCOUT1_PIN                  (GPIO_PIN_0)
-/* VCOUT2_C*/
-#define CMP_VCOUT2_PORT                 (GPIO_PORT_1)
-#define CMP_VCOUT2_PIN                  (GPIO_PIN_1)
+/* VCOUT1*/
+#define CMP_VCOUT1_PORT                 (GPIO_PORT_9)
+#define CMP_VCOUT1_PIN                  (GPIO_PIN_3)
 /* IVCMP1_0 */
-#define VCMP1_0_PORT                    (GPIO_PORT_1)
-#define VCMP1_0_PIN                     (GPIO_PIN_3)
-/* IVCMP1_1 */
-#define VCMP1_1_PORT                    (GPIO_PORT_2)
-#define VCMP1_1_PIN                     (GPIO_PIN_0)
+#define IVCMP1_0_PORT                   (GPIO_PORT_4)
+#define IVCMP1_0_PIN                    (GPIO_PIN_0)
 /* IREF1 */
 #define IREF1_PORT                      (GPIO_PORT_1)
-#define IREF1_PIN                       (GPIO_PIN_2)
+#define IREF1_PIN                       (GPIO_PIN_1)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -124,9 +118,9 @@ int32_t main(void)
     SystemClockConfig();
 
     /* Port function configuration */
-    GPIO_SetFunc(CMP_VCOUT1_PORT, CMP_VCOUT1_PIN, GPIO_FUNC_3_CMP);
-    GPIO_SetFunc(VCMP1_0_PORT, VCMP1_0_PIN, GPIO_FUNC_1_IVCMP);
-    //GPIO_SetFunc(IREF1_PORT, IREF1_PIN, GPIO_FUNC_1_IVCMP);
+    GPIO_SetFunc(CMP_VCOUT1_PORT, CMP_VCOUT1_PIN, GPIO_FUNC_1_VCOUT);
+    GPIO_SetFunc(IVCMP1_0_PORT, IVCMP1_0_PIN, GPIO_FUNC_1);
+    GPIO_SetFunc(IREF1_PORT, IREF1_PIN, GPIO_FUNC_1);
 
     /* Enable internal Vref*/
     PWC_PwrMonStructInit(&stcPwcIni);
@@ -141,8 +135,8 @@ int32_t main(void)
     CMP_DeInit(CMP_TEST_UNIT);
 
     /* Configuration for normal compare function */
-    stcCmpCfg.u8CmpVol = CMP1_CVSL_VCMP1_0;
-    stcCmpCfg.u8RefVol = CMP1_RVSL_VREF;
+    stcCmpCfg.u8CmpVol = CMP_CVSL_IVCMPx_0;
+    stcCmpCfg.u8RefVol = CMP_RVSL_IVREF1;
     stcCmpCfg.u8OutDetectEdges = CMP_DETECT_EDGS_BOTH;
     stcCmpCfg.u8OutFilter = CMP_OUT_FILTER_PCLKDIV8;
     stcCmpCfg.u8OutPolarity = CMP_OUT_REVERSE_ON;
