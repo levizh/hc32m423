@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-28       Yangjp          First version
+   2020-02-01       Zhangxl         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -99,7 +99,7 @@ extern "C"
 #define DDL_EXINT_NMI_ENABLE                        (DDL_OFF)
 #define DDL_GPIO_ENABLE                             (DDL_OFF)
 #define DDL_I2C_ENABLE                              (DDL_OFF)
-#define DDL_INTERRUPTS_ENABLE                       (DDL_ON)
+#define DDL_INTERRUPTS_ENABLE                       (DDL_OFF)
 #define DDL_PWC_ENABLE                              (DDL_OFF)
 #define DDL_RMU_ENABLE                              (DDL_OFF)
 #define DDL_SPI_ENABLE                              (DDL_OFF)

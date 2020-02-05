@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-28       Yangjp          First version
+   2020-02-01       Zhangxl         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -144,15 +144,9 @@ extern "C"
     #include "hc32m423_icg.h"
 #endif /* DDL_ICG_ENABLE */
 
-#if ((DDL_INTERRUPTS_ENABLE == DDL_ON)  ||                                      \
-    (DDL_EXINT_NMI_ENABLE == DDL_ON)    ||                                      \
-    (DDL_EKEY_ENABLE == DDL_ON))
+#if ((DDL_INTERRUPTS_ENABLE == DDL_ON) || (DDL_EXINT_NMI_ENABLE == DDL_ON))
     #include "hc32m423_interrupts.h"
-#endif /* DDL_INTERRUPTS_ENABLE || DDL_EXINT_NMI_ENABLE || DDL_EKEY_ENABLE */
-
-#if (DDL_EVENT_PORT_ENABLE == DDL_ON)
-    #include "hc32m423_event_port.h"
-#endif /* DDL_EVENT_PORT_ENABLE */
+#endif /* DDL_INTERRUPTS_ENABLE || DDL_EXINT_NMI_ENABLE */
 
 #if (DDL_PWC_ENABLE == DDL_ON)
     #include "hc32m423_pwc.h"
