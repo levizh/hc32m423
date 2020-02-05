@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-04       levi          First version
+   2020-02-05       levi          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2017, Huada Semiconductor Co.,Ltd. All rights reserved.
@@ -56,7 +56,7 @@
  **
  ** History:
  **
- **   - 2020-02-04  1.0   First version for Device Driver Library of HC32M423 series MCU.
+ **   - 2020-02-05  1.0   First version for Device Driver Library of HC32M423 series MCU.
  **
  ******************************************************************************/
 
@@ -1361,28 +1361,39 @@ typedef struct
  */
 typedef struct
 {
-    __IO uint32_t CNTER;
-    __IO uint32_t PERAR;
-    uint8_t RESERVED0[56];
-    __IO uint32_t CMPAR1;
-    __IO uint32_t CMPAR2;
-    uint8_t RESERVED1[56];
-    __IO uint32_t BCSTR;
-    __IO uint32_t HCONR;
-    __IO uint32_t HCUPR;
-    __IO uint32_t HCDOR;
-    __IO uint32_t ICONR;
-    __IO uint32_t ECONR;
-    __IO uint32_t FCONR;
-    __IO uint32_t STFLR;
-    uint8_t RESERVED2[32];
-    __IO uint32_t BCONR;
-    uint8_t RESERVED3[60];
-    __IO uint32_t CCONR1;
-    __IO uint32_t CCONR2;
-    uint8_t RESERVED4[56];
-    __IO uint32_t PCONR1;
-    __IO uint32_t PCONR2;
+    __IO uint16_t CNTER;
+    uint8_t RESERVED0[2];
+    __IO uint16_t PERAR;
+    uint8_t RESERVED1[58];
+    __IO uint16_t CMPAR1;
+    uint8_t RESERVED2[2];
+    __IO uint16_t CMPAR2;
+    uint8_t RESERVED3[58];
+    __IO uint16_t BCSTR;
+    uint8_t RESERVED4[2];
+    __IO uint16_t HCONR;
+    uint8_t RESERVED5[2];
+    __IO uint16_t HCUPR;
+    uint8_t RESERVED6[2];
+    __IO uint16_t HCDOR;
+    uint8_t RESERVED7[2];
+    __IO uint16_t ICONR;
+    uint8_t RESERVED8[2];
+    __IO uint16_t ECONR;
+    uint8_t RESERVED9[2];
+    __IO uint16_t FCONR;
+    uint8_t RESERVED10[2];
+    __IO uint16_t STFLR;
+    uint8_t RESERVED11[34];
+    __IO uint16_t BCONR;
+    uint8_t RESERVED12[62];
+    __IO uint16_t CCONR1;
+    uint8_t RESERVED13[2];
+    __IO uint16_t CCONR2;
+    uint8_t RESERVED14[58];
+    __IO uint16_t PCONR1;
+    uint8_t RESERVED15[2];
+    __IO uint16_t PCONR2;
 } M4_TMRA_TypeDef;
 
 /**
@@ -1390,40 +1401,57 @@ typedef struct
  */
 typedef struct
 {
-    __IO uint32_t CNTER;
-    __IO uint32_t PERAR;
-    uint8_t RESERVED0[56];
-    __IO uint32_t CMPAR1;
-    __IO uint32_t CMPAR2;
-    __IO uint32_t CMPAR3;
-    __IO uint32_t CMPAR4;
-    __IO uint32_t CMPAR5;
-    __IO uint32_t CMPAR6;
-    uint8_t RESERVED1[40];
-    __IO uint32_t BCSTR;
-    __IO uint32_t HCONR;
-    __IO uint32_t HCUPR;
-    __IO uint32_t HCDOR;
-    __IO uint32_t ICONR;
-    __IO uint32_t ECONR;
-    uint8_t RESERVED2[4];
-    __IO uint32_t STFLR;
-    uint8_t RESERVED3[32];
-    __IO uint32_t BCONR1;
-    uint8_t RESERVED4[4];
-    __IO uint32_t BCONR2;
-    uint8_t RESERVED5[4];
-    __IO uint32_t BCONR3;
-    uint8_t RESERVED6[44];
-    __IO uint32_t CCONR1;
-    __IO uint32_t CCONR2;
-    __IO uint32_t CCONR3;
-    __IO uint32_t CCONR4;
-    uint8_t RESERVED7[48];
-    __IO uint32_t PCONR1;
-    __IO uint32_t PCONR2;
-    __IO uint32_t PCONR3;
-    __IO uint32_t PCONR4;
+    __IO uint16_t CNTER;
+    uint8_t RESERVED0[2];
+    __IO uint16_t PERAR;
+    uint8_t RESERVED1[58];
+    __IO uint16_t CMPAR1;
+    uint8_t RESERVED2[2];
+    __IO uint16_t CMPAR2;
+    uint8_t RESERVED3[2];
+    __IO uint16_t CMPAR3;
+    uint8_t RESERVED4[2];
+    __IO uint16_t CMPAR4;
+    uint8_t RESERVED5[2];
+    __IO uint16_t CMPAR5;
+    uint8_t RESERVED6[2];
+    __IO uint16_t CMPAR6;
+    uint8_t RESERVED7[42];
+    __IO uint16_t BCSTR;
+    uint8_t RESERVED8[2];
+    __IO uint16_t HCONR;
+    uint8_t RESERVED9[2];
+    __IO uint16_t HCUPR;
+    uint8_t RESERVED10[2];
+    __IO uint16_t HCDOR;
+    uint8_t RESERVED11[2];
+    __IO uint16_t ICONR;
+    uint8_t RESERVED12[2];
+    __IO uint16_t ECONR;
+    uint8_t RESERVED13[6];
+    __IO uint16_t STFLR;
+    uint8_t RESERVED14[34];
+    __IO uint16_t BCONR1;
+    uint8_t RESERVED15[6];
+    __IO uint16_t BCONR2;
+    uint8_t RESERVED16[6];
+    __IO uint16_t BCONR3;
+    uint8_t RESERVED17[46];
+    __IO uint16_t CCONR1;
+    uint8_t RESERVED18[2];
+    __IO uint16_t CCONR2;
+    uint8_t RESERVED19[2];
+    __IO uint16_t CCONR3;
+    uint8_t RESERVED20[2];
+    __IO uint16_t CCONR4;
+    uint8_t RESERVED21[50];
+    __IO uint16_t PCONR1;
+    uint8_t RESERVED22[2];
+    __IO uint16_t PCONR2;
+    uint8_t RESERVED23[2];
+    __IO uint16_t PCONR3;
+    uint8_t RESERVED24[2];
+    __IO uint16_t PCONR4;
 } M4_TMRB_TypeDef;
 
 /**
@@ -1860,6 +1888,8 @@ typedef struct
 /*  Bit definition for CMP_MDR register  */
 #define CMP_MDR_CENB_POS                               (0U)
 #define CMP_MDR_CENB                                   ((uint8_t)0x01U)
+#define CMP_MDR_CWDE_POS                               (1U)
+#define CMP_MDR_CWDE                                   ((uint8_t)0x02U)
 #define CMP_MDR_CMON_POS                               (7U)
 #define CMP_MDR_CMON                                   ((uint8_t)0x80U)
 
@@ -5185,315 +5215,255 @@ typedef struct
 *******************************************************************************/
 /*  Bit definition for TMRA_CNTER register  */
 #define TMRA_CNTER_CNT_POS                             (0U)
-#define TMRA_CNTER_CNT                                 ((uint32_t)0x0000FFFFU)
-#define TMRA_CNTER_CNT_0                               ((uint32_t)0x00000001U)
-#define TMRA_CNTER_CNT_1                               ((uint32_t)0x00000002U)
-#define TMRA_CNTER_CNT_2                               ((uint32_t)0x00000004U)
-#define TMRA_CNTER_CNT_3                               ((uint32_t)0x00000008U)
-#define TMRA_CNTER_CNT_4                               ((uint32_t)0x00000010U)
-#define TMRA_CNTER_CNT_5                               ((uint32_t)0x00000020U)
-#define TMRA_CNTER_CNT_6                               ((uint32_t)0x00000040U)
-#define TMRA_CNTER_CNT_7                               ((uint32_t)0x00000080U)
-#define TMRA_CNTER_CNT_8                               ((uint32_t)0x00000100U)
-#define TMRA_CNTER_CNT_9                               ((uint32_t)0x00000200U)
-#define TMRA_CNTER_CNT_10                              ((uint32_t)0x00000400U)
-#define TMRA_CNTER_CNT_11                              ((uint32_t)0x00000800U)
-#define TMRA_CNTER_CNT_12                              ((uint32_t)0x00001000U)
-#define TMRA_CNTER_CNT_13                              ((uint32_t)0x00002000U)
-#define TMRA_CNTER_CNT_14                              ((uint32_t)0x00004000U)
-#define TMRA_CNTER_CNT_15                              ((uint32_t)0x00008000U)
+#define TMRA_CNTER_CNT                                 ((uint16_t)0xFFFFU)
+#define TMRA_CNTER_CNT_0                               ((uint16_t)0x0001U)
+#define TMRA_CNTER_CNT_1                               ((uint16_t)0x0002U)
+#define TMRA_CNTER_CNT_2                               ((uint16_t)0x0004U)
+#define TMRA_CNTER_CNT_3                               ((uint16_t)0x0008U)
+#define TMRA_CNTER_CNT_4                               ((uint16_t)0x0010U)
+#define TMRA_CNTER_CNT_5                               ((uint16_t)0x0020U)
+#define TMRA_CNTER_CNT_6                               ((uint16_t)0x0040U)
+#define TMRA_CNTER_CNT_7                               ((uint16_t)0x0080U)
+#define TMRA_CNTER_CNT_8                               ((uint16_t)0x0100U)
+#define TMRA_CNTER_CNT_9                               ((uint16_t)0x0200U)
+#define TMRA_CNTER_CNT_10                              ((uint16_t)0x0400U)
+#define TMRA_CNTER_CNT_11                              ((uint16_t)0x0800U)
+#define TMRA_CNTER_CNT_12                              ((uint16_t)0x1000U)
+#define TMRA_CNTER_CNT_13                              ((uint16_t)0x2000U)
+#define TMRA_CNTER_CNT_14                              ((uint16_t)0x4000U)
+#define TMRA_CNTER_CNT_15                              ((uint16_t)0x8000U)
 
 /*  Bit definition for TMRA_PERAR register  */
 #define TMRA_PERAR_PER_POS                             (0U)
-#define TMRA_PERAR_PER                                 ((uint32_t)0x0000FFFFU)
-#define TMRA_PERAR_PER_0                               ((uint32_t)0x00000001U)
-#define TMRA_PERAR_PER_1                               ((uint32_t)0x00000002U)
-#define TMRA_PERAR_PER_2                               ((uint32_t)0x00000004U)
-#define TMRA_PERAR_PER_3                               ((uint32_t)0x00000008U)
-#define TMRA_PERAR_PER_4                               ((uint32_t)0x00000010U)
-#define TMRA_PERAR_PER_5                               ((uint32_t)0x00000020U)
-#define TMRA_PERAR_PER_6                               ((uint32_t)0x00000040U)
-#define TMRA_PERAR_PER_7                               ((uint32_t)0x00000080U)
-#define TMRA_PERAR_PER_8                               ((uint32_t)0x00000100U)
-#define TMRA_PERAR_PER_9                               ((uint32_t)0x00000200U)
-#define TMRA_PERAR_PER_10                              ((uint32_t)0x00000400U)
-#define TMRA_PERAR_PER_11                              ((uint32_t)0x00000800U)
-#define TMRA_PERAR_PER_12                              ((uint32_t)0x00001000U)
-#define TMRA_PERAR_PER_13                              ((uint32_t)0x00002000U)
-#define TMRA_PERAR_PER_14                              ((uint32_t)0x00004000U)
-#define TMRA_PERAR_PER_15                              ((uint32_t)0x00008000U)
+#define TMRA_PERAR_PER                                 ((uint16_t)0xFFFFU)
+#define TMRA_PERAR_PER_0                               ((uint16_t)0x0001U)
+#define TMRA_PERAR_PER_1                               ((uint16_t)0x0002U)
+#define TMRA_PERAR_PER_2                               ((uint16_t)0x0004U)
+#define TMRA_PERAR_PER_3                               ((uint16_t)0x0008U)
+#define TMRA_PERAR_PER_4                               ((uint16_t)0x0010U)
+#define TMRA_PERAR_PER_5                               ((uint16_t)0x0020U)
+#define TMRA_PERAR_PER_6                               ((uint16_t)0x0040U)
+#define TMRA_PERAR_PER_7                               ((uint16_t)0x0080U)
+#define TMRA_PERAR_PER_8                               ((uint16_t)0x0100U)
+#define TMRA_PERAR_PER_9                               ((uint16_t)0x0200U)
+#define TMRA_PERAR_PER_10                              ((uint16_t)0x0400U)
+#define TMRA_PERAR_PER_11                              ((uint16_t)0x0800U)
+#define TMRA_PERAR_PER_12                              ((uint16_t)0x1000U)
+#define TMRA_PERAR_PER_13                              ((uint16_t)0x2000U)
+#define TMRA_PERAR_PER_14                              ((uint16_t)0x4000U)
+#define TMRA_PERAR_PER_15                              ((uint16_t)0x8000U)
 
-/*  Bit definition for TMRA_CMPAR1 register  */
-#define TMRA_CMPAR1_CMP_POS                            (0U)
-#define TMRA_CMPAR1_CMP                                ((uint32_t)0x0000FFFFU)
-#define TMRA_CMPAR1_CMP_0                              ((uint32_t)0x00000001U)
-#define TMRA_CMPAR1_CMP_1                              ((uint32_t)0x00000002U)
-#define TMRA_CMPAR1_CMP_2                              ((uint32_t)0x00000004U)
-#define TMRA_CMPAR1_CMP_3                              ((uint32_t)0x00000008U)
-#define TMRA_CMPAR1_CMP_4                              ((uint32_t)0x00000010U)
-#define TMRA_CMPAR1_CMP_5                              ((uint32_t)0x00000020U)
-#define TMRA_CMPAR1_CMP_6                              ((uint32_t)0x00000040U)
-#define TMRA_CMPAR1_CMP_7                              ((uint32_t)0x00000080U)
-#define TMRA_CMPAR1_CMP_8                              ((uint32_t)0x00000100U)
-#define TMRA_CMPAR1_CMP_9                              ((uint32_t)0x00000200U)
-#define TMRA_CMPAR1_CMP_10                             ((uint32_t)0x00000400U)
-#define TMRA_CMPAR1_CMP_11                             ((uint32_t)0x00000800U)
-#define TMRA_CMPAR1_CMP_12                             ((uint32_t)0x00001000U)
-#define TMRA_CMPAR1_CMP_13                             ((uint32_t)0x00002000U)
-#define TMRA_CMPAR1_CMP_14                             ((uint32_t)0x00004000U)
-#define TMRA_CMPAR1_CMP_15                             ((uint32_t)0x00008000U)
-
-/*  Bit definition for TMRA_CMPAR2 register  */
-#define TMRA_CMPAR2_CMP_POS                            (0U)
-#define TMRA_CMPAR2_CMP                                ((uint32_t)0x0000FFFFU)
-#define TMRA_CMPAR2_CMP_0                              ((uint32_t)0x00000001U)
-#define TMRA_CMPAR2_CMP_1                              ((uint32_t)0x00000002U)
-#define TMRA_CMPAR2_CMP_2                              ((uint32_t)0x00000004U)
-#define TMRA_CMPAR2_CMP_3                              ((uint32_t)0x00000008U)
-#define TMRA_CMPAR2_CMP_4                              ((uint32_t)0x00000010U)
-#define TMRA_CMPAR2_CMP_5                              ((uint32_t)0x00000020U)
-#define TMRA_CMPAR2_CMP_6                              ((uint32_t)0x00000040U)
-#define TMRA_CMPAR2_CMP_7                              ((uint32_t)0x00000080U)
-#define TMRA_CMPAR2_CMP_8                              ((uint32_t)0x00000100U)
-#define TMRA_CMPAR2_CMP_9                              ((uint32_t)0x00000200U)
-#define TMRA_CMPAR2_CMP_10                             ((uint32_t)0x00000400U)
-#define TMRA_CMPAR2_CMP_11                             ((uint32_t)0x00000800U)
-#define TMRA_CMPAR2_CMP_12                             ((uint32_t)0x00001000U)
-#define TMRA_CMPAR2_CMP_13                             ((uint32_t)0x00002000U)
-#define TMRA_CMPAR2_CMP_14                             ((uint32_t)0x00004000U)
-#define TMRA_CMPAR2_CMP_15                             ((uint32_t)0x00008000U)
+/*  Bit definition for TMRA_CMPAR register  */
+#define TMRA_CMPAR_CMP_POS                             (0U)
+#define TMRA_CMPAR_CMP                                 ((uint16_t)0xFFFFU)
+#define TMRA_CMPAR_CMP_0                               ((uint16_t)0x0001U)
+#define TMRA_CMPAR_CMP_1                               ((uint16_t)0x0002U)
+#define TMRA_CMPAR_CMP_2                               ((uint16_t)0x0004U)
+#define TMRA_CMPAR_CMP_3                               ((uint16_t)0x0008U)
+#define TMRA_CMPAR_CMP_4                               ((uint16_t)0x0010U)
+#define TMRA_CMPAR_CMP_5                               ((uint16_t)0x0020U)
+#define TMRA_CMPAR_CMP_6                               ((uint16_t)0x0040U)
+#define TMRA_CMPAR_CMP_7                               ((uint16_t)0x0080U)
+#define TMRA_CMPAR_CMP_8                               ((uint16_t)0x0100U)
+#define TMRA_CMPAR_CMP_9                               ((uint16_t)0x0200U)
+#define TMRA_CMPAR_CMP_10                              ((uint16_t)0x0400U)
+#define TMRA_CMPAR_CMP_11                              ((uint16_t)0x0800U)
+#define TMRA_CMPAR_CMP_12                              ((uint16_t)0x1000U)
+#define TMRA_CMPAR_CMP_13                              ((uint16_t)0x2000U)
+#define TMRA_CMPAR_CMP_14                              ((uint16_t)0x4000U)
+#define TMRA_CMPAR_CMP_15                              ((uint16_t)0x8000U)
 
 /*  Bit definition for TMRA_BCSTR register  */
 #define TMRA_BCSTR_START_POS                           (0U)
-#define TMRA_BCSTR_START                               ((uint32_t)0x00000001U)
+#define TMRA_BCSTR_START                               ((uint16_t)0x0001U)
 #define TMRA_BCSTR_DIR_POS                             (1U)
-#define TMRA_BCSTR_DIR                                 ((uint32_t)0x00000002U)
+#define TMRA_BCSTR_DIR                                 ((uint16_t)0x0002U)
 #define TMRA_BCSTR_MODE_POS                            (2U)
-#define TMRA_BCSTR_MODE                                ((uint32_t)0x00000004U)
+#define TMRA_BCSTR_MODE                                ((uint16_t)0x0004U)
 #define TMRA_BCSTR_SYNST_POS                           (3U)
-#define TMRA_BCSTR_SYNST                               ((uint32_t)0x00000008U)
+#define TMRA_BCSTR_SYNST                               ((uint16_t)0x0008U)
 #define TMRA_BCSTR_CKDIV_POS                           (4U)
-#define TMRA_BCSTR_CKDIV                               ((uint32_t)0x000000F0U)
-#define TMRA_BCSTR_CKDIV_0                             ((uint32_t)0x00000010U)
-#define TMRA_BCSTR_CKDIV_1                             ((uint32_t)0x00000020U)
-#define TMRA_BCSTR_CKDIV_2                             ((uint32_t)0x00000040U)
-#define TMRA_BCSTR_CKDIV_3                             ((uint32_t)0x00000080U)
+#define TMRA_BCSTR_CKDIV                               ((uint16_t)0x00F0U)
+#define TMRA_BCSTR_CKDIV_0                             ((uint16_t)0x0010U)
+#define TMRA_BCSTR_CKDIV_1                             ((uint16_t)0x0020U)
+#define TMRA_BCSTR_CKDIV_2                             ((uint16_t)0x0040U)
+#define TMRA_BCSTR_CKDIV_3                             ((uint16_t)0x0080U)
 #define TMRA_BCSTR_OVSTP_POS                           (8U)
-#define TMRA_BCSTR_OVSTP                               ((uint32_t)0x00000100U)
+#define TMRA_BCSTR_OVSTP                               ((uint16_t)0x0100U)
 #define TMRA_BCSTR_INENOVF_POS                         (12U)
-#define TMRA_BCSTR_INENOVF                             ((uint32_t)0x00001000U)
+#define TMRA_BCSTR_INENOVF                             ((uint16_t)0x1000U)
 #define TMRA_BCSTR_INENUDF_POS                         (13U)
-#define TMRA_BCSTR_INENUDF                             ((uint32_t)0x00002000U)
+#define TMRA_BCSTR_INENUDF                             ((uint16_t)0x2000U)
 #define TMRA_BCSTR_OVFF_POS                            (14U)
-#define TMRA_BCSTR_OVFF                                ((uint32_t)0x00004000U)
+#define TMRA_BCSTR_OVFF                                ((uint16_t)0x4000U)
 #define TMRA_BCSTR_UDFF_POS                            (15U)
-#define TMRA_BCSTR_UDFF                                ((uint32_t)0x00008000U)
+#define TMRA_BCSTR_UDFF                                ((uint16_t)0x8000U)
 
 /*  Bit definition for TMRA_HCONR register  */
 #define TMRA_HCONR_HSTA0_POS                           (0U)
-#define TMRA_HCONR_HSTA0                               ((uint32_t)0x00000001U)
+#define TMRA_HCONR_HSTA0                               ((uint16_t)0x0001U)
 #define TMRA_HCONR_HSTA1_POS                           (1U)
-#define TMRA_HCONR_HSTA1                               ((uint32_t)0x00000002U)
+#define TMRA_HCONR_HSTA1                               ((uint16_t)0x0002U)
 #define TMRA_HCONR_HSTA2_POS                           (2U)
-#define TMRA_HCONR_HSTA2                               ((uint32_t)0x00000004U)
+#define TMRA_HCONR_HSTA2                               ((uint16_t)0x0004U)
 #define TMRA_HCONR_HSTP0_POS                           (4U)
-#define TMRA_HCONR_HSTP0                               ((uint32_t)0x00000010U)
+#define TMRA_HCONR_HSTP0                               ((uint16_t)0x0010U)
 #define TMRA_HCONR_HSTP1_POS                           (5U)
-#define TMRA_HCONR_HSTP1                               ((uint32_t)0x00000020U)
+#define TMRA_HCONR_HSTP1                               ((uint16_t)0x0020U)
 #define TMRA_HCONR_HSTP2_POS                           (6U)
-#define TMRA_HCONR_HSTP2                               ((uint32_t)0x00000040U)
+#define TMRA_HCONR_HSTP2                               ((uint16_t)0x0040U)
 #define TMRA_HCONR_HCLE0_POS                           (8U)
-#define TMRA_HCONR_HCLE0                               ((uint32_t)0x00000100U)
+#define TMRA_HCONR_HCLE0                               ((uint16_t)0x0100U)
 #define TMRA_HCONR_HCLE1_POS                           (9U)
-#define TMRA_HCONR_HCLE1                               ((uint32_t)0x00000200U)
+#define TMRA_HCONR_HCLE1                               ((uint16_t)0x0200U)
 #define TMRA_HCONR_HCLE2_POS                           (10U)
-#define TMRA_HCONR_HCLE2                               ((uint32_t)0x00000400U)
+#define TMRA_HCONR_HCLE2                               ((uint16_t)0x0400U)
 #define TMRA_HCONR_HCLE3_POS                           (12U)
-#define TMRA_HCONR_HCLE3                               ((uint32_t)0x00001000U)
+#define TMRA_HCONR_HCLE3                               ((uint16_t)0x1000U)
 #define TMRA_HCONR_HCLE4_POS                           (13U)
-#define TMRA_HCONR_HCLE4                               ((uint32_t)0x00002000U)
+#define TMRA_HCONR_HCLE4                               ((uint16_t)0x2000U)
 
 /*  Bit definition for TMRA_HCUPR register  */
 #define TMRA_HCUPR_HCUP0_POS                           (0U)
-#define TMRA_HCUPR_HCUP0                               ((uint32_t)0x00000001U)
+#define TMRA_HCUPR_HCUP0                               ((uint16_t)0x0001U)
 #define TMRA_HCUPR_HCUP1_POS                           (1U)
-#define TMRA_HCUPR_HCUP1                               ((uint32_t)0x00000002U)
+#define TMRA_HCUPR_HCUP1                               ((uint16_t)0x0002U)
 #define TMRA_HCUPR_HCUP2_POS                           (2U)
-#define TMRA_HCUPR_HCUP2                               ((uint32_t)0x00000004U)
+#define TMRA_HCUPR_HCUP2                               ((uint16_t)0x0004U)
 #define TMRA_HCUPR_HCUP3_POS                           (3U)
-#define TMRA_HCUPR_HCUP3                               ((uint32_t)0x00000008U)
+#define TMRA_HCUPR_HCUP3                               ((uint16_t)0x0008U)
 #define TMRA_HCUPR_HCUP4_POS                           (4U)
-#define TMRA_HCUPR_HCUP4                               ((uint32_t)0x00000010U)
+#define TMRA_HCUPR_HCUP4                               ((uint16_t)0x0010U)
 #define TMRA_HCUPR_HCUP5_POS                           (5U)
-#define TMRA_HCUPR_HCUP5                               ((uint32_t)0x00000020U)
+#define TMRA_HCUPR_HCUP5                               ((uint16_t)0x0020U)
 #define TMRA_HCUPR_HCUP6_POS                           (6U)
-#define TMRA_HCUPR_HCUP6                               ((uint32_t)0x00000040U)
+#define TMRA_HCUPR_HCUP6                               ((uint16_t)0x0040U)
 #define TMRA_HCUPR_HCUP7_POS                           (7U)
-#define TMRA_HCUPR_HCUP7                               ((uint32_t)0x00000080U)
+#define TMRA_HCUPR_HCUP7                               ((uint16_t)0x0080U)
 #define TMRA_HCUPR_HCUP8_POS                           (8U)
-#define TMRA_HCUPR_HCUP8                               ((uint32_t)0x00000100U)
+#define TMRA_HCUPR_HCUP8                               ((uint16_t)0x0100U)
 #define TMRA_HCUPR_HCUP9_POS                           (9U)
-#define TMRA_HCUPR_HCUP9                               ((uint32_t)0x00000200U)
+#define TMRA_HCUPR_HCUP9                               ((uint16_t)0x0200U)
 #define TMRA_HCUPR_HCUP10_POS                          (10U)
-#define TMRA_HCUPR_HCUP10                              ((uint32_t)0x00000400U)
+#define TMRA_HCUPR_HCUP10                              ((uint16_t)0x0400U)
 #define TMRA_HCUPR_HCUP11_POS                          (11U)
-#define TMRA_HCUPR_HCUP11                              ((uint32_t)0x00000800U)
+#define TMRA_HCUPR_HCUP11                              ((uint16_t)0x0800U)
 #define TMRA_HCUPR_HCUP12_POS                          (12U)
-#define TMRA_HCUPR_HCUP12                              ((uint32_t)0x00001000U)
+#define TMRA_HCUPR_HCUP12                              ((uint16_t)0x1000U)
 
 /*  Bit definition for TMRA_HCDOR register  */
 #define TMRA_HCDOR_HCDO0_POS                           (0U)
-#define TMRA_HCDOR_HCDO0                               ((uint32_t)0x00000001U)
+#define TMRA_HCDOR_HCDO0                               ((uint16_t)0x0001U)
 #define TMRA_HCDOR_HCDO1_POS                           (1U)
-#define TMRA_HCDOR_HCDO1                               ((uint32_t)0x00000002U)
+#define TMRA_HCDOR_HCDO1                               ((uint16_t)0x0002U)
 #define TMRA_HCDOR_HCDO2_POS                           (2U)
-#define TMRA_HCDOR_HCDO2                               ((uint32_t)0x00000004U)
+#define TMRA_HCDOR_HCDO2                               ((uint16_t)0x0004U)
 #define TMRA_HCDOR_HCDO3_POS                           (3U)
-#define TMRA_HCDOR_HCDO3                               ((uint32_t)0x00000008U)
+#define TMRA_HCDOR_HCDO3                               ((uint16_t)0x0008U)
 #define TMRA_HCDOR_HCDO4_POS                           (4U)
-#define TMRA_HCDOR_HCDO4                               ((uint32_t)0x00000010U)
+#define TMRA_HCDOR_HCDO4                               ((uint16_t)0x0010U)
 #define TMRA_HCDOR_HCDO5_POS                           (5U)
-#define TMRA_HCDOR_HCDO5                               ((uint32_t)0x00000020U)
+#define TMRA_HCDOR_HCDO5                               ((uint16_t)0x0020U)
 #define TMRA_HCDOR_HCDO6_POS                           (6U)
-#define TMRA_HCDOR_HCDO6                               ((uint32_t)0x00000040U)
+#define TMRA_HCDOR_HCDO6                               ((uint16_t)0x0040U)
 #define TMRA_HCDOR_HCDO7_POS                           (7U)
-#define TMRA_HCDOR_HCDO7                               ((uint32_t)0x00000080U)
+#define TMRA_HCDOR_HCDO7                               ((uint16_t)0x0080U)
 #define TMRA_HCDOR_HCDO8_POS                           (8U)
-#define TMRA_HCDOR_HCDO8                               ((uint32_t)0x00000100U)
+#define TMRA_HCDOR_HCDO8                               ((uint16_t)0x0100U)
 #define TMRA_HCDOR_HCDO9_POS                           (9U)
-#define TMRA_HCDOR_HCDO9                               ((uint32_t)0x00000200U)
+#define TMRA_HCDOR_HCDO9                               ((uint16_t)0x0200U)
 #define TMRA_HCDOR_HCDO10_POS                          (10U)
-#define TMRA_HCDOR_HCDO10                              ((uint32_t)0x00000400U)
+#define TMRA_HCDOR_HCDO10                              ((uint16_t)0x0400U)
 #define TMRA_HCDOR_HCDO11_POS                          (11U)
-#define TMRA_HCDOR_HCDO11                              ((uint32_t)0x00000800U)
+#define TMRA_HCDOR_HCDO11                              ((uint16_t)0x0800U)
 #define TMRA_HCDOR_HCDO12_POS                          (12U)
-#define TMRA_HCDOR_HCDO12                              ((uint32_t)0x00001000U)
+#define TMRA_HCDOR_HCDO12                              ((uint16_t)0x1000U)
 
 /*  Bit definition for TMRA_ICONR register  */
 #define TMRA_ICONR_ITEN1_POS                           (0U)
-#define TMRA_ICONR_ITEN1                               ((uint32_t)0x00000001U)
+#define TMRA_ICONR_ITEN1                               ((uint16_t)0x0001U)
 #define TMRA_ICONR_ITEN2_POS                           (1U)
-#define TMRA_ICONR_ITEN2                               ((uint32_t)0x00000002U)
+#define TMRA_ICONR_ITEN2                               ((uint16_t)0x0002U)
 
 /*  Bit definition for TMRA_ECONR register  */
 #define TMRA_ECONR_ETEN1_POS                           (0U)
-#define TMRA_ECONR_ETEN1                               ((uint32_t)0x00000001U)
+#define TMRA_ECONR_ETEN1                               ((uint16_t)0x0001U)
 #define TMRA_ECONR_ETEN2_POS                           (1U)
-#define TMRA_ECONR_ETEN2                               ((uint32_t)0x00000002U)
+#define TMRA_ECONR_ETEN2                               ((uint16_t)0x0002U)
 
 /*  Bit definition for TMRA_FCONR register  */
 #define TMRA_FCONR_NOFIENTG_POS                        (0U)
-#define TMRA_FCONR_NOFIENTG                            ((uint32_t)0x00000001U)
+#define TMRA_FCONR_NOFIENTG                            ((uint16_t)0x0001U)
 #define TMRA_FCONR_NOFICKTG_POS                        (1U)
-#define TMRA_FCONR_NOFICKTG                            ((uint32_t)0x00000006U)
-#define TMRA_FCONR_NOFICKTG_0                          ((uint32_t)0x00000002U)
-#define TMRA_FCONR_NOFICKTG_1                          ((uint32_t)0x00000004U)
+#define TMRA_FCONR_NOFICKTG                            ((uint16_t)0x0006U)
+#define TMRA_FCONR_NOFICKTG_0                          ((uint16_t)0x0002U)
+#define TMRA_FCONR_NOFICKTG_1                          ((uint16_t)0x0004U)
 #define TMRA_FCONR_NOFIENCA_POS                        (8U)
-#define TMRA_FCONR_NOFIENCA                            ((uint32_t)0x00000100U)
+#define TMRA_FCONR_NOFIENCA                            ((uint16_t)0x0100U)
 #define TMRA_FCONR_NOFICKCA_POS                        (9U)
-#define TMRA_FCONR_NOFICKCA                            ((uint32_t)0x00000600U)
-#define TMRA_FCONR_NOFICKCA_0                          ((uint32_t)0x00000200U)
-#define TMRA_FCONR_NOFICKCA_1                          ((uint32_t)0x00000400U)
+#define TMRA_FCONR_NOFICKCA                            ((uint16_t)0x0600U)
+#define TMRA_FCONR_NOFICKCA_0                          ((uint16_t)0x0200U)
+#define TMRA_FCONR_NOFICKCA_1                          ((uint16_t)0x0400U)
 #define TMRA_FCONR_NOFIENCB_POS                        (12U)
-#define TMRA_FCONR_NOFIENCB                            ((uint32_t)0x00001000U)
+#define TMRA_FCONR_NOFIENCB                            ((uint16_t)0x1000U)
 #define TMRA_FCONR_NOFICKCB_POS                        (13U)
-#define TMRA_FCONR_NOFICKCB                            ((uint32_t)0x00006000U)
-#define TMRA_FCONR_NOFICKCB_0                          ((uint32_t)0x00002000U)
-#define TMRA_FCONR_NOFICKCB_1                          ((uint32_t)0x00004000U)
+#define TMRA_FCONR_NOFICKCB                            ((uint16_t)0x6000U)
+#define TMRA_FCONR_NOFICKCB_0                          ((uint16_t)0x2000U)
+#define TMRA_FCONR_NOFICKCB_1                          ((uint16_t)0x4000U)
 
 /*  Bit definition for TMRA_STFLR register  */
 #define TMRA_STFLR_CMPF1_POS                           (0U)
-#define TMRA_STFLR_CMPF1                               ((uint32_t)0x00000001U)
+#define TMRA_STFLR_CMPF1                               ((uint16_t)0x0001U)
 #define TMRA_STFLR_CMPF2_POS                           (1U)
-#define TMRA_STFLR_CMPF2                               ((uint32_t)0x00000002U)
+#define TMRA_STFLR_CMPF2                               ((uint16_t)0x0002U)
 
 /*  Bit definition for TMRA_BCONR register  */
 #define TMRA_BCONR_BEN_POS                             (0U)
-#define TMRA_BCONR_BEN                                 ((uint32_t)0x00000001U)
+#define TMRA_BCONR_BEN                                 ((uint16_t)0x0001U)
 #define TMRA_BCONR_BSE0_POS                            (1U)
-#define TMRA_BCONR_BSE0                                ((uint32_t)0x00000002U)
+#define TMRA_BCONR_BSE0                                ((uint16_t)0x0002U)
 #define TMRA_BCONR_BSE1_POS                            (2U)
-#define TMRA_BCONR_BSE1                                ((uint32_t)0x00000004U)
+#define TMRA_BCONR_BSE1                                ((uint16_t)0x0004U)
 
-/*  Bit definition for TMRA_CCONR1 register  */
-#define TMRA_CCONR1_CAPMD_POS                          (0U)
-#define TMRA_CCONR1_CAPMD                              ((uint32_t)0x00000001U)
-#define TMRA_CCONR1_HICP0_POS                          (4U)
-#define TMRA_CCONR1_HICP0                              ((uint32_t)0x00000010U)
-#define TMRA_CCONR1_HICP1_POS                          (5U)
-#define TMRA_CCONR1_HICP1                              ((uint32_t)0x00000020U)
-#define TMRA_CCONR1_HICP2_POS                          (6U)
-#define TMRA_CCONR1_HICP2                              ((uint32_t)0x00000040U)
-#define TMRA_CCONR1_NOFIENCP_POS                       (12U)
-#define TMRA_CCONR1_NOFIENCP                           ((uint32_t)0x00001000U)
-#define TMRA_CCONR1_NOFICKCP_POS                       (13U)
-#define TMRA_CCONR1_NOFICKCP                           ((uint32_t)0x00006000U)
-#define TMRA_CCONR1_NOFICKCP_0                         ((uint32_t)0x00002000U)
-#define TMRA_CCONR1_NOFICKCP_1                         ((uint32_t)0x00004000U)
+/*  Bit definition for TMRA_CCONR register  */
+#define TMRA_CCONR_CAPMD_POS                           (0U)
+#define TMRA_CCONR_CAPMD                               ((uint16_t)0x0001U)
+#define TMRA_CCONR_HICP0_POS                           (4U)
+#define TMRA_CCONR_HICP0                               ((uint16_t)0x0010U)
+#define TMRA_CCONR_HICP1_POS                           (5U)
+#define TMRA_CCONR_HICP1                               ((uint16_t)0x0020U)
+#define TMRA_CCONR_HICP2_POS                           (6U)
+#define TMRA_CCONR_HICP2                               ((uint16_t)0x0040U)
+#define TMRA_CCONR_NOFIENCP_POS                        (12U)
+#define TMRA_CCONR_NOFIENCP                            ((uint16_t)0x1000U)
+#define TMRA_CCONR_NOFICKCP_POS                        (13U)
+#define TMRA_CCONR_NOFICKCP                            ((uint16_t)0x6000U)
+#define TMRA_CCONR_NOFICKCP_0                          ((uint16_t)0x2000U)
+#define TMRA_CCONR_NOFICKCP_1                          ((uint16_t)0x4000U)
 
-/*  Bit definition for TMRA_CCONR2 register  */
-#define TMRA_CCONR2_CAPMD_POS                          (0U)
-#define TMRA_CCONR2_CAPMD                              ((uint32_t)0x00000001U)
-#define TMRA_CCONR2_HICP0_POS                          (4U)
-#define TMRA_CCONR2_HICP0                              ((uint32_t)0x00000010U)
-#define TMRA_CCONR2_HICP1_POS                          (5U)
-#define TMRA_CCONR2_HICP1                              ((uint32_t)0x00000020U)
-#define TMRA_CCONR2_HICP2_POS                          (6U)
-#define TMRA_CCONR2_HICP2                              ((uint32_t)0x00000040U)
-#define TMRA_CCONR2_NOFIENCP_POS                       (12U)
-#define TMRA_CCONR2_NOFIENCP                           ((uint32_t)0x00001000U)
-#define TMRA_CCONR2_NOFICKCP_POS                       (13U)
-#define TMRA_CCONR2_NOFICKCP                           ((uint32_t)0x00006000U)
-#define TMRA_CCONR2_NOFICKCP_0                         ((uint32_t)0x00002000U)
-#define TMRA_CCONR2_NOFICKCP_1                         ((uint32_t)0x00004000U)
-
-/*  Bit definition for TMRA_PCONR1 register  */
-#define TMRA_PCONR1_STAC_POS                           (0U)
-#define TMRA_PCONR1_STAC                               ((uint32_t)0x00000003U)
-#define TMRA_PCONR1_STAC_0                             ((uint32_t)0x00000001U)
-#define TMRA_PCONR1_STAC_1                             ((uint32_t)0x00000002U)
-#define TMRA_PCONR1_STPC_POS                           (2U)
-#define TMRA_PCONR1_STPC                               ((uint32_t)0x0000000CU)
-#define TMRA_PCONR1_STPC_0                             ((uint32_t)0x00000004U)
-#define TMRA_PCONR1_STPC_1                             ((uint32_t)0x00000008U)
-#define TMRA_PCONR1_CMPC_POS                           (4U)
-#define TMRA_PCONR1_CMPC                               ((uint32_t)0x00000030U)
-#define TMRA_PCONR1_CMPC_0                             ((uint32_t)0x00000010U)
-#define TMRA_PCONR1_CMPC_1                             ((uint32_t)0x00000020U)
-#define TMRA_PCONR1_PERC_POS                           (6U)
-#define TMRA_PCONR1_PERC                               ((uint32_t)0x000000C0U)
-#define TMRA_PCONR1_PERC_0                             ((uint32_t)0x00000040U)
-#define TMRA_PCONR1_PERC_1                             ((uint32_t)0x00000080U)
-#define TMRA_PCONR1_FORC_POS                           (8U)
-#define TMRA_PCONR1_FORC                               ((uint32_t)0x00000300U)
-#define TMRA_PCONR1_FORC_0                             ((uint32_t)0x00000100U)
-#define TMRA_PCONR1_FORC_1                             ((uint32_t)0x00000200U)
-#define TMRA_PCONR1_OUTEN_POS                          (12U)
-#define TMRA_PCONR1_OUTEN                              ((uint32_t)0x00001000U)
-
-/*  Bit definition for TMRA_PCONR2 register  */
-#define TMRA_PCONR2_STAC_POS                           (0U)
-#define TMRA_PCONR2_STAC                               ((uint32_t)0x00000003U)
-#define TMRA_PCONR2_STAC_0                             ((uint32_t)0x00000001U)
-#define TMRA_PCONR2_STAC_1                             ((uint32_t)0x00000002U)
-#define TMRA_PCONR2_STPC_POS                           (2U)
-#define TMRA_PCONR2_STPC                               ((uint32_t)0x0000000CU)
-#define TMRA_PCONR2_STPC_0                             ((uint32_t)0x00000004U)
-#define TMRA_PCONR2_STPC_1                             ((uint32_t)0x00000008U)
-#define TMRA_PCONR2_CMPC_POS                           (4U)
-#define TMRA_PCONR2_CMPC                               ((uint32_t)0x00000030U)
-#define TMRA_PCONR2_CMPC_0                             ((uint32_t)0x00000010U)
-#define TMRA_PCONR2_CMPC_1                             ((uint32_t)0x00000020U)
-#define TMRA_PCONR2_PERC_POS                           (6U)
-#define TMRA_PCONR2_PERC                               ((uint32_t)0x000000C0U)
-#define TMRA_PCONR2_PERC_0                             ((uint32_t)0x00000040U)
-#define TMRA_PCONR2_PERC_1                             ((uint32_t)0x00000080U)
-#define TMRA_PCONR2_FORC_POS                           (8U)
-#define TMRA_PCONR2_FORC                               ((uint32_t)0x00000300U)
-#define TMRA_PCONR2_FORC_0                             ((uint32_t)0x00000100U)
-#define TMRA_PCONR2_FORC_1                             ((uint32_t)0x00000200U)
-#define TMRA_PCONR2_OUTEN_POS                          (12U)
-#define TMRA_PCONR2_OUTEN                              ((uint32_t)0x00001000U)
+/*  Bit definition for TMRA_PCONR register  */
+#define TMRA_PCONR_STAC_POS                            (0U)
+#define TMRA_PCONR_STAC                                ((uint16_t)0x0003U)
+#define TMRA_PCONR_STAC_0                              ((uint16_t)0x0001U)
+#define TMRA_PCONR_STAC_1                              ((uint16_t)0x0002U)
+#define TMRA_PCONR_STPC_POS                            (2U)
+#define TMRA_PCONR_STPC                                ((uint16_t)0x000CU)
+#define TMRA_PCONR_STPC_0                              ((uint16_t)0x0004U)
+#define TMRA_PCONR_STPC_1                              ((uint16_t)0x0008U)
+#define TMRA_PCONR_CMPC_POS                            (4U)
+#define TMRA_PCONR_CMPC                                ((uint16_t)0x0030U)
+#define TMRA_PCONR_CMPC_0                              ((uint16_t)0x0010U)
+#define TMRA_PCONR_CMPC_1                              ((uint16_t)0x0020U)
+#define TMRA_PCONR_PERC_POS                            (6U)
+#define TMRA_PCONR_PERC                                ((uint16_t)0x00C0U)
+#define TMRA_PCONR_PERC_0                              ((uint16_t)0x0040U)
+#define TMRA_PCONR_PERC_1                              ((uint16_t)0x0080U)
+#define TMRA_PCONR_FORC_POS                            (8U)
+#define TMRA_PCONR_FORC                                ((uint16_t)0x0300U)
+#define TMRA_PCONR_FORC_0                              ((uint16_t)0x0100U)
+#define TMRA_PCONR_FORC_1                              ((uint16_t)0x0200U)
+#define TMRA_PCONR_OUTEN_POS                           (12U)
+#define TMRA_PCONR_OUTEN                               ((uint16_t)0x1000U)
 
 
 /*******************************************************************************
@@ -5501,455 +5471,219 @@ typedef struct
 *******************************************************************************/
 /*  Bit definition for TMRB_CNTER register  */
 #define TMRB_CNTER_CNT_POS                             (0U)
-#define TMRB_CNTER_CNT                                 ((uint32_t)0x0000FFFFU)
-#define TMRB_CNTER_CNT_0                               ((uint32_t)0x00000001U)
-#define TMRB_CNTER_CNT_1                               ((uint32_t)0x00000002U)
-#define TMRB_CNTER_CNT_2                               ((uint32_t)0x00000004U)
-#define TMRB_CNTER_CNT_3                               ((uint32_t)0x00000008U)
-#define TMRB_CNTER_CNT_4                               ((uint32_t)0x00000010U)
-#define TMRB_CNTER_CNT_5                               ((uint32_t)0x00000020U)
-#define TMRB_CNTER_CNT_6                               ((uint32_t)0x00000040U)
-#define TMRB_CNTER_CNT_7                               ((uint32_t)0x00000080U)
-#define TMRB_CNTER_CNT_8                               ((uint32_t)0x00000100U)
-#define TMRB_CNTER_CNT_9                               ((uint32_t)0x00000200U)
-#define TMRB_CNTER_CNT_10                              ((uint32_t)0x00000400U)
-#define TMRB_CNTER_CNT_11                              ((uint32_t)0x00000800U)
-#define TMRB_CNTER_CNT_12                              ((uint32_t)0x00001000U)
-#define TMRB_CNTER_CNT_13                              ((uint32_t)0x00002000U)
-#define TMRB_CNTER_CNT_14                              ((uint32_t)0x00004000U)
-#define TMRB_CNTER_CNT_15                              ((uint32_t)0x00008000U)
+#define TMRB_CNTER_CNT                                 ((uint16_t)0xFFFFU)
+#define TMRB_CNTER_CNT_0                               ((uint16_t)0x0001U)
+#define TMRB_CNTER_CNT_1                               ((uint16_t)0x0002U)
+#define TMRB_CNTER_CNT_2                               ((uint16_t)0x0004U)
+#define TMRB_CNTER_CNT_3                               ((uint16_t)0x0008U)
+#define TMRB_CNTER_CNT_4                               ((uint16_t)0x0010U)
+#define TMRB_CNTER_CNT_5                               ((uint16_t)0x0020U)
+#define TMRB_CNTER_CNT_6                               ((uint16_t)0x0040U)
+#define TMRB_CNTER_CNT_7                               ((uint16_t)0x0080U)
+#define TMRB_CNTER_CNT_8                               ((uint16_t)0x0100U)
+#define TMRB_CNTER_CNT_9                               ((uint16_t)0x0200U)
+#define TMRB_CNTER_CNT_10                              ((uint16_t)0x0400U)
+#define TMRB_CNTER_CNT_11                              ((uint16_t)0x0800U)
+#define TMRB_CNTER_CNT_12                              ((uint16_t)0x1000U)
+#define TMRB_CNTER_CNT_13                              ((uint16_t)0x2000U)
+#define TMRB_CNTER_CNT_14                              ((uint16_t)0x4000U)
+#define TMRB_CNTER_CNT_15                              ((uint16_t)0x8000U)
 
 /*  Bit definition for TMRB_PERAR register  */
 #define TMRB_PERAR_PER_POS                             (0U)
-#define TMRB_PERAR_PER                                 ((uint32_t)0x0000FFFFU)
-#define TMRB_PERAR_PER_0                               ((uint32_t)0x00000001U)
-#define TMRB_PERAR_PER_1                               ((uint32_t)0x00000002U)
-#define TMRB_PERAR_PER_2                               ((uint32_t)0x00000004U)
-#define TMRB_PERAR_PER_3                               ((uint32_t)0x00000008U)
-#define TMRB_PERAR_PER_4                               ((uint32_t)0x00000010U)
-#define TMRB_PERAR_PER_5                               ((uint32_t)0x00000020U)
-#define TMRB_PERAR_PER_6                               ((uint32_t)0x00000040U)
-#define TMRB_PERAR_PER_7                               ((uint32_t)0x00000080U)
-#define TMRB_PERAR_PER_8                               ((uint32_t)0x00000100U)
-#define TMRB_PERAR_PER_9                               ((uint32_t)0x00000200U)
-#define TMRB_PERAR_PER_10                              ((uint32_t)0x00000400U)
-#define TMRB_PERAR_PER_11                              ((uint32_t)0x00000800U)
-#define TMRB_PERAR_PER_12                              ((uint32_t)0x00001000U)
-#define TMRB_PERAR_PER_13                              ((uint32_t)0x00002000U)
-#define TMRB_PERAR_PER_14                              ((uint32_t)0x00004000U)
-#define TMRB_PERAR_PER_15                              ((uint32_t)0x00008000U)
+#define TMRB_PERAR_PER                                 ((uint16_t)0xFFFFU)
+#define TMRB_PERAR_PER_0                               ((uint16_t)0x0001U)
+#define TMRB_PERAR_PER_1                               ((uint16_t)0x0002U)
+#define TMRB_PERAR_PER_2                               ((uint16_t)0x0004U)
+#define TMRB_PERAR_PER_3                               ((uint16_t)0x0008U)
+#define TMRB_PERAR_PER_4                               ((uint16_t)0x0010U)
+#define TMRB_PERAR_PER_5                               ((uint16_t)0x0020U)
+#define TMRB_PERAR_PER_6                               ((uint16_t)0x0040U)
+#define TMRB_PERAR_PER_7                               ((uint16_t)0x0080U)
+#define TMRB_PERAR_PER_8                               ((uint16_t)0x0100U)
+#define TMRB_PERAR_PER_9                               ((uint16_t)0x0200U)
+#define TMRB_PERAR_PER_10                              ((uint16_t)0x0400U)
+#define TMRB_PERAR_PER_11                              ((uint16_t)0x0800U)
+#define TMRB_PERAR_PER_12                              ((uint16_t)0x1000U)
+#define TMRB_PERAR_PER_13                              ((uint16_t)0x2000U)
+#define TMRB_PERAR_PER_14                              ((uint16_t)0x4000U)
+#define TMRB_PERAR_PER_15                              ((uint16_t)0x8000U)
 
-/*  Bit definition for TMRB_CMPAR1 register  */
-#define TMRB_CMPAR1_CMP_POS                            (0U)
-#define TMRB_CMPAR1_CMP                                ((uint32_t)0x0000FFFFU)
-#define TMRB_CMPAR1_CMP_0                              ((uint32_t)0x00000001U)
-#define TMRB_CMPAR1_CMP_1                              ((uint32_t)0x00000002U)
-#define TMRB_CMPAR1_CMP_2                              ((uint32_t)0x00000004U)
-#define TMRB_CMPAR1_CMP_3                              ((uint32_t)0x00000008U)
-#define TMRB_CMPAR1_CMP_4                              ((uint32_t)0x00000010U)
-#define TMRB_CMPAR1_CMP_5                              ((uint32_t)0x00000020U)
-#define TMRB_CMPAR1_CMP_6                              ((uint32_t)0x00000040U)
-#define TMRB_CMPAR1_CMP_7                              ((uint32_t)0x00000080U)
-#define TMRB_CMPAR1_CMP_8                              ((uint32_t)0x00000100U)
-#define TMRB_CMPAR1_CMP_9                              ((uint32_t)0x00000200U)
-#define TMRB_CMPAR1_CMP_10                             ((uint32_t)0x00000400U)
-#define TMRB_CMPAR1_CMP_11                             ((uint32_t)0x00000800U)
-#define TMRB_CMPAR1_CMP_12                             ((uint32_t)0x00001000U)
-#define TMRB_CMPAR1_CMP_13                             ((uint32_t)0x00002000U)
-#define TMRB_CMPAR1_CMP_14                             ((uint32_t)0x00004000U)
-#define TMRB_CMPAR1_CMP_15                             ((uint32_t)0x00008000U)
-
-/*  Bit definition for TMRB_CMPAR2 register  */
-#define TMRB_CMPAR2_CMP_POS                            (0U)
-#define TMRB_CMPAR2_CMP                                ((uint32_t)0x0000FFFFU)
-#define TMRB_CMPAR2_CMP_0                              ((uint32_t)0x00000001U)
-#define TMRB_CMPAR2_CMP_1                              ((uint32_t)0x00000002U)
-#define TMRB_CMPAR2_CMP_2                              ((uint32_t)0x00000004U)
-#define TMRB_CMPAR2_CMP_3                              ((uint32_t)0x00000008U)
-#define TMRB_CMPAR2_CMP_4                              ((uint32_t)0x00000010U)
-#define TMRB_CMPAR2_CMP_5                              ((uint32_t)0x00000020U)
-#define TMRB_CMPAR2_CMP_6                              ((uint32_t)0x00000040U)
-#define TMRB_CMPAR2_CMP_7                              ((uint32_t)0x00000080U)
-#define TMRB_CMPAR2_CMP_8                              ((uint32_t)0x00000100U)
-#define TMRB_CMPAR2_CMP_9                              ((uint32_t)0x00000200U)
-#define TMRB_CMPAR2_CMP_10                             ((uint32_t)0x00000400U)
-#define TMRB_CMPAR2_CMP_11                             ((uint32_t)0x00000800U)
-#define TMRB_CMPAR2_CMP_12                             ((uint32_t)0x00001000U)
-#define TMRB_CMPAR2_CMP_13                             ((uint32_t)0x00002000U)
-#define TMRB_CMPAR2_CMP_14                             ((uint32_t)0x00004000U)
-#define TMRB_CMPAR2_CMP_15                             ((uint32_t)0x00008000U)
-
-/*  Bit definition for TMRB_CMPAR3 register  */
-#define TMRB_CMPAR3_CMP_POS                            (0U)
-#define TMRB_CMPAR3_CMP                                ((uint32_t)0x0000FFFFU)
-#define TMRB_CMPAR3_CMP_0                              ((uint32_t)0x00000001U)
-#define TMRB_CMPAR3_CMP_1                              ((uint32_t)0x00000002U)
-#define TMRB_CMPAR3_CMP_2                              ((uint32_t)0x00000004U)
-#define TMRB_CMPAR3_CMP_3                              ((uint32_t)0x00000008U)
-#define TMRB_CMPAR3_CMP_4                              ((uint32_t)0x00000010U)
-#define TMRB_CMPAR3_CMP_5                              ((uint32_t)0x00000020U)
-#define TMRB_CMPAR3_CMP_6                              ((uint32_t)0x00000040U)
-#define TMRB_CMPAR3_CMP_7                              ((uint32_t)0x00000080U)
-#define TMRB_CMPAR3_CMP_8                              ((uint32_t)0x00000100U)
-#define TMRB_CMPAR3_CMP_9                              ((uint32_t)0x00000200U)
-#define TMRB_CMPAR3_CMP_10                             ((uint32_t)0x00000400U)
-#define TMRB_CMPAR3_CMP_11                             ((uint32_t)0x00000800U)
-#define TMRB_CMPAR3_CMP_12                             ((uint32_t)0x00001000U)
-#define TMRB_CMPAR3_CMP_13                             ((uint32_t)0x00002000U)
-#define TMRB_CMPAR3_CMP_14                             ((uint32_t)0x00004000U)
-#define TMRB_CMPAR3_CMP_15                             ((uint32_t)0x00008000U)
-
-/*  Bit definition for TMRB_CMPAR4 register  */
-#define TMRB_CMPAR4_CMP_POS                            (0U)
-#define TMRB_CMPAR4_CMP                                ((uint32_t)0x0000FFFFU)
-#define TMRB_CMPAR4_CMP_0                              ((uint32_t)0x00000001U)
-#define TMRB_CMPAR4_CMP_1                              ((uint32_t)0x00000002U)
-#define TMRB_CMPAR4_CMP_2                              ((uint32_t)0x00000004U)
-#define TMRB_CMPAR4_CMP_3                              ((uint32_t)0x00000008U)
-#define TMRB_CMPAR4_CMP_4                              ((uint32_t)0x00000010U)
-#define TMRB_CMPAR4_CMP_5                              ((uint32_t)0x00000020U)
-#define TMRB_CMPAR4_CMP_6                              ((uint32_t)0x00000040U)
-#define TMRB_CMPAR4_CMP_7                              ((uint32_t)0x00000080U)
-#define TMRB_CMPAR4_CMP_8                              ((uint32_t)0x00000100U)
-#define TMRB_CMPAR4_CMP_9                              ((uint32_t)0x00000200U)
-#define TMRB_CMPAR4_CMP_10                             ((uint32_t)0x00000400U)
-#define TMRB_CMPAR4_CMP_11                             ((uint32_t)0x00000800U)
-#define TMRB_CMPAR4_CMP_12                             ((uint32_t)0x00001000U)
-#define TMRB_CMPAR4_CMP_13                             ((uint32_t)0x00002000U)
-#define TMRB_CMPAR4_CMP_14                             ((uint32_t)0x00004000U)
-#define TMRB_CMPAR4_CMP_15                             ((uint32_t)0x00008000U)
-
-/*  Bit definition for TMRB_CMPAR5 register  */
-#define TMRB_CMPAR5_CMP_POS                            (0U)
-#define TMRB_CMPAR5_CMP                                ((uint32_t)0x0000FFFFU)
-#define TMRB_CMPAR5_CMP_0                              ((uint32_t)0x00000001U)
-#define TMRB_CMPAR5_CMP_1                              ((uint32_t)0x00000002U)
-#define TMRB_CMPAR5_CMP_2                              ((uint32_t)0x00000004U)
-#define TMRB_CMPAR5_CMP_3                              ((uint32_t)0x00000008U)
-#define TMRB_CMPAR5_CMP_4                              ((uint32_t)0x00000010U)
-#define TMRB_CMPAR5_CMP_5                              ((uint32_t)0x00000020U)
-#define TMRB_CMPAR5_CMP_6                              ((uint32_t)0x00000040U)
-#define TMRB_CMPAR5_CMP_7                              ((uint32_t)0x00000080U)
-#define TMRB_CMPAR5_CMP_8                              ((uint32_t)0x00000100U)
-#define TMRB_CMPAR5_CMP_9                              ((uint32_t)0x00000200U)
-#define TMRB_CMPAR5_CMP_10                             ((uint32_t)0x00000400U)
-#define TMRB_CMPAR5_CMP_11                             ((uint32_t)0x00000800U)
-#define TMRB_CMPAR5_CMP_12                             ((uint32_t)0x00001000U)
-#define TMRB_CMPAR5_CMP_13                             ((uint32_t)0x00002000U)
-#define TMRB_CMPAR5_CMP_14                             ((uint32_t)0x00004000U)
-#define TMRB_CMPAR5_CMP_15                             ((uint32_t)0x00008000U)
-
-/*  Bit definition for TMRB_CMPAR6 register  */
-#define TMRB_CMPAR6_CMP_POS                            (0U)
-#define TMRB_CMPAR6_CMP                                ((uint32_t)0x0000FFFFU)
-#define TMRB_CMPAR6_CMP_0                              ((uint32_t)0x00000001U)
-#define TMRB_CMPAR6_CMP_1                              ((uint32_t)0x00000002U)
-#define TMRB_CMPAR6_CMP_2                              ((uint32_t)0x00000004U)
-#define TMRB_CMPAR6_CMP_3                              ((uint32_t)0x00000008U)
-#define TMRB_CMPAR6_CMP_4                              ((uint32_t)0x00000010U)
-#define TMRB_CMPAR6_CMP_5                              ((uint32_t)0x00000020U)
-#define TMRB_CMPAR6_CMP_6                              ((uint32_t)0x00000040U)
-#define TMRB_CMPAR6_CMP_7                              ((uint32_t)0x00000080U)
-#define TMRB_CMPAR6_CMP_8                              ((uint32_t)0x00000100U)
-#define TMRB_CMPAR6_CMP_9                              ((uint32_t)0x00000200U)
-#define TMRB_CMPAR6_CMP_10                             ((uint32_t)0x00000400U)
-#define TMRB_CMPAR6_CMP_11                             ((uint32_t)0x00000800U)
-#define TMRB_CMPAR6_CMP_12                             ((uint32_t)0x00001000U)
-#define TMRB_CMPAR6_CMP_13                             ((uint32_t)0x00002000U)
-#define TMRB_CMPAR6_CMP_14                             ((uint32_t)0x00004000U)
-#define TMRB_CMPAR6_CMP_15                             ((uint32_t)0x00008000U)
+/*  Bit definition for TMRB_CMPAR register  */
+#define TMRB_CMPAR_CMP_POS                             (0U)
+#define TMRB_CMPAR_CMP                                 ((uint16_t)0xFFFFU)
+#define TMRB_CMPAR_CMP_0                               ((uint16_t)0x0001U)
+#define TMRB_CMPAR_CMP_1                               ((uint16_t)0x0002U)
+#define TMRB_CMPAR_CMP_2                               ((uint16_t)0x0004U)
+#define TMRB_CMPAR_CMP_3                               ((uint16_t)0x0008U)
+#define TMRB_CMPAR_CMP_4                               ((uint16_t)0x0010U)
+#define TMRB_CMPAR_CMP_5                               ((uint16_t)0x0020U)
+#define TMRB_CMPAR_CMP_6                               ((uint16_t)0x0040U)
+#define TMRB_CMPAR_CMP_7                               ((uint16_t)0x0080U)
+#define TMRB_CMPAR_CMP_8                               ((uint16_t)0x0100U)
+#define TMRB_CMPAR_CMP_9                               ((uint16_t)0x0200U)
+#define TMRB_CMPAR_CMP_10                              ((uint16_t)0x0400U)
+#define TMRB_CMPAR_CMP_11                              ((uint16_t)0x0800U)
+#define TMRB_CMPAR_CMP_12                              ((uint16_t)0x1000U)
+#define TMRB_CMPAR_CMP_13                              ((uint16_t)0x2000U)
+#define TMRB_CMPAR_CMP_14                              ((uint16_t)0x4000U)
+#define TMRB_CMPAR_CMP_15                              ((uint16_t)0x8000U)
 
 /*  Bit definition for TMRB_BCSTR register  */
 #define TMRB_BCSTR_START_POS                           (0U)
-#define TMRB_BCSTR_START                               ((uint32_t)0x00000001U)
+#define TMRB_BCSTR_START                               ((uint16_t)0x0001U)
 #define TMRB_BCSTR_DIR_POS                             (1U)
-#define TMRB_BCSTR_DIR                                 ((uint32_t)0x00000002U)
+#define TMRB_BCSTR_DIR                                 ((uint16_t)0x0002U)
 #define TMRB_BCSTR_MODE_POS                            (2U)
-#define TMRB_BCSTR_MODE                                ((uint32_t)0x00000004U)
+#define TMRB_BCSTR_MODE                                ((uint16_t)0x0004U)
 #define TMRB_BCSTR_SYNST_POS                           (3U)
-#define TMRB_BCSTR_SYNST                               ((uint32_t)0x00000008U)
+#define TMRB_BCSTR_SYNST                               ((uint16_t)0x0008U)
 #define TMRB_BCSTR_CKDIV_POS                           (4U)
-#define TMRB_BCSTR_CKDIV                               ((uint32_t)0x000000F0U)
-#define TMRB_BCSTR_CKDIV_0                             ((uint32_t)0x00000010U)
-#define TMRB_BCSTR_CKDIV_1                             ((uint32_t)0x00000020U)
-#define TMRB_BCSTR_CKDIV_2                             ((uint32_t)0x00000040U)
-#define TMRB_BCSTR_CKDIV_3                             ((uint32_t)0x00000080U)
+#define TMRB_BCSTR_CKDIV                               ((uint16_t)0x00F0U)
+#define TMRB_BCSTR_CKDIV_0                             ((uint16_t)0x0010U)
+#define TMRB_BCSTR_CKDIV_1                             ((uint16_t)0x0020U)
+#define TMRB_BCSTR_CKDIV_2                             ((uint16_t)0x0040U)
+#define TMRB_BCSTR_CKDIV_3                             ((uint16_t)0x0080U)
 #define TMRB_BCSTR_OVSTP_POS                           (8U)
-#define TMRB_BCSTR_OVSTP                               ((uint32_t)0x00000100U)
+#define TMRB_BCSTR_OVSTP                               ((uint16_t)0x0100U)
 #define TMRB_BCSTR_INENOVF_POS                         (12U)
-#define TMRB_BCSTR_INENOVF                             ((uint32_t)0x00001000U)
+#define TMRB_BCSTR_INENOVF                             ((uint16_t)0x1000U)
 #define TMRB_BCSTR_INENUDF_POS                         (13U)
-#define TMRB_BCSTR_INENUDF                             ((uint32_t)0x00002000U)
+#define TMRB_BCSTR_INENUDF                             ((uint16_t)0x2000U)
 #define TMRB_BCSTR_OVFF_POS                            (14U)
-#define TMRB_BCSTR_OVFF                                ((uint32_t)0x00004000U)
+#define TMRB_BCSTR_OVFF                                ((uint16_t)0x4000U)
 #define TMRB_BCSTR_UDFF_POS                            (15U)
-#define TMRB_BCSTR_UDFF                                ((uint32_t)0x00008000U)
+#define TMRB_BCSTR_UDFF                                ((uint16_t)0x8000U)
 
 /*  Bit definition for TMRB_HCONR register  */
 #define TMRB_HCONR_HSTA0_POS                           (0U)
-#define TMRB_HCONR_HSTA0                               ((uint32_t)0x00000001U)
+#define TMRB_HCONR_HSTA0                               ((uint16_t)0x0001U)
 #define TMRB_HCONR_HSTA1_POS                           (1U)
-#define TMRB_HCONR_HSTA1                               ((uint32_t)0x00000002U)
+#define TMRB_HCONR_HSTA1                               ((uint16_t)0x0002U)
 #define TMRB_HCONR_HSTA2_POS                           (2U)
-#define TMRB_HCONR_HSTA2                               ((uint32_t)0x00000004U)
+#define TMRB_HCONR_HSTA2                               ((uint16_t)0x0004U)
 #define TMRB_HCONR_HSTP0_POS                           (4U)
-#define TMRB_HCONR_HSTP0                               ((uint32_t)0x00000010U)
+#define TMRB_HCONR_HSTP0                               ((uint16_t)0x0010U)
 #define TMRB_HCONR_HSTP1_POS                           (5U)
-#define TMRB_HCONR_HSTP1                               ((uint32_t)0x00000020U)
+#define TMRB_HCONR_HSTP1                               ((uint16_t)0x0020U)
 #define TMRB_HCONR_HSTP2_POS                           (6U)
-#define TMRB_HCONR_HSTP2                               ((uint32_t)0x00000040U)
+#define TMRB_HCONR_HSTP2                               ((uint16_t)0x0040U)
 #define TMRB_HCONR_HCLE0_POS                           (8U)
-#define TMRB_HCONR_HCLE0                               ((uint32_t)0x00000100U)
+#define TMRB_HCONR_HCLE0                               ((uint16_t)0x0100U)
 #define TMRB_HCONR_HCLE1_POS                           (9U)
-#define TMRB_HCONR_HCLE1                               ((uint32_t)0x00000200U)
+#define TMRB_HCONR_HCLE1                               ((uint16_t)0x0200U)
 #define TMRB_HCONR_HCLE2_POS                           (10U)
-#define TMRB_HCONR_HCLE2                               ((uint32_t)0x00000400U)
+#define TMRB_HCONR_HCLE2                               ((uint16_t)0x0400U)
 #define TMRB_HCONR_HCLE5_POS                           (14U)
-#define TMRB_HCONR_HCLE5                               ((uint32_t)0x00004000U)
+#define TMRB_HCONR_HCLE5                               ((uint16_t)0x4000U)
 #define TMRB_HCONR_HCLE6_POS                           (15U)
-#define TMRB_HCONR_HCLE6                               ((uint32_t)0x00008000U)
+#define TMRB_HCONR_HCLE6                               ((uint16_t)0x8000U)
 
 /*  Bit definition for TMRB_HCUPR register  */
 #define TMRB_HCUPR_HCUP8_POS                           (8U)
-#define TMRB_HCUPR_HCUP8                               ((uint32_t)0x00000100U)
+#define TMRB_HCUPR_HCUP8                               ((uint16_t)0x0100U)
 #define TMRB_HCUPR_HCUP9_POS                           (9U)
-#define TMRB_HCUPR_HCUP9                               ((uint32_t)0x00000200U)
+#define TMRB_HCUPR_HCUP9                               ((uint16_t)0x0200U)
 #define TMRB_HCUPR_HCUP10_POS                          (10U)
-#define TMRB_HCUPR_HCUP10                              ((uint32_t)0x00000400U)
+#define TMRB_HCUPR_HCUP10                              ((uint16_t)0x0400U)
 
 /*  Bit definition for TMRB_HCDOR register  */
 #define TMRB_HCDOR_HCDO8_POS                           (8U)
-#define TMRB_HCDOR_HCDO8                               ((uint32_t)0x00000100U)
+#define TMRB_HCDOR_HCDO8                               ((uint16_t)0x0100U)
 #define TMRB_HCDOR_HCDO9_POS                           (9U)
-#define TMRB_HCDOR_HCDO9                               ((uint32_t)0x00000200U)
+#define TMRB_HCDOR_HCDO9                               ((uint16_t)0x0200U)
 #define TMRB_HCDOR_HCDO10_POS                          (10U)
-#define TMRB_HCDOR_HCDO10                              ((uint32_t)0x00000400U)
+#define TMRB_HCDOR_HCDO10                              ((uint16_t)0x0400U)
 
 /*  Bit definition for TMRB_ICONR register  */
 #define TMRB_ICONR_ITEN1_POS                           (0U)
-#define TMRB_ICONR_ITEN1                               ((uint32_t)0x00000001U)
+#define TMRB_ICONR_ITEN1                               ((uint16_t)0x0001U)
 #define TMRB_ICONR_ITEN2_POS                           (1U)
-#define TMRB_ICONR_ITEN2                               ((uint32_t)0x00000002U)
+#define TMRB_ICONR_ITEN2                               ((uint16_t)0x0002U)
 #define TMRB_ICONR_ITEN3_POS                           (2U)
-#define TMRB_ICONR_ITEN3                               ((uint32_t)0x00000004U)
+#define TMRB_ICONR_ITEN3                               ((uint16_t)0x0004U)
 #define TMRB_ICONR_ITEN4_POS                           (3U)
-#define TMRB_ICONR_ITEN4                               ((uint32_t)0x00000008U)
+#define TMRB_ICONR_ITEN4                               ((uint16_t)0x0008U)
 #define TMRB_ICONR_ITEN5_POS                           (4U)
-#define TMRB_ICONR_ITEN5                               ((uint32_t)0x00000010U)
+#define TMRB_ICONR_ITEN5                               ((uint16_t)0x0010U)
 #define TMRB_ICONR_ITEN6_POS                           (5U)
-#define TMRB_ICONR_ITEN6                               ((uint32_t)0x00000020U)
+#define TMRB_ICONR_ITEN6                               ((uint16_t)0x0020U)
 
 /*  Bit definition for TMRB_ECONR register  */
 #define TMRB_ECONR_ETEN1_POS                           (0U)
-#define TMRB_ECONR_ETEN1                               ((uint32_t)0x00000001U)
+#define TMRB_ECONR_ETEN1                               ((uint16_t)0x0001U)
 #define TMRB_ECONR_ETEN2_POS                           (1U)
-#define TMRB_ECONR_ETEN2                               ((uint32_t)0x00000002U)
+#define TMRB_ECONR_ETEN2                               ((uint16_t)0x0002U)
 #define TMRB_ECONR_ETEN3_POS                           (2U)
-#define TMRB_ECONR_ETEN3                               ((uint32_t)0x00000004U)
+#define TMRB_ECONR_ETEN3                               ((uint16_t)0x0004U)
 #define TMRB_ECONR_ETEN4_POS                           (3U)
-#define TMRB_ECONR_ETEN4                               ((uint32_t)0x00000008U)
+#define TMRB_ECONR_ETEN4                               ((uint16_t)0x0008U)
 #define TMRB_ECONR_ETEN5_POS                           (4U)
-#define TMRB_ECONR_ETEN5                               ((uint32_t)0x00000010U)
+#define TMRB_ECONR_ETEN5                               ((uint16_t)0x0010U)
 #define TMRB_ECONR_ETEN6_POS                           (5U)
-#define TMRB_ECONR_ETEN6                               ((uint32_t)0x00000020U)
+#define TMRB_ECONR_ETEN6                               ((uint16_t)0x0020U)
 
 /*  Bit definition for TMRB_STFLR register  */
 #define TMRB_STFLR_CMPF1_POS                           (0U)
-#define TMRB_STFLR_CMPF1                               ((uint32_t)0x00000001U)
+#define TMRB_STFLR_CMPF1                               ((uint16_t)0x0001U)
 #define TMRB_STFLR_CMPF2_POS                           (1U)
-#define TMRB_STFLR_CMPF2                               ((uint32_t)0x00000002U)
+#define TMRB_STFLR_CMPF2                               ((uint16_t)0x0002U)
 #define TMRB_STFLR_CMPF3_POS                           (2U)
-#define TMRB_STFLR_CMPF3                               ((uint32_t)0x00000004U)
+#define TMRB_STFLR_CMPF3                               ((uint16_t)0x0004U)
 #define TMRB_STFLR_CMPF4_POS                           (3U)
-#define TMRB_STFLR_CMPF4                               ((uint32_t)0x00000008U)
+#define TMRB_STFLR_CMPF4                               ((uint16_t)0x0008U)
 #define TMRB_STFLR_CMPF5_POS                           (4U)
-#define TMRB_STFLR_CMPF5                               ((uint32_t)0x00000010U)
+#define TMRB_STFLR_CMPF5                               ((uint16_t)0x0010U)
 #define TMRB_STFLR_CMPF6_POS                           (5U)
-#define TMRB_STFLR_CMPF6                               ((uint32_t)0x00000020U)
+#define TMRB_STFLR_CMPF6                               ((uint16_t)0x0020U)
 
-/*  Bit definition for TMRB_BCONR1 register  */
-#define TMRB_BCONR1_BEN_POS                            (0U)
-#define TMRB_BCONR1_BEN                                ((uint32_t)0x00000001U)
-#define TMRB_BCONR1_BSE0_POS                           (1U)
-#define TMRB_BCONR1_BSE0                               ((uint32_t)0x00000002U)
-#define TMRB_BCONR1_BSE1_POS                           (2U)
-#define TMRB_BCONR1_BSE1                               ((uint32_t)0x00000004U)
+/*  Bit definition for TMRB_BCONR register  */
+#define TMRB_BCONR_BEN_POS                             (0U)
+#define TMRB_BCONR_BEN                                 ((uint16_t)0x0001U)
+#define TMRB_BCONR_BSE0_POS                            (1U)
+#define TMRB_BCONR_BSE0                                ((uint16_t)0x0002U)
+#define TMRB_BCONR_BSE1_POS                            (2U)
+#define TMRB_BCONR_BSE1                                ((uint16_t)0x0004U)
 
-/*  Bit definition for TMRB_BCONR2 register  */
-#define TMRB_BCONR2_BEN_POS                            (0U)
-#define TMRB_BCONR2_BEN                                ((uint32_t)0x00000001U)
-#define TMRB_BCONR2_BSE0_POS                           (1U)
-#define TMRB_BCONR2_BSE0                               ((uint32_t)0x00000002U)
-#define TMRB_BCONR2_BSE1_POS                           (2U)
-#define TMRB_BCONR2_BSE1                               ((uint32_t)0x00000004U)
+/*  Bit definition for TMRB_CCONR register  */
+#define TMRB_CCONR_CAPMDA_POS                          (0U)
+#define TMRB_CCONR_CAPMDA                              ((uint16_t)0x0001U)
+#define TMRB_CCONR_HICP0_POS                           (4U)
+#define TMRB_CCONR_HICP0                               ((uint16_t)0x0010U)
+#define TMRB_CCONR_HICP1_POS                           (5U)
+#define TMRB_CCONR_HICP1                               ((uint16_t)0x0020U)
+#define TMRB_CCONR_HICP2_POS                           (6U)
+#define TMRB_CCONR_HICP2                               ((uint16_t)0x0040U)
+#define TMRB_CCONR_NOFIENCP_POS                        (12U)
+#define TMRB_CCONR_NOFIENCP                            ((uint16_t)0x1000U)
+#define TMRB_CCONR_NOFICKCP_POS                        (13U)
+#define TMRB_CCONR_NOFICKCP                            ((uint16_t)0x6000U)
+#define TMRB_CCONR_NOFICKCP_0                          ((uint16_t)0x2000U)
+#define TMRB_CCONR_NOFICKCP_1                          ((uint16_t)0x4000U)
 
-/*  Bit definition for TMRB_BCONR3 register  */
-#define TMRB_BCONR3_BEN_POS                            (0U)
-#define TMRB_BCONR3_BEN                                ((uint32_t)0x00000001U)
-#define TMRB_BCONR3_BSE0_POS                           (1U)
-#define TMRB_BCONR3_BSE0                               ((uint32_t)0x00000002U)
-#define TMRB_BCONR3_BSE1_POS                           (2U)
-#define TMRB_BCONR3_BSE1                               ((uint32_t)0x00000004U)
-
-/*  Bit definition for TMRB_CCONR1 register  */
-#define TMRB_CCONR1_CAPMDA_POS                         (0U)
-#define TMRB_CCONR1_CAPMDA                             ((uint32_t)0x00000001U)
-#define TMRB_CCONR1_HICP0_POS                          (4U)
-#define TMRB_CCONR1_HICP0                              ((uint32_t)0x00000010U)
-#define TMRB_CCONR1_HICP1_POS                          (5U)
-#define TMRB_CCONR1_HICP1                              ((uint32_t)0x00000020U)
-#define TMRB_CCONR1_HICP2_POS                          (6U)
-#define TMRB_CCONR1_HICP2                              ((uint32_t)0x00000040U)
-#define TMRB_CCONR1_NOFIENCP_POS                       (12U)
-#define TMRB_CCONR1_NOFIENCP                           ((uint32_t)0x00001000U)
-#define TMRB_CCONR1_NOFICKCP_POS                       (13U)
-#define TMRB_CCONR1_NOFICKCP                           ((uint32_t)0x00006000U)
-#define TMRB_CCONR1_NOFICKCP_0                         ((uint32_t)0x00002000U)
-#define TMRB_CCONR1_NOFICKCP_1                         ((uint32_t)0x00004000U)
-
-/*  Bit definition for TMRB_CCONR2 register  */
-#define TMRB_CCONR2_CAPMDA_POS                         (0U)
-#define TMRB_CCONR2_CAPMDA                             ((uint32_t)0x00000001U)
-#define TMRB_CCONR2_HICP0_POS                          (4U)
-#define TMRB_CCONR2_HICP0                              ((uint32_t)0x00000010U)
-#define TMRB_CCONR2_HICP1_POS                          (5U)
-#define TMRB_CCONR2_HICP1                              ((uint32_t)0x00000020U)
-#define TMRB_CCONR2_HICP2_POS                          (6U)
-#define TMRB_CCONR2_HICP2                              ((uint32_t)0x00000040U)
-#define TMRB_CCONR2_NOFIENCP_POS                       (12U)
-#define TMRB_CCONR2_NOFIENCP                           ((uint32_t)0x00001000U)
-#define TMRB_CCONR2_NOFICKCP_POS                       (13U)
-#define TMRB_CCONR2_NOFICKCP                           ((uint32_t)0x00006000U)
-#define TMRB_CCONR2_NOFICKCP_0                         ((uint32_t)0x00002000U)
-#define TMRB_CCONR2_NOFICKCP_1                         ((uint32_t)0x00004000U)
-
-/*  Bit definition for TMRB_CCONR3 register  */
-#define TMRB_CCONR3_CAPMDA_POS                         (0U)
-#define TMRB_CCONR3_CAPMDA                             ((uint32_t)0x00000001U)
-#define TMRB_CCONR3_HICP0_POS                          (4U)
-#define TMRB_CCONR3_HICP0                              ((uint32_t)0x00000010U)
-#define TMRB_CCONR3_HICP1_POS                          (5U)
-#define TMRB_CCONR3_HICP1                              ((uint32_t)0x00000020U)
-#define TMRB_CCONR3_HICP2_POS                          (6U)
-#define TMRB_CCONR3_HICP2                              ((uint32_t)0x00000040U)
-#define TMRB_CCONR3_NOFIENCP_POS                       (12U)
-#define TMRB_CCONR3_NOFIENCP                           ((uint32_t)0x00001000U)
-#define TMRB_CCONR3_NOFICKCP_POS                       (13U)
-#define TMRB_CCONR3_NOFICKCP                           ((uint32_t)0x00006000U)
-#define TMRB_CCONR3_NOFICKCP_0                         ((uint32_t)0x00002000U)
-#define TMRB_CCONR3_NOFICKCP_1                         ((uint32_t)0x00004000U)
-
-/*  Bit definition for TMRB_CCONR4 register  */
-#define TMRB_CCONR4_CAPMDA_POS                         (0U)
-#define TMRB_CCONR4_CAPMDA                             ((uint32_t)0x00000001U)
-#define TMRB_CCONR4_HICP0_POS                          (4U)
-#define TMRB_CCONR4_HICP0                              ((uint32_t)0x00000010U)
-#define TMRB_CCONR4_HICP1_POS                          (5U)
-#define TMRB_CCONR4_HICP1                              ((uint32_t)0x00000020U)
-#define TMRB_CCONR4_HICP2_POS                          (6U)
-#define TMRB_CCONR4_HICP2                              ((uint32_t)0x00000040U)
-#define TMRB_CCONR4_NOFIENCP_POS                       (12U)
-#define TMRB_CCONR4_NOFIENCP                           ((uint32_t)0x00001000U)
-#define TMRB_CCONR4_NOFICKCP_POS                       (13U)
-#define TMRB_CCONR4_NOFICKCP                           ((uint32_t)0x00006000U)
-#define TMRB_CCONR4_NOFICKCP_0                         ((uint32_t)0x00002000U)
-#define TMRB_CCONR4_NOFICKCP_1                         ((uint32_t)0x00004000U)
-
-/*  Bit definition for TMRB_PCONR1 register  */
-#define TMRB_PCONR1_STAC_POS                           (0U)
-#define TMRB_PCONR1_STAC                               ((uint32_t)0x00000003U)
-#define TMRB_PCONR1_STAC_0                             ((uint32_t)0x00000001U)
-#define TMRB_PCONR1_STAC_1                             ((uint32_t)0x00000002U)
-#define TMRB_PCONR1_STPC_POS                           (2U)
-#define TMRB_PCONR1_STPC                               ((uint32_t)0x0000000CU)
-#define TMRB_PCONR1_STPC_0                             ((uint32_t)0x00000004U)
-#define TMRB_PCONR1_STPC_1                             ((uint32_t)0x00000008U)
-#define TMRB_PCONR1_CMPC_POS                           (4U)
-#define TMRB_PCONR1_CMPC                               ((uint32_t)0x00000030U)
-#define TMRB_PCONR1_CMPC_0                             ((uint32_t)0x00000010U)
-#define TMRB_PCONR1_CMPC_1                             ((uint32_t)0x00000020U)
-#define TMRB_PCONR1_PERC_POS                           (6U)
-#define TMRB_PCONR1_PERC                               ((uint32_t)0x000000C0U)
-#define TMRB_PCONR1_PERC_0                             ((uint32_t)0x00000040U)
-#define TMRB_PCONR1_PERC_1                             ((uint32_t)0x00000080U)
-#define TMRB_PCONR1_FORC_POS                           (8U)
-#define TMRB_PCONR1_FORC                               ((uint32_t)0x00000300U)
-#define TMRB_PCONR1_FORC_0                             ((uint32_t)0x00000100U)
-#define TMRB_PCONR1_FORC_1                             ((uint32_t)0x00000200U)
-#define TMRB_PCONR1_OUTEN_POS                          (12U)
-#define TMRB_PCONR1_OUTEN                              ((uint32_t)0x00001000U)
-
-/*  Bit definition for TMRB_PCONR2 register  */
-#define TMRB_PCONR2_STAC_POS                           (0U)
-#define TMRB_PCONR2_STAC                               ((uint32_t)0x00000003U)
-#define TMRB_PCONR2_STAC_0                             ((uint32_t)0x00000001U)
-#define TMRB_PCONR2_STAC_1                             ((uint32_t)0x00000002U)
-#define TMRB_PCONR2_STPC_POS                           (2U)
-#define TMRB_PCONR2_STPC                               ((uint32_t)0x0000000CU)
-#define TMRB_PCONR2_STPC_0                             ((uint32_t)0x00000004U)
-#define TMRB_PCONR2_STPC_1                             ((uint32_t)0x00000008U)
-#define TMRB_PCONR2_CMPC_POS                           (4U)
-#define TMRB_PCONR2_CMPC                               ((uint32_t)0x00000030U)
-#define TMRB_PCONR2_CMPC_0                             ((uint32_t)0x00000010U)
-#define TMRB_PCONR2_CMPC_1                             ((uint32_t)0x00000020U)
-#define TMRB_PCONR2_PERC_POS                           (6U)
-#define TMRB_PCONR2_PERC                               ((uint32_t)0x000000C0U)
-#define TMRB_PCONR2_PERC_0                             ((uint32_t)0x00000040U)
-#define TMRB_PCONR2_PERC_1                             ((uint32_t)0x00000080U)
-#define TMRB_PCONR2_FORC_POS                           (8U)
-#define TMRB_PCONR2_FORC                               ((uint32_t)0x00000300U)
-#define TMRB_PCONR2_FORC_0                             ((uint32_t)0x00000100U)
-#define TMRB_PCONR2_FORC_1                             ((uint32_t)0x00000200U)
-#define TMRB_PCONR2_OUTEN_POS                          (12U)
-#define TMRB_PCONR2_OUTEN                              ((uint32_t)0x00001000U)
-
-/*  Bit definition for TMRB_PCONR3 register  */
-#define TMRB_PCONR3_STAC_POS                           (0U)
-#define TMRB_PCONR3_STAC                               ((uint32_t)0x00000003U)
-#define TMRB_PCONR3_STAC_0                             ((uint32_t)0x00000001U)
-#define TMRB_PCONR3_STAC_1                             ((uint32_t)0x00000002U)
-#define TMRB_PCONR3_STPC_POS                           (2U)
-#define TMRB_PCONR3_STPC                               ((uint32_t)0x0000000CU)
-#define TMRB_PCONR3_STPC_0                             ((uint32_t)0x00000004U)
-#define TMRB_PCONR3_STPC_1                             ((uint32_t)0x00000008U)
-#define TMRB_PCONR3_CMPC_POS                           (4U)
-#define TMRB_PCONR3_CMPC                               ((uint32_t)0x00000030U)
-#define TMRB_PCONR3_CMPC_0                             ((uint32_t)0x00000010U)
-#define TMRB_PCONR3_CMPC_1                             ((uint32_t)0x00000020U)
-#define TMRB_PCONR3_PERC_POS                           (6U)
-#define TMRB_PCONR3_PERC                               ((uint32_t)0x000000C0U)
-#define TMRB_PCONR3_PERC_0                             ((uint32_t)0x00000040U)
-#define TMRB_PCONR3_PERC_1                             ((uint32_t)0x00000080U)
-#define TMRB_PCONR3_FORC_POS                           (8U)
-#define TMRB_PCONR3_FORC                               ((uint32_t)0x00000300U)
-#define TMRB_PCONR3_FORC_0                             ((uint32_t)0x00000100U)
-#define TMRB_PCONR3_FORC_1                             ((uint32_t)0x00000200U)
-#define TMRB_PCONR3_OUTEN_POS                          (12U)
-#define TMRB_PCONR3_OUTEN                              ((uint32_t)0x00001000U)
-
-/*  Bit definition for TMRB_PCONR4 register  */
-#define TMRB_PCONR4_STAC_POS                           (0U)
-#define TMRB_PCONR4_STAC                               ((uint32_t)0x00000003U)
-#define TMRB_PCONR4_STAC_0                             ((uint32_t)0x00000001U)
-#define TMRB_PCONR4_STAC_1                             ((uint32_t)0x00000002U)
-#define TMRB_PCONR4_STPC_POS                           (2U)
-#define TMRB_PCONR4_STPC                               ((uint32_t)0x0000000CU)
-#define TMRB_PCONR4_STPC_0                             ((uint32_t)0x00000004U)
-#define TMRB_PCONR4_STPC_1                             ((uint32_t)0x00000008U)
-#define TMRB_PCONR4_CMPC_POS                           (4U)
-#define TMRB_PCONR4_CMPC                               ((uint32_t)0x00000030U)
-#define TMRB_PCONR4_CMPC_0                             ((uint32_t)0x00000010U)
-#define TMRB_PCONR4_CMPC_1                             ((uint32_t)0x00000020U)
-#define TMRB_PCONR4_PERC_POS                           (6U)
-#define TMRB_PCONR4_PERC                               ((uint32_t)0x000000C0U)
-#define TMRB_PCONR4_PERC_0                             ((uint32_t)0x00000040U)
-#define TMRB_PCONR4_PERC_1                             ((uint32_t)0x00000080U)
-#define TMRB_PCONR4_FORC_POS                           (8U)
-#define TMRB_PCONR4_FORC                               ((uint32_t)0x00000300U)
-#define TMRB_PCONR4_FORC_0                             ((uint32_t)0x00000100U)
-#define TMRB_PCONR4_FORC_1                             ((uint32_t)0x00000200U)
-#define TMRB_PCONR4_OUTEN_POS                          (12U)
-#define TMRB_PCONR4_OUTEN                              ((uint32_t)0x00001000U)
+/*  Bit definition for TMRB_PCONR register  */
+#define TMRB_PCONR_STAC_POS                            (0U)
+#define TMRB_PCONR_STAC                                ((uint16_t)0x0003U)
+#define TMRB_PCONR_STAC_0                              ((uint16_t)0x0001U)
+#define TMRB_PCONR_STAC_1                              ((uint16_t)0x0002U)
+#define TMRB_PCONR_STPC_POS                            (2U)
+#define TMRB_PCONR_STPC                                ((uint16_t)0x000CU)
+#define TMRB_PCONR_STPC_0                              ((uint16_t)0x0004U)
+#define TMRB_PCONR_STPC_1                              ((uint16_t)0x0008U)
+#define TMRB_PCONR_CMPC_POS                            (4U)
+#define TMRB_PCONR_CMPC                                ((uint16_t)0x0030U)
+#define TMRB_PCONR_CMPC_0                              ((uint16_t)0x0010U)
+#define TMRB_PCONR_CMPC_1                              ((uint16_t)0x0020U)
+#define TMRB_PCONR_PERC_POS                            (6U)
+#define TMRB_PCONR_PERC                                ((uint16_t)0x00C0U)
+#define TMRB_PCONR_PERC_0                              ((uint16_t)0x0040U)
+#define TMRB_PCONR_PERC_1                              ((uint16_t)0x0080U)
+#define TMRB_PCONR_FORC_POS                            (8U)
+#define TMRB_PCONR_FORC                                ((uint16_t)0x0300U)
+#define TMRB_PCONR_FORC_0                              ((uint16_t)0x0100U)
+#define TMRB_PCONR_FORC_1                              ((uint16_t)0x0200U)
+#define TMRB_PCONR_OUTEN_POS                           (12U)
+#define TMRB_PCONR_OUTEN                               ((uint16_t)0x1000U)
 
 
 /*******************************************************************************
@@ -6774,7 +6508,8 @@ typedef struct
 typedef struct
 {
     __IO uint32_t CENB;
-    uint32_t RESERVED0[6];
+    __IO uint32_t CWDE;
+    uint32_t RESERVED0[5];
     __IO uint32_t CMON;
 } stc_cmp_mdr_bit_t;
 
@@ -11810,7 +11545,6 @@ typedef struct
     __IO uint32_t CNT13;
     __IO uint32_t CNT14;
     __IO uint32_t CNT15;
-    uint32_t RESERVED0[16];
 } stc_tmra_cnter_bit_t;
 
 typedef struct
@@ -11831,7 +11565,6 @@ typedef struct
     __IO uint32_t PER13;
     __IO uint32_t PER14;
     __IO uint32_t PER15;
-    uint32_t RESERVED0[16];
 } stc_tmra_perar_bit_t;
 
 typedef struct
@@ -11852,29 +11585,7 @@ typedef struct
     __IO uint32_t CMP13;
     __IO uint32_t CMP14;
     __IO uint32_t CMP15;
-    uint32_t RESERVED0[16];
-} stc_tmra_cmpar1_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CMP0;
-    __IO uint32_t CMP1;
-    __IO uint32_t CMP2;
-    __IO uint32_t CMP3;
-    __IO uint32_t CMP4;
-    __IO uint32_t CMP5;
-    __IO uint32_t CMP6;
-    __IO uint32_t CMP7;
-    __IO uint32_t CMP8;
-    __IO uint32_t CMP9;
-    __IO uint32_t CMP10;
-    __IO uint32_t CMP11;
-    __IO uint32_t CMP12;
-    __IO uint32_t CMP13;
-    __IO uint32_t CMP14;
-    __IO uint32_t CMP15;
-    uint32_t RESERVED0[16];
-} stc_tmra_cmpar2_bit_t;
+} stc_tmra_cmpar_bit_t;
 
 typedef struct
 {
@@ -11892,7 +11603,6 @@ typedef struct
     __IO uint32_t INENUDF;
     __IO uint32_t OVFF;
     __IO uint32_t UDFF;
-    uint32_t RESERVED1[16];
 } stc_tmra_bcstr_bit_t;
 
 typedef struct
@@ -11911,7 +11621,7 @@ typedef struct
     uint32_t RESERVED2[1];
     __IO uint32_t HCLE3;
     __IO uint32_t HCLE4;
-    uint32_t RESERVED3[18];
+    uint32_t RESERVED3[2];
 } stc_tmra_hconr_bit_t;
 
 typedef struct
@@ -11929,7 +11639,7 @@ typedef struct
     __IO uint32_t HCUP10;
     __IO uint32_t HCUP11;
     __IO uint32_t HCUP12;
-    uint32_t RESERVED0[19];
+    uint32_t RESERVED0[3];
 } stc_tmra_hcupr_bit_t;
 
 typedef struct
@@ -11947,21 +11657,21 @@ typedef struct
     __IO uint32_t HCDO10;
     __IO uint32_t HCDO11;
     __IO uint32_t HCDO12;
-    uint32_t RESERVED0[19];
+    uint32_t RESERVED0[3];
 } stc_tmra_hcdor_bit_t;
 
 typedef struct
 {
     __IO uint32_t ITEN1;
     __IO uint32_t ITEN2;
-    uint32_t RESERVED0[30];
+    uint32_t RESERVED0[14];
 } stc_tmra_iconr_bit_t;
 
 typedef struct
 {
     __IO uint32_t ETEN1;
     __IO uint32_t ETEN2;
-    uint32_t RESERVED0[30];
+    uint32_t RESERVED0[14];
 } stc_tmra_econr_bit_t;
 
 typedef struct
@@ -11977,14 +11687,14 @@ typedef struct
     __IO uint32_t NOFIENCB;
     __IO uint32_t NOFICKCB0;
     __IO uint32_t NOFICKCB1;
-    uint32_t RESERVED2[17];
+    uint32_t RESERVED2[1];
 } stc_tmra_fconr_bit_t;
 
 typedef struct
 {
     __IO uint32_t CMPF1;
     __IO uint32_t CMPF2;
-    uint32_t RESERVED0[30];
+    uint32_t RESERVED0[14];
 } stc_tmra_stflr_bit_t;
 
 typedef struct
@@ -11992,7 +11702,7 @@ typedef struct
     __IO uint32_t BEN;
     __IO uint32_t BSE0;
     __IO uint32_t BSE1;
-    uint32_t RESERVED0[29];
+    uint32_t RESERVED0[13];
 } stc_tmra_bconr_bit_t;
 
 typedef struct
@@ -12006,22 +11716,8 @@ typedef struct
     __IO uint32_t NOFIENCP;
     __IO uint32_t NOFICKCP0;
     __IO uint32_t NOFICKCP1;
-    uint32_t RESERVED2[17];
-} stc_tmra_cconr1_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CAPMD;
-    uint32_t RESERVED0[3];
-    __IO uint32_t HICP0;
-    __IO uint32_t HICP1;
-    __IO uint32_t HICP2;
-    uint32_t RESERVED1[5];
-    __IO uint32_t NOFIENCP;
-    __IO uint32_t NOFICKCP0;
-    __IO uint32_t NOFICKCP1;
-    uint32_t RESERVED2[17];
-} stc_tmra_cconr2_bit_t;
+    uint32_t RESERVED2[1];
+} stc_tmra_cconr_bit_t;
 
 typedef struct
 {
@@ -12037,25 +11733,8 @@ typedef struct
     __IO uint32_t FORC1;
     uint32_t RESERVED0[2];
     __IO uint32_t OUTEN;
-    uint32_t RESERVED1[19];
-} stc_tmra_pconr1_bit_t;
-
-typedef struct
-{
-    __IO uint32_t STAC0;
-    __IO uint32_t STAC1;
-    __IO uint32_t STPC0;
-    __IO uint32_t STPC1;
-    __IO uint32_t CMPC0;
-    __IO uint32_t CMPC1;
-    __IO uint32_t PERC0;
-    __IO uint32_t PERC1;
-    __IO uint32_t FORC0;
-    __IO uint32_t FORC1;
-    uint32_t RESERVED0[2];
-    __IO uint32_t OUTEN;
-    uint32_t RESERVED1[19];
-} stc_tmra_pconr2_bit_t;
+    uint32_t RESERVED1[3];
+} stc_tmra_pconr_bit_t;
 
 typedef struct
 {
@@ -12075,7 +11754,6 @@ typedef struct
     __IO uint32_t CNT13;
     __IO uint32_t CNT14;
     __IO uint32_t CNT15;
-    uint32_t RESERVED0[16];
 } stc_tmrb_cnter_bit_t;
 
 typedef struct
@@ -12096,7 +11774,6 @@ typedef struct
     __IO uint32_t PER13;
     __IO uint32_t PER14;
     __IO uint32_t PER15;
-    uint32_t RESERVED0[16];
 } stc_tmrb_perar_bit_t;
 
 typedef struct
@@ -12117,113 +11794,7 @@ typedef struct
     __IO uint32_t CMP13;
     __IO uint32_t CMP14;
     __IO uint32_t CMP15;
-    uint32_t RESERVED0[16];
-} stc_tmrb_cmpar1_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CMP0;
-    __IO uint32_t CMP1;
-    __IO uint32_t CMP2;
-    __IO uint32_t CMP3;
-    __IO uint32_t CMP4;
-    __IO uint32_t CMP5;
-    __IO uint32_t CMP6;
-    __IO uint32_t CMP7;
-    __IO uint32_t CMP8;
-    __IO uint32_t CMP9;
-    __IO uint32_t CMP10;
-    __IO uint32_t CMP11;
-    __IO uint32_t CMP12;
-    __IO uint32_t CMP13;
-    __IO uint32_t CMP14;
-    __IO uint32_t CMP15;
-    uint32_t RESERVED0[16];
-} stc_tmrb_cmpar2_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CMP0;
-    __IO uint32_t CMP1;
-    __IO uint32_t CMP2;
-    __IO uint32_t CMP3;
-    __IO uint32_t CMP4;
-    __IO uint32_t CMP5;
-    __IO uint32_t CMP6;
-    __IO uint32_t CMP7;
-    __IO uint32_t CMP8;
-    __IO uint32_t CMP9;
-    __IO uint32_t CMP10;
-    __IO uint32_t CMP11;
-    __IO uint32_t CMP12;
-    __IO uint32_t CMP13;
-    __IO uint32_t CMP14;
-    __IO uint32_t CMP15;
-    uint32_t RESERVED0[16];
-} stc_tmrb_cmpar3_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CMP0;
-    __IO uint32_t CMP1;
-    __IO uint32_t CMP2;
-    __IO uint32_t CMP3;
-    __IO uint32_t CMP4;
-    __IO uint32_t CMP5;
-    __IO uint32_t CMP6;
-    __IO uint32_t CMP7;
-    __IO uint32_t CMP8;
-    __IO uint32_t CMP9;
-    __IO uint32_t CMP10;
-    __IO uint32_t CMP11;
-    __IO uint32_t CMP12;
-    __IO uint32_t CMP13;
-    __IO uint32_t CMP14;
-    __IO uint32_t CMP15;
-    uint32_t RESERVED0[16];
-} stc_tmrb_cmpar4_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CMP0;
-    __IO uint32_t CMP1;
-    __IO uint32_t CMP2;
-    __IO uint32_t CMP3;
-    __IO uint32_t CMP4;
-    __IO uint32_t CMP5;
-    __IO uint32_t CMP6;
-    __IO uint32_t CMP7;
-    __IO uint32_t CMP8;
-    __IO uint32_t CMP9;
-    __IO uint32_t CMP10;
-    __IO uint32_t CMP11;
-    __IO uint32_t CMP12;
-    __IO uint32_t CMP13;
-    __IO uint32_t CMP14;
-    __IO uint32_t CMP15;
-    uint32_t RESERVED0[16];
-} stc_tmrb_cmpar5_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CMP0;
-    __IO uint32_t CMP1;
-    __IO uint32_t CMP2;
-    __IO uint32_t CMP3;
-    __IO uint32_t CMP4;
-    __IO uint32_t CMP5;
-    __IO uint32_t CMP6;
-    __IO uint32_t CMP7;
-    __IO uint32_t CMP8;
-    __IO uint32_t CMP9;
-    __IO uint32_t CMP10;
-    __IO uint32_t CMP11;
-    __IO uint32_t CMP12;
-    __IO uint32_t CMP13;
-    __IO uint32_t CMP14;
-    __IO uint32_t CMP15;
-    uint32_t RESERVED0[16];
-} stc_tmrb_cmpar6_bit_t;
+} stc_tmrb_cmpar_bit_t;
 
 typedef struct
 {
@@ -12241,7 +11812,6 @@ typedef struct
     __IO uint32_t INENUDF;
     __IO uint32_t OVFF;
     __IO uint32_t UDFF;
-    uint32_t RESERVED1[16];
 } stc_tmrb_bcstr_bit_t;
 
 typedef struct
@@ -12260,7 +11830,6 @@ typedef struct
     uint32_t RESERVED2[3];
     __IO uint32_t HCLE5;
     __IO uint32_t HCLE6;
-    uint32_t RESERVED3[16];
 } stc_tmrb_hconr_bit_t;
 
 typedef struct
@@ -12269,7 +11838,7 @@ typedef struct
     __IO uint32_t HCUP8;
     __IO uint32_t HCUP9;
     __IO uint32_t HCUP10;
-    uint32_t RESERVED1[21];
+    uint32_t RESERVED1[5];
 } stc_tmrb_hcupr_bit_t;
 
 typedef struct
@@ -12278,7 +11847,7 @@ typedef struct
     __IO uint32_t HCDO8;
     __IO uint32_t HCDO9;
     __IO uint32_t HCDO10;
-    uint32_t RESERVED1[21];
+    uint32_t RESERVED1[5];
 } stc_tmrb_hcdor_bit_t;
 
 typedef struct
@@ -12289,7 +11858,7 @@ typedef struct
     __IO uint32_t ITEN4;
     __IO uint32_t ITEN5;
     __IO uint32_t ITEN6;
-    uint32_t RESERVED0[26];
+    uint32_t RESERVED0[10];
 } stc_tmrb_iconr_bit_t;
 
 typedef struct
@@ -12300,7 +11869,7 @@ typedef struct
     __IO uint32_t ETEN4;
     __IO uint32_t ETEN5;
     __IO uint32_t ETEN6;
-    uint32_t RESERVED0[26];
+    uint32_t RESERVED0[10];
 } stc_tmrb_econr_bit_t;
 
 typedef struct
@@ -12311,7 +11880,7 @@ typedef struct
     __IO uint32_t CMPF4;
     __IO uint32_t CMPF5;
     __IO uint32_t CMPF6;
-    uint32_t RESERVED0[26];
+    uint32_t RESERVED0[10];
 } stc_tmrb_stflr_bit_t;
 
 typedef struct
@@ -12319,24 +11888,8 @@ typedef struct
     __IO uint32_t BEN;
     __IO uint32_t BSE0;
     __IO uint32_t BSE1;
-    uint32_t RESERVED0[29];
-} stc_tmrb_bconr1_bit_t;
-
-typedef struct
-{
-    __IO uint32_t BEN;
-    __IO uint32_t BSE0;
-    __IO uint32_t BSE1;
-    uint32_t RESERVED0[29];
-} stc_tmrb_bconr2_bit_t;
-
-typedef struct
-{
-    __IO uint32_t BEN;
-    __IO uint32_t BSE0;
-    __IO uint32_t BSE1;
-    uint32_t RESERVED0[29];
-} stc_tmrb_bconr3_bit_t;
+    uint32_t RESERVED0[13];
+} stc_tmrb_bconr_bit_t;
 
 typedef struct
 {
@@ -12349,50 +11902,8 @@ typedef struct
     __IO uint32_t NOFIENCP;
     __IO uint32_t NOFICKCP0;
     __IO uint32_t NOFICKCP1;
-    uint32_t RESERVED2[17];
-} stc_tmrb_cconr1_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CAPMDA;
-    uint32_t RESERVED0[3];
-    __IO uint32_t HICP0;
-    __IO uint32_t HICP1;
-    __IO uint32_t HICP2;
-    uint32_t RESERVED1[5];
-    __IO uint32_t NOFIENCP;
-    __IO uint32_t NOFICKCP0;
-    __IO uint32_t NOFICKCP1;
-    uint32_t RESERVED2[17];
-} stc_tmrb_cconr2_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CAPMDA;
-    uint32_t RESERVED0[3];
-    __IO uint32_t HICP0;
-    __IO uint32_t HICP1;
-    __IO uint32_t HICP2;
-    uint32_t RESERVED1[5];
-    __IO uint32_t NOFIENCP;
-    __IO uint32_t NOFICKCP0;
-    __IO uint32_t NOFICKCP1;
-    uint32_t RESERVED2[17];
-} stc_tmrb_cconr3_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CAPMDA;
-    uint32_t RESERVED0[3];
-    __IO uint32_t HICP0;
-    __IO uint32_t HICP1;
-    __IO uint32_t HICP2;
-    uint32_t RESERVED1[5];
-    __IO uint32_t NOFIENCP;
-    __IO uint32_t NOFICKCP0;
-    __IO uint32_t NOFICKCP1;
-    uint32_t RESERVED2[17];
-} stc_tmrb_cconr4_bit_t;
+    uint32_t RESERVED2[1];
+} stc_tmrb_cconr_bit_t;
 
 typedef struct
 {
@@ -12408,59 +11919,8 @@ typedef struct
     __IO uint32_t FORC1;
     uint32_t RESERVED0[2];
     __IO uint32_t OUTEN;
-    uint32_t RESERVED1[19];
-} stc_tmrb_pconr1_bit_t;
-
-typedef struct
-{
-    __IO uint32_t STAC0;
-    __IO uint32_t STAC1;
-    __IO uint32_t STPC0;
-    __IO uint32_t STPC1;
-    __IO uint32_t CMPC0;
-    __IO uint32_t CMPC1;
-    __IO uint32_t PERC0;
-    __IO uint32_t PERC1;
-    __IO uint32_t FORC0;
-    __IO uint32_t FORC1;
-    uint32_t RESERVED0[2];
-    __IO uint32_t OUTEN;
-    uint32_t RESERVED1[19];
-} stc_tmrb_pconr2_bit_t;
-
-typedef struct
-{
-    __IO uint32_t STAC0;
-    __IO uint32_t STAC1;
-    __IO uint32_t STPC0;
-    __IO uint32_t STPC1;
-    __IO uint32_t CMPC0;
-    __IO uint32_t CMPC1;
-    __IO uint32_t PERC0;
-    __IO uint32_t PERC1;
-    __IO uint32_t FORC0;
-    __IO uint32_t FORC1;
-    uint32_t RESERVED0[2];
-    __IO uint32_t OUTEN;
-    uint32_t RESERVED1[19];
-} stc_tmrb_pconr3_bit_t;
-
-typedef struct
-{
-    __IO uint32_t STAC0;
-    __IO uint32_t STAC1;
-    __IO uint32_t STPC0;
-    __IO uint32_t STPC1;
-    __IO uint32_t CMPC0;
-    __IO uint32_t CMPC1;
-    __IO uint32_t PERC0;
-    __IO uint32_t PERC1;
-    __IO uint32_t FORC0;
-    __IO uint32_t FORC1;
-    uint32_t RESERVED0[2];
-    __IO uint32_t OUTEN;
-    uint32_t RESERVED1[19];
-} stc_tmrb_pconr4_bit_t;
+    uint32_t RESERVED1[3];
+} stc_tmrb_pconr_bit_t;
 
 typedef struct
 {
@@ -13425,65 +12885,93 @@ typedef struct
 typedef struct
 {
     stc_tmra_cnter_bit_t                     CNTER_b;
+    uint32_t                                 RESERVED0[16];
     stc_tmra_perar_bit_t                     PERAR_b;
-    uint32_t                                 RESERVED0[448];
-    stc_tmra_cmpar1_bit_t                    CMPAR1_b;
-    stc_tmra_cmpar2_bit_t                    CMPAR2_b;
-    uint32_t                                 RESERVED1[448];
+    uint32_t                                 RESERVED1[464];
+    stc_tmra_cmpar_bit_t                     CMPAR1_b;
+    uint32_t                                 RESERVED2[16];
+    stc_tmra_cmpar_bit_t                     CMPAR2_b;
+    uint32_t                                 RESERVED3[464];
     stc_tmra_bcstr_bit_t                     BCSTR_b;
+    uint32_t                                 RESERVED4[16];
     stc_tmra_hconr_bit_t                     HCONR_b;
+    uint32_t                                 RESERVED5[16];
     stc_tmra_hcupr_bit_t                     HCUPR_b;
+    uint32_t                                 RESERVED6[16];
     stc_tmra_hcdor_bit_t                     HCDOR_b;
+    uint32_t                                 RESERVED7[16];
     stc_tmra_iconr_bit_t                     ICONR_b;
+    uint32_t                                 RESERVED8[16];
     stc_tmra_econr_bit_t                     ECONR_b;
+    uint32_t                                 RESERVED9[16];
     stc_tmra_fconr_bit_t                     FCONR_b;
+    uint32_t                                 RESERVED10[16];
     stc_tmra_stflr_bit_t                     STFLR_b;
-    uint32_t                                 RESERVED2[256];
+    uint32_t                                 RESERVED11[272];
     stc_tmra_bconr_bit_t                     BCONR_b;
-    uint32_t                                 RESERVED3[480];
-    stc_tmra_cconr1_bit_t                    CCONR1_b;
-    stc_tmra_cconr2_bit_t                    CCONR2_b;
-    uint32_t                                 RESERVED4[448];
-    stc_tmra_pconr1_bit_t                    PCONR1_b;
-    stc_tmra_pconr2_bit_t                    PCONR2_b;
+    uint32_t                                 RESERVED12[496];
+    stc_tmra_cconr_bit_t                     CCONR1_b;
+    uint32_t                                 RESERVED13[16];
+    stc_tmra_cconr_bit_t                     CCONR2_b;
+    uint32_t                                 RESERVED14[464];
+    stc_tmra_pconr_bit_t                     PCONR1_b;
+    uint32_t                                 RESERVED15[16];
+    stc_tmra_pconr_bit_t                     PCONR2_b;
 } bM4_TMRA_TypeDef;
 
 typedef struct
 {
     stc_tmrb_cnter_bit_t                     CNTER_b;
+    uint32_t                                 RESERVED0[16];
     stc_tmrb_perar_bit_t                     PERAR_b;
-    uint32_t                                 RESERVED0[448];
-    stc_tmrb_cmpar1_bit_t                    CMPAR1_b;
-    stc_tmrb_cmpar2_bit_t                    CMPAR2_b;
-    stc_tmrb_cmpar3_bit_t                    CMPAR3_b;
-    stc_tmrb_cmpar4_bit_t                    CMPAR4_b;
-    stc_tmrb_cmpar5_bit_t                    CMPAR5_b;
-    stc_tmrb_cmpar6_bit_t                    CMPAR6_b;
-    uint32_t                                 RESERVED1[320];
+    uint32_t                                 RESERVED1[464];
+    stc_tmrb_cmpar_bit_t                     CMPAR1_b;
+    uint32_t                                 RESERVED2[16];
+    stc_tmrb_cmpar_bit_t                     CMPAR2_b;
+    uint32_t                                 RESERVED3[16];
+    stc_tmrb_cmpar_bit_t                     CMPAR3_b;
+    uint32_t                                 RESERVED4[16];
+    stc_tmrb_cmpar_bit_t                     CMPAR4_b;
+    uint32_t                                 RESERVED5[16];
+    stc_tmrb_cmpar_bit_t                     CMPAR5_b;
+    uint32_t                                 RESERVED6[16];
+    stc_tmrb_cmpar_bit_t                     CMPAR6_b;
+    uint32_t                                 RESERVED7[336];
     stc_tmrb_bcstr_bit_t                     BCSTR_b;
+    uint32_t                                 RESERVED8[16];
     stc_tmrb_hconr_bit_t                     HCONR_b;
+    uint32_t                                 RESERVED9[16];
     stc_tmrb_hcupr_bit_t                     HCUPR_b;
+    uint32_t                                 RESERVED10[16];
     stc_tmrb_hcdor_bit_t                     HCDOR_b;
+    uint32_t                                 RESERVED11[16];
     stc_tmrb_iconr_bit_t                     ICONR_b;
+    uint32_t                                 RESERVED12[16];
     stc_tmrb_econr_bit_t                     ECONR_b;
-    uint32_t                                 RESERVED2[32];
+    uint32_t                                 RESERVED13[48];
     stc_tmrb_stflr_bit_t                     STFLR_b;
-    uint32_t                                 RESERVED3[256];
-    stc_tmrb_bconr1_bit_t                    BCONR1_b;
-    uint32_t                                 RESERVED4[32];
-    stc_tmrb_bconr2_bit_t                    BCONR2_b;
-    uint32_t                                 RESERVED5[32];
-    stc_tmrb_bconr3_bit_t                    BCONR3_b;
-    uint32_t                                 RESERVED6[352];
-    stc_tmrb_cconr1_bit_t                    CCONR1_b;
-    stc_tmrb_cconr2_bit_t                    CCONR2_b;
-    stc_tmrb_cconr3_bit_t                    CCONR3_b;
-    stc_tmrb_cconr4_bit_t                    CCONR4_b;
-    uint32_t                                 RESERVED7[384];
-    stc_tmrb_pconr1_bit_t                    PCONR1_b;
-    stc_tmrb_pconr2_bit_t                    PCONR2_b;
-    stc_tmrb_pconr3_bit_t                    PCONR3_b;
-    stc_tmrb_pconr4_bit_t                    PCONR4_b;
+    uint32_t                                 RESERVED14[272];
+    stc_tmrb_bconr_bit_t                     BCONR1_b;
+    uint32_t                                 RESERVED15[48];
+    stc_tmrb_bconr_bit_t                     BCONR2_b;
+    uint32_t                                 RESERVED16[48];
+    stc_tmrb_bconr_bit_t                     BCONR3_b;
+    uint32_t                                 RESERVED17[368];
+    stc_tmrb_cconr_bit_t                     CCONR1_b;
+    uint32_t                                 RESERVED18[16];
+    stc_tmrb_cconr_bit_t                     CCONR2_b;
+    uint32_t                                 RESERVED19[16];
+    stc_tmrb_cconr_bit_t                     CCONR3_b;
+    uint32_t                                 RESERVED20[16];
+    stc_tmrb_cconr_bit_t                     CCONR4_b;
+    uint32_t                                 RESERVED21[400];
+    stc_tmrb_pconr_bit_t                     PCONR1_b;
+    uint32_t                                 RESERVED22[16];
+    stc_tmrb_pconr_bit_t                     PCONR2_b;
+    uint32_t                                 RESERVED23[16];
+    stc_tmrb_pconr_bit_t                     PCONR3_b;
+    uint32_t                                 RESERVED24[16];
+    stc_tmrb_pconr_bit_t                     PCONR4_b;
 } bM4_TMRB_TypeDef;
 
 typedef struct
