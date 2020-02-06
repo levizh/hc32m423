@@ -148,8 +148,8 @@ int32_t main(void)
 
     /* Port function configuration */
     GPIO_SetFunc(CMP_VCOUT1_PORT, CMP_VCOUT1_PIN, GPIO_FUNC_1_VCOUT);
-    GPIO_SetFunc(IVCMP1_0_PORT, IVCMP1_0_PIN, GPIO_FUNC_1);
-    GPIO_SetFunc(IREF1_PORT, IREF1_PIN, GPIO_FUNC_1);
+    GPIO_SetFunc(IVCMP1_0_PORT, IVCMP1_0_PIN, FUNC_1_ANA);
+    GPIO_SetFunc(IREF1_PORT, IREF1_PIN, FUNC_1_ANA);
 #if 0
     //todo
     /* Port function configuration for Timerb PWM */

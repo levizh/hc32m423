@@ -123,9 +123,9 @@ int32_t main(void)
 
     /* Port function configuration */
     GPIO_SetFunc(CMP_VCOUT2_PORT, CMP_VCOUT2_PIN, GPIO_FUNC_1_VCOUT);
-    GPIO_SetFunc(IVCMP2_2_PORT, IVCMP2_2_PIN, GPIO_FUNC_1);
-    GPIO_SetFunc(IREF1_PORT, IREF1_PIN, GPIO_FUNC_1);
-    GPIO_SetFunc(IREF2_PORT, IREF2_PIN, GPIO_FUNC_1);
+    GPIO_SetFunc(IVCMP2_2_PORT, IVCMP2_2_PIN, FUNC_1_ANA);
+    GPIO_SetFunc(IREF1_PORT, IREF1_PIN, FUNC_1_ANA);
+    GPIO_SetFunc(IREF2_PORT, IREF2_PIN, FUNC_1_ANA);
 
     /* Enable internal Vref*/
     PWC_PwrMonStructInit(&stcPwcIni);
