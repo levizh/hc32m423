@@ -73,7 +73,7 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* LED_R Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_12)
+#define LED_R_PORT                      (GPIO_PORT_A)
 #define LED_R_PIN                       (GPIO_PIN_0)
 
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
@@ -81,8 +81,8 @@
 #define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
 
 /* LED_G Port/Pin definition */
-#define LED_G_PORT                      (GPIO_PORT_7)
-#define LED_G_PIN                       (GPIO_PIN_0)
+#define LED_G_PORT                      (GPIO_PORT_A)
+#define LED_G_PIN                       (GPIO_PIN_1)
 
 #define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
 #define LED_G_OFF()                     (GPIO_SetPins(LED_G_PORT, LED_G_PIN))

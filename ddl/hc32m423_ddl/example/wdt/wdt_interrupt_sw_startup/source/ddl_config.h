@@ -1,11 +1,11 @@
 /**
  *******************************************************************************
- * @file  icg/icg_lvd_reset_hw_startup/source/main.c
- * @brief Main program of ICG LVD Reset for the Device Driver Library.
+ * @file  wdt/wdt_interrupt_sw_startup/source/ddl_config.h
+ * @brief This file contains HC32 Series Device Driver Library usage management.
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-25       Yangjp          First version
+   2019-06-27       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -28,9 +28,9 @@
  * HDSC MAKES NO WARRANTY, EXPRESS OR IMPLIED, ARISING BY LAW OR OTHERWISE,
  * REGARDING THE SOFTWARE (INCLUDING ANY ACCOMPANYING WRITTEN MATERIALS),
  * ITS PERFORMANCE OR SUITABILITY FOR YOUR INTENDED USE, INCLUDING,
- * WITHOUT LIMITATION, THE IMPLIED WARRANTY OF MERCHANTABILITY, THE IMPLIED
  * WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE OR USE, AND THE IMPLIED
  * WARRANTY OF NONINFRINGEMENT.
+ * WITHOUT LIMITATION, THE IMPLIED WARRANTY OF MERCHANTABILITY, THE IMPLIED
  * HDSC SHALL HAVE NO LIABILITY (WHETHER IN CONTRACT, WARRANTY, TORT,
  * NEGLIGENCE OR OTHERWISE) FOR ANY DAMAGES WHATSOEVER (INCLUDING, WITHOUT
  * LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION,
@@ -49,121 +49,94 @@
  * at all times.
  *******************************************************************************
  */
+#ifndef __DDL_CONFIG_H__
+#define __DDL_CONFIG_H__
 
 /*******************************************************************************
  * Include files
  ******************************************************************************/
-#include "hc32_ddl.h"
 
-/**
- * @addtogroup HC32M423_DDL_Examples
- * @{
- */
-
-/**
- * @addtogroup ICG_LVD_Reset
- * @{
- */
-
-/*******************************************************************************
- * Local type definitions ('typedef')
- ******************************************************************************/
-
-/*******************************************************************************
- * Local pre-processor symbols/macros ('#define')
- ******************************************************************************/
-/* LED_R Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_12)
-#define LED_R_PIN                       (GPIO_PIN_0)
-
-#define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
-#define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
-#define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
-
-/* Reset source definition */
-#define RESET_SOURCE_LVD                (0U)
-#define RESET_SOURCE_OTHER              (1U)
-
-/*******************************************************************************
- * Global variable definitions (declared in header file with 'extern')
- ******************************************************************************/
-
-/*******************************************************************************
- * Local function prototypes ('static')
- ******************************************************************************/
-
-/*******************************************************************************
- * Local variable definitions ('static')
- ******************************************************************************/
-
-/*******************************************************************************
- * Function implementation - global ('extern') and local ('static')
- ******************************************************************************/
-/**
- * @brief  Main function of ICG LVD Reset.
- * @param  None
- * @retval int32_t return value, if needed
- */
-int32_t main(void)
+/* C binding of definitions if building with C++ compiler */
+#ifdef __cplusplus
+extern "C"
 {
-    /**
-     ***************************************************************************
-     @brief Modify hc32m423_icg.h file of define
-     @verbatim
-     #define ICG1_LVD_HARDWARE_START      ICG_FUNCTION_ON
+#endif
 
-     #define ICG1_LVD_DFS                 ICG_LVD_FILTER_CLOCK_LRC16
-     #define ICG1_LVD_DFDIS               ICG_LVD_DIGITAL_FILTER_DISABLE
-     #define ICG1_LVD_LVDLVL              ICG_LVD_BELOW2P96_OR_ABOVE3P02
-     #define ICG1_LVD_NMIS                ICG_LVD_INT_TYPE_INTR
-     #define ICG1_LVD_IRS                 ICG_LVD_TRIG_EVENT_RESET
-     #define ICG1_LVD_IRDIS               ICG_LVD_INT_AND_RESET_ENABLE
-     #define ICG1_LVD_LVDDIS              ICG_LVD_VOLTAGE_DETECTION_ENABLE
-     @endverbatim
-    ***************************************************************************
-    */
-    uint8_t u8ResetSource;
-    stc_gpio_init_t stcGpioInit;
-    stc_rmu_rstcause_t stcRmuRstCause;
+/*******************************************************************************
+ * Global type definitions ('typedef')
+ ******************************************************************************/
 
-    /* Configure structure initialization */
-    GPIO_StructInit(&stcGpioInit);
+/*******************************************************************************
+ * Global pre-processor symbols/macros ('#define')
+ ******************************************************************************/
+/* Chip module on-off define */
+#define DDL_ON                                      (1U)
+#define DDL_OFF                                     (0U)
 
-    /* LED Port/Pin initialization */
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
-    GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
-    LED_R_OFF();
+/**
+ * @brief This is the list of modules to be used in the Device Driver Library.
+ * Select the modules you need to use to DDL_ON.
+ *
+ * @note DDL_ICG_ENABLE must be turned on(DDL_ON) to ensure that the chip works
+ * properly.
+ *
+ * @note DDL_UTILITY_ENABLE must be turned on(DDL_ON) if using Device Driver
+ * Library.
+ */
+#define DDL_ICG_ENABLE                              (DDL_ON)
+#define DDL_UTILITY_ENABLE                          (DDL_ON)
+#define DDL_PRINT_ENABLE                            (DDL_OFF)
 
-    /* Get RMU information */
-    RMU_GetResetCause(&stcRmuRstCause);
-    if (Set == stcRmuRstCause.LvdRst)
-    {
-        u8ResetSource = RESET_SOURCE_LVD;
-        LED_R_ON();
-    }
-    else
-    {
-        u8ResetSource = RESET_SOURCE_OTHER;
-    }
-    RMU_ClrResetFlag();
+#define DDL_ADC_ENABLE                              (DDL_OFF)
+#define DDL_CLK_ENABLE                              (DDL_OFF)
+#define DDL_CMP_ENABLE                              (DDL_OFF)
+#define DDL_CRC_ENABLE                              (DDL_OFF)
+#define DDL_CTC_ENABLE                              (DDL_OFF)
+#define DDL_DMA_ENABLE                              (DDL_OFF)
+#define DDL_EFM_ENABLE                              (DDL_OFF)
+#define DDL_EKEY_ENABLE                             (DDL_OFF)
+#define DDL_EMB_ENABLE                              (DDL_OFF)
+#define DDL_EVENT_PORT_ENABLE                       (DDL_OFF)
+#define DDL_EXINT_NMI_ENABLE                        (DDL_ON)
+#define DDL_GPIO_ENABLE                             (DDL_ON)
+#define DDL_I2C_ENABLE                              (DDL_OFF)
+#define DDL_INTERRUPTS_ENABLE                       (DDL_ON)
+#define DDL_PWC_ENABLE                              (DDL_ON)
+#define DDL_RMU_ENABLE                              (DDL_OFF)
+#define DDL_SPI_ENABLE                              (DDL_OFF)
+#define DDL_SWDT_ENABLE                             (DDL_OFF)
+#define DDL_TIMER0_ENABLE                           (DDL_OFF)
+#define DDL_TIMER2_ENABLE                           (DDL_OFF)
+#define DDL_TIMER4_ENABLE                           (DDL_OFF)
+#define DDL_TIMERA_ENABLE                           (DDL_OFF)
+#define DDL_TIMERB_ENABLE                           (DDL_OFF)
+#define DDL_USART_ENABLE                            (DDL_OFF)
+#define DDL_WDT_ENABLE                              (DDL_ON)
 
-    while (1)
-    {
-        if (RESET_SOURCE_OTHER == u8ResetSource)
-        {
-            LED_R_TOGGLE();
-            DDL_Delay1ms(1000U);
-        }
-    }
+/* Midware module on-off define */
+#define MW_ON                                       (1U)
+#define MW_OFF                                      (0U)
+
+/**
+ * @brief This is the list of midware modules to be used.
+ * Select the modules you need to use to MW_ON.
+ */
+#define MW_LIN_ENABLE                               (MW_OFF)
+#define MW_W25QXX_ENABLE                            (MW_OFF)
+
+/*******************************************************************************
+ * Global variable definitions ('extern')
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Global function prototypes (definition in C source)
+ ******************************************************************************/
+
+#ifdef __cplusplus
 }
+#endif
 
-/**
- * @}
- */
-
-/**
- * @}
- */
+#endif /* __DDL_CONFIG_H__ */
 
 /*******************************************************************************
  * EOF (not truncated)

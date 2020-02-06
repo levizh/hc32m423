@@ -6,8 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-24       Yangjp          First version
-   2020-01-08       Wuze            Added GCC compiler support for the definition of u32ICG.
+   2020-02-03       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.

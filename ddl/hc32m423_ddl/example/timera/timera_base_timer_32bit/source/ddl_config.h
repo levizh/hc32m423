@@ -1,11 +1,11 @@
 /**
  *******************************************************************************
- * @file  swdt/swdt_reset_sw_startup/source/ddl_config.h
+ * @file  timera/timera_base_timer/source/ddl_config.h
  * @brief This file contains HC32 Series Device Driver Library usage management.
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-27       Yangjp          First version
+   2019-07-04       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -88,7 +88,7 @@ extern "C"
 #define DDL_PRINT_ENABLE                            (DDL_OFF)
 
 #define DDL_ADC_ENABLE                              (DDL_OFF)
-#define DDL_CLK_ENABLE                              (DDL_OFF)
+#define DDL_CLK_ENABLE                              (DDL_ON)
 #define DDL_CMP_ENABLE                              (DDL_OFF)
 #define DDL_CRC_ENABLE                              (DDL_OFF)
 #define DDL_CTC_ENABLE                              (DDL_OFF)
@@ -102,13 +102,13 @@ extern "C"
 #define DDL_I2C_ENABLE                              (DDL_OFF)
 #define DDL_INTERRUPTS_ENABLE                       (DDL_ON)
 #define DDL_PWC_ENABLE                              (DDL_OFF)
-#define DDL_RMU_ENABLE                              (DDL_ON)
+#define DDL_RMU_ENABLE                              (DDL_OFF)
 #define DDL_SPI_ENABLE                              (DDL_OFF)
-#define DDL_SWDT_ENABLE                             (DDL_ON)
+#define DDL_SWDT_ENABLE                             (DDL_OFF)
 #define DDL_TIMER0_ENABLE                           (DDL_OFF)
 #define DDL_TIMER2_ENABLE                           (DDL_OFF)
 #define DDL_TIMER4_ENABLE                           (DDL_OFF)
-#define DDL_TIMERA_ENABLE                           (DDL_OFF)
+#define DDL_TIMERA_ENABLE                           (DDL_ON)
 #define DDL_TIMERB_ENABLE                           (DDL_OFF)
 #define DDL_USART_ENABLE                            (DDL_OFF)
 

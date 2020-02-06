@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-01       Yangjp          First version
+   2020-02-05       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -95,6 +95,9 @@ typedef struct
 
     uint16_t u16CountDir;               /*!< Specifies the TimerA count direction.
                                              This parameter can be a value of @ref TIMERA_Count_Direction */
+
+    uint16_t u16SyncStart;              /*!< Specifies the TimerA synchronous start.
+                                             This parameter can be a value of @ref TIMERA_Sync_Start */
 
     uint16_t u16ClkDiv;                 /*!< Specifies the TimerA Count clock division.
                                              This parameter can be a value of @ref TIMERA_Clock_Division */
@@ -226,20 +229,31 @@ typedef enum
  */
 
 /**
+ * @defgroup TIMERA_Sync_Start TimerA Sync Start
+ * @note The bit is invalid in uint1 or unit3.
+ * @{
+ */
+#define TIMERA_SYNC_START_ENABLE                (TMRA_BCSTR_SYNST)
+#define TIMERA_SYNC_START_DISABLE               ((uint16_t)0x0000U)
+/**
+ * @}
+ */
+
+/**
  * @defgroup TIMERA_Clock_Division TimerA Clock Division
  * @{
  */
-#define TIMERA_CLKDIV_DIV1                      ((uint16_t)0x0000U)                                              /*!< HCLK      */
-#define TIMERA_CLKDIV_DIV2                      (TMRA_BCSTR_CKDIV_0)                                            /*!< HCLK/2    */
-#define TIMERA_CLKDIV_DIV4                      (TMRA_BCSTR_CKDIV_1)                                            /*!< HCLK/4    */
-#define TIMERA_CLKDIV_DIV8                      (TMRA_BCSTR_CKDIV_1 | TMRA_BCSTR_CKDIV_0)                       /*!< HCLK/8    */
-#define TIMERA_CLKDIV_DIV16                     (TMRA_BCSTR_CKDIV_2)                                            /*!< HCLK/16   */
-#define TIMERA_CLKDIV_DIV32                     (TMRA_BCSTR_CKDIV_2 | TMRA_BCSTR_CKDIV_0)                       /*!< HCLK/32   */
-#define TIMERA_CLKDIV_DIV64                     (TMRA_BCSTR_CKDIV_2 | TMRA_BCSTR_CKDIV_1)                       /*!< HCLK/64   */
-#define TIMERA_CLKDIV_DIV128                    (TMRA_BCSTR_CKDIV_2 | TMRA_BCSTR_CKDIV_1 | TMRA_BCSTR_CKDIV_0)  /*!< HCLK/128  */
-#define TIMERA_CLKDIV_DIV256                    (TMRA_BCSTR_CKDIV_3)                                            /*!< HCLK/256  */
-#define TIMERA_CLKDIV_DIV512                    (TMRA_BCSTR_CKDIV_3 | TMRA_BCSTR_CKDIV_0)                       /*!< HCLK/512  */
-#define TIMERA_CLKDIV_DIV1024                   (TMRA_BCSTR_CKDIV_3 | TMRA_BCSTR_CKDIV_1)                       /*!< HCLK/1024 */
+#define TIMERA_CLKDIV_DIV1                      ((uint16_t)0x0000U)                                             /*!< PCLK1      */
+#define TIMERA_CLKDIV_DIV2                      (TMRA_BCSTR_CKDIV_0)                                            /*!< PCLK1/2    */
+#define TIMERA_CLKDIV_DIV4                      (TMRA_BCSTR_CKDIV_1)                                            /*!< PCLK1/4    */
+#define TIMERA_CLKDIV_DIV8                      (TMRA_BCSTR_CKDIV_1 | TMRA_BCSTR_CKDIV_0)                       /*!< PCLK1/8    */
+#define TIMERA_CLKDIV_DIV16                     (TMRA_BCSTR_CKDIV_2)                                            /*!< PCLK1/16   */
+#define TIMERA_CLKDIV_DIV32                     (TMRA_BCSTR_CKDIV_2 | TMRA_BCSTR_CKDIV_0)                       /*!< PCLK1/32   */
+#define TIMERA_CLKDIV_DIV64                     (TMRA_BCSTR_CKDIV_2 | TMRA_BCSTR_CKDIV_1)                       /*!< PCLK1/64   */
+#define TIMERA_CLKDIV_DIV128                    (TMRA_BCSTR_CKDIV_2 | TMRA_BCSTR_CKDIV_1 | TMRA_BCSTR_CKDIV_0)  /*!< PCLK1/128  */
+#define TIMERA_CLKDIV_DIV256                    (TMRA_BCSTR_CKDIV_3)                                            /*!< PCLK1/256  */
+#define TIMERA_CLKDIV_DIV512                    (TMRA_BCSTR_CKDIV_3 | TMRA_BCSTR_CKDIV_0)                       /*!< PCLK1/512  */
+#define TIMERA_CLKDIV_DIV1024                   (TMRA_BCSTR_CKDIV_3 | TMRA_BCSTR_CKDIV_1)                       /*!< PCLK1/1024 */
 /**
  * @}
  */
@@ -256,7 +270,7 @@ typedef enum
 
 /**
  * @defgroup TIMERA_TRIG_Port_Filter_State TimerA TRIG Port Noise Filter State
- * @note TIMA_<t>_TRIG t is unit number,value is 1.
+ * @note TIMA_<t>_TRIG t is unit number,value is 1 to 4.
  * @{
  */
 #define TIMERA_TRIG_FILTER_ENABLE               (TMRA_FCONR_NOFIENTG)   /*!< Enable TIMA_<t>_TRIG Port noise filter function  */
@@ -269,17 +283,17 @@ typedef enum
  * @defgroup TIMERA_TRIG_Port_Filter_Clock_Division TimerA TRIG Port Noise Filter Clock Division
  * @{
  */
-#define TIMERA_TRIG_CLKDIV_DIV1                 ((uint16_t)0x0000U)     /*!< HCLK */
-#define TIMERA_TRIG_CLKDIV_DIV4                 (TMRA_FCONR_NOFICKTG_0) /*!< HCLK/4 */
-#define TIMERA_TRIG_CLKDIV_DIV16                (TMRA_FCONR_NOFICKTG_1) /*!< HCLK/16 */
-#define TIMERA_TRIG_CLKDIV_DIV64                (TMRA_FCONR_NOFICKTG)   /*!< HCLK/64 */
+#define TIMERA_TRIG_CLKDIV_DIV1                 ((uint16_t)0x0000U)     /*!< PCLK1 */
+#define TIMERA_TRIG_CLKDIV_DIV4                 (TMRA_FCONR_NOFICKTG_0) /*!< PCLK1/4 */
+#define TIMERA_TRIG_CLKDIV_DIV16                (TMRA_FCONR_NOFICKTG_1) /*!< PCLK1/16 */
+#define TIMERA_TRIG_CLKDIV_DIV64                (TMRA_FCONR_NOFICKTG)   /*!< PCLK1/64 */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_CLKA_Port_Filter_State TimerA CLKA Port Noise Filter State
- * @note TIMA_<t>_CLKA t is unit number,value is 1.
+ * @note TIMA_<t>_CLKA t is unit number,value is 1 to 4.
  * @{
  */
 #define TIMERA_CLKA_FILTER_ENABLE               (TMRA_FCONR_NOFIENCA)   /*!< Enable TIMA_<t>_CLKA Port noise filter function */
@@ -292,17 +306,17 @@ typedef enum
  * @defgroup TIMERA_CLKA_Port_Filter_Clock_Division TimerA CLKA Port Noise Filter Clock Division
  * @{
  */
-#define TIMERA_CLKA_CLKDIV_DIV1                 ((uint16_t)0x0000U)     /*!< HCLK */
-#define TIMERA_CLKA_CLKDIV_DIV4                 (TMRA_FCONR_NOFICKCA_0) /*!< HCLK/4 */
-#define TIMERA_CLKA_CLKDIV_DIV16                (TMRA_FCONR_NOFICKCA_1) /*!< HCLK/16 */
-#define TIMERA_CLKA_CLKDIV_DIV64                (TMRA_FCONR_NOFICKCA)   /*!< HCLK/64 */
+#define TIMERA_CLKA_CLKDIV_DIV1                 ((uint16_t)0x0000U)     /*!< PCLK1 */
+#define TIMERA_CLKA_CLKDIV_DIV4                 (TMRA_FCONR_NOFICKCA_0) /*!< PCLK1/4 */
+#define TIMERA_CLKA_CLKDIV_DIV16                (TMRA_FCONR_NOFICKCA_1) /*!< PCLK1/16 */
+#define TIMERA_CLKA_CLKDIV_DIV64                (TMRA_FCONR_NOFICKCA)   /*!< PCLK1/64 */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_CLKB_Port_Filter_State TimerA CLKB Port Noise Filter State
- * @note TIMA_<t>_CLKB t is unit number,value is 1.
+ * @note TIMA_<t>_CLKB t is unit number,value is 3 or 4.
  * @{
  */
 #define TIMERA_CLKB_FILTER_ENABLE               (TMRA_FCONR_NOFIENCB)   /*!< Enable TIMA_<t>_CLKB Port noise filter function */
@@ -315,10 +329,10 @@ typedef enum
  * @defgroup TIMERA_CLKB_Port_Filter_Clock_Division TimerA CLKB Port Noise Filter Clock Division
  * @{
  */
-#define TIMERA_CLKB_CLKDIV_DIV1                 ((uint16_t)0x0000U)     /*!< HCLK */
-#define TIMERA_CLKB_CLKDIV_DIV4                 (TMRA_FCONR_NOFICKCB_0) /*!< HCLK/4 */
-#define TIMERA_CLKB_CLKDIV_DIV16                (TMRA_FCONR_NOFICKCB_1) /*!< HCLK/16 */
-#define TIMERA_CLKB_CLKDIV_DIV64                (TMRA_FCONR_NOFICKCB)   /*!< HCLK/64 */
+#define TIMERA_CLKB_CLKDIV_DIV1                 ((uint16_t)0x0000U)     /*!< PCLK1 */
+#define TIMERA_CLKB_CLKDIV_DIV4                 (TMRA_FCONR_NOFICKCB_0) /*!< PCLK1/4 */
+#define TIMERA_CLKB_CLKDIV_DIV16                (TMRA_FCONR_NOFICKCB_1) /*!< PCLK1/16 */
+#define TIMERA_CLKB_CLKDIV_DIV64                (TMRA_FCONR_NOFICKCB)   /*!< PCLK1/64 */
 /**
  * @}
  */
@@ -361,7 +375,7 @@ typedef enum
  * @defgroup TIMERA_Function_Mode TimerA Function Mode
  * @{
  */
-#define TIMERA_INPUT_CAPTURE                    (TMRA_CCONR1_CAPMD)     /*!< Capture input function */
+#define TIMERA_INPUT_CAPTURE                    (TMRA_CCONR_CAPMD)      /*!< Capture input function */
 #define TIMERA_OUTPUT_COMPARE                   ((uint16_t)0x0000U)     /*!< Compare output function */
 /**
  * @}
@@ -369,12 +383,13 @@ typedef enum
 
 /**
  * @defgroup TIMERA_IC_Condition TimerA Input Capture Condition
- * @note TIMA_<t>_PWM<n> t is unit number,value is 1 and n is channel number of unit,range is 1-2.
+ * @note TIMA_<t>_PWM<n> t is unit number,n is channel number. 
+ * @note n is 1 when unit is 1 or 2, n is 1-2 when unit is 3 or 4.
  * @{
  */
-#define TIMERA_IC_PWM_RISING                    (TMRA_CCONR1_HICP0)     /*!< Capture triggered by rising edge on timer input TIMA_<t>_PWMn */
-#define TIMERA_IC_PWM_FALLING                   (TMRA_CCONR1_HICP1)     /*!< Capture triggered by falling edge on timer input TIMA_<t>_PWMn */
-#define TIMERA_IC_SPECIFY_EVT                   (TMRA_CCONR1_HICP2)     /*!< Capture triggered by the timer TMRA_HTSSR specified event */
+#define TIMERA_IC_PWM_RISING                    (TMRA_CCONR_HICP0)      /*!< Capture triggered by rising edge on timer input TIMA_<t>_PWMn */
+#define TIMERA_IC_PWM_FALLING                   (TMRA_CCONR_HICP1)      /*!< Capture triggered by falling edge on timer input TIMA_<t>_PWMn */
+#define TIMERA_IC_SPECIFY_EVT                   (TMRA_CCONR_HICP2)      /*!< Capture triggered by the timer TMRA1_HTSSR specified event */
 #define TIMERA_IC_INVALID                       ((uint16_t)0x0000U)     /*!< Don't occur capture action */
 /**
  * @}
@@ -382,10 +397,11 @@ typedef enum
 
 /**
  * @defgroup TIMERA_IC_PWM_Port_Filter_State TimerA Input Capture PWM Port Filter State
- * @note TIMA_<t>_PWM<n> t is unit number,value is 1 and n is channel number of unit,range is 1-2.
+ * @note TIMA_<t>_PWM<n> t is unit number,n is channel number. 
+ * @note n is 1 when unit is 1 or 2, n is 1-2 when unit is 3 or 4.
  * @{
  */
-#define TIMERA_IC_PWM_FILTER_ENABLE             (TMRA_CCONR1_NOFIENCP)  /*!< Enable TIMA_<t>_PWMn input capture noise filter function */
+#define TIMERA_IC_PWM_FILTER_ENABLE             (TMRA_CCONR_NOFIENCP)   /*!< Enable TIMA_<t>_PWMn input capture noise filter function */
 #define TIMERA_IC_PWM_FILTER_DISABLE            ((uint16_t)0x0000U)     /*!< Disable TIMA_<t>_PWMn input capture noise filter function */
 /**
  * @}
@@ -393,82 +409,86 @@ typedef enum
 
 /**
  * @defgroup TIMERA_IC_PWM_Port_Filter_Clock_Division TimerA Input Capture PWM Port Filter Clock Division
- * @note TIMA_<t>_PWM<n> t is unit number,value is 1 and n is channel number of unit,range is 1-2.
  * @{
  */
-#define TIMERA_IC_PWM_CLKDIV_DIV1               ((uint16_t)0x0000U)         /*!< HCLK */
-#define TIMERA_IC_PWM_CLKDIV_DIV4               (TMRA_CCONR1_NOFICKCP_0)    /*!< HCLK/4 */
-#define TIMERA_IC_PWM_CLKDIV_DIV16              (TMRA_CCONR1_NOFICKCP_1)    /*!< HCLK/16 */
-#define TIMERA_IC_PWM_CLKDIV_DIV64              (TMRA_CCONR1_NOFICKCP)      /*!< HCLK/64 */
+#define TIMERA_IC_PWM_CLKDIV_DIV1               ((uint16_t)0x0000U)         /*!< PCLK1 */
+#define TIMERA_IC_PWM_CLKDIV_DIV4               (TMRA_CCONR_NOFICKCP_0)     /*!< PCLK1/4 */
+#define TIMERA_IC_PWM_CLKDIV_DIV16              (TMRA_CCONR_NOFICKCP_1)     /*!< PCLK1/16 */
+#define TIMERA_IC_PWM_CLKDIV_DIV64              (TMRA_CCONR_NOFICKCP)       /*!< PCLK1/64 */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_OC_Start_Count_Output_Polarity TimerA Output Compare Start Count Output Polarity
- * @note TIMA_<t>_PWM<n> t is unit number,value is 1 and n is channel number of unit,range is 1-2.
+ * @note TIMA_<t>_PWM<n> t is unit number,n is channel number. 
+ * @note n is 1 when unit is 1 or 2, n is 1-2 when unit is 3 or 4.
  * @{
  */
 #define TIMERA_OC_STARTCOUNT_OUTPUT_LOW         ((uint16_t)0x0000U)     /*!< TIM_<t>_PWMn output low level when TimerA start count */
-#define TIMERA_OC_STARTCOUNT_OUTPUT_HIGH        (TMRA_PCONR1_STAC_0)    /*!< TIM_<t>_PWMn output high level when TimerA start count */
-#define TIMERA_OC_STARTCOUNT_OUTPUT_HOLD        (TMRA_PCONR1_STAC_1)    /*!< TIM_<t>_PWMn output hold level when TimerA start count */
+#define TIMERA_OC_STARTCOUNT_OUTPUT_HIGH        (TMRA_PCONR_STAC_0)    /*!< TIM_<t>_PWMn output high level when TimerA start count */
+#define TIMERA_OC_STARTCOUNT_OUTPUT_HOLD        (TMRA_PCONR_STAC_1)    /*!< TIM_<t>_PWMn output hold level when TimerA start count */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_OC_Stop_Count_Output_Polarity TimerA Output Compare Stop Count Output Polarity
- * @note TIMA_<t>_PWM<n> t is unit number,value is 1 and n is channel number of unit,range is 1-2.
+ * @note TIMA_<t>_PWM<n> t is unit number,n is channel number. 
+ * @note n is 1 when unit is 1 or 2, n is 1-2 when unit is 3 or 4.
  * @{
  */
 #define TIMERA_OC_STOPCOUNT_OUTPUT_LOW          ((uint16_t)0x0000U)     /*!< TIM_<t>_PWMn output low level when TimerA stop count */
-#define TIMERA_OC_STOPCOUNT_OUTPUT_HIGH         (TMRA_PCONR1_STPC_0)    /*!< TIM_<t>_PWMn output high level when TimerA stop count */
-#define TIMERA_OC_STOPCOUNT_OUTPUT_HOLD         (TMRA_PCONR1_STPC_1)    /*!< TIM_<t>_PWMn output hold level when TimerA stop count */
+#define TIMERA_OC_STOPCOUNT_OUTPUT_HIGH         (TMRA_PCONR_STPC_0)    /*!< TIM_<t>_PWMn output high level when TimerA stop count */
+#define TIMERA_OC_STOPCOUNT_OUTPUT_HOLD         (TMRA_PCONR_STPC_1)    /*!< TIM_<t>_PWMn output hold level when TimerA stop count */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_OC_Compare_Match_Output_Polarity TimerA Output Compare Match Output Polarity
- * @note TIMA_<t>_PWM<n> t is unit number,value is 1 and n is channel number of unit,range is 1-2.
+ * @note TIMA_<t>_PWM<n> t is unit number,n is channel number. 
+ * @note n is 1 when unit is 1 or 2, n is 1-2 when unit is 3 or 4.
  * @{
  */
 #define TIMERA_OC_CMPMATCH_OUTPUT_LOW           ((uint16_t)0x0000U)     /*!< TIM_<t>_PWMn output low level when TimerA compare match */
-#define TIMERA_OC_CMPMATCH_OUTPUT_HIGH          (TMRA_PCONR1_CMPC_0)    /*!< TIM_<t>_PWMn output high level when TimerA compare match */
-#define TIMERA_OC_CMPMATCH_OUTPUT_HOLD          (TMRA_PCONR1_CMPC_1)    /*!< TIM_<t>_PWMn output hold level when TimerA compare match */
-#define TIMERA_OC_CMPMATCH_OUTPUT_INVERTED      (TMRA_PCONR1_CMPC)      /*!< TIM_<t>_PWMn output inverted level when TimerA compare match */
+#define TIMERA_OC_CMPMATCH_OUTPUT_HIGH          (TMRA_PCONR_CMPC_0)    /*!< TIM_<t>_PWMn output high level when TimerA compare match */
+#define TIMERA_OC_CMPMATCH_OUTPUT_HOLD          (TMRA_PCONR_CMPC_1)    /*!< TIM_<t>_PWMn output hold level when TimerA compare match */
+#define TIMERA_OC_CMPMATCH_OUTPUT_INVERTED      (TMRA_PCONR_CMPC)      /*!< TIM_<t>_PWMn output inverted level when TimerA compare match */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_OC_Period_Match_Output_Polarity TimerA Output Compare Period Match Output Polarity
- * @note TIMA_<t>_PWM<n> t is unit number,value is 1 and n is channel number of unit,range is 1-2.
+ * @note TIMA_<t>_PWM<n> t is unit number,n is channel number. 
+ * @note n is 1 when unit is 1 or 2, n is 1-2 when unit is 3 or 4.
  * @{
  */
 #define TIMERA_OC_PERIODMATCH_OUTPUT_LOW        ((uint16_t)0x0000U)     /*!< TIM_<t>_PWMn output low level when TimerA period match */
-#define TIMERA_OC_PERIODMATCH_OUTPUT_HIGH       (TMRA_PCONR1_PERC_0)    /*!< TIM_<t>_PWMn output high level when TimerA period match */
-#define TIMERA_OC_PERIODMATCH_OUTPUT_HOLD       (TMRA_PCONR1_PERC_1)    /*!< TIM_<t>_PWMn output hold level when TimerA period match */
-#define TIMERA_OC_PERIODMATCH_OUTPUT_INVERTED   (TMRA_PCONR1_PERC)      /*!< TIM_<t>_PWMn output inverted level when TimerA period match */
+#define TIMERA_OC_PERIODMATCH_OUTPUT_HIGH       (TMRA_PCONR_PERC_0)    /*!< TIM_<t>_PWMn output high level when TimerA period match */
+#define TIMERA_OC_PERIODMATCH_OUTPUT_HOLD       (TMRA_PCONR_PERC_1)    /*!< TIM_<t>_PWMn output hold level when TimerA period match */
+#define TIMERA_OC_PERIODMATCH_OUTPUT_INVERTED   (TMRA_PCONR_PERC)      /*!< TIM_<t>_PWMn output inverted level when TimerA period match */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_OC_Port_Output_State TimerA Output Compare Force Output Polarity
- * @note TIMA_<t>_PWM<n> t is unit number,value is 1 and n is channel number of unit,range is 1-2.
+ * @note TIMA_<t>_PWM<n> t is unit number,n is channel number. 
+ * @note n is 1 when unit is 1 or 2, n is 1-2 when unit is 3 or 4.
  * @{
  */
 #define TIMERA_OC_FORCE_OUTPUT_INVALID          ((uint16_t)0x0000U)     /*!< Invalid */
-#define TIMERA_OC_FORCE_OUTPUT_LOW              (TMRA_PCONR1_FORC_1)    /*!< Force TIM_<t>_PWMn force output low level */
-#define TIMERA_OC_FORCE_OUTPUT_HIGH             (TMRA_PCONR1_FORC)      /*!< Force TIM_<t>_PWMn force output high level */
+#define TIMERA_OC_FORCE_OUTPUT_LOW              (TMRA_PCONR_FORC_1)    /*!< Force TIM_<t>_PWMn force output low level */
+#define TIMERA_OC_FORCE_OUTPUT_HIGH             (TMRA_PCONR_FORC)      /*!< Force TIM_<t>_PWMn force output high level */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_OC_Cache_State TimerA Output Compare Cache State
- * @note TIMA_<t>_PWM<n> t is unit number,value is 1 and Only n=1 is valid.
+ * @note TIMA_<t>_PWM<n> t is unit number,value is 3 or 4 and Only n=1 is valid.
  * @{
  */
 #define TIMERA_OC_CACHE_ENABLE                  (TMRA_BCONR_BEN)        /*!< Enable Output Compare Cache function */
@@ -479,7 +499,6 @@ typedef enum
 
 /**
  * @defgroup TIMERA_OC_Cache_Transmit_Condition TimerA Compare Cache Transmit Condition
- * @note TIMA_<t>_PWM<n> t is unit number,value is 1 and n is channel number of unit,range is 1-2.
  * @{
  */
 #define TIMERA_OC_CACHE_TRANSMIT_CREST          (TMRA_BCONR_BSE0)       /*!< In Triangular wave crest transmit cache value */
@@ -491,46 +510,51 @@ typedef enum
 
 /**
  * @defgroup TIMERA_Hardware_Start_Count_Condition TimerA Hardware Start Count Condition
- * @note TIMA_<t>_TRIG t is unit number,value is 1.
+ * @note TIMA_<t>_TRIG t is unit number,value is 1 to 4.
  * @{
  */
 #define TIMERA_HWSTART_INVALID                  ((uint16_t)0x0000U)     /*!< Hardware start is invalid */
 #define TIMERA_HWSTART_TRIG_RISING              (TMRA_HCONR_HSTA0)      /*!< Hardware start by rising edge on timer input TIMA_<t>_TRIG */
 #define TIMERA_HWSTART_TRIG_FALLING             (TMRA_HCONR_HSTA1)      /*!< Hardware start by falling edge on timer input TIMA_<t>_TRIG */
-#define TIMERA_HWSTART_SPECIFY_EVT              (TMRA_HCONR_HSTA2)      /*!< Hardware start by the timer TMRA_HTSSR specified event */
+#define TIMERA_HWSTART_SPECIFY_EVT              (TMRA_HCONR_HSTA2)      /*!< Hardware start by the timer TMRA0_HTSSR specified event */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_Hardware_Stop_Count_Condition TimerA Hardware Stop Count Condition
- * @note TIMA_<t>_TRIG t is unit number,value is 1.
+ * @note TIMA_<t>_TRIG t is unit number,value is 1 to 4.
  * @{
  */
 #define TIMERA_HWSTOP_INVALID                   ((uint16_t)0x0000U)     /*!< Hardware stop is invalid */
 #define TIMERA_HWSTOP_TRIG_RISING               (TMRA_HCONR_HSTP0)      /*!< Hardware stop by rising edge on timer input TIMA_<t>_TRIG */
 #define TIMERA_HWSTOP_TRIG_FALLING              (TMRA_HCONR_HSTP1)      /*!< Hardware stop by falling edge on timer input TIMA_<t>_TRIG */
-#define TIMERA_HWSTOP_SPECIFY_EVT               (TMRA_HCONR_HSTP2)      /*!< Hardware stop by the timer TMRA_HTSSR specified event */
+#define TIMERA_HWSTOP_SPECIFY_EVT               (TMRA_HCONR_HSTP2)      /*!< Hardware stop by the timer TMRA0_HTSSR specified event */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_Hardware_Clear_Count_Condition TimerA Hardware Clear Count Condition
- * @note TIMA_<t>_TRIG t is unit number,value is 1.
+ * @note TIMA_<t>_TRIG t is unit number,value is 1 to 4.
+ * @note n is 2 or 4 when m is 1 or 3, n is 1 or 3 when m is 2 or 4.
  * @{
  */
 #define TIMERA_HWCLEAR_INVALID                  ((uint16_t)0x0000U)     /*!< Hardware clear is invalid */
 #define TIMERA_HWCLEAR_TRIG_RISING              (TMRA_HCONR_HCLE0)      /*!< Hardware clear count by rising edge on timer input TIMA_<t>_TRIG */
 #define TIMERA_HWCLEAR_TRIG_FALLING             (TMRA_HCONR_HCLE1)      /*!< Hardware clear count by falling edge on timer input TIMA_<t>_TRIG */
-#define TIMERA_HWCLEAR_SPECIFY_EVT              (TMRA_HCONR_HCLE2)      /*!< Hardware clear count by the timer TMRA_HTSSR specified event */
+#define TIMERA_HWCLEAR_SPECIFY_EVT              (TMRA_HCONR_HCLE2)      /*!< Hardware clear count by the timer TMRA0_HTSSR specified event */
+#define TIMERA_HWCLEAR_UNIT_N_TRIG_RISING       (TMRA_HCONR_HCLE3)      /*!< When this unit is m, the TIMA_<t>_TRIG input of unit n is rising edge to trigger the hardware clear count */
+#define TIMERA_HWCLEAR_UNIT_N_TRIG_FALLING      (TMRA_HCONR_HCLE4)      /*!< When this unit is m, the TIMA_<t>_TRIG input of unit n is falling edge to trigger the hardware clear count */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_Hardware_Count_Up_Condition TimerA Hardware Count Up Condition
- * @note TIMA_<t>_TRIG or TIMA_<t>_CLKA or TIMA_<t>_CLKB t is unit number,value is 1.
+ * @note TIMA_<t>_TRIG t is unit number,value is 1 to 4. 
+ * @note TIMA_<t>_CLKA or TIMA_<t>_CLKB t is unit number,value is 3 to 4.
+ * @note n is 2 or 4 when m is 1 or 3, n is 1 or 3 when m is 2 or 4.
  * @{
  */
 #define TIMERA_HWUP_INVALID                     ((uint16_t)0x0000U)     /*!< Hardware count up is invalid */
@@ -544,14 +568,18 @@ typedef enum
 #define TIMERA_HWUP_CLKB_HIGH_CLKA_FALLING      (TMRA_HCUPR_HCUP7)      /*!< Hardware count up by falling edge on timer input TIMA_<t>_CLKA when TIMA_<t>_CLKB is high level */
 #define TIMERA_HWUP_TRIG_RISING                 (TMRA_HCUPR_HCUP8)      /*!< Hardware count up by rising edge on timer input TIMA_<t>_TRIG */
 #define TIMERA_HWUP_TRIG_FALLING                (TMRA_HCUPR_HCUP9)      /*!< Hardware count up by falling edge on timer input TIMA_<t>_TRIG */
-#define TIMERA_HWUP_SPECIFY_EVT                 (TMRA_HCUPR_HCUP10)     /*!< Hardware count up by the timer TMRA_HTSSR specified event */
+#define TIMERA_HWUP_SPECIFY_EVT                 (TMRA_HCUPR_HCUP10)     /*!< Hardware count up by the timer TMRA0_HTSSR specified event */
+#define TIMERA_HWUP_UNIT_N_COUNT_OVERFLOW       (TMRA_HCUPR_HCUP11)     /*!< When this unit is m, unit n generates a count overflow to trigger hardware count up */
+#define TIMERA_HWUP_UNIT_N_COUNT_UNDERFLOW      (TMRA_HCUPR_HCUP12)     /*!< When this unit is m, unit n generates a count underflow to trigger hardware count up */
 /**
  * @}
  */
 
 /**
  * @defgroup TIMERA_Hardware_Count_Down_Condition TimerA Hardware Count Down Condition
- * @note TIMA_<t>_TRIG or TIMA_<t>_CLKA or TIMA_<t>_CLKB t is unit number,value is 1.
+ * @note TIMA_<t>_TRIG t is unit number,value is 1 to 4. 
+ * @note TIMA_<t>_CLKA or TIMA_<t>_CLKB t is unit number,value is 3 to 4.
+ * @note n is 2 or 4 when m is 1 or 3, n is 1 or 3 when m is 2 or 4.
  * @{
  */
 #define TIMERA_HWDOWN_INVALID                   ((uint16_t)0x0000U)     /*!< Hardware count down is invalid */
@@ -565,7 +593,9 @@ typedef enum
 #define TIMERA_HWDOWN_CLKB_HIGH_CLKA_FALLING    (TMRA_HCDOR_HCDO7)      /*!< Hardware count down by falling edge on timer input TIMA_<t>_CLKA when TIMA_<t>_CLKB is high level */
 #define TIMERA_HWDOWN_TRIG_RISING               (TMRA_HCDOR_HCDO8)      /*!< Hardware count down by rising edge on timer input TIMA_<t>_TRIG */
 #define TIMERA_HWDOWN_TRIG_FALLING              (TMRA_HCDOR_HCDO9)      /*!< Hardware count down by falling edge on timer input TIMA_<t>_TRIG */
-#define TIMERA_HWDOWN_SPECIFY_EVT               (TMRA_HCDOR_HCDO10)     /*!< Hardware count down by the timer TMRA_HTSSR specified event */
+#define TIMERA_HWDOWN_SPECIFY_EVT               (TMRA_HCDOR_HCDO10)     /*!< Hardware count down by the timer TMRA0_HTSSR specified event */
+#define TIMERA_HWDOWN_UNIT_N_COUNT_OVERFLOW     (TMRA_HCDOR_HCDO11)     /*!< When this unit is m, unit n generates a count overflow to trigger hardware count down */
+#define TIMERA_HWDOWN_UNIT_N_COUNT_UNDERFLOW    (TMRA_HCDOR_HCDO12)     /*!< When this unit is m, unit n generates a count underflow to trigger the hardware count down */
 /**
  * @}
  */
@@ -587,99 +617,112 @@ typedef enum
  */
 
 /**
- * @brief  Set trigger event source.
+ * @brief  Set counter trigger event source.
  * @param  [in] enEvtSrc                Trigger event source @ref en_event_src_t
  * @retval None
  */
-__STATIC_INLINE void TIMERA_SetTriggerSrc(en_event_src_t enEvtSrc)
+__STATIC_INLINE void TIMERA_SetCounterTriggerSrc(en_event_src_t enEvtSrc)
 {
-    WRITE_REG(M0P_AOS->TMRA_HTSSR, enEvtSrc);
+    WRITE_REG(M4_AOS->TMRA0_HTSSR, enEvtSrc);
+}
+
+/**
+ * @brief  Set capture trigger event source.
+ * @param  [in] enEvtSrc                Trigger event source @ref en_event_src_t
+ * @retval None
+ */
+__STATIC_INLINE void TIMERA_SetCaptureTriggerSrc(en_event_src_t enEvtSrc)
+{
+    WRITE_REG(M4_AOS->TMRA1_HTSSR, enEvtSrc);
 }
 
 /* Initialization and configuration TimerA base functions */
-en_result_t TIMERA_DeInit(M0P_TMRA_TypeDef *TMRAx);
-en_result_t TIMERA_Init(M0P_TMRA_TypeDef *TMRAx,
-                        const stc_timera_init_t *pstcInit);
+en_result_t TIMERA_DeInit(M4_TMRA_TypeDef *TMRAx);
+en_result_t TIMERA_Init(M4_TMRA_TypeDef *TMRAx,
+                        stc_timera_init_t *pstcInit);
 en_result_t TIMERA_StructInit(stc_timera_init_t *pstcInit);
-void TIMERA_SetCounter(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Value);
-uint16_t TIMERA_GetCounter(M0P_TMRA_TypeDef *TMRAx);
-void TIMERA_SetPeriod(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Value);
-uint16_t TIMERA_GetPeriod(M0P_TMRA_TypeDef *TMRAx);
-void TIMERA_SetClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div);
-void TIMERA_EventCmd(M0P_TMRA_TypeDef *TMRAx, uint16_t u16EvtSource,
+void TIMERA_SetCounter(M4_TMRA_TypeDef *TMRAx, uint16_t u16Value);
+uint16_t TIMERA_GetCounter(M4_TMRA_TypeDef *TMRAx);
+void TIMERA_SetPeriod(M4_TMRA_TypeDef *TMRAx, uint16_t u16Value);
+uint16_t TIMERA_GetPeriod(M4_TMRA_TypeDef *TMRAx);
+void TIMERA_SetClkDiv(M4_TMRA_TypeDef *TMRAx, uint16_t u16Div);
+void TIMERA_SyncStartCmd(M4_TMRA_TypeDef *TMRAx,
+                         en_functional_state_t enNewSta);
+void TIMERA_EventCmd(M4_TMRA_TypeDef *TMRAx, uint16_t u16EvtSource,
                      en_functional_state_t enNewSta);
-void TIMERA_Cmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta);
-void TIMERA_SetTrigFilterClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div);
-void TIMERA_TrigFilterCmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta);
-void TIMERA_SetClkAFilterClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div);
-void TIMERA_ClkAFilterCmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta);
-void TIMERA_SetClkBFilterClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div);
-void TIMERA_ClkBFilterCmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta);
+void TIMERA_Cmd(M4_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta);
+void TIMERA_SetTrigFilterClkDiv(M4_TMRA_TypeDef *TMRAx, uint16_t u16Div);
+void TIMERA_TrigFilterCmd(M4_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta);
+void TIMERA_SetClkAFilterClkDiv(M4_TMRA_TypeDef *TMRAx, uint16_t u16Div);
+void TIMERA_ClkAFilterCmd(M4_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta);
+void TIMERA_SetClkBFilterClkDiv(M4_TMRA_TypeDef *TMRAx, uint16_t u16Div);
+void TIMERA_ClkBFilterCmd(M4_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta);
 
 /* Configuration TimerA Hardware trigger functions */
-void TIMERA_SetHwTriggerCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
-uint16_t TIMERA_GetHwTriggerCondition(M0P_TMRA_TypeDef *TMRAx);
-void TIMERA_SetHwStartCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
-void TIMERA_SetHwStopCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
-void TIMERA_SetHwClearCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
-void TIMERA_SetHwUpCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
-uint16_t TIMERA_GetHwUpCondition(M0P_TMRA_TypeDef *TMRAx);
-void TIMERA_SetHwDownCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
-uint16_t TIMERA_GetHwDownCondition(M0P_TMRA_TypeDef *TMRAx);
+void TIMERA_SetHwTriggerCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
+uint16_t TIMERA_GetHwTriggerCondition(M4_TMRA_TypeDef *TMRAx);
+void TIMERA_SetHwStartCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
+void TIMERA_SetHwStopCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
+void TIMERA_SetHwClearCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
+void TIMERA_SetHwUpCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
+uint16_t TIMERA_GetHwUpCondition(M4_TMRA_TypeDef *TMRAx);
+void TIMERA_SetHwDownCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition);
+uint16_t TIMERA_GetHwDownCondition(M4_TMRA_TypeDef *TMRAx);
 
 /* Initialization and configuration TimerA input capture functions */
-en_result_t TIMERA_IC_DeInit(M0P_TMRA_TypeDef *TMRAx,
+en_result_t TIMERA_IC_DeInit(M4_TMRA_TypeDef *TMRAx,
                              uint8_t u8Channel);
-en_result_t TIMERA_IC_Init(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
+en_result_t TIMERA_IC_Init(M4_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
                            const stc_timera_ic_init_t *pstcIcInit);
 en_result_t TIMERA_IC_StructInit(stc_timera_ic_init_t *pstcIcInit);
-uint16_t TIMERA_IC_GetCapture(M0P_TMRA_TypeDef *TMRAx,
+uint16_t TIMERA_IC_GetCapture(M4_TMRA_TypeDef *TMRAx,
                               uint8_t u8Channel);
-void TIMERA_IC_SetCaptureCondition(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_IC_SetCaptureCondition(M4_TMRA_TypeDef *TMRAx,
                                    uint8_t u8Channel,
                                    uint16_t u16Condition);
-void TIMERA_IC_FilterCmd(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
+void TIMERA_IC_FilterCmd(M4_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
                          en_functional_state_t enNewSta);
-void TIMERA_IC_SetFilterClkDiv(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_IC_SetFilterClkDiv(M4_TMRA_TypeDef *TMRAx,
                                uint8_t u8Channel, uint16_t u16Div);
 
 /* Initialization and configuration TimerA output compare functions */
-en_result_t TIMERA_OC_DeInit(M0P_TMRA_TypeDef *TMRAx,
+en_result_t TIMERA_OC_DeInit(M4_TMRA_TypeDef *TMRAx,
                              uint8_t u8Channel);
-en_result_t TIMERA_OC_Init(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
+en_result_t TIMERA_OC_Init(M4_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
                            const stc_timera_oc_init_t *pstcOcInit);
 en_result_t TIMERA_OC_StructInit(stc_timera_oc_init_t *pstcOcInit);
-void TIMERA_OC_SetCompare(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
+void TIMERA_OC_SetCompare(M4_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
                           uint16_t u16Value);
-void TIMERA_OC_PwmCmd(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
+void TIMERA_OC_PwmCmd(M4_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
                       en_functional_state_t enNewSta);
-void TIMERA_OC_SetStartCountOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_OC_SetStartCountOutputPolarity(M4_TMRA_TypeDef *TMRAx,
                                            uint8_t u8Channel,
                                            uint16_t u16Polarity);
-void TIMERA_OC_SetStopCountOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_OC_SetStopCountOutputPolarity(M4_TMRA_TypeDef *TMRAx,
                                           uint8_t u8Channel,
                                           uint16_t u16Polarity);
-void TIMERA_OC_SetCmpMatchOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_OC_SetCmpMatchOutputPolarity(M4_TMRA_TypeDef *TMRAx,
                                          uint8_t u8Channel,
                                          uint16_t u16Polarity);
-void TIMERA_OC_SetPeriodMatchOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_OC_SetPeriodMatchOutputPolarity(M4_TMRA_TypeDef *TMRAx,
                                             uint8_t u8Channel,
                                             uint16_t u16Polarity);
-void TIMERA_OC_SetForceOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_OC_SetForceOutputPolarity(M4_TMRA_TypeDef *TMRAx,
                                       uint8_t u8Channel,
                                       uint16_t u16Polarity);
-en_result_t TIMERA_OC_CacheCmd(M0P_TMRA_TypeDef *TMRAx,
+en_result_t TIMERA_OC_CacheCmd(M4_TMRA_TypeDef *TMRAx,
                                uint8_t u8Channel,
                                en_functional_state_t enNewSta);
-en_result_t TIMERA_OC_SetCacheTransmitCondition(M0P_TMRA_TypeDef *TMRAx,
+en_result_t TIMERA_OC_SetCacheTransmitCondition(M4_TMRA_TypeDef *TMRAx,
                                                 uint8_t u8Channel,
                                                 uint16_t u16Condition);
 
 /* Interrupts and flags management functions */
-en_flag_status_t TIMERA_GetFlag(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Flag);
-void TIMERA_ClearFlag(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Flag);
-void TIMERA_IntCmd(M0P_TMRA_TypeDef *TMRAx, uint16_t u16IntSource,
+void TIMERA_IntCmd(M4_TMRA_TypeDef *TMRAx, uint16_t u16IntSource,
                    en_functional_state_t enNewSta);
+en_flag_status_t TIMERA_GetFlag(M4_TMRA_TypeDef *TMRAx, uint16_t u16Flag);
+void TIMERA_ClearFlag(M4_TMRA_TypeDef *TMRAx, uint16_t u16Flag);
+
 
 /**
  * @}

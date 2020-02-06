@@ -1,11 +1,11 @@
 /**
  *******************************************************************************
- * @file  icg/icg_lvd_reset_hw_startup/source/ddl_config.h
+ * @file  icg/icg_wdt_reset_hw_startup/source/ddl_config.h
  * @brief This file contains HC32 Series Device Driver Library usage management.
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-25       Yangjp          First version
+   2020-02-06       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -97,10 +97,10 @@ extern "C"
 #define DDL_EKEY_ENABLE                             (DDL_OFF)
 #define DDL_EMB_ENABLE                              (DDL_OFF)
 #define DDL_EVENT_PORT_ENABLE                       (DDL_OFF)
-#define DDL_EXINT_NMI_ENABLE                        (DDL_OFF)
+#define DDL_EXINT_NMI_ENABLE                        (DDL_ON)
 #define DDL_GPIO_ENABLE                             (DDL_ON)
 #define DDL_I2C_ENABLE                              (DDL_OFF)
-#define DDL_INTERRUPTS_ENABLE                       (DDL_OFF)
+#define DDL_INTERRUPTS_ENABLE                       (DDL_ON)
 #define DDL_PWC_ENABLE                              (DDL_OFF)
 #define DDL_RMU_ENABLE                              (DDL_ON)
 #define DDL_SPI_ENABLE                              (DDL_OFF)
@@ -111,6 +111,7 @@ extern "C"
 #define DDL_TIMERA_ENABLE                           (DDL_OFF)
 #define DDL_TIMERB_ENABLE                           (DDL_OFF)
 #define DDL_USART_ENABLE                            (DDL_OFF)
+#define DDL_WDT_ENABLE                              (DDL_ON)
 
 /* Midware module on-off define */
 #define MW_ON                                       (1U)

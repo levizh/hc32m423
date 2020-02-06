@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-26       Yangjp          First version
+   2020-02-04       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -80,31 +80,6 @@ extern "C"
 /*******************************************************************************
  * Global type definitions ('typedef')
  ******************************************************************************/
-/**
- * @defgroup SWDT_Global_Types SWDT Global Types
- * @{
- */
-
-/**
- * @brief SWDT Init structure definition
- */
-typedef struct
-{
-    uint32_t u32CountCycle;     /*!< Specifies the SWDT Count Cycle.
-                                     This parameter can be a value of @ref SWDT_Counter_Cycle */
-    uint32_t u32ClockDivision;  /*!< Specifies the SWDT Clock Division.
-                                     This parameter can be a value of @ref SWDT_Clock_Division */
-    uint32_t u32RefreshRange;   /*!< Specifies the SWDT Allow Refresh Range.
-                                     This parameter can be a value of @ref SWDT_Refresh_Percent_Range */
-    uint32_t u32LPModeCountEn;  /*!< Specifies the SWDT Count Enable/Disable In Low Power Mode(Sleep/Stop Mode).
-                                     This parameter can be a value of @ref SWDT_LPW_Mode_Count */
-    uint32_t u32RequestType;    /*!< Specifies the SWDT Refresh Error or Count Underflow Request Type.
-                                     This parameter can be a value of @ref SWDT_Trigger_Event_Type */
-} stc_swdt_init_t;
-
-/**
- * @}
- */
 
 /*******************************************************************************
  * Global pre-processor symbols/macros ('#define')
@@ -112,98 +87,6 @@ typedef struct
 /**
  * @defgroup SWDT_Global_Macros SWDT Global Macros
  * @{
- */
-
-/**
- * @defgroup SWDT_Counter_Cycle SWDT Counter Cycle
- * @{
- */
-#define SWDT_COUNTER_CYCLE_256                  ((uint32_t)0x00000000UL)    /*!< 256 clock cycle */
-#define SWDT_COUNTER_CYCLE_4096                 ((uint32_t)SWDT_CR_PERI_0)  /*!< 4096 clock cycle */
-#define SWDT_COUNTER_CYCLE_16384                ((uint32_t)SWDT_CR_PERI_1)  /*!< 16384 clock cycle */
-#define SWDT_COUNTER_CYCLE_65536                ((uint32_t)SWDT_CR_PERI)    /*!< 65536 clock cycle */
-/**
- * @}
- */
-
-/**
- * @defgroup SWDT_Clock_Division SWDT Clock Division
- * @{
- */
-#define SWDT_CLOCK_DIV1                         ((uint32_t)0x00000000UL)       /*!< SWDTCLK */
-#define SWDT_CLOCK_DIV16                        ((uint32_t)SWDT_CR_CKS_2)      /*!< SWDTCLK/16 */
-#define SWDT_CLOCK_DIV32                        ((uint32_t)(SWDT_CR_CKS_0 | \
-                                                            SWDT_CR_CKS_2))    /*!< SWDTCLK/32 */
-#define SWDT_CLOCK_DIV64                        ((uint32_t)(SWDT_CR_CKS_1 | \
-                                                            SWDT_CR_CKS_2))    /*!< SWDTCLK/64 */
-#define SWDT_CLOCK_DIV128                       ((uint32_t)(SWDT_CR_CKS_0 | \
-                                                            SWDT_CR_CKS_1 | \
-                                                            SWDT_CR_CKS_2))    /*!< SWDTCLK/128 */
-#define SWDT_CLOCK_DIV256                       ((uint32_t)SWDT_CR_CKS_3)      /*!< SWDTCLK/256 */
-#define SWDT_CLOCK_DIV2048                      ((uint32_t)(SWDT_CR_CKS_0 | \
-                                                            SWDT_CR_CKS_1 | \
-                                                            SWDT_CR_CKS_3))    /*!< SWDTCLK/2048 */
-/**
- * @}
- */
-
-/**
- * @defgroup SWDT_Refresh_Percent_Range SWDT Refresh Percent Range
- * @{
- */
-#define SWDT_RANGE_100PCT                       ((uint32_t)0x00000000UL)       /*!< 100% */
-#define SWDT_RANGE_0TO25PCT                     ((uint32_t)SWDT_CR_WDPT_0)     /*!< 0%~25% */
-#define SWDT_RANGE_25TO50PCT                    ((uint32_t)SWDT_CR_WDPT_1)     /*!< 25%~50% */
-#define SWDT_RANGE_0TO50PCT                     ((uint32_t)(SWDT_CR_WDPT_0 | \
-                                                            SWDT_CR_WDPT_1))   /*!< 0%~50% */
-#define SWDT_RANGE_50TO75PCT                    ((uint32_t)SWDT_CR_WDPT_2)     /*!< 50%~75% */
-#define SWDT_RANGE_0TO25PCT_50TO75PCT           ((uint32_t)(SWDT_CR_WDPT_0 | \
-                                                            SWDT_CR_WDPT_2))   /*!< 0%~25% & 50%~75% */
-#define SWDT_RANGE_25TO75PCT                    ((uint32_t)(SWDT_CR_WDPT_1 | \
-                                                            SWDT_CR_WDPT_2))   /*!< 25%~75% */
-#define SWDT_RANGE_0TO75PCT                     ((uint32_t)(SWDT_CR_WDPT_0 | \
-                                                            SWDT_CR_WDPT_1 | \
-                                                            SWDT_CR_WDPT_2))   /*!< 0%~75% */
-#define SWDT_RANGE_75TO100PCT                   ((uint32_t)SWDT_CR_WDPT_3)     /*!< 75%~100% */
-#define SWDT_RANGE_0TO25PCT_75TO100PCT          ((uint32_t)(SWDT_CR_WDPT_0 | \
-                                                            SWDT_CR_WDPT_3))   /*!< 0%~25% & 75%~100% */
-#define SWDT_RANGE_25TO50PCT_75TO100PCT         ((uint32_t)(SWDT_CR_WDPT_1 | \
-                                                            SWDT_CR_WDPT_3))   /*!< 25%~50% & 75%~100% */
-#define SWDT_RANGE_0TO50PCT_75TO100PCT          ((uint32_t)(SWDT_CR_WDPT_0 | \
-                                                            SWDT_CR_WDPT_1 | \
-                                                            SWDT_CR_WDPT_3))   /*!< 0%~50% & 75%~100% */
-#define SWDT_RANGE_50TO100PCT                   ((uint32_t)(SWDT_CR_WDPT_2 | \
-                                                            SWDT_CR_WDPT_3))   /*!< 50%~100% */
-#define SWDT_RANGE_0TO25PCT_50TO100PCT          ((uint32_t)(SWDT_CR_WDPT_0 | \
-                                                            SWDT_CR_WDPT_2 | \
-                                                            SWDT_CR_WDPT_3))   /*!< 0%~25% & 50%~100% */
-#define SWDT_RANGE_25TO100PCT                   ((uint32_t)(SWDT_CR_WDPT_1 | \
-                                                            SWDT_CR_WDPT_2 | \
-                                                            SWDT_CR_WDPT_3))   /*!< 25%~100% */
-#define SWDT_RANGE_0TO100PCT                    ((uint32_t)SWDT_CR_WDPT)       /*!< 0%~100% */
-/**
- * @}
- */
-
-/**
- * @defgroup SWDT_LPW_Mode_Count SWDT Low Power Mode Count
- * @brief SWDT count control in the sleep/stop mode
- * @{
- */
-#define SWDT_LPW_MODE_COUNT_CONTINUE            ((uint32_t)0x00000000UL)    /*!< SWDT count continue in the sleep/stop mode */
-#define SWDT_LPW_MODE_COUNT_STOP                ((uint32_t)SWDT_CR_SLPOFF)  /*!< SWDT count stop in the sleep/stop mode */
-/**
- * @}
- */
-
-/**
-* @defgroup SWDT_Trigger_Event_Type SWDT Trigger Event Type
-* @{
-*/
-#define SWDT_TRIG_EVENT_INT                     ((uint32_t)0x00000000UL)  /*!< SWDT trigger interrupt */
-#define SWDT_TRIG_EVENT_RESET                   ((uint32_t)SWDT_CR_ITS)   /*!< SWDT trigger reset */
-/**
- * @}
  */
 
 /**
@@ -239,11 +122,10 @@ typedef struct
  */
 __STATIC_INLINE uint16_t SWDT_GetCountValue(void)
 {
-    return (uint16_t)(READ_REG(M0P_SWDT->SR) & SWDT_SR_CNT);
+    return (uint16_t)(READ_REG(M4_SWDT->SR) & SWDT_SR_CNT);
 }
 
-/* Initialization and configuration functions */
-en_result_t SWDT_Init(const stc_swdt_init_t *pstcSwdtInit);
+/* Configuration function */
 void SWDT_ReloadCounter(void);
 
 /* Flags management functions */

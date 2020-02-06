@@ -1,7 +1,7 @@
 /**
  *******************************************************************************
- * @file  swdt/swdt_reset_sw_startup/source/main.c
- * @brief Main program of SWDT Reset for the Device Driver Library.
+ * @file  wdt/wdt_interrupt_sw_startup/source/main.c
+ * @brief Main program of WDT Interrupt for the Device Driver Library.
  @verbatim
    Change Logs:
    Date             Author          Notes
@@ -61,7 +61,7 @@
  */
 
 /**
- * @addtogroup SWDT_Reset
+ * @addtogroup WDT_Interrupt
  * @{
  */
 
@@ -73,23 +73,24 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* LED_R Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_12)
+#define LED_R_PORT                      (GPIO_PORT_A)
 #define LED_R_PIN                       (GPIO_PIN_0)
 
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
 
+/* LED_G Port/Pin definition */
+#define LED_G_PORT                      (GPIO_PORT_A)
+#define LED_G_PIN                       (GPIO_PIN_1)
+
+#define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
+#define LED_G_OFF()                     (GPIO_SetPins(LED_G_PORT, LED_G_PIN))
+#define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
+
 /* SW1 Port/Pin definition */
 #define SW1_PORT                        (GPIO_PORT_2)
 #define SW1_PIN                         (GPIO_PIN_2)
-
-/* SWDT count cycle definition */
-#define SWDT_COUNT_CYCLE                (4096U)
-
-/* Reset source definition */
-#define RESET_SOURCE_SWDT               (0U)
-#define RESET_SOURCE_OTHER              (1U)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -102,12 +103,45 @@
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static uint8_t u8ResetSource;
-static uint8_t u8ExIntFlag = 0U;
+static uint8_t u8ExIntCnt = 0U;
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
  ******************************************************************************/
+/**
+ * @brief  WDT interrupt callback function.
+ * @param  None
+ * @retval None
+ */
+static void WDT_IrqCallback(void)
+{
+    en_flag_status_t enFlagSta;
+
+    enFlagSta = WDT_GetFlag(WDT_FLAG_COUNT_UNDERFLOW);
+    /* WDT underflow interrupt */
+    if (Set == enFlagSta)
+    {
+        WDT_ClearFlag(WDT_FLAG_COUNT_UNDERFLOW);
+        /* Normal mode */
+        if (0U == u8ExIntCnt)
+        {
+            LED_R_TOGGLE();
+        }
+        /* Sleep mode */
+        else if (1U == u8ExIntCnt)
+        {
+            LED_G_TOGGLE();
+        }
+        /* Stop mode */
+        else
+        {
+            LED_R_TOGGLE();
+            LED_G_TOGGLE();
+        }
+    }
+    WDT_ReloadCounter();
+}
+
 /**
  * @brief  SW1 interrupt callback function.
  * @param  None
@@ -117,7 +151,13 @@ void EXINT02_Handler(void)
 {
     if (Set == EXINT_GetExIntSrc(EXINT_CH02))
     {
-        u8ExIntFlag = 1U;
+        u8ExIntCnt++;
+        if (u8ExIntCnt >= 3U)
+        {
+            u8ExIntCnt = 0U;
+        }
+        LED_R_OFF();
+        LED_G_OFF();
         EXINT_ClrExIntSrc(EXINT_CH02);
     }
 }
@@ -140,48 +180,76 @@ static void SW1_Config(void)
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
     GPIO_Init(SW1_PORT, SW1_PIN, &stcGpioInit);
 
-    /* EXINT Channel 2 (SW1) configure */
-    stcExIntInit.u16ExIntCh = (uint16_t)EXINT_CH02;
-    stcExIntInit.u8ExIntFE = EXINT_FILTER_OFF;
-    stcExIntInit.u8ExIntLvl = EXINT_TRIGGER_FALLING;
+    stcExIntInit.u32ExIntCh     = EXINT_CH02;
+    stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
+    stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV8;
+    stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
+    stcExIntInit.u32ExIntFBTime = NMI_EXINT_FBTIM_2US;
+    stcExIntInit.u32ExIntLvl    = EXINT_TRIGGER_FALLING;
     EXINT_Init(&stcExIntInit);
 
     /* Clear pending */
-    NVIC_ClearPendingIRQ(EXINT02_IRQn);
+    NVIC_ClearPendingIRQ(ExInt2_IRQn);
     /* Set priority */
-    NVIC_SetPriority(EXINT02_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_SetPriority(ExInt2_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
     /* Enable NVIC */
-    NVIC_EnableIRQ(EXINT02_IRQn);
+    NVIC_EnableIRQ(ExInt2_IRQn);
+
+    /* Enable stop mode wakeup */
+    INTC_WakeupSrcCmd(INTC_WUPENR_EIRQWUEN_2, Enable);
 }
 
 /**
- * @brief  SWDT configuration.
+ * @brief  WDT configuration.
  * @param  None
  * @retval None
  */
-static void SWDT_Config(void)
+static void WDT_Config(void)
 {
-    stc_swdt_init_t stcSwdtInit;
+    uint8_t u8Ret;
+    stc_wdt_init_t stcWdtInit;
+    stc_irq_regi_config_t stcIrqRegister;
 
-    /* SWDT structure parameters configure */
-    stcSwdtInit.u32CountCycle = SWDT_COUNTER_CYCLE_4096;
-    stcSwdtInit.u32ClockDivision = SWDT_CLOCK_DIV16;
-    stcSwdtInit.u32RefreshRange = SWDT_RANGE_0TO25PCT;
-    stcSwdtInit.u32LPModeCountEn = SWDT_LPW_MODE_COUNT_STOP;
-    stcSwdtInit.u32RequestType = SWDT_TRIG_EVENT_RESET;
-    SWDT_Init(&stcSwdtInit);
+    /* WDT structure parameters configure */
+    stcWdtInit.u32CountCycle = WDT_COUNTER_CYCLE_256;
+    stcWdtInit.u32ClockDivision = WDT_CLOCK_DIV128;
+    stcWdtInit.u32RefreshRange = WDT_RANGE_0TO100PCT;
+    stcWdtInit.u32LPModeCountEn = WDT_LPW_MODE_COUNT_CONTINUE;
+    stcWdtInit.u32RequestType = WDT_TRIG_EVENT_INT;
+    WDT_Init(&stcWdtInit);
+
+    /* NVIC configure of WDT */
+    stcIrqRegister.enIntSrc = INT_WDT_NMIUNDF;
+    stcIrqRegister.enIRQn = Int008_IRQn;
+    stcIrqRegister.pfnCallback = &WDT_IrqCallback;
+    u8Ret = INTC_IrqRegistration(&stcIrqRegister);
+    if (Ok != u8Ret)
+    {
+        /* check parameter */
+        while (1)
+        {
+        }
+    }
+
+    /* Clear pending */
+    NVIC_ClearPendingIRQ(stcIrqRegister.enIRQn);
+    /* Set priority */
+    NVIC_SetPriority(stcIrqRegister.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    /* Enable NVIC */
+    NVIC_EnableIRQ(stcIrqRegister.enIRQn);
+
+    /* Enable stop mode wakeup */
+    INTC_WakeupSrcCmd(INTC_WUPENR_WDTWUEN, Enable);
 }
 
 /**
- * @brief  Main function of SWDT Reset.
+ * @brief  Main function of WDT Interrupt.
  * @param  None
  * @retval int32_t return value, if needed
  */
 int32_t main(void)
 {
-    uint16_t u16CmpVal;
     stc_gpio_init_t stcGpioInit;
-    stc_rmu_rstcause_t stcRmuRstCause;
 
     /* Configure structure initialization */
     GPIO_StructInit(&stcGpioInit);
@@ -189,49 +257,32 @@ int32_t main(void)
     /* LED Port/Pin initialization */
     stcGpioInit.u16PinMode = PIN_MODE_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
+    GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
     LED_R_OFF();
+    LED_G_OFF();
 
-    /* Get RMU information */
-    RMU_GetResetCause(&stcRmuRstCause);
-    if (Set == stcRmuRstCause.WdtRst)
-    {
-        u8ResetSource = RESET_SOURCE_SWDT;
-        LED_R_ON();
-    }
-    else
-    {
-        u8ResetSource = RESET_SOURCE_OTHER;
-    }
-    RMU_ClrResetFlag();
-
-    /* SWDT configuration */
-    SWDT_Config();
+    /* WDT configuration */
+    WDT_Config();
     /* SW1 configuration */
     SW1_Config();
-    /* First reload counter to start SWDT */
-    SWDT_ReloadCounter();
-    /* Wait for SWDT module to complete initial load */
-    DDL_Delay1ms(200U);
-    /* Count cycle=16384,range=0%-25% */
-    u16CmpVal = SWDT_COUNT_CYCLE / 4U;
+    /* First reload counter to start WDT */
+    WDT_ReloadCounter();
 
     while (1)
     {
-        if (1U == u8ExIntFlag)
+        /* Sleep mode */
+        if (1U == u8ExIntCnt)
         {
-            u8ExIntFlag = 0U;
-            u16CmpVal = SWDT_COUNT_CYCLE / 2U;
+            PWC_EnterSleepMode();
         }
-
-        if (SWDT_GetCountValue() < u16CmpVal)
+        /* Stop mode */
+        else if (2U == u8ExIntCnt)
         {
-            SWDT_ReloadCounter();
-            /* Wait for the count value to update */
-            DDL_Delay1ms(10U);
-            if (RESET_SOURCE_OTHER == u8ResetSource)
-            {
-                LED_R_TOGGLE();
-            }
+            PWC_EnterStopMode();
+        }
+        else
+        {
+            /* Reserved */
         }
     }
 }

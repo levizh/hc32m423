@@ -192,6 +192,10 @@ extern "C"
     #include "hc32m423_utility.h"
 #endif /* DDL_UTILITY_ENABLE */
 
+#if (DDL_WDT_ENABLE == DDL_ON)
+    #include "hc32m423_wdt.h"
+#endif /* DDL_WDT_ENABLE */
+
 #endif /* USE_DDL_DRIVER */
 
 /*******************************************************************************

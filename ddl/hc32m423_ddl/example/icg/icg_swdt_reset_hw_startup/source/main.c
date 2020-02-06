@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-25       Yangjp          First version
+   2020-02-06       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -73,7 +73,7 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* LED_R Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_12)
+#define LED_R_PORT                      (GPIO_PORT_A)
 #define LED_R_PIN                       (GPIO_PIN_0)
 
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
@@ -140,18 +140,20 @@ static void SW1_Config(void)
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
     GPIO_Init(SW1_PORT, SW1_PIN, &stcGpioInit);
 
-    /* EXINT Channel 2 (SW1) configure */
-    stcExIntInit.u16ExIntCh = (uint16_t)EXINT_CH02;
-    stcExIntInit.u8ExIntFE = EXINT_FILTER_OFF;
-    stcExIntInit.u8ExIntLvl = EXINT_TRIGGER_FALLING;
+    stcExIntInit.u32ExIntCh     = EXINT_CH02;
+    stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
+    stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV8;
+    stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
+    stcExIntInit.u32ExIntFBTime = NMI_EXINT_FBTIM_2US;
+    stcExIntInit.u32ExIntLvl    = EXINT_TRIGGER_FALLING;
     EXINT_Init(&stcExIntInit);
 
     /* Clear pending */
-    NVIC_ClearPendingIRQ(EXINT02_IRQn);
+    NVIC_ClearPendingIRQ(ExInt2_IRQn);
     /* Set priority */
-    NVIC_SetPriority(EXINT02_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_SetPriority(ExInt2_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
     /* Enable NVIC */
-    NVIC_EnableIRQ(EXINT02_IRQn);
+    NVIC_EnableIRQ(ExInt2_IRQn);
 }
 
 /**

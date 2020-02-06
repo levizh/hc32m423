@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-26       Yangjp          First version
+   2020-02-04       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -83,16 +83,6 @@
  */
 
 /**
- * @defgroup SWDT_Registers_Clear_Mask SWDT Registers Clear Mask
- * @{
- */
-#define SWDT_CR_CLEAR_MASK              (SWDT_CR_PERI | SWDT_CR_CKS | SWDT_CR_WDPT | \
-                                         SWDT_CR_SLPOFF | SWDT_CR_ITS)
-/**
- * @}
- */
-
-/**
  * @defgroup SWDT_Refresh_Key SWDT Refresh Key
  * @{
  */
@@ -106,47 +96,6 @@
  * @defgroup SWDT_Check_Parameters_Validity SWDT Check Parameters Validity
  * @{
  */
-#define IS_SWDT_COUNTER_CYCLE(x)                                               \
-(   (SWDT_COUNTER_CYCLE_256 == (x))             ||                             \
-    (SWDT_COUNTER_CYCLE_4096 == (x))            ||                             \
-    (SWDT_COUNTER_CYCLE_16384 == (x))           ||                             \
-    (SWDT_COUNTER_CYCLE_65536 == (x)))
-
-#define IS_SWDT_CLOCK_DIVISION(x)                                              \
-(   (SWDT_CLOCK_DIV1 == (x))                    ||                             \
-    (SWDT_CLOCK_DIV16 == (x))                   ||                             \
-    (SWDT_CLOCK_DIV32 == (x))                   ||                             \
-    (SWDT_CLOCK_DIV64 == (x))                   ||                             \
-    (SWDT_CLOCK_DIV128 == (x))                  ||                             \
-    (SWDT_CLOCK_DIV256 == (x))                  ||                             \
-    (SWDT_CLOCK_DIV2048 == (x)))
-
-#define IS_SWDT_ALLOW_REFRESH_RANGE(x)                                         \
-(   (SWDT_RANGE_100PCT == (x))                  ||                             \
-    (SWDT_RANGE_0TO25PCT == (x))                ||                             \
-    (SWDT_RANGE_25TO50PCT == (x))               ||                             \
-    (SWDT_RANGE_0TO50PCT == (x))                ||                             \
-    (SWDT_RANGE_50TO75PCT == (x))               ||                             \
-    (SWDT_RANGE_0TO25PCT_50TO75PCT == (x))      ||                             \
-    (SWDT_RANGE_25TO75PCT == (x))               ||                             \
-    (SWDT_RANGE_0TO75PCT == (x))                ||                             \
-    (SWDT_RANGE_75TO100PCT == (x))              ||                             \
-    (SWDT_RANGE_0TO25PCT_75TO100PCT == (x))     ||                             \
-    (SWDT_RANGE_25TO50PCT_75TO100PCT == (x))    ||                             \
-    (SWDT_RANGE_0TO50PCT_75TO100PCT == (x))     ||                             \
-    (SWDT_RANGE_50TO100PCT == (x))              ||                             \
-    (SWDT_RANGE_0TO25PCT_50TO100PCT == (x))     ||                             \
-    (SWDT_RANGE_25TO100PCT == (x))              ||                             \
-    (SWDT_RANGE_0TO100PCT == (x)))
-
-#define IS_SWDT_LPW_MODE_COUNT(x)                                              \
-(   (SWDT_LPW_MODE_COUNT_CONTINUE == (x))   ||                                 \
-    (SWDT_LPW_MODE_COUNT_STOP == (x)))
-
-#define IS_SWDT_REQUEST_TYPE(x)                                                \
-(   (SWDT_TRIG_EVENT_INT == (x))                ||                             \
-    (SWDT_TRIG_EVENT_RESET == (x)))
-
 #define IS_SWDT_FLAG(x)                                                        \
 (   (SWDT_FLAG_COUNT_UNDERFLOW == (x))          ||                             \
     (SWDT_FLAG_REFRESH_ERROR == (x)))
@@ -179,42 +128,6 @@
  */
 
 /**
- * @brief  Initialize SWDT.
- * @param  [in] pstcSwdtInit            Pointer to a stc_swdt_init_t structure
- *                                      that contains configuration information.
- *   @arg  See the struct @ref stc_swdt_init_t.
- * @retval An en_result_t enumeration value:
- *           - Ok: Initialize success
- *           - ErrorInvalidParameter: Invalid parameter
- */
-en_result_t SWDT_Init(const stc_swdt_init_t *pstcSwdtInit)
-{
-    en_result_t enRet = Ok;
-
-    if(NULL == pstcSwdtInit)
-    {
-        enRet = ErrorInvalidParameter;
-    }
-    else
-    {
-        /* Check parameters */
-        DDL_ASSERT(IS_SWDT_COUNTER_CYCLE(pstcSwdtInit->u32CountCycle));
-        DDL_ASSERT(IS_SWDT_CLOCK_DIVISION(pstcSwdtInit->u32ClockDivision));
-        DDL_ASSERT(IS_SWDT_ALLOW_REFRESH_RANGE(pstcSwdtInit->u32RefreshRange));
-        DDL_ASSERT(IS_SWDT_LPW_MODE_COUNT(pstcSwdtInit->u32LPModeCountEn));
-        DDL_ASSERT(IS_SWDT_REQUEST_TYPE(pstcSwdtInit->u32RequestType));
-
-        /* SWDT CR Configuration(Software Start Mode) */
-        MODIFY_REG(M0P_SWDT->CR, SWDT_CR_CLEAR_MASK,
-                   (pstcSwdtInit->u32CountCycle   | pstcSwdtInit->u32ClockDivision |
-                    pstcSwdtInit->u32RefreshRange | pstcSwdtInit->u32LPModeCountEn |
-                    pstcSwdtInit->u32RequestType));
-    }
-
-    return enRet;
-}
-
-/**
  * @brief  SWDT reload counter
  * @note   In software startup mode, Start counter when refreshing for the first time.
  * @param  None
@@ -222,8 +135,8 @@ en_result_t SWDT_Init(const stc_swdt_init_t *pstcSwdtInit)
  */
 void SWDT_ReloadCounter(void)
 {
-    M0P_SWDT->RR = SWDT_REFRESH_KEY_START;
-    M0P_SWDT->RR = SWDT_REFRESH_KEY_END;
+    M4_SWDT->RR = SWDT_REFRESH_KEY_START;
+    M4_SWDT->RR = SWDT_REFRESH_KEY_END;
 }
 
 /**
@@ -243,7 +156,7 @@ en_flag_status_t SWDT_GetFlag(uint32_t u32Flag)
     /* Check parameters */
     DDL_ASSERT(IS_SWDT_FLAG(u32Flag));
 
-    if (Reset != (READ_BIT(M0P_SWDT->SR, u32Flag)))
+    if (Reset != (READ_BIT(M4_SWDT->SR, u32Flag)))
     {
         enFlagSta = Set;
     }
@@ -263,7 +176,7 @@ en_flag_status_t SWDT_GetFlag(uint32_t u32Flag)
  */
 en_result_t SWDT_ClearFlag(uint32_t u32Flag)
 {
-    uint32_t u32Timeout, u32TimeCnt = 0UL;
+    uint32_t u32Timeout = 0UL;
     en_result_t enRet = Ok;
 
     /* Check parameters */
@@ -273,11 +186,10 @@ en_result_t SWDT_ClearFlag(uint32_t u32Flag)
     u32Timeout = SystemCoreClock >> 8U;
     do
     {
-        CLEAR_BIT(M0P_SWDT->SR, u32Flag);
-        u32TimeCnt++;
-    } while ((Reset != (READ_BIT(M0P_SWDT->SR, u32Flag))) && (u32TimeCnt < u32Timeout));
+        CLEAR_BIT(M4_SWDT->SR, u32Flag);
+    } while ((Reset != (READ_BIT(M4_SWDT->SR, u32Flag))) && (--u32Timeout));
 
-    if (u32TimeCnt >= u32Timeout)
+    if (0U == u32Timeout)
     {
         enRet = ErrorTimeout;
     }

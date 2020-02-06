@@ -1,11 +1,11 @@
 /**
  *******************************************************************************
- * @file  icg/icg_lvd_interrupt_hw_startup/source/main.c
- * @brief Main program of ICG LVD Interrupt for the Device Driver Library.
+ * @file  icg/icg_wdt_reset_hw_startup/source/main.c
+ * @brief Main program of ICG WDT Reset for the Device Driver Library.
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-25       Yangjp          First version
+   2020-02-06       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -61,7 +61,7 @@
  */
 
 /**
- * @addtogroup ICG_LVD_Interrupt
+ * @addtogroup ICG_WDT_Reset
  * @{
  */
 
@@ -73,20 +73,23 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* LED_R Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_12)
+#define LED_R_PORT                      (GPIO_PORT_A)
 #define LED_R_PIN                       (GPIO_PIN_0)
 
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
 
-/* LED_G Port/Pin definition */
-#define LED_G_PORT                      (GPIO_PORT_7)
-#define LED_G_PIN                       (GPIO_PIN_0)
+/* SW1 Port/Pin definition */
+#define SW1_PORT                        (GPIO_PORT_2)
+#define SW1_PIN                         (GPIO_PIN_2)
 
-#define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
-#define LED_G_OFF()                     (GPIO_SetPins(LED_G_PORT, LED_G_PIN))
-#define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
+/* WDT count cycle definition */
+#define WDT_COUNT_CYCLE                (4096U)
+
+/* Reset source definition */
+#define RESET_SOURCE_WDT               (0U)
+#define RESET_SOURCE_OTHER              (1U)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -99,66 +102,62 @@
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
+static uint8_t u8ResetSource;
+static uint8_t u8ExIntFlag = 0U;
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
  ******************************************************************************/
 /**
- * @brief  LVD interrupt callback function.
+ * @brief  SW1 interrupt callback function.
  * @param  None
  * @retval None
  */
-static void LVD_IrqCallback(void)
+void EXINT02_Handler(void)
 {
-    if (Set == PWC_GetLvdFlag(PWC_LVD_FLAG_DET))
+    if (Set == EXINT_GetExIntSrc(EXINT_CH02))
     {
-        PWC_ClearLvdDetFlag();
-        if (Set == PWC_GetLvdFlag(PWC_LVD_FLAG_LVI))
-        {
-            LED_G_OFF();
-            LED_R_ON();
-        }
-        else
-        {
-            LED_G_ON();
-            LED_R_OFF();
-        }
+        u8ExIntFlag = 1U;
+        EXINT_ClrExIntSrc(EXINT_CH02);
     }
 }
 
 /**
- * @brief  LVD configuration.
+ * @brief  SW1 configuration.
  * @param  None
  * @retval None
  */
-static void LVD_Config(void)
+static void SW1_Config(void)
 {
-    uint8_t u8Ret;
-    stc_irq_regi_config_t stcIrqRegister;
+    stc_gpio_init_t stcGpioInit;
+    stc_exint_config_t stcExIntInit;
 
-    /* NVIC configure of LVD */
-    stcIrqRegister.enIntSrc = INT_PVD_DET;
-    stcIrqRegister.enIRQn = Int022_IRQn;
-    stcIrqRegister.pfnCallback = &LVD_IrqCallback;
-    u8Ret = INTC_IrqRegistration(&stcIrqRegister);
-    if (Ok != u8Ret)
-    {
-        /* check parameter */
-        while (1)
-        {
-        }
-    }
+    /* configure structure initialization */
+    GPIO_StructInit(&stcGpioInit);
+    EXINT_StructInit(&stcExIntInit);
+
+    /* External interrupt Ch.2 initialize */
+    stcGpioInit.u16ExInt = PIN_EXINT_ON;
+    GPIO_Init(SW1_PORT, SW1_PIN, &stcGpioInit);
+
+    stcExIntInit.u32ExIntCh     = EXINT_CH02;
+    stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
+    stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV8;
+    stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
+    stcExIntInit.u32ExIntFBTime = NMI_EXINT_FBTIM_2US;
+    stcExIntInit.u32ExIntLvl    = EXINT_TRIGGER_FALLING;
+    EXINT_Init(&stcExIntInit);
 
     /* Clear pending */
-    NVIC_ClearPendingIRQ(stcIrqRegister.enIRQn);
+    NVIC_ClearPendingIRQ(ExInt2_IRQn);
     /* Set priority */
-    NVIC_SetPriority(stcIrqRegister.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_SetPriority(ExInt2_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
     /* Enable NVIC */
-    NVIC_EnableIRQ(stcIrqRegister.enIRQn);
+    NVIC_EnableIRQ(ExInt2_IRQn);
 }
 
 /**
- * @brief  Main function of ICG LVD Interrupt.
+ * @brief  Main function of ICG WDT Reset.
  * @param  None
  * @retval int32_t return value, if needed
  */
@@ -168,35 +167,67 @@ int32_t main(void)
      ***************************************************************************
      @brief Modify hc32m423_icg.h file of define
      @verbatim
-     #define ICG1_LVD_HARDWARE_START      ICG_FUNCTION_ON
+     #define ICG0_WDT_HARDWARE_START         ICG_FUNCTION_ON
 
-     #define ICG1_LVD_DFS                 ICG_LVD_FILTER_CLOCK_LRC16
-     #define ICG1_LVD_DFDIS               ICG_LVD_DIGITAL_FILTER_ENABLE
-     #define ICG1_LVD_LVDLVL              ICG_LVD_BELOW2P96_OR_ABOVE3P02
-     #define ICG1_LVD_NMIS                ICG_LVD_INT_TYPE_INTR
-     #define ICG1_LVD_IRS                 ICG_LVD_TRIG_EVENT_INT
-     #define ICG1_LVD_IRDIS               ICG_LVD_INT_AND_RESET_ENABLE
-     #define ICG1_LVD_LVDDIS              ICG_LVD_VOLTAGE_DETECTION_ENABLE
+     #define ICG0_WDT_AUTS                   ICG_WDT_AFTER_RESET_AUTOSTART
+     #define ICG0_WDT_ITS                    ICG_WDT_TRIG_EVENT_RESET
+     #define ICG0_WDT_PERI                   ICG_WDT_COUNTER_CYCLE_4096
+     #define ICG0_WDT_CKS                    ICG_WDT_CLOCK_DIV16
+     #define ICG0_WDT_WDPT                   ICG_WDT_RANGE_0TO25PCT
+     #define ICG0_WDT_SLTPOFF                ICG_WDT_LPW_MODE_COUNT_STOP
      @endverbatim
-    ***************************************************************************
-    */
+     ***************************************************************************
+     */
+    uint16_t u16CmpVal;
     stc_gpio_init_t stcGpioInit;
+    stc_rmu_rstcause_t stcRmuRstCause;
 
     /* Configure structure initialization */
     GPIO_StructInit(&stcGpioInit);
 
     /* LED Port/Pin initialization */
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
-    GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
     LED_R_OFF();
-    LED_G_ON();
 
-    /* LVD configuration */
-    LVD_Config();
+    /* Get RMU information */
+    RMU_GetResetCause(&stcRmuRstCause);
+    if (Set == stcRmuRstCause.WdtRst)
+    {
+        u8ResetSource = RESET_SOURCE_WDT;
+        LED_R_ON();
+    }
+    else
+    {
+        u8ResetSource = RESET_SOURCE_OTHER;
+    }
+    RMU_ClrResetFlag();
+
+    /* SW1 configuration */
+    SW1_Config();
+    /* Wait for WDT module to complete initial load */
+    DDL_Delay1ms(200U);
+    /* Count cycle=16384,range=0%-25% */
+    u16CmpVal = WDT_COUNT_CYCLE / 4U;
 
     while (1)
     {
+        if (1U == u8ExIntFlag)
+        {
+            u8ExIntFlag = 0U;
+            u16CmpVal = WDT_COUNT_CYCLE / 2U;
+        }
+
+        if (WDT_GetCountValue() < u16CmpVal)
+        {
+            WDT_ReloadCounter();
+            /* Wait for the count value to update */
+            DDL_Delay1ms(10U);
+            if (RESET_SOURCE_OTHER == u8ResetSource)
+            {
+                LED_R_TOGGLE();
+            }
+        }
     }
 }
 

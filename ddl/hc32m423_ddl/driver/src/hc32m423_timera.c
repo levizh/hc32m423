@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-01       Yangjp          First version
+   2020-02-05       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -94,7 +94,7 @@
  * @defgroup TIMERA_Hardware_Trigger_Source_Mask TIMERA Hardware Trigger Source Mask
  * @{
  */
-#define TIMERA_TRIG_SRC_MASK                ((uint32_t)0x0000007Ful)  /*!< TIMERA Hardware Trigger Source Mask */
+#define TIMERA_TRIG_SRC_MASK                ((uint32_t)0x000001FFUL)  /*!< TIMERA Hardware Trigger Source Mask */
 /**
  * @}
  */
@@ -104,18 +104,13 @@
  * @{
  */
 #define TIMERA_BCONR_BSE_MASK               (TMRA_BCONR_BSE1 | TMRA_BCONR_BSE0)
-#define TIMERA_CCONR_HICP_MASK              (TMRA_CCONR1_HICP2 | TMRA_CCONR1_HICP1 | TMRA_CCONR1_HICP0)
+#define TIMERA_CCONR_HICP_MASK              (TMRA_CCONR_HICP2 | TMRA_CCONR_HICP1 | TMRA_CCONR_HICP0)
 #define TIMERA_HCONR_HSTA_MASK              (TMRA_HCONR_HSTA2 | TMRA_HCONR_HSTA1 | TMRA_HCONR_HSTA0)
 #define TIMERA_HCONR_HSTP_MASK              (TMRA_HCONR_HSTP2 | TMRA_HCONR_HSTP1 | TMRA_HCONR_HSTP0)
-#define TIMERA_HCONR_HCLE_MASK              (TMRA_HCONR_HCLE2 | TMRA_HCONR_HCLE1 | TMRA_HCONR_HCLE0)
-#define TIMERA_HCUPR_HCUP_MASK              (TMRA_HCUPR_HCUP10 | TMRA_HCUPR_HCUP9 | TMRA_HCUPR_HCUP8 | \
-                                             TMRA_HCUPR_HCUP7  | TMRA_HCUPR_HCUP6 | TMRA_HCUPR_HCUP5 | \
-                                             TMRA_HCUPR_HCUP4  | TMRA_HCUPR_HCUP3 | TMRA_HCUPR_HCUP2 | \
-                                             TMRA_HCUPR_HCUP1  | TMRA_HCUPR_HCUP0)
-#define TIMERA_HCDOR_HCDO_MASK              (TMRA_HCDOR_HCDO10 | TMRA_HCDOR_HCDO9 | TMRA_HCDOR_HCDO8 | \
-                                             TMRA_HCDOR_HCDO7  | TMRA_HCDOR_HCDO6 | TMRA_HCDOR_HCDO5 | \
-                                             TMRA_HCDOR_HCDO4  | TMRA_HCDOR_HCDO3 | TMRA_HCDOR_HCDO2 | \
-                                             TMRA_HCDOR_HCDO1  | TMRA_HCDOR_HCDO0)
+#define TIMERA_HCONR_HCLE_MASK              (TMRA_HCONR_HCLE4 | TMRA_HCONR_HCLE3 | TMRA_HCONR_HCLE2 | \
+                                             TMRA_HCONR_HCLE1 | TMRA_HCONR_HCLE0)
+#define TIMERA_HCUPR_HCUP_MASK              ((uint16_t)0x1FFFU)
+#define TIMERA_HCDOR_HCDO_MASK              ((uint16_t)0x1FFFU)
 #define TIMERA_HW_TRIG_MASK                 (TIMERA_HCONR_HSTA_MASK | TIMERA_HCONR_HSTP_MASK | TIMERA_HCONR_HCLE_MASK)
 #define TIMERA_EVENT_MASK                   (TIMERA_EVENT_CMP1 | TIMERA_EVENT_CMP2)
 #define TIMERA_INT_MASK                     (TIMERA_INT_OVF    | TIMERA_INT_UDF  | \
@@ -131,10 +126,9 @@
  * @brief Get the specified Compare/Capture register address of the TimerA unit
  * @{
  */
-#define TMRA_CMPARx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->CMPAR1)) + ((uint32_t)(__CH__))*4U)
-#define TMRA_BCONRx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->BCONR))  + ((uint32_t)(__CH__))*4U)
-#define TMRA_CCONRx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->CCONR1)) + ((uint32_t)(__CH__))*4U)
-#define TMRA_PCONRx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->PCONR1)) + ((uint32_t)(__CH__))*4U)
+#define TMRA_CMPARx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->CMPAR1)) + ((uint32_t)(__CH__)) << 2U)
+#define TMRA_CCONRx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->CCONR1)) + ((uint32_t)(__CH__)) << 2U)
+#define TMRA_PCONRx(__TMRAx__, __CH__)      ((uint32_t)(&((__TMRAx__)->PCONR1)) + ((uint32_t)(__CH__)) << 2U)
 /**
  * @}
  */
@@ -144,7 +138,19 @@
  * @{
  */
 
-#define IS_TIMERA_INSTANCE(x)                   (M0P_TMRA == (x))
+#define IS_TIMERA_NORMAL_INSTANCE(x)                                           \
+(   (M4_TMRA1 == (x))                           ||                             \
+    (M4_TMRA2 == (x))                           ||                             \
+    (M4_TMRA3 == (x))                           ||                             \
+    (M4_TMRA4 == (x)))
+
+#define IS_TIMERA_SPECIAL_INSTANCE(x)                                          \
+(   (M4_TMRA3 == (x))                           ||                             \
+    (M4_TMRA4 == (x)))
+
+#define IS_TIMERA_SYNC_INSTANCE(x)                                             \
+(   (M4_TMRA2 == (x))                           ||                             \
+    (M4_TMRA4 == (x)))
 
 #define IS_TIMERA_CHANNEL(x)                                                   \
 (   (TIMERA_CHANNEL_CH1 == (x))                 ||                             \
@@ -160,6 +166,10 @@
 #define IS_TIMERA_COUNT_DIRECTION(x)                                           \
 (   (TIMERA_COUNT_UP == (x))                    ||                             \
     (TIMERA_COUNT_DOWN == (x)))
+
+#define IS_TIMERA_SYNC_START(x)                                                \
+(   (TIMERA_SYNC_START_ENABLE == (x))           ||                             \
+    (TIMERA_SYNC_START_DISABLE == (x)))
 
 #define IS_TIMERA_CLK_DIV(x)                                                   \
 (   (TIMERA_CLKDIV_DIV1 == (x))                 ||                             \
@@ -331,22 +341,24 @@
  * @brief  De-Initialize TimerA unit base function.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @retval An en_result_t enumeration value:
  *           - Ok: De-Initialize success
  *           - ErrorInvalidParameter: TMRAx is invalid instance
  */
-en_result_t TIMERA_DeInit(M0P_TMRA_TypeDef *TMRAx)
+en_result_t TIMERA_DeInit(M4_TMRA_TypeDef *TMRAx)
 {
-    uint8_t u8Cnt;
+    uint8_t i, u8ChCnt;
     __IO uint16_t *TMRA_CMPAR;
-    __IO uint16_t *TMRA_BCONR;
     __IO uint16_t *TMRA_CCONR;
     __IO uint16_t *TMRA_PCONR;
     en_result_t enRet = Ok;
 
     /* Check TMRAx instance */
-    if (!IS_TIMERA_INSTANCE(TMRAx))
+    if (!IS_TIMERA_NORMAL_INSTANCE(TMRAx))
     {
         enRet = ErrorInvalidParameter;
     }
@@ -357,29 +369,32 @@ en_result_t TIMERA_DeInit(M0P_TMRA_TypeDef *TMRAx)
         WRITE_REG16(TMRAx->ICONR, 0x0000U);
         WRITE_REG16(TMRAx->ECONR, 0x0000U);
         WRITE_REG16(TMRAx->CNTER, 0x0000U);
-        WRITE_REG16(TMRAx->PERAR, 0xFFFFu);
+        WRITE_REG16(TMRAx->PERAR, 0xFFFFU);
         WRITE_REG16(TMRAx->FCONR, 0x0000U);
         WRITE_REG16(TMRAx->STFLR, 0x0000U);
         WRITE_REG16(TMRAx->HCONR, 0x0000U);
         WRITE_REG16(TMRAx->HCUPR, 0x0000U);
         WRITE_REG16(TMRAx->HCDOR, 0x0000U);
 
-        for (u8Cnt = 0U; u8Cnt < TIMERA_PWM_CHANNEL_NUMBER; u8Cnt++)
+        if ((M4_TMRA3 == TMRAx) || (M4_TMRA4 == TMRAx))
         {
-            TMRA_CMPAR = (__IO uint16_t *)TMRA_CMPARx(TMRAx, u8Cnt);
-            WRITE_REG16(*TMRA_CMPAR, 0xFFFFu);
-            TMRA_CCONR = (__IO uint16_t *)TMRA_CCONRx(TMRAx, u8Cnt);
-            WRITE_REG16(*TMRA_CCONR, 0x0000U);
-            TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, u8Cnt);
-            WRITE_REG16(*TMRA_PCONR, 0x0000U);
-
-            if ((u8Cnt % 2U) == 0U)
-            {
-                TMRA_BCONR = (__IO uint16_t *)TMRA_BCONRx(TMRAx, u8Cnt);
-                WRITE_REG16(*TMRA_BCONR, 0x0000U);
-            }
+            u8ChCnt = TIMERA_PWM_CHANNEL_NUMBER;
+            WRITE_REG16(TMRAx->BCONR, 0x0000U);
         }
-        WRITE_REG16(M0P_AOS->TMRA_HTSSR, TIMERA_TRIG_SRC_MASK);
+        else
+        {
+            u8ChCnt = 1U;
+        }
+
+        for (i = 0U; i < u8ChCnt; i++)
+        {
+            TMRA_CMPAR = (__IO uint16_t *)TMRA_CMPARx(TMRAx, i);
+            WRITE_REG16(*TMRA_CMPAR, 0xFFFFU);
+            TMRA_CCONR = (__IO uint16_t *)TMRA_CCONRx(TMRAx, i);
+            WRITE_REG16(*TMRA_CCONR, 0x0000U);
+            TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, i);
+            WRITE_REG16(*TMRA_PCONR, 0x0000U);
+        }
     }
 
     return enRet;
@@ -389,19 +404,22 @@ en_result_t TIMERA_DeInit(M0P_TMRA_TypeDef *TMRAx)
  * @brief  Initialize TimerA base function.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] pstcInit                Pointer to a @ref stc_timera_init_t structure.
  * @retval An en_result_t enumeration value:
  *           - Ok: Initialize success
  *           - ErrorInvalidParameter: TMRAx is invalid instance or pstcInit == NULL
  */
-en_result_t TIMERA_Init(M0P_TMRA_TypeDef *TMRAx,
-                        const stc_timera_init_t *pstcInit)
+en_result_t TIMERA_Init(M4_TMRA_TypeDef *TMRAx,
+                        stc_timera_init_t *pstcInit)
 {
     en_result_t enRet = Ok;
 
     /* Check TMRAx instance and pstcInit */
-    if ((!IS_TIMERA_INSTANCE(TMRAx)) || (NULL == pstcInit))
+    if ((!IS_TIMERA_NORMAL_INSTANCE(TMRAx)) || (NULL == pstcInit))
     {
         enRet = ErrorInvalidParameter;
     }
@@ -411,6 +429,7 @@ en_result_t TIMERA_Init(M0P_TMRA_TypeDef *TMRAx,
         DDL_ASSERT(0U != pstcInit->u16PeriodVal);
         DDL_ASSERT(IS_TIMERA_COUNT_MODE(pstcInit->u16CountMode));
         DDL_ASSERT(IS_TIMERA_COUNT_DIRECTION(pstcInit->u16CountDir));
+        DDL_ASSERT(IS_TIMERA_SYNC_START(pstcInit->u16SyncStart));
         DDL_ASSERT(IS_TIMERA_CLK_DIV(pstcInit->u16ClkDiv));
         DDL_ASSERT(IS_TIMERA_OVERFLOW_STATE(pstcInit->u16OverflowAction));
         DDL_ASSERT(IS_TIMERA_HWSTART_CONDITION(pstcInit->u16HwStartCondition));
@@ -427,18 +446,34 @@ en_result_t TIMERA_Init(M0P_TMRA_TypeDef *TMRAx,
 
         WRITE_REG16(TMRAx->CNTER, 0U);
         WRITE_REG16(TMRAx->PERAR, pstcInit->u16PeriodVal);
+        if ((M4_TMRA1 == TMRAx) || (M4_TMRA3 == TMRAx))
+        {
+            pstcInit->u16SyncStart = TIMERA_SYNC_START_DISABLE;
+        }
         MODIFY_REG16(TMRAx->BCSTR,
-                     (TMRA_BCSTR_DIR | TMRA_BCSTR_MODE | TMRA_BCSTR_OVSTP | TMRA_BCSTR_CKDIV),
+                     (TMRA_BCSTR_DIR | TMRA_BCSTR_MODE | TMRA_BCSTR_OVSTP |
+                     TMRA_BCSTR_CKDIV | TMRA_BCSTR_SYNST),
                      (pstcInit->u16CountMode | pstcInit->u16CountDir |
-                      pstcInit->u16OverflowAction | pstcInit->u16ClkDiv));
+                      pstcInit->u16OverflowAction | pstcInit->u16ClkDiv |
+                      pstcInit->u16SyncStart));
 
         /* Set External port filter */
+        if ((M4_TMRA1 == TMRAx) || (M4_TMRA2 == TMRAx))
+        {
+            pstcInit->u16ClkBFilterState = TIMERA_CLKB_FILTER_DISABLE;
+            pstcInit->u16ClkBFilterClkDiv = TIMERA_CLKB_CLKDIV_DIV1;
+        }
         WRITE_REG16(TMRAx->FCONR,
                     (pstcInit->u16TrigFilterState | pstcInit->u16TrigFilterClkDiv |
                      pstcInit->u16ClkAFilterState | pstcInit->u16ClkAFilterClkDiv |
                      pstcInit->u16ClkBFilterState | pstcInit->u16ClkBFilterClkDiv));
 
         /* Set hardware trigger event */
+        if ((M4_TMRA1 == TMRAx) || (M4_TMRA2 == TMRAx))
+        {
+            pstcInit->u16HwUpCondition &= ~0x00FFU;
+            pstcInit->u16HwDownCondition &= ~0x00FFU;
+        }
         WRITE_REG16(TMRAx->HCONR,
                     (pstcInit->u16HwStartCondition | pstcInit->u16HwStopCondition |
                      pstcInit->u16HwClearCondition));
@@ -470,6 +505,7 @@ en_result_t TIMERA_StructInit(stc_timera_init_t *pstcInit)
         pstcInit->u16PeriodVal = 0xFFFFu;
         pstcInit->u16CountDir = TIMERA_COUNT_UP;
         pstcInit->u16CountMode = TIMERA_SAWTOOTH_WAVE;
+        pstcInit->u16SyncStart = TIMERA_SYNC_START_DISABLE;
         pstcInit->u16ClkDiv = TIMERA_CLKDIV_DIV1;
         pstcInit->u16OverflowAction = TIMERA_OVERFLOW_COUNT;
         pstcInit->u16HwStartCondition = TIMERA_HWSTART_INVALID;
@@ -492,14 +528,17 @@ en_result_t TIMERA_StructInit(stc_timera_init_t *pstcInit)
  * @brief  Set the TimerA counter value.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Value                Counter value (between 0 and 0xFFFF)
  * @retval None
  */
-void TIMERA_SetCounter(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Value)
+void TIMERA_SetCounter(M4_TMRA_TypeDef *TMRAx, uint16_t u16Value)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
 
     WRITE_REG16(TMRAx->CNTER, u16Value);
 }
@@ -508,13 +547,16 @@ void TIMERA_SetCounter(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Value)
  * @brief  Get the TimerA counter value.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @retval uint16_t                     Counter value (between 0 and 0xFFFF)
  */
-uint16_t TIMERA_GetCounter(M0P_TMRA_TypeDef *TMRAx)
+uint16_t TIMERA_GetCounter(M4_TMRA_TypeDef *TMRAx)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
 
     return READ_REG16(TMRAx->CNTER);
 }
@@ -523,14 +565,17 @@ uint16_t TIMERA_GetCounter(M0P_TMRA_TypeDef *TMRAx)
  * @brief  Set TimerA period register value.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Value                Period value (between 0 and 0xFFFF)
  * @retval None
  */
-void TIMERA_SetPeriod(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Value)
+void TIMERA_SetPeriod(M4_TMRA_TypeDef *TMRAx, uint16_t u16Value)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
 
     WRITE_REG16(TMRAx->PERAR, u16Value);
 }
@@ -539,13 +584,16 @@ void TIMERA_SetPeriod(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Value)
  * @brief  Get TimerA period register value.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @retval uint16_t                     Period value (between 0 and 0xFFFF)
  */
-uint16_t TIMERA_GetPeriod(M0P_TMRA_TypeDef *TMRAx)
+uint16_t TIMERA_GetPeriod(M4_TMRA_TypeDef *TMRAx)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
 
     return READ_REG16(TMRAx->PERAR);
 }
@@ -554,36 +602,70 @@ uint16_t TIMERA_GetPeriod(M0P_TMRA_TypeDef *TMRAx)
  * @brief  Set TimerA clock division.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Div                  TimerA clock division
  *         This parameter can be one of the following values:
- *           @arg TIMERA_CLKDIV_DIV1:   HCLK
- *           @arg TIMERA_CLKDIV_DIV2:   HCLK/2
- *           @arg TIMERA_CLKDIV_DIV4:   HCLK/4
- *           @arg TIMERA_CLKDIV_DIV8:   HCLK/8
- *           @arg TIMERA_CLKDIV_DIV16:  HCLK/16
- *           @arg TIMERA_CLKDIV_DIV32:  HCLK/32
- *           @arg TIMERA_CLKDIV_DIV64:  HCLK/64
- *           @arg TIMERA_CLKDIV_DIV128: HCLK/128
- *           @arg TIMERA_CLKDIV_DIV256: HCLK/256
- *           @arg TIMERA_CLKDIV_DIV512: HCLK/512
- *           @arg TIMERA_CLKDIV_DIV1024:HCLK/1024
+ *           @arg TIMERA_CLKDIV_DIV1:   PCLK1
+ *           @arg TIMERA_CLKDIV_DIV2:   PCLK1/2
+ *           @arg TIMERA_CLKDIV_DIV4:   PCLK1/4
+ *           @arg TIMERA_CLKDIV_DIV8:   PCLK1/8
+ *           @arg TIMERA_CLKDIV_DIV16:  PCLK1/16
+ *           @arg TIMERA_CLKDIV_DIV32:  PCLK1/32
+ *           @arg TIMERA_CLKDIV_DIV64:  PCLK1/64
+ *           @arg TIMERA_CLKDIV_DIV128: PCLK1/128
+ *           @arg TIMERA_CLKDIV_DIV256: PCLK1/256
+ *           @arg TIMERA_CLKDIV_DIV512: PCLK1/512
+ *           @arg TIMERA_CLKDIV_DIV1024:PCLK1/1024
  * @retval None
  */
-void TIMERA_SetClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div)
+void TIMERA_SetClkDiv(M4_TMRA_TypeDef *TMRAx, uint16_t u16Div)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CLK_DIV(u16Div));
 
     MODIFY_REG16(TMRAx->BCSTR, TMRA_BCSTR_CKDIV, u16Div);
 }
 
 /**
- * @brief  Enable or disable TimerA compare match or trigger capture event output.
+ * @brief  Enable or disable TimerA sync start.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
+ * @param  [in] enNewSta                The function new state.
+ *           @arg  This parameter can be: Enable or Disable.
+ * @retval None
+ */
+void TIMERA_SyncStartCmd(M4_TMRA_TypeDef *TMRAx,
+                         en_functional_state_t enNewSta)
+{
+    /* Check parameters */
+    DDL_ASSERT(IS_TIMERA_SYNC_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
+
+    if (Enable == enNewSta)
+    {
+        SET_REG16_BIT(TMRAx->BCSTR, TMRA_BCSTR_SYNST);
+    }
+    else
+    {
+        CLEAR_REG16_BIT(TMRAx->BCSTR, TMRA_BCSTR_SYNST);
+    }
+}
+
+/**
+ * @brief  Enable or disable TimerA compare match or trigger capture event output.
+ * @note   The parameter u16EvtSource in Unit 1 or 2 can only be set to TIMERA_EVENT_CMP1
+ * @param  [in] TMRAx                   Pointer to TimerA instance register base
+ *         This parameter can be one of the following values:
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16EvtSource            TimerA event source
  *         This parameter can be one or any combination of the following values:
  *           @arg TIMERA_EVENT_CMP1: Chanel 1 compare match or trigger capture
@@ -592,11 +674,11 @@ void TIMERA_SetClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div)
  *           @arg  This parameter can be: Enable or Disable.
  * @retval None
  */
-void TIMERA_EventCmd(M0P_TMRA_TypeDef *TMRAx, uint16_t u16EvtSource,
+void TIMERA_EventCmd(M4_TMRA_TypeDef *TMRAx, uint16_t u16EvtSource,
                      en_functional_state_t enNewSta)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_EVENT(u16EvtSource));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
@@ -614,15 +696,18 @@ void TIMERA_EventCmd(M0P_TMRA_TypeDef *TMRAx, uint16_t u16EvtSource,
  * @brief  Enable or disable TimerA.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] enNewSta                The function new state.
  *           @arg  This parameter can be: Enable or Disable.
  * @retval None
  */
-void TIMERA_Cmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta)
+void TIMERA_Cmd(M4_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
     if (Enable == enNewSta)
@@ -639,19 +724,22 @@ void TIMERA_Cmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta)
  * @brief  Set TimerA TRIG Port noise filter clock division.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Div                  TimerA TRIG Port noise filter clock division
  *         This parameter can be one of the following values:
- *           @arg TIMERA_TRIG_CLKDIV_DIV1:   HCLK
- *           @arg TIMERA_TRIG_CLKDIV_DIV4:   HCLK/4
- *           @arg TIMERA_TRIG_CLKDIV_DIV16:  HCLK/16
- *           @arg TIMERA_TRIG_CLKDIV_DIV64:  HCLK/64
+ *           @arg TIMERA_TRIG_CLKDIV_DIV1:   PCLK1
+ *           @arg TIMERA_TRIG_CLKDIV_DIV4:   PCLK1/4
+ *           @arg TIMERA_TRIG_CLKDIV_DIV16:  PCLK1/16
+ *           @arg TIMERA_TRIG_CLKDIV_DIV64:  PCLK1/64
  * @retval None
  */
-void TIMERA_SetTrigFilterClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div)
+void TIMERA_SetTrigFilterClkDiv(M4_TMRA_TypeDef *TMRAx, uint16_t u16Div)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_TRIG_PORT_FILTER_CLKDIV(u16Div));
 
     MODIFY_REG16(TMRAx->FCONR, TMRA_FCONR_NOFICKTG, u16Div);
@@ -661,15 +749,18 @@ void TIMERA_SetTrigFilterClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div)
  * @brief  Enable or disable TimerA TRIG Port noise filter function.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] enNewSta                The function new state.
  *           @arg  This parameter can be: Enable or Disable.
  * @retval None
  */
-void TIMERA_TrigFilterCmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta)
+void TIMERA_TrigFilterCmd(M4_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
     if (Enable == enNewSta)
@@ -686,19 +777,22 @@ void TIMERA_TrigFilterCmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSt
  * @brief  Set TimerA CLKA Port noise filter clock division.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Div                  TimerA CLKA Port noise filter clock division
  *         This parameter can be one of the following values:
- *           @arg TIMERA_CLKA_CLKDIV_DIV1:   HCLK
- *           @arg TIMERA_CLKA_CLKDIV_DIV4:   HCLK/4
- *           @arg TIMERA_CLKA_CLKDIV_DIV16:  HCLK/16
- *           @arg TIMERA_CLKA_CLKDIV_DIV64:  HCLK/64
+ *           @arg TIMERA_CLKA_CLKDIV_DIV1:   PCLK1
+ *           @arg TIMERA_CLKA_CLKDIV_DIV4:   PCLK1/4
+ *           @arg TIMERA_CLKA_CLKDIV_DIV16:  PCLK1/16
+ *           @arg TIMERA_CLKA_CLKDIV_DIV64:  PCLK1/64
  * @retval None
  */
-void TIMERA_SetClkAFilterClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div)
+void TIMERA_SetClkAFilterClkDiv(M4_TMRA_TypeDef *TMRAx, uint16_t u16Div)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CLKA_PORT_FILTER_CLKDIV(u16Div));
 
     MODIFY_REG16(TMRAx->FCONR, TMRA_FCONR_NOFICKCA, u16Div);
@@ -708,15 +802,18 @@ void TIMERA_SetClkAFilterClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div)
  * @brief  Enable or disable TimerA CLKA Port noise filter function.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] enNewSta                The function new state.
  *           @arg  This parameter can be: Enable or Disable.
  * @retval None
  */
-void TIMERA_ClkAFilterCmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta)
+void TIMERA_ClkAFilterCmd(M4_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
     if (Enable == enNewSta)
@@ -733,19 +830,20 @@ void TIMERA_ClkAFilterCmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSt
  * @brief  Set TimerA CLKB Port noise filter clock division.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Div                  TimerA CLKB Port noise filter clock division
  *         This parameter can be one of the following values:
- *           @arg TIMERA_CLKB_CLKDIV_DIV1:   HCLK
- *           @arg TIMERA_CLKB_CLKDIV_DIV4:   HCLK/4
- *           @arg TIMERA_CLKB_CLKDIV_DIV16:  HCLK/16
- *           @arg TIMERA_CLKB_CLKDIV_DIV64:  HCLK/64
+ *           @arg TIMERA_CLKB_CLKDIV_DIV1:   PCLK1
+ *           @arg TIMERA_CLKB_CLKDIV_DIV4:   PCLK1/4
+ *           @arg TIMERA_CLKB_CLKDIV_DIV16:  PCLK1/16
+ *           @arg TIMERA_CLKB_CLKDIV_DIV64:  PCLK1/64
  * @retval None
  */
-void TIMERA_SetClkBFilterClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div)
+void TIMERA_SetClkBFilterClkDiv(M4_TMRA_TypeDef *TMRAx, uint16_t u16Div)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_SPECIAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CLKB_PORT_FILTER_CLKDIV(u16Div));
 
     MODIFY_REG16(TMRAx->FCONR, TMRA_FCONR_NOFICKCB, u16Div);
@@ -755,15 +853,16 @@ void TIMERA_SetClkBFilterClkDiv(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Div)
  * @brief  Enable or disable TimerA CLKB Port noise filter function.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] enNewSta                The function new state.
  *           @arg  This parameter can be: Enable or Disable.
  * @retval None
  */
-void TIMERA_ClkBFilterCmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta)
+void TIMERA_ClkBFilterCmd(M4_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSta)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_SPECIAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
 
@@ -781,7 +880,10 @@ void TIMERA_ClkBFilterCmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSt
  * @brief  Set TimerA hardware trigger counter Start/Stop/Clear condition.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Condition            TimerA hardware start counter condition
  *         This parameter can be one or any combination of the following values:
  *           @arg @ref TIMERA_Hardware_Start_Count_Condition
@@ -789,10 +891,10 @@ void TIMERA_ClkBFilterCmd(M0P_TMRA_TypeDef *TMRAx, en_functional_state_t enNewSt
  *           @arg @ref TIMERA_Hardware_Clear_Count_Condition
  * @retval  None
  */
-void TIMERA_SetHwTriggerCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
+void TIMERA_SetHwTriggerCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_HWTRIGGER_CONDITION(u16Condition));
 
     WRITE_REG16(TMRAx->HCONR, u16Condition);
@@ -802,16 +904,19 @@ void TIMERA_SetHwTriggerCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition
  * @brief  Get TimerA hardware trigger counter Start/Stop/Clear condition.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @retval Returned value can be one or any combination of the following values:
  *           @arg @ref TIMERA_Hardware_Start_Count_Condition
  *           @arg @ref TIMERA_Hardware_Stop_Count_Condition
  *           @arg @ref TIMERA_Hardware_Clear_Count_Condition
  */
-uint16_t TIMERA_GetHwTriggerCondition(M0P_TMRA_TypeDef *TMRAx)
+uint16_t TIMERA_GetHwTriggerCondition(M4_TMRA_TypeDef *TMRAx)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
 
     return READ_REG16(TMRAx->HCONR);
 }
@@ -820,7 +925,10 @@ uint16_t TIMERA_GetHwTriggerCondition(M0P_TMRA_TypeDef *TMRAx)
  * @brief  Set TimerA hardware start counter condition.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Condition            TimerA hardware start counter condition
  *         This parameter can be one or any combination of the following values:
  *           @arg TIMERA_HWSTART_INVALID:       Hardware start is invalid
@@ -829,10 +937,10 @@ uint16_t TIMERA_GetHwTriggerCondition(M0P_TMRA_TypeDef *TMRAx)
  *           @arg TIMERA_HWSTART_SPECIFY_EVT:   Hardware start counter by the timer TMRA_HTSSR specified event
  * @retval  None
  */
-void TIMERA_SetHwStartCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
+void TIMERA_SetHwStartCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_HWSTART_CONDITION(u16Condition));
 
     MODIFY_REG16(TMRAx->HCONR, TIMERA_HCONR_HSTA_MASK, u16Condition);
@@ -842,7 +950,10 @@ void TIMERA_SetHwStartCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
  * @brief  Set TimerA hardware stop counter condition.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Condition            TimerA hardware stop counter condition
  *         This parameter can be one or any combination of the following values:
  *           @arg TIMERA_HWSTOP_INVALID:        Hardware stop is invalid
@@ -851,10 +962,10 @@ void TIMERA_SetHwStartCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
  *           @arg TIMERA_HWSTOP_SPECIFY_EVT:    Hardware stop counter by the timer TMRA_HTSSR specified event
  * @retval  None
  */
-void TIMERA_SetHwStopCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
+void TIMERA_SetHwStopCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_HWSTOP_CONDITION(u16Condition));
 
     MODIFY_REG16(TMRAx->HCONR, TIMERA_HCONR_HSTP_MASK, u16Condition);
@@ -864,19 +975,24 @@ void TIMERA_SetHwStopCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
  * @brief  Set TimerA hardware clear counter condition.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Condition            TimerA hardware clear counter condition
  *         This parameter can be one or any combination of the following values:
- *           @arg TIMERA_HWCLEAR_INVALID:       Hardware clear is invalid
- *           @arg TIMERA_HWCLEAR_TRIG_RISING:   Hardware clear counter by rising edge on timer input TIMA_<t>_TRIG
- *           @arg TIMERA_HWCLEAR_TRIG_FALLING:  Hardware clear counter by falling edge on timer input TIMA_<t>_TRIG
- *           @arg TIMERA_HWCLEAR_SPECIFY_EVT:   Hardware clear counter by the timer TMRA_HTSSR specified event
+ *           @arg TIMERA_HWCLEAR_INVALID:               Hardware clear is invalid
+ *           @arg TIMERA_HWCLEAR_TRIG_RISING:           Hardware clear counter by rising edge on timer input TIMA_<t>_TRIG
+ *           @arg TIMERA_HWCLEAR_TRIG_FALLING:          Hardware clear counter by falling edge on timer input TIMA_<t>_TRIG
+ *           @arg TIMERA_HWCLEAR_SPECIFY_EVT:           Hardware clear counter by the timer TMRA_HTSSR specified event
+ *           @arg TIMERA_HWCLEAR_UNIT_N_TRIG_RISING:    When this unit is m, the TIMA_<t>_TRIG input of unit n is rising edge to trigger the hardware clear count
+ *           @arg TIMERA_HWCLEAR_UNIT_N_TRIG_FALLING:   When this unit is m, the TIMA_<t>_TRIG input of unit n is falling edge to trigger the hardware clear count
  * @retval  None
  */
-void TIMERA_SetHwClearCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
+void TIMERA_SetHwClearCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_HWCLEAR_CONDITION(u16Condition));
 
     MODIFY_REG16(TMRAx->HCONR, TIMERA_HCONR_HCLE_MASK, u16Condition);
@@ -884,9 +1000,15 @@ void TIMERA_SetHwClearCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
 
 /**
  * @brief  Set TimerA hardware up counter condition.
+ * @note   The parameter u16Condition in Unit 1 or 2 can only be set to TIMERA_HWUP_TRIG_RISING
+ *         and TIMERA_HWUP_TRIG_FALLING and TIMERA_HWUP_SPECIFY_EVT
+ *         and TIMERA_HWUP_UNIT_N_COUNT_OVERFLOW and TIMERA_HWUP_UNIT_N_COUNT_UNDERFLOW.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Condition            TimerA hardware up counter condition
  *         This parameter can be one or any combination of the following values:
  *           @arg TIMERA_HWUP_INVALID:                  Hardware count up is invalid
@@ -901,12 +1023,14 @@ void TIMERA_SetHwClearCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
  *           @arg TIMERA_HWUP_TRIG_RISING:              Hardware count up by rising edge on timer input TIMA_<t>_TRIG
  *           @arg TIMERA_HWUP_TRIG_FALLING:             Hardware count up by falling edge on timer input TIMA_<t>_TRIG
  *           @arg TIMERA_HWUP_SPECIFY_EVT:              Hardware count up by the timer TMRA_HTSSR specified event
+ *           @arg TIMERA_HWUP_UNIT_N_COUNT_OVERFLOW:    When this unit is m, unit n generates a count overflow to trigger hardware count up
+ *           @arg TIMERA_HWUP_UNIT_N_COUNT_UNDERFLOW:   When this unit is m, unit n generates a count underflow to trigger hardware count up
  * @retval  None
  */
-void TIMERA_SetHwUpCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
+void TIMERA_SetHwUpCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_HWUP_CONDITION(u16Condition));
 
     WRITE_REG16(TMRAx->HCUPR, u16Condition);
@@ -916,7 +1040,10 @@ void TIMERA_SetHwUpCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
  * @brief  Get TimerA hardware up counter condition.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @retval Returned value can be one or any combination of the following values:
  *           @arg TIMERA_HWUP_INVALID:                  Hardware count up is invalid
  *           @arg TIMERA_HWUP_CLKA_LOW_CLKB_RISING:     Hardware count up by rising edge on timer input TIMA_<t>_CLKB when TIMA_<t>_CLKA is low level
@@ -930,20 +1057,28 @@ void TIMERA_SetHwUpCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
  *           @arg TIMERA_HWUP_TRIG_RISING:              Hardware count up by rising edge on timer input TIMA_<t>_TRIG
  *           @arg TIMERA_HWUP_TRIG_FALLING:             Hardware count up by falling edge on timer input TIMA_<t>_TRIG
  *           @arg TIMERA_HWUP_SPECIFY_EVT:              Hardware count up by the timer TMRA_HTSSR specified event
+ *           @arg TIMERA_HWUP_UNIT_N_COUNT_OVERFLOW:    When this unit is m, unit n generates a count overflow to trigger hardware count up
+ *           @arg TIMERA_HWUP_UNIT_N_COUNT_UNDERFLOW:   When this unit is m, unit n generates a count underflow to trigger hardware count up
  */
-uint16_t TIMERA_GetHwUpCondition(M0P_TMRA_TypeDef *TMRAx)
+uint16_t TIMERA_GetHwUpCondition(M4_TMRA_TypeDef *TMRAx)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
 
     return READ_REG16(TMRAx->HCUPR);
 }
 
 /**
  * @brief  Set TimerA hardware down counter condition.
+ * @note   The parameter u16Condition in Unit 1 or 2 can only be set to TIMERA_HWDOWN_TRIG_RISING
+ *         and TIMERA_HWDOWN_TRIG_FALLING and TIMERA_HWDOWN_SPECIFY_EVT
+ *         and TIMERA_HWDOWN_UNIT_N_COUNT_OVERFLOW and TIMERA_HWDOWN_UNIT_N_COUNT_UNDERFLOW.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16Condition            TimerA hardware down counter condition
  *         This parameter can be one or any combination of the following values:
  *           @arg TIMERA_HWDOWN_INVALID:                  Hardware count down is invalid
@@ -958,12 +1093,14 @@ uint16_t TIMERA_GetHwUpCondition(M0P_TMRA_TypeDef *TMRAx)
  *           @arg TIMERA_HWDOWN_TRIG_RISING:              Hardware count down by rising edge on timer input TIMA_<t>_TRIG
  *           @arg TIMERA_HWDOWN_TRIG_FALLING:             Hardware count down by falling edge on timer input TIMA_<t>_TRIG
  *           @arg TIMERA_HWDOWN_SPECIFY_EVT:              Hardware count down by the timer TMRA_HTSSR specified event
+ *           @arg TIMERA_HWDOWN_UNIT_N_COUNT_OVERFLOW:    When this unit is m, unit n generates a count overflow to trigger hardware count down
+ *           @arg TIMERA_HWDOWN_UNIT_N_COUNT_UNDERFLOW:   When this unit is m, unit n generates a count underflow to trigger the hardware count down
  * @retval  None
  */
-void TIMERA_SetHwDownCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
+void TIMERA_SetHwDownCondition(M4_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_HWDOWN_CONDITION(u16Condition));
 
     WRITE_REG16(TMRAx->HCDOR, u16Condition);
@@ -973,7 +1110,10 @@ void TIMERA_SetHwDownCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
  * @brief  Get TimerA hardware down counter condition.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @retval Returned value can be one or any combination of the following values:
  *           @arg TIMERA_HWDOWN_INVALID:                  Hardware count down is invalid
  *           @arg TIMERA_HWDOWN_CLKA_LOW_CLKB_RISING:     Hardware count down by rising edge on timer input TIMA_<t>_CLKB when TIMA_<t>_CLKA is low level
@@ -987,20 +1127,26 @@ void TIMERA_SetHwDownCondition(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Condition)
  *           @arg TIMERA_HWDOWN_TRIG_RISING:              Hardware count down by rising edge on timer input TIMA_<t>_TRIG
  *           @arg TIMERA_HWDOWN_TRIG_FALLING:             Hardware count down by falling edge on timer input TIMA_<t>_TRIG
  *           @arg TIMERA_HWDOWN_SPECIFY_EVT:              Hardware count down by the timer TMRA_HTSSR specified event
+ *           @arg TIMERA_HWDOWN_UNIT_N_COUNT_OVERFLOW:    When this unit is m, unit n generates a count overflow to trigger hardware count down
+ *           @arg TIMERA_HWDOWN_UNIT_N_COUNT_UNDERFLOW:   When this unit is m, unit n generates a count underflow to trigger the hardware count down
  */
-uint16_t TIMERA_GetHwDownCondition(M0P_TMRA_TypeDef *TMRAx)
+uint16_t TIMERA_GetHwDownCondition(M4_TMRA_TypeDef *TMRAx)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
 
     return READ_REG16(TMRAx->HCDOR);
 }
 
 /**
  * @brief  De-Initialize TimerA unit input capture.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA input capture channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1009,16 +1155,15 @@ uint16_t TIMERA_GetHwDownCondition(M0P_TMRA_TypeDef *TMRAx)
  *           - Ok: De-Initialize success
  *           - ErrorInvalidParameter: TMRAx is invalid instance
  */
-en_result_t TIMERA_IC_DeInit(M0P_TMRA_TypeDef *TMRAx,
+en_result_t TIMERA_IC_DeInit(M4_TMRA_TypeDef *TMRAx,
                              uint8_t u8Channel)
 {
     __IO uint16_t *TMRA_CMPAR;
-    __IO uint16_t *TMRA_BCONR;
     __IO uint16_t *TMRA_CCONR;
     en_result_t enRet = Ok;
 
     /* Check TMRAx instance */
-    if (!IS_TIMERA_INSTANCE(TMRAx))
+    if (!IS_TIMERA_NORMAL_INSTANCE(TMRAx))
     {
         enRet = ErrorInvalidParameter;
     }
@@ -1029,15 +1174,9 @@ en_result_t TIMERA_IC_DeInit(M0P_TMRA_TypeDef *TMRAx,
 
         /* Configures the registers to reset value. */
         TMRA_CMPAR = (__IO uint16_t *)TMRA_CMPARx(TMRAx, u8Channel);
-        WRITE_REG16(*TMRA_CMPAR, 0xFFFFu);
+        WRITE_REG16(*TMRA_CMPAR, 0xFFFFU);
         TMRA_CCONR = (__IO uint16_t *)TMRA_CCONRx(TMRAx, u8Channel);
         WRITE_REG16(*TMRA_CCONR, TIMERA_INPUT_CAPTURE);
-
-        if ((u8Channel % 2U) == 0U)
-        {
-            TMRA_BCONR = (__IO uint16_t *)TMRA_BCONRx(TMRAx, u8Channel);
-            WRITE_REG16(*TMRA_BCONR, 0x0000U);
-        }
     }
 
     return enRet;
@@ -1045,9 +1184,13 @@ en_result_t TIMERA_IC_DeInit(M0P_TMRA_TypeDef *TMRAx,
 
 /**
  * @brief  Initialize TimerA input capture function.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA input capture channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1057,14 +1200,14 @@ en_result_t TIMERA_IC_DeInit(M0P_TMRA_TypeDef *TMRAx,
  *           - Ok: Initialize success
  *           - ErrorInvalidParameter: TMRAx is invalid instance or pstcIcInit == NULL
  */
-en_result_t TIMERA_IC_Init(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
+en_result_t TIMERA_IC_Init(M4_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
                            const stc_timera_ic_init_t *pstcIcInit)
 {
     __IO uint16_t *TMRA_CCONR;
     en_result_t enRet = Ok;
 
     /* Check TMRAx instance and pstcIcInit */
-    if ((!IS_TIMERA_INSTANCE(TMRAx)) || (NULL == pstcIcInit))
+    if ((!IS_TIMERA_NORMAL_INSTANCE(TMRAx)) || (NULL == pstcIcInit))
     {
         enRet = ErrorInvalidParameter;
     }
@@ -1078,8 +1221,8 @@ en_result_t TIMERA_IC_Init(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
 
         TMRA_CCONR = (__IO uint16_t *)TMRA_CCONRx(TMRAx, u8Channel);
         MODIFY_REG16(*TMRA_CCONR,
-                     (TMRA_CCONR1_NOFIENCP | TMRA_CCONR1_NOFICKCP |
-                      TMRA_CCONR1_CAPMD | TIMERA_CCONR_HICP_MASK),
+                     (TMRA_CCONR_NOFIENCP | TMRA_CCONR_NOFICKCP |
+                      TMRA_CCONR_CAPMD | TIMERA_CCONR_HICP_MASK),
                      (TIMERA_INPUT_CAPTURE | pstcIcInit->u16CaptureCondition |
                       pstcIcInit->u16PwmFilterState | pstcIcInit->u16PwmFilterClkDiv));
     }
@@ -1113,22 +1256,26 @@ en_result_t TIMERA_IC_StructInit(stc_timera_ic_init_t *pstcIcInit)
 
 /**
  * @brief  Get TimerA capture register value.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA input capture channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
              @arg TIMERA_CHANNEL_CH2:   TimerA PWM Channel 2
  * @retval Compare value (between 0 and 0xFFFF)
  */
-uint16_t TIMERA_IC_GetCapture(M0P_TMRA_TypeDef *TMRAx,
+uint16_t TIMERA_IC_GetCapture(M4_TMRA_TypeDef *TMRAx,
                               uint8_t u8Channel)
 {
     __IO uint16_t *TMRA_CMPAR;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CHANNEL(u8Channel));
 
     /* Configures the registers to reset value. */
@@ -1138,9 +1285,13 @@ uint16_t TIMERA_IC_GetCapture(M0P_TMRA_TypeDef *TMRAx,
 
 /**
  * @brief  Set TimerA input capture condition.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA input capture channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1153,14 +1304,14 @@ uint16_t TIMERA_IC_GetCapture(M0P_TMRA_TypeDef *TMRAx,
  *           @arg TIMERA_IC_INVALID:        Don't occur capture action
  * @retval None
  */
-void TIMERA_IC_SetCaptureCondition(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_IC_SetCaptureCondition(M4_TMRA_TypeDef *TMRAx,
                                    uint8_t u8Channel,
                                    uint16_t u16Condition)
 {
     __IO uint16_t *TMRA_CCONR;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CHANNEL(u8Channel));
     DDL_ASSERT(IS_TIMERA_IC_CAPTURE_CONDITION(u16Condition));
 
@@ -1170,9 +1321,13 @@ void TIMERA_IC_SetCaptureCondition(M0P_TMRA_TypeDef *TMRAx,
 
 /**
  * @brief  Enable or Disable TimerA input capture noise filter function.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA input capture channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1181,63 +1336,71 @@ void TIMERA_IC_SetCaptureCondition(M0P_TMRA_TypeDef *TMRAx,
  *           @arg  This parameter can be: Enable or Disable.
  * @retval None
  */
-void TIMERA_IC_FilterCmd(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
+void TIMERA_IC_FilterCmd(M4_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
                          en_functional_state_t enNewSta)
 {
     __IO uint16_t *TMRA_CCONR;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CHANNEL(u8Channel));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
     TMRA_CCONR = (__IO uint16_t *)TMRA_CCONRx(TMRAx, u8Channel);
     if (Enable == enNewSta)
     {
-        SET_REG16_BIT(*TMRA_CCONR, TMRA_CCONR1_NOFIENCP);
+        SET_REG16_BIT(*TMRA_CCONR, TMRA_CCONR_NOFIENCP);
     }
     else
     {
-        CLEAR_REG16_BIT(*TMRA_CCONR, TMRA_CCONR1_NOFIENCP);
+        CLEAR_REG16_BIT(*TMRA_CCONR, TMRA_CCONR_NOFIENCP);
     }
 }
 
 /**
  * @brief  Set TimerA PWM Port input capture noise filter clock division.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA input capture channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
              @arg TIMERA_CHANNEL_CH2:   TimerA PWM Channel 2
  * @param  [in] u16Div                  TimerA input capture noise filter clock division
  *         This parameter can be one of the following values:
- *           @arg TIMERA_IC_PWM_CLKDIV_DIV1:    HCLK
- *           @arg TIMERA_IC_PWM_CLKDIV_DIV4:    HCLK/4
- *           @arg TIMERA_IC_PWM_CLKDIV_DIV16:   HCLK/16
- *           @arg TIMERA_IC_PWM_CLKDIV_DIV64:   HCLK/64
+ *           @arg TIMERA_IC_PWM_CLKDIV_DIV1:    PCLK1
+ *           @arg TIMERA_IC_PWM_CLKDIV_DIV4:    PCLK1/4
+ *           @arg TIMERA_IC_PWM_CLKDIV_DIV16:   PCLK1/16
+ *           @arg TIMERA_IC_PWM_CLKDIV_DIV64:   PCLK1/64
  * @retval None
  */
-void TIMERA_IC_SetFilterClkDiv(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_IC_SetFilterClkDiv(M4_TMRA_TypeDef *TMRAx,
                                uint8_t u8Channel, uint16_t u16Div)
 {
     __IO uint16_t *TMRA_CCONR;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CHANNEL(u8Channel));
     DDL_ASSERT(IS_TIMERA_IC_PWM_PORT_FILTER_CLKDIV(u16Div));
 
     TMRA_CCONR = (__IO uint16_t *)TMRA_CCONRx(TMRAx, u8Channel);
-    MODIFY_REG16(*TMRA_CCONR, TMRA_CCONR1_NOFICKCP, u16Div);
+    MODIFY_REG16(*TMRA_CCONR, TMRA_CCONR_NOFICKCP, u16Div);
 }
 
 /**
  * @brief  De-Initialize TimerA unit output compare.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA output compare channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1246,17 +1409,16 @@ void TIMERA_IC_SetFilterClkDiv(M0P_TMRA_TypeDef *TMRAx,
  *           - Ok: De-Initialize success
  *           - ErrorInvalidParameter: TMRAx is invalid instance
  */
-en_result_t TIMERA_OC_DeInit(M0P_TMRA_TypeDef *TMRAx,
+en_result_t TIMERA_OC_DeInit(M4_TMRA_TypeDef *TMRAx,
                              uint8_t u8Channel)
 {
     __IO uint16_t *TMRA_CMPAR;
-    __IO uint16_t *TMRA_BCONR;
     __IO uint16_t *TMRA_CCONR;
     __IO uint16_t *TMRA_PCONR;
     en_result_t enRet = Ok;
 
     /* Check TMRAx instance */
-    if (!IS_TIMERA_INSTANCE(TMRAx))
+    if (!IS_TIMERA_NORMAL_INSTANCE(TMRAx))
     {
         enRet = ErrorInvalidParameter;
     }
@@ -1267,16 +1429,18 @@ en_result_t TIMERA_OC_DeInit(M0P_TMRA_TypeDef *TMRAx,
 
         /* Configures the registers to reset value. */
         TMRA_CMPAR = (__IO uint16_t *)TMRA_CMPARx(TMRAx, u8Channel);
-        WRITE_REG16(*TMRA_CMPAR, 0xFFFFu);
+        WRITE_REG16(*TMRA_CMPAR, 0xFFFFU);
         TMRA_CCONR = (__IO uint16_t *)TMRA_CCONRx(TMRAx, u8Channel);
-        WRITE_REG16(*TMRA_CCONR, TIMERA_OUTPUT_COMPARE);
+        CLEAR_REG16_BIT(*TMRA_CCONR, TMRA_CCONR_CAPMD);
         TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, u8Channel);
         WRITE_REG16(*TMRA_PCONR, 0x0000U);
 
-        if ((u8Channel % 2U) == 0U)
+        if ((M4_TMRA3 == TMRAx) || (M4_TMRA4 == TMRAx))
         {
-            TMRA_BCONR = (__IO uint16_t *)TMRA_BCONRx(TMRAx, u8Channel);
-            WRITE_REG16(*TMRA_BCONR, 0x0000U);
+            if (TIMERA_CHANNEL_CH1 == u8Channel)
+            {
+                WRITE_REG16(TMRAx->BCONR, 0x0000U);
+            }
         }
     }
 
@@ -1285,9 +1449,13 @@ en_result_t TIMERA_OC_DeInit(M0P_TMRA_TypeDef *TMRAx,
 
 /**
  * @brief  Initialize TimerA output compare function.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA output compare channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1297,17 +1465,16 @@ en_result_t TIMERA_OC_DeInit(M0P_TMRA_TypeDef *TMRAx,
  *           - Ok: Initialize success
  *           - ErrorInvalidParameter: TMRAx is invalid instance or pstcOcInit == NULL
  */
-en_result_t TIMERA_OC_Init(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
+en_result_t TIMERA_OC_Init(M4_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
                            const stc_timera_oc_init_t *pstcOcInit)
 {
     __IO uint16_t *TMRA_CMPAR;
-    __IO uint16_t *TMRA_BCONR;
     __IO uint16_t *TMRA_CCONR;
     __IO uint16_t *TMRA_PCONR;
     en_result_t enRet = Ok;
 
     /* Check TMRAx instance and pstcOcInit */
-    if ((!IS_TIMERA_INSTANCE(TMRAx)) || (NULL == pstcOcInit))
+    if ((!IS_TIMERA_NORMAL_INSTANCE(TMRAx)) || (NULL == pstcOcInit))
     {
         enRet = ErrorInvalidParameter;
     }
@@ -1327,20 +1494,21 @@ en_result_t TIMERA_OC_Init(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
         WRITE_REG16(*TMRA_CMPAR, pstcOcInit->u16CompareVal);
         /* Configure output compare */
         TMRA_CCONR = (__IO uint16_t *)TMRA_CCONRx(TMRAx, u8Channel);
-        CLEAR_REG16_BIT(*TMRA_CCONR, TMRA_CCONR1_CAPMD);
-
+        CLEAR_REG16_BIT(*TMRA_CCONR, TMRA_CCONR_CAPMD);
         TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, u8Channel);
         MODIFY_REG16(*TMRA_PCONR,
-                     (TMRA_PCONR1_STAC | TMRA_PCONR1_STPC | TMRA_PCONR1_CMPC |
-                      TMRA_PCONR1_PERC | TMRA_PCONR1_FORC),
+                     (TMRA_PCONR_STAC | TMRA_PCONR_STPC | TMRA_PCONR_CMPC |
+                      TMRA_PCONR_PERC | TMRA_PCONR_FORC),
                      (pstcOcInit->u16StartCountOutput | pstcOcInit->u16StopCountOutput |
                       pstcOcInit->u16CompareMatchOutput | pstcOcInit->u16PeriodMatchOutput |
                       pstcOcInit->u16PortOutputState));
 
-        if ((u8Channel % 2U) == 0U)
+        if ((M4_TMRA3 == TMRAx) || (M4_TMRA4 == TMRAx))
         {
-            TMRA_BCONR = (__IO uint16_t *)TMRA_BCONRx(TMRAx, u8Channel);
-            WRITE_REG16(*TMRA_BCONR, (pstcOcInit->u16CacheState | pstcOcInit->u16CacheTransmitCondition));
+            if (TIMERA_CHANNEL_CH1 == u8Channel)
+            {
+                WRITE_REG16(TMRAx->BCONR, (pstcOcInit->u16CacheState | pstcOcInit->u16CacheTransmitCondition));
+            }
         }
     }
 
@@ -1378,9 +1546,13 @@ en_result_t TIMERA_OC_StructInit(stc_timera_oc_init_t *pstcOcInit)
 
 /**
  * @brief  Set TimerA compare register value.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA output compare channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1388,13 +1560,13 @@ en_result_t TIMERA_OC_StructInit(stc_timera_oc_init_t *pstcOcInit)
  * @param  [in] u16Value Compare value (between 0 and 0xFFFF)
  * @retval None
  */
-void TIMERA_OC_SetCompare(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
+void TIMERA_OC_SetCompare(M4_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
                           uint16_t u16Value)
 {
     __IO uint16_t *TMRA_CMPAR;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CHANNEL(u8Channel));
 
     TMRA_CMPAR = (__IO uint16_t *)TMRA_CMPARx(TMRAx, u8Channel);
@@ -1403,9 +1575,13 @@ void TIMERA_OC_SetCompare(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
 
 /**
  * @brief  Enable or Disable TimerA PWM output function.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA output compare channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1414,32 +1590,36 @@ void TIMERA_OC_SetCompare(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
  *           @arg  This parameter can be: Enable or Disable.
  * @retval None
  */
-void TIMERA_OC_PwmCmd(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
+void TIMERA_OC_PwmCmd(M4_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
                       en_functional_state_t enNewSta)
 {
     __IO uint16_t *TMRA_PCONR;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CHANNEL(u8Channel));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
     TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, u8Channel);
     if (Enable == enNewSta)
     {
-        SET_REG16_BIT(*TMRA_PCONR, TMRA_PCONR1_OUTEN);
+        SET_REG16_BIT(*TMRA_PCONR, TMRA_PCONR_OUTEN);
     }
     else
     {
-        CLEAR_REG16_BIT(*TMRA_PCONR, TMRA_PCONR1_OUTEN);
+        CLEAR_REG16_BIT(*TMRA_PCONR, TMRA_PCONR_OUTEN);
     }
 }
 
 /**
  * @brief  Set TIMA_<t>_PWMn port output polarity when start count.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA output compare channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1451,26 +1631,30 @@ void TIMERA_OC_PwmCmd(M0P_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
  *           @arg TIMERA_OC_STARTCOUNT_OUTPUT_HOLD: TIMA_<t>_PWMn output hold level when TimerA start count
  * @retval None
  */
-void TIMERA_OC_SetStartCountOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_OC_SetStartCountOutputPolarity(M4_TMRA_TypeDef *TMRAx,
                                            uint8_t u8Channel,
                                            uint16_t u16Polarity)
 {
     __IO uint16_t *TMRA_PCONR;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CHANNEL(u8Channel));
     DDL_ASSERT(IS_TIMERA_OC_START_COUNT_OUTPUT_POLARITY(u16Polarity));
 
     TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, u8Channel);
-    MODIFY_REG16(*TMRA_PCONR, TMRA_PCONR1_STAC, u16Polarity);
+    MODIFY_REG16(*TMRA_PCONR, TMRA_PCONR_STAC, u16Polarity);
 }
 
 /**
  * @brief  Set TIMA_<t>_PWMn port output polarity for stop count.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA output compare channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1482,26 +1666,30 @@ void TIMERA_OC_SetStartCountOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
  *           @arg TIMERA_OC_STOPCOUNT_OUTPUT_HOLD:  TIMA_<t>_PWMn output hold level when TimerA stop count
  * @retval None
  */
-void TIMERA_OC_SetStopCountOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_OC_SetStopCountOutputPolarity(M4_TMRA_TypeDef *TMRAx,
                                           uint8_t u8Channel,
                                           uint16_t u16Polarity)
 {
     __IO uint16_t *TMRA_PCONR;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CHANNEL(u8Channel));
     DDL_ASSERT(IS_TIMERA_OC_STOP_COUNT_OUTPUT_POLARITY(u16Polarity));
 
     TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, u8Channel);
-    MODIFY_REG16(*TMRA_PCONR, TMRA_PCONR1_STPC, u16Polarity);
+    MODIFY_REG16(*TMRA_PCONR, TMRA_PCONR_STPC, u16Polarity);
 }
 
 /**
  * @brief  Set TIMA_<t>_PWMn port output polarity for compare match.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA output compare channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1514,26 +1702,30 @@ void TIMERA_OC_SetStopCountOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
  *           @arg TIMERA_OC_CMPMATCH_OUTPUT_INVERTED:   TIMA_<t>_PWMn output inverted level when TimerA comapre match
  * @retval None
  */
-void TIMERA_OC_SetCmpMatchOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_OC_SetCmpMatchOutputPolarity(M4_TMRA_TypeDef *TMRAx,
                                          uint8_t u8Channel,
                                          uint16_t u16Polarity)
 {
     __IO uint16_t *TMRA_PCONR;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CHANNEL(u8Channel));
     DDL_ASSERT(IS_TIMERA_OC_CMPMATCH_OUTPUT_POLARITY(u16Polarity));
 
     TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, u8Channel);
-    MODIFY_REG16(*TMRA_PCONR, TMRA_PCONR1_CMPC, u16Polarity);
+    MODIFY_REG16(*TMRA_PCONR, TMRA_PCONR_CMPC, u16Polarity);
 }
 
 /**
  * @brief  Set TIMA_<t>_PWMn port output polarity for period match.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA output compare channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1546,26 +1738,30 @@ void TIMERA_OC_SetCmpMatchOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
  *           @arg TIMERA_OC_PERIODMATCH_OUTPUT_INVERTED:    TIMA_<t>_PWMn output inverted level when TimerA period match
  * @retval None
  */
-void TIMERA_OC_SetPeriodMatchOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_OC_SetPeriodMatchOutputPolarity(M4_TMRA_TypeDef *TMRAx,
                                             uint8_t u8Channel,
                                             uint16_t u16Polarity)
 {
     __IO uint16_t *TMRA_PCONR;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CHANNEL(u8Channel));
     DDL_ASSERT(IS_TIMERA_OC_PERIODMATCH_OUTPUT_POLARITY(u16Polarity));
 
     TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, u8Channel);
-    MODIFY_REG16(*TMRA_PCONR, TMRA_PCONR1_PERC, u16Polarity);
+    MODIFY_REG16(*TMRA_PCONR, TMRA_PCONR_PERC, u16Polarity);
 }
 
 /**
  * @brief  Set TIMA_<t>_PWMn port output polarity for force.
+ * @note   The parameter u8Channel in Unit 1 or 2 can only be set to TIMERA_CHANNEL_CH1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA output compare channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1577,26 +1773,27 @@ void TIMERA_OC_SetPeriodMatchOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
  *           @arg TIMERA_OC_FORCE_OUTPUT_INVALID:   Force invalid
  * @retval None
  */
-void TIMERA_OC_SetForceOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_OC_SetForceOutputPolarity(M4_TMRA_TypeDef *TMRAx,
                                       uint8_t u8Channel,
                                       uint16_t u16Polarity)
 {
     __IO uint16_t *TMRA_PCONR;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_CHANNEL(u8Channel));
     DDL_ASSERT(IS_TIMERA_OC_FORCE_OUTPUT_POLARITY(u16Polarity));
 
     TMRA_PCONR = (__IO uint16_t *)TMRA_PCONRx(TMRAx, u8Channel);
-    MODIFY_REG16(*TMRA_PCONR, TMRA_PCONR1_FORC, u16Polarity);
+    MODIFY_REG16(*TMRA_PCONR, TMRA_PCONR_FORC, u16Polarity);
 }
 
 /**
  * @brief  Enable or Disable TimerA PWM output cache function.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA output compare channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1606,11 +1803,10 @@ void TIMERA_OC_SetForceOutputPolarity(M0P_TMRA_TypeDef *TMRAx,
  *           - Ok: Configure success
  *           - ErrorInvalidParameter: u8Channel is invalid
  */
-en_result_t TIMERA_OC_CacheCmd(M0P_TMRA_TypeDef *TMRAx,
+en_result_t TIMERA_OC_CacheCmd(M4_TMRA_TypeDef *TMRAx,
                                uint8_t u8Channel,
                                en_functional_state_t enNewSta)
 {
-    __IO uint16_t *TMRA_BCONRx;
     en_result_t enRet = Ok;
 
     /* Check channel validity */
@@ -1621,18 +1817,17 @@ en_result_t TIMERA_OC_CacheCmd(M0P_TMRA_TypeDef *TMRAx,
     else
     {
         /* Check parameters */
-        DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+        DDL_ASSERT(IS_TIMERA_SPECIAL_INSTANCE(TMRAx));
         DDL_ASSERT(IS_TIMERA_CACHE_CHANNEL(u8Channel));
         DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
-        TMRA_BCONRx = (__IO uint16_t *)TMRA_BCONRx(TMRAx, u8Channel);
         if (Enable == enNewSta)
         {
-            SET_REG16_BIT(*TMRA_BCONRx, TMRA_BCONR_BEN);
+            SET_REG16_BIT(TMRAx->BCONR, TMRA_BCONR_BEN);
         }
         else
         {
-            CLEAR_REG16_BIT(*TMRA_BCONRx, TMRA_BCONR_BEN);
+            CLEAR_REG16_BIT(TMRAx->BCONR, TMRA_BCONR_BEN);
         }
     }
 
@@ -1643,7 +1838,8 @@ en_result_t TIMERA_OC_CacheCmd(M0P_TMRA_TypeDef *TMRAx,
  * @brief  Set TimerA PWM output cache transmit condition.
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u8Channel               TimerA output compare channel
            This parameter can be one of the following values:
              @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
@@ -1656,11 +1852,10 @@ en_result_t TIMERA_OC_CacheCmd(M0P_TMRA_TypeDef *TMRAx,
  *           - Ok: Configure success
  *           - ErrorInvalidParameter: u8Channel is invalid
  */
-en_result_t TIMERA_OC_SetCacheTransmitCondition(M0P_TMRA_TypeDef *TMRAx,
+en_result_t TIMERA_OC_SetCacheTransmitCondition(M4_TMRA_TypeDef *TMRAx,
                                                 uint8_t u8Channel,
                                                 uint16_t u16Condition)
 {
-    __IO uint16_t *TMRA_BCONRx;
     en_result_t enRet = Ok;
 
     /* Check channel validity */
@@ -1671,98 +1866,26 @@ en_result_t TIMERA_OC_SetCacheTransmitCondition(M0P_TMRA_TypeDef *TMRAx,
     else
     {
         /* Check parameters */
-        DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+        DDL_ASSERT(IS_TIMERA_SPECIAL_INSTANCE(TMRAx));
         DDL_ASSERT(IS_TIMERA_CACHE_CHANNEL(u8Channel));
         DDL_ASSERT(IS_TIMERA_OC_CACHE_TRANS_CONDITION(u16Condition));
 
-        TMRA_BCONRx = (__IO uint16_t *)TMRA_BCONRx(TMRAx, u8Channel);
-        MODIFY_REG16(*TMRA_BCONRx, TIMERA_BCONR_BSE_MASK, u16Condition);
+        MODIFY_REG16(TMRAx->BCONR, TIMERA_BCONR_BSE_MASK, u16Condition);
     }
 
     return enRet;
 }
 
 /**
- * @brief  Get TimerA flag status.
- * @param  [in] TMRAx                   Pointer to TimerA instance register base
- *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
- * @param  [in] u16Flag                 TimerA flag type
- *         This parameter can be one of the following values:
- *           @arg TIMERA_FLAG_OVF:      Overflow flag
- *           @arg TIMERA_FLAG_UDF:      Underflow flag
- *           @arg TIMERA_FLAG_CMP1:     PWM Channel 1 compare match flag
- *           @arg TIMERA_FLAG_CMP2:     PWM Channel 2 compare match flag
- * @retval An en_flag_status_t enumeration value:
- *           - Set: Flag is set
- *           - Reset: Flag is reset
- */
-en_flag_status_t TIMERA_GetFlag(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Flag)
-{
-    en_flag_status_t enFlag = Reset;
-
-    /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
-    DDL_ASSERT(IS_TIMERA_GET_FLAG(u16Flag));
-
-    switch (u16Flag)
-    {
-        case TIMERA_FLAG_OVF:
-        case TIMERA_FLAG_UDF:
-            enFlag = (READ_BIT(TMRAx->BCSTR, u16Flag)) ? Set : Reset;
-            break;
-        case TIMERA_FLAG_CMP1:
-        case TIMERA_FLAG_CMP2:
-            enFlag = (READ_BIT(TMRAx->STFLR, u16Flag)) ? Set : Reset;
-            break;
-        default:
-            break;
-    }
-
-    return enFlag;
-}
-
-/**
- * @brief  Clear TimerA flag.
- * @param  [in] TMRAx                   Pointer to TimerA instance register base
- *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
- * @param  [in] u16Flag                 TimerA flag type
- *         This parameter can be one or any combination of the following values:
- *           @arg TIMERA_FLAG_OVF:      Overflow flag
- *           @arg TIMERA_FLAG_UDF:      Underflow flag
- *           @arg TIMERA_FLAG_CMP1:     PWM Channel 1 compare match flag
- *           @arg TIMERA_FLAG_CMP2:     PWM Channel 2 compare match flag
- * @retval None
- */
-void TIMERA_ClearFlag(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Flag)
-{
-    uint16_t u16Tmp;
-
-    /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
-    DDL_ASSERT(IS_TIMERA_CLEAR_FLAG(u16Flag));
-
-    /* OVF and UDF flag */
-    u16Tmp = u16Flag & 0xFF00U;
-    if (0U != u16Tmp)
-    {
-        CLEAR_REG16_BIT(TMRAx->BCSTR, u16Tmp);
-    }
-
-    /* Count match flag */
-    u16Tmp = u16Flag & 0x00FFu;
-    if (0U != u16Tmp)
-    {
-        CLEAR_REG16_BIT(TMRAx->STFLR, u16Tmp);
-    }
-}
-
-/**
  * @brief  Enable or disable specified TimerA interrupt.
+ * @note   The parameter u16IntSource in Unit 1 or 2 can only be set to TIMERA_INT_OVF
+ *         and TIMERA_INT_UDF and TIMERA_INT_CMP1
  * @param  [in] TMRAx                   Pointer to TimerA instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_TMRA:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
  * @param  [in] u16IntSource            TimerA interrupt source
  *         This parameter can be one or any combination of the following values:
  *           @arg TIMERA_INT_OVF:       Overflow interrupt
@@ -1773,14 +1896,14 @@ void TIMERA_ClearFlag(M0P_TMRA_TypeDef *TMRAx, uint16_t u16Flag)
  *           @arg  This parameter can be: Enable or Disable.
  * @retval None
  */
-void TIMERA_IntCmd(M0P_TMRA_TypeDef *TMRAx,
+void TIMERA_IntCmd(M4_TMRA_TypeDef *TMRAx,
                    uint16_t u16IntSource,
                    en_functional_state_t enNewSta)
 {
     uint16_t u16Tmp;
 
     /* Check parameters */
-    DDL_ASSERT(IS_TIMERA_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
     DDL_ASSERT(IS_TIMERA_INT(u16IntSource));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
@@ -1810,6 +1933,92 @@ void TIMERA_IntCmd(M0P_TMRA_TypeDef *TMRAx,
         {
             CLEAR_REG16_BIT(TMRAx->ICONR, u16Tmp);
         }
+    }
+}
+
+/**
+ * @brief  Get TimerA flag status.
+ * @note   The parameter u16IntSource in Unit 1 or 2 can only be set to TIMERA_FLAG_OVF
+ *         and TIMERA_FLAG_UDF and TIMERA_FLAG_CMP1
+ * @param  [in] TMRAx                   Pointer to TimerA instance register base
+ *         This parameter can be one of the following values:
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
+ * @param  [in] u16Flag                 TimerA flag type
+ *         This parameter can be one of the following values:
+ *           @arg TIMERA_FLAG_OVF:      Overflow flag
+ *           @arg TIMERA_FLAG_UDF:      Underflow flag
+ *           @arg TIMERA_FLAG_CMP1:     PWM Channel 1 compare match flag
+ *           @arg TIMERA_FLAG_CMP2:     PWM Channel 2 compare match flag
+ * @retval An en_flag_status_t enumeration value:
+ *           - Set: Flag is set
+ *           - Reset: Flag is reset
+ */
+en_flag_status_t TIMERA_GetFlag(M4_TMRA_TypeDef *TMRAx, uint16_t u16Flag)
+{
+    en_flag_status_t enFlag = Reset;
+
+    /* Check parameters */
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_GET_FLAG(u16Flag));
+
+    switch (u16Flag)
+    {
+        case TIMERA_FLAG_OVF:
+        case TIMERA_FLAG_UDF:
+            enFlag = (READ_BIT(TMRAx->BCSTR, u16Flag)) ? Set : Reset;
+            break;
+        case TIMERA_FLAG_CMP1:
+        case TIMERA_FLAG_CMP2:
+            enFlag = (READ_BIT(TMRAx->STFLR, u16Flag)) ? Set : Reset;
+            break;
+        default:
+            break;
+    }
+
+    return enFlag;
+}
+
+/**
+ * @brief  Clear TimerA flag.
+ * @note   The parameter u16IntSource in Unit 1 or 2 can only be set to TIMERA_FLAG_OVF
+ *         and TIMERA_FLAG_UDF and TIMERA_FLAG_CMP1
+ * @param  [in] TMRAx                   Pointer to TimerA instance register base
+ *         This parameter can be one of the following values:
+ *           @arg M4_TMRA1:             TimerA unit 1 instance register base
+ *           @arg M4_TMRA2:             TimerA unit 2 instance register base
+ *           @arg M4_TMRA3:             TimerA unit 3 instance register base
+ *           @arg M4_TMRA4:             TimerA unit 4 instance register base
+ * @param  [in] u16Flag                 TimerA flag type
+ *         This parameter can be one or any combination of the following values:
+ *           @arg TIMERA_FLAG_OVF:      Overflow flag
+ *           @arg TIMERA_FLAG_UDF:      Underflow flag
+ *           @arg TIMERA_FLAG_CMP1:     PWM Channel 1 compare match flag
+ *           @arg TIMERA_FLAG_CMP2:     PWM Channel 2 compare match flag
+ * @retval None
+ */
+void TIMERA_ClearFlag(M4_TMRA_TypeDef *TMRAx, uint16_t u16Flag)
+{
+    uint16_t u16Tmp;
+
+    /* Check parameters */
+    DDL_ASSERT(IS_TIMERA_NORMAL_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_CLEAR_FLAG(u16Flag));
+
+    /* OVF and UDF flag */
+    u16Tmp = u16Flag & 0xFF00U;
+    if (0U != u16Tmp)
+    {
+        CLEAR_REG16_BIT(TMRAx->BCSTR, u16Tmp);
+    }
+
+    /* Count match flag */
+    u16Tmp = u16Flag & 0x00FFu;
+    if (0U != u16Tmp)
+    {
+        CLEAR_REG16_BIT(TMRAx->STFLR, u16Tmp);
     }
 }
 

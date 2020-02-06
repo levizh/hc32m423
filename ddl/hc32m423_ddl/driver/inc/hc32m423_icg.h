@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-24       Yangjp          First version
+   2020-02-03       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -370,11 +370,11 @@ extern "C"
 
 /**
  * @defgroup ICG_WDT_LPW_Mode_Count ICG WDT Low Power Mode Count
- * @brief WDT count control in the sleep/stop mode
+ * @brief WDT count control in the sleep mode
  * @{
  */
-#define ICG_WDT_LPW_MODE_COUNT_CONTINUE         ((uint32_t)0x00000000UL)        /*!< WDT count continue in the sleep/stop mode */
-#define ICG_WDT_LPW_MODE_COUNT_STOP             ((uint32_t)ICG_ICG7_WDTSLPOFF)  /*!< WDT count stop in the sleep/stop mode */
+#define ICG_WDT_LPW_MODE_COUNT_CONTINUE         ((uint32_t)0x00000000UL)        /*!< WDT count continue in the sleep mode */
+#define ICG_WDT_LPW_MODE_COUNT_STOP             ((uint32_t)ICG_ICG7_WDTSLPOFF)  /*!< WDT count stop in the sleep mode */
 /**
  * @}
  */

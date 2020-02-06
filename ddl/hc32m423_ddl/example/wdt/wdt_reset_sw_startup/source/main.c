@@ -1,11 +1,11 @@
 /**
  *******************************************************************************
- * @file  timera/timera_phase_difference/source/main.c
- * @brief This example demonstrates TIMERA phase difference function.
+ * @file  wdt/wdt_reset_sw_startup/source/main.c
+ * @brief Main program of WDT Reset for the Device Driver Library.
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-04       Yangjp          First version
+   2019-06-27       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -61,7 +61,7 @@
  */
 
 /**
- * @addtogroup TIMERA_Phase_Difference
+ * @addtogroup WDT_Reset
  * @{
  */
 
@@ -80,34 +80,16 @@
 #define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
 
-/* LED_G Port/Pin definition */
-#define LED_G_PORT                      (GPIO_PORT_A)
-#define LED_G_PIN                       (GPIO_PIN_1)
+/* SW1 Port/Pin definition */
+#define SW1_PORT                        (GPIO_PORT_2)
+#define SW1_PIN                         (GPIO_PIN_2)
 
-#define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
-#define LED_G_OFF()                     (GPIO_SetPins(LED_G_PORT, LED_G_PIN))
-#define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
+/* WDT count cycle definition */
+#define WDT_COUNT_CYCLE                (4096U)
 
-/* TIMERA unit definition */
-#define TIMERA_UNIT1                    (M0P_TMRA)
-#define TIMERA_UNIT1_CLOCK              (CLK_FCG_TIMA)
-#define TIMERA_UNIT1_OVF_INT            (TIMERA_INT_OVF)
-#define TIMERA_UNIT1_OVF_INTn           (INT_TMRA_OVF)
-#define TIMERA_UNIT1_OVF_IRQn           (Int016_IRQn)
-#define TIMERA_UNIT1_UDF_INT            (TIMERA_INT_UDF)
-#define TIMERA_UNIT1_UDF_INTn           (INT_TMRA_UDF)
-#define TIMERA_UNIT1_UDF_IRQn           (Int017_IRQn)
-#define TIMERA_UNIT1_PERIOD_VALUE       (1000U)
-
-/* TIMERA CLKA Port/Pin definition */
-#define TIMERA_UNIT1_CLKA_PORT          (GPIO_PORT_7)
-#define TIMERA_UNIT1_CLKA_PIN           (GPIO_PIN_5)
-#define TIMERA_UNIT1_CLKA_FUNC          (GPIO_FUNC_7_TIMA)
-
-/* TIMERA CLKB Port/Pin definition */
-#define TIMERA_UNIT1_CLKB_PORT          (GPIO_PORT_7)
-#define TIMERA_UNIT1_CLKB_PIN           (GPIO_PIN_4)
-#define TIMERA_UNIT1_CLKB_FUNC          (GPIO_FUNC_7_TIMA)
+/* Reset source definition */
+#define RESET_SOURCE_WDT               (0U)
+#define RESET_SOURCE_OTHER              (1U)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -120,51 +102,88 @@
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
+static uint8_t u8ResetSource;
+static uint8_t u8ExIntFlag = 0U;
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
  ******************************************************************************/
 /**
- * @brief  TIMERA 1 unit overflow interrupt callback function.
+ * @brief  SW1 interrupt callback function.
  * @param  None
  * @retval None
  */
-static void TimeraUnit1Overflow_IrqCallback(void)
+void EXINT02_Handler(void)
 {
-    LED_R_TOGGLE();
-    TIMERA_ClearFlag(TIMERA_UNIT1, TIMERA_FLAG_OVF);
+    if (Set == EXINT_GetExIntSrc(EXINT_CH02))
+    {
+        u8ExIntFlag = 1U;
+        EXINT_ClrExIntSrc(EXINT_CH02);
+    }
 }
 
 /**
- * @brief  TIMERA 1 unit underflow interrupt callback function.
+ * @brief  SW1 configuration.
  * @param  None
  * @retval None
  */
-static void TimeraUnit1Underflow_IrqCallback(void)
-{
-    LED_G_TOGGLE();
-    TIMERA_ClearFlag(TIMERA_UNIT1, TIMERA_FLAG_UDF);
-}
-
-/**
- * @brief  Configure System clock.
- * @param  None
- * @retval None
- */
-static void SystemClk_Config(void)
-{
-    /* Configure the system clock to HRC32MHz. */
-    CLK_HRCInit(CLK_HRC_ON, CLK_HRCFREQ_32);
-}
-
-/**
- * @brief  Configure LED.
- * @param  None
- * @retval None
- */
-static void Led_Config(void)
+static void SW1_Config(void)
 {
     stc_gpio_init_t stcGpioInit;
+    stc_exint_config_t stcExIntInit;
+
+    /* configure structure initialization */
+    GPIO_StructInit(&stcGpioInit);
+    EXINT_StructInit(&stcExIntInit);
+
+    /* External interrupt Ch.2 initialize */
+    stcGpioInit.u16ExInt = PIN_EXINT_ON;
+    GPIO_Init(SW1_PORT, SW1_PIN, &stcGpioInit);
+
+    stcExIntInit.u32ExIntCh     = EXINT_CH02;
+    stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
+    stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV8;
+    stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
+    stcExIntInit.u32ExIntFBTime = NMI_EXINT_FBTIM_2US;
+    stcExIntInit.u32ExIntLvl    = EXINT_TRIGGER_FALLING;
+    EXINT_Init(&stcExIntInit);
+
+    /* Clear pending */
+    NVIC_ClearPendingIRQ(ExInt2_IRQn);
+    /* Set priority */
+    NVIC_SetPriority(ExInt2_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    /* Enable NVIC */
+    NVIC_EnableIRQ(ExInt2_IRQn);
+}
+
+/**
+ * @brief  WDT configuration.
+ * @param  None
+ * @retval None
+ */
+static void WDT_Config(void)
+{
+    stc_wdt_init_t stcWdtInit;
+
+    /* WDT structure parameters configure */
+    stcWdtInit.u32CountCycle = WDT_COUNTER_CYCLE_4096;
+    stcWdtInit.u32ClockDivision = WDT_CLOCK_DIV16;
+    stcWdtInit.u32RefreshRange = WDT_RANGE_0TO25PCT;
+    stcWdtInit.u32LPModeCountEn = WDT_LPW_MODE_COUNT_STOP;
+    stcWdtInit.u32RequestType = WDT_TRIG_EVENT_RESET;
+    WDT_Init(&stcWdtInit);
+}
+
+/**
+ * @brief  Main function of WDT Reset.
+ * @param  None
+ * @retval int32_t return value, if needed
+ */
+int32_t main(void)
+{
+    uint16_t u16CmpVal;
+    stc_gpio_init_t stcGpioInit;
+    stc_rmu_rstcause_t stcRmuRstCause;
 
     /* Configure structure initialization */
     GPIO_StructInit(&stcGpioInit);
@@ -172,83 +191,50 @@ static void Led_Config(void)
     /* LED Port/Pin initialization */
     stcGpioInit.u16PinMode = PIN_MODE_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
-    GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
     LED_R_OFF();
-    LED_G_OFF();
-}
 
-/**
- * @brief  Configure TimerA function.
- * @param  None
- * @retval None
- */
-static void Timera_Config(void)
-{
-    stc_timera_init_t stcTimeraInit;
-    stc_irq_regi_config_t stcIrqRegiConf;
+    /* Get RMU information */
+    RMU_GetResetCause(&stcRmuRstCause);
+    if (Set == stcRmuRstCause.WdtRst)
+    {
+        u8ResetSource = RESET_SOURCE_WDT;
+        LED_R_ON();
+    }
+    else
+    {
+        u8ResetSource = RESET_SOURCE_OTHER;
+    }
+    RMU_ClrResetFlag();
 
-    /* Configuration structure initialization */
-    TIMERA_StructInit(&stcTimeraInit);
-
-    /* Configuration peripheral clock */
-    CLK_FcgPeriphClockCmd(TIMERA_UNIT1_CLOCK, Enable);
-
-    /* Configuration TIMERA capture Port */
-    GPIO_SetFunc(TIMERA_UNIT1_CLKA_PORT, TIMERA_UNIT1_CLKA_PIN, TIMERA_UNIT1_CLKA_FUNC);
-    GPIO_SetFunc(TIMERA_UNIT1_CLKB_PORT, TIMERA_UNIT1_CLKB_PIN, TIMERA_UNIT1_CLKB_FUNC);
-
-    /* Configuration timera 1 unit structure */
-    stcTimeraInit.u16CountMode = TIMERA_SAWTOOTH_WAVE;
-    stcTimeraInit.u16PeriodVal = TIMERA_UNIT1_PERIOD_VALUE;
-    stcTimeraInit.u16ClkAFilterState = TIMERA_CLKA_FILTER_ENABLE;
-    stcTimeraInit.u16ClkAFilterClkDiv = TIMERA_CLKA_CLKDIV_DIV4;
-    stcTimeraInit.u16ClkBFilterState = TIMERA_CLKB_FILTER_ENABLE;
-    stcTimeraInit.u16ClkBFilterClkDiv = TIMERA_CLKB_CLKDIV_DIV4;
-    stcTimeraInit.u16HwUpCondition = TIMERA_HWUP_CLKB_HIGH_CLKA_RISING;
-    stcTimeraInit.u16HwDownCondition = TIMERA_HWDOWN_CLKB_LOW_CLKA_RISING;
-    TIMERA_Init(TIMERA_UNIT1, &stcTimeraInit);
-    TIMERA_IntCmd(TIMERA_UNIT1, TIMERA_INT_OVF | TIMERA_INT_UDF, Enable);
-
-    /* Configuration timera 1 unit overflow interrupt */
-    stcIrqRegiConf.enIntSrc = TIMERA_UNIT1_OVF_INTn;
-    stcIrqRegiConf.enIRQn = TIMERA_UNIT1_OVF_IRQn;
-    stcIrqRegiConf.pfnCallback = &TimeraUnit1Overflow_IrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
-    NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
-    NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
-    NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
-
-    /* Configuration timera 1 unit underflow interrupt */
-    stcIrqRegiConf.enIntSrc = TIMERA_UNIT1_UDF_INTn;
-    stcIrqRegiConf.enIRQn = TIMERA_UNIT1_UDF_IRQn;
-    stcIrqRegiConf.pfnCallback = &TimeraUnit1Underflow_IrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
-    NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
-    NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
-    NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
-
-    /* Start TIMERA counter */
-    TIMERA_Cmd(TIMERA_UNIT1, Enable);
-}
-
-/**
- * @brief  Main function of TIMERA phase difference.
- * @param  None
- * @retval int32_t return value, if needed
- */
-int32_t main(void)
-{
-    /* Configure system clock. */
-    SystemClk_Config();
-
-    /* Configure LED. */
-    Led_Config();
-
-    /* Configure TimerA */
-    Timera_Config();
+    /* WDT configuration */
+    WDT_Config();
+    /* SW1 configuration */
+    SW1_Config();
+    /* First reload counter to start WDT */
+    WDT_ReloadCounter();
+    /* Wait for WDT module to complete initial load */
+    DDL_Delay1ms(200U);
+    /* Count cycle=16384,range=0%-25% */
+    u16CmpVal = WDT_COUNT_CYCLE / 4U;
 
     while (1)
     {
+        if (1U == u8ExIntFlag)
+        {
+            u8ExIntFlag = 0U;
+            u16CmpVal = WDT_COUNT_CYCLE / 2U;
+        }
+
+        if (WDT_GetCountValue() < u16CmpVal)
+        {
+            WDT_ReloadCounter();
+            /* Wait for the count value to update */
+            DDL_Delay1ms(10U);
+            if (RESET_SOURCE_OTHER == u8ResetSource)
+            {
+                LED_R_TOGGLE();
+            }
+        }
     }
 }
 
