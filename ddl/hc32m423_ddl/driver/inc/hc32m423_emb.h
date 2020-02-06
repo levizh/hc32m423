@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-27       Hongjh          First version
+   2020-02-07       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -90,48 +90,105 @@ extern "C"
  */
 typedef struct
 {
-    en_functional_state_t enPwmWHighLvl;    /*!< Enable or disable EMB detect Timer4 PWM W channel polarity level
-                                                 This parameter can be a value of @ref en_functional_state_t */
+    uint32_t    u32PwmWLvl;                 /*!< Enable or disable EMB detect Timer4 PWM W channel polarity level
+                                                 This parameter can be a value of @ref EMB_Ground0_Timer4_PWMW_Level */
 
-    en_functional_state_t enPwmVHighLvl;    /*!< Enable or disable EMB detect Timer4 PWM V channel polarity level
-                                                 This parameter can be a value of @ref en_functional_state_t */
+    uint32_t    u32PwmVLvl;                 /*!< Enable or disable EMB detect Timer4 PWM V channel polarity level
+                                                 This parameter can be a value of @ref EMB_Ground0_Timer4_PWMV_Level */
 
-    en_functional_state_t enPwmUHighLvl;    /*!< Enable or disable EMB detect Timer4 PWM U channel polarity level
-                                                 This parameter can be a value of @ref en_functional_state_t */
+    uint32_t    u32PwmULvl;                 /*!< Enable or disable EMB detect Timer4 PWM U channel polarity level
+                                                 This parameter can be a value of @ref EMB_Ground0_Timer4_PWMU_Level */
 } stc_emb_timer4_pwm_level_t;
 
 /**
- * @brief EMB control Timer4 initialization configuration
+ * @brief EMB control Timer4 configuration
  */
 typedef struct
 {
-    en_functional_state_t enPortCmd;        /*!< Enable or disable EMB detect port in control function
-                                                 This parameter can be a value of @ref en_functional_state_t */
+    uint32_t    u32Timer4PwmUEnable;        /*!< Enable or disable EMB detect Timer4 PWM U channel same phase function
+                                                 This parameter can be a value of @ref EMB_Timer4_PWM_U_Selection */
 
-    en_functional_state_t enCmp1Cmd;        /*!< Enable or disable EMB detect CMP1 function
-                                                 This parameter can be a value of @ref en_functional_state_t */
+    uint32_t    u32Timer4PwmVEnable;        /*!< Enable or disable EMB detect Timer4 PWM V channel same phase function
+                                                 This parameter can be a value of @ref EMB_Timer4_PWM_V_Selection */
 
-    en_functional_state_t enCmp2Cmd;        /*!< Enable or disable EMB detect CMP2 function
-                                                 This parameter can be a value of @ref en_functional_state_t */
+    uint32_t    u32Timer4PwmWEnable;        /*!< Enable or disable EMB detect Timer4 PWM W channel same phase function
+                                                 This parameter can be a value of @ref EMB_Timer4_PWM_W_Selection */
+} stc_emb_ctrl_timer4_t;
 
-    en_functional_state_t enOscCmd;         /*!< Enable or disable EMB detect OSC failure function
-                                                 This parameter can be a value of @ref en_functional_state_t */
+/**
+ * @brief EMB control port EMB IN configuration
+ */
+typedef struct
+{
+    uint32_t    u32PortEmbInEnable;         /*!< Enable or disable EMB detect port in(EMB_IN1) control function
+                                                 This parameter can be a value of @ref EMB_Port_EMBIN1_Selection 
+                                                 or @ref EMB_Port_EMBIN2_Selection or EMB_Port_EMBIN3_Selection */
 
-    en_functional_state_t enTimer4PwmUCmd;  /*!< Enable or disable EMB detect Timer4 PWM U channel same phase function
-                                                 This parameter can be a value of @ref en_functional_state_t */
+    uint32_t    u32PortEmbInLevel;          /*!< EMB detect port level
+                                                 This parameter can be a value of @ref EMB_Port_EMBIN1_Level
+                                                 or @ref EMB_Port_EMBIN2_Level or @ref EMB_Port_EMBIN3_Level */
 
-    en_functional_state_t enTimer4PwmVCmd;  /*!< Enable or disable EMB detect Timer4 PWM V channel same phase function
-                                                 This parameter can be a value of @ref en_functional_state_t */
+    uint32_t    u32PortEmbInFilterDiv;      /*!< EMB port filter division
+                                                 This parameter can be a value of @ref EMB_Port_EMBIN1_Filter_Clock_Division
+                                                 @ref EMB_Port_EMBIN2_Filter_Clock_Division or @ref EMB_Port_EMBIN3_Filter_Clock_Division */
+} stc_emb_ctrl_port_t;
 
-    en_functional_state_t enTimer4PwmWCmd;  /*!< Enable or disable EMB detect Timer4 PWM W channel same phase function
-                                                 This parameter can be a value of @ref en_functional_state_t */
+/**
+ * @brief EMB ground0 Timer4 initialization configuration
+ */
+typedef struct
+{
+    uint32_t    u32Cmp1Enable;              /*!< Enable or disable EMB detect CMP1 result function
+                                                 This parameter can be a value of @ref EMB_CMP1_Selection */
 
-    uint32_t u32PortLevel;                  /*!< EMB detect port level
-                                                 This parameter can be a value of @ref EMB_Port_Level */
+    uint32_t    u32Cmp2Enable;              /*!< Enable or disable EMB detect CMP2 result function
+                                                 This parameter can be a value of @ref EMB_CMP2_Selection */
 
-    uint32_t u32PortFilterDiv;              /*!< EMB port filter division
-                                                 This parameter can be a value of @ref EMB_Port_Filter_Clock_Division */
-} stc_emb_ctrl_timer4_init_t;
+    uint32_t    u32Cmp3Enable;              /*!< Enable or disable EMB detect CMP3 result function
+                                                 This parameter can be a value of @ref EMB_CMP3_Selection */
+
+    uint32_t    u32OscEnable;               /*!< EMB detect OSC failure function
+                                                 This parameter can be a value of @ref EMB_OSC_Stop_Selection */
+
+    stc_emb_ctrl_timer4_t   stcTimer4;      /*!< EMB detect Timer4 function
+                                                 This parameter details refer @ref stc_emb_ctrl_timer4_t structure */
+
+    stc_emb_ctrl_port_t     stcEmbIn1;      /*!< EMB detect port EMBIN1 function
+                                                 This parameter details refer @ref stc_emb_ctrl_port_t structure */
+
+    stc_emb_ctrl_port_t     stcEmbIn2;      /*!< EMB detect port EMBIN1 function
+                                                 This parameter details refer @ref stc_emb_ctrl_port_t structure */
+
+    stc_emb_ctrl_port_t     stcEmbIn3;      /*!< EMB detect port EMBIN1 function
+                                                 This parameter details refer @ref stc_emb_ctrl_port_t structure */
+} stc_emb_ground0_timer4_init_t;
+
+/**
+ * @brief EMB ground1 TimerB initialization configuration
+ */
+typedef struct
+{
+    uint32_t    u32Cmp1Enable;              /*!< Enable or disable EMB detect CMP1 result function
+                                                 This parameter can be a value of @ref EMB_CMP1_Selection */
+
+    uint32_t    u32Cmp2Enable;              /*!< Enable or disable EMB detect CMP2 result function
+                                                 This parameter can be a value of @ref EMB_CMP2_Selection */
+
+    uint32_t    u32Cmp3Enable;              /*!< Enable or disable EMB detect CMP3 result function
+                                                 This parameter can be a value of @ref EMB_CMP3_Selection */
+
+    uint32_t    u32OscEnable;               /*!< EMB detect OSC failure function
+                                                 This parameter can be a value of @ref EMB_OSC_Stop_Selection */
+
+    stc_emb_ctrl_port_t     stcEmbIn1;      /*!< EMB detect port EMBIN1 function
+                                                 This parameter details refer @ref stc_emb_ctrl_port_t structure */
+
+    stc_emb_ctrl_port_t     stcEmbIn2;      /*!< EMB detect port EMBIN1 function
+                                                 This parameter details refer @ref stc_emb_ctrl_port_t structure */
+
+    stc_emb_ctrl_port_t     stcEmbIn3;      /*!< EMB detect port EMBIN1 function
+                                                 This parameter details refer @ref stc_emb_ctrl_port_t structure */
+} stc_emb_ground1_timerb_init_t;
 
 /**
  * @}
@@ -145,24 +202,220 @@ typedef struct
  * @{
  */
 
-/** @defgroup EMB_Port_Filter_Clock_Division EMB Port Filter Clock Division
+/**
+ * @defgroup EMB_Group EMB Group
  * @{
  */
-#define EMB_PORT_FILTER_NONE                    (0x00UL)                            /*!< Disable filter */
-#define EMB_PORT_FILTER_CLK_DIV1                (EMB_CTL_NFEN)                      /*!< PCLK           */
-#define EMB_PORT_FILTER_CLK_DIV8                (EMB_CTL_NFEN | EMB_CTL_NFSEL_0)    /*!< PCLK/8         */
-#define EMB_PORT_FILTER_CLK_DIV32               (EMB_CTL_NFEN | EMB_CTL_NFSEL_1)    /*!< PCLK/32        */
-#define EMB_PORT_FILTER_CLK_DIV128              (EMB_CTL_NFEN | EMB_CTL_NFSEL)      /*!< PCLK/128       */
+#define EMB_GROUP0_TMR4                         ((uint32_t)0UL)
+#define EMB_GROUP1_TMRB                         ((uint32_t)1UL)
 /**
  * @}
  */
 
 /**
- * @defgroup EMB_Port_Level EMB Port Level
+ * @defgroup EMB_CMP1_Selection EMB CMP1 Selection
  * @{
  */
-#define EMB_PORT_LEVEL_HIGH                     (0x00UL)
-#define EMB_PORT_LEVEL_LOW                      (EMB_CTL_INVSEL)
+#define EMB_CMP1_ENABLE                         (EMB_CTL0_CMPEN_0)
+#define EMB_CMP1_DISABLE                        ((uint32_t)0UL)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_CMP2_Selection EMB CMP2 Selection
+ * @{
+ */
+#define EMB_CMP2_ENABLE                         (EMB_CTL0_CMPEN_1)
+#define EMB_CMP2_DISABLE                        ((uint32_t)0UL)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_CMP3_Selection EMB CMP3 Selection
+ * @{
+ */
+#define EMB_CMP3_ENABLE                         (EMB_CTL0_CMPEN_2)
+#define EMB_CMP3_DISABLE                        ((uint32_t)0UL)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_OSC_Stop_Selection EMB OSC Stop Selection
+ * @{
+ */
+#define EMB_OSC_ENABLE                          (EMB_CTL0_OSCSTPEN)
+#define EMB_OSC_DISABLE                         ((uint32_t)0UL)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Timer4_PWM_W_Selection EMB Timer4 PWM W Selection
+ * @{
+ */
+#define EMB_TMR4_PWMW_ENABLE                    (EMB_CTL0_PWMSEN0)
+#define EMB_TMR4_PWMW_DISABLE                   ((uint32_t)0UL)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Timer4_PWM_V_Selection EMB Timer4 PWM V Selection
+ * @{
+ */
+#define EMB_TMR4_PWMV_ENABLE                    (EMB_CTL0_PWMSEN1)
+#define EMB_TMR4_PWMV_DISABLE                   ((uint32_t)0UL)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Timer4_PWM_U_Selection EMB Timer4 PWM U Selection
+ * @{
+ */
+#define EMB_TMR4_PWMU_ENABLE                    (EMB_CTL0_PWMSEN2)
+#define EMB_TMR4_PWMU_DISABLE                   ((uint32_t)0UL)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Port_EMBIN1_Selection EMB Port EMB IN1 Selection
+ * @{
+ */
+#define EMB_PORT_EMBIN1_ENABLE                  (EMB_CTL0_PORTINEN0)
+#define EMB_PORT_EMBIN1_DISABLE                 ((uint32_t)0UL)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Port_EMBIN2_Selection EMB Port EMB IN2 Selection
+ * @{
+ */
+#define EMB_PORT_EMBIN2_ENABLE                  (EMB_CTL0_PORTINEN1)
+#define EMB_PORT_EMBIN2_DISABLE                 ((uint32_t)0UL)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Port_EMBIN3_Selection EMB Port EMB IN3 Selection
+ * @{
+ */
+#define EMB_PORT_EMBIN3_ENABLE                  (EMB_CTL0_PORTINEN2)
+#define EMB_PORT_EMBIN3_DISABLE                 ((uint32_t)0UL)
+/**
+ * @}
+ */
+
+/** @defgroup EMB_Port_EMBIN1_Filter_Clock_Division EMB Port EMBIN1 Filter Clock Division
+ * @{
+ */
+#define EMB_PORT_EMBIN1_FILTER_NONE             ((uint32_t)0UL)                         /*!< Disable filter */
+#define EMB_PORT_EMBIN1_FILTER_CLK_DIV1         (EMB_CTL0_NFEN0)                        /*!< PCLK           */
+#define EMB_PORT_EMBIN1_FILTER_CLK_DIV8         (EMB_CTL0_NFEN0 | EMB_CTL0_NFSEL0_0)    /*!< PCLK/8         */
+#define EMB_PORT_EMBIN1_FILTER_CLK_DIV32        (EMB_CTL0_NFEN0 | EMB_CTL0_NFSEL0_1)    /*!< PCLK/32        */
+#define EMB_PORT_EMBIN1_FILTER_CLK_DIV128       (EMB_CTL0_NFEN0 | EMB_CTL0_NFSEL0)      /*!< PCLK/128       */
+/**
+ * @}
+ */
+
+/** @defgroup EMB_Port_EMBIN2_Filter_Clock_Division EMB Port EMBIN2 Filter Clock Division
+ * @{
+ */
+#define EMB_PORT_EMBIN2_FILTER_NONE             ((uint32_t)0UL)                         /*!< Disable filter */
+#define EMB_PORT_EMBIN2_FILTER_CLK_DIV1         (EMB_CTL0_NFEN1)                        /*!< PCLK           */
+#define EMB_PORT_EMBIN2_FILTER_CLK_DIV8         (EMB_CTL0_NFEN1 | EMB_CTL0_NFSEL1_0)    /*!< PCLK/8         */
+#define EMB_PORT_EMBIN2_FILTER_CLK_DIV32        (EMB_CTL0_NFEN1 | EMB_CTL0_NFSEL1_1)    /*!< PCLK/32        */
+#define EMB_PORT_EMBIN2_FILTER_CLK_DIV128       (EMB_CTL0_NFEN1 | EMB_CTL0_NFSEL1)      /*!< PCLK/128       */
+/**
+ * @}
+ */
+
+/** @defgroup EMB_Port_EMBIN3_Filter_Clock_Division EMB Port EMBIN3 Filter Clock Division
+ * @{
+ */
+#define EMB_PORT_EMBIN3_FILTER_NONE             ((uint32_t)0UL)                         /*!< Disable filter */
+#define EMB_PORT_EMBIN3_FILTER_CLK_DIV1         (EMB_CTL0_NFEN2)                        /*!< PCLK           */
+#define EMB_PORT_EMBIN3_FILTER_CLK_DIV8         (EMB_CTL0_NFEN2 | EMB_CTL0_NFSEL2_0)    /*!< PCLK/8         */
+#define EMB_PORT_EMBIN3_FILTER_CLK_DIV32        (EMB_CTL0_NFEN2 | EMB_CTL0_NFSEL2_1)    /*!< PCLK/32        */
+#define EMB_PORT_EMBIN3_FILTER_CLK_DIV128       (EMB_CTL0_NFEN2 | EMB_CTL0_NFSEL2)      /*!< PCLK/128       */
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Port_EMBIN1_Level EMB Port EMBIN1 Level
+ * @{
+ */
+#define EMB_PORT_EMBIN1_LEVEL_HIGH              ((uint32_t)0UL)
+#define EMB_PORT_EMBIN1_LEVEL_LOW               (EMB_CTL0_INVSEL0)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Port_EMBIN2_Level EMB Port EMBIN2 Level
+ * @{
+ */
+#define EMB_PORT_EMBIN2_LEVEL_HIGH              ((uint32_t)0UL)
+#define EMB_PORT_EMBIN2_LEVEL_LOW               (EMB_CTL0_INVSEL1)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Port_EMBIN3_Level EMB Port EMBIN3 Level
+ * @{
+ */
+#define EMB_PORT_EMBIN3_LEVEL_HIGH              ((uint32_t)0UL)
+#define EMB_PORT_EMBIN3_LEVEL_LOW               (EMB_CTL0_INVSEL2)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Ground0_Detect_Timer4_PWMU_Level EMB Ground0 Detect Timer4 PWMU Level
+ * @{
+ */
+#define EMB_DETECT_TIMER4_PWMU_LEVEL_LOW        ((uint32_t)0UL)
+#define EMB_DETECT_TIMER4_PWMU_LEVEL_HIGH       (EMB_PWMLV0_PWMLV_2)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Ground0_Detect_Timer4_PWMV_Level EMB Ground0 Detect Timer4 PWMV Level
+ * @{
+ */
+#define EMB_DETECT_TIMER4_PWMV_LEVEL_LOW        ((uint32_t)0UL)
+#define EMB_DETECT_TIMER4_PWMV_LEVEL_HIGH       (EMB_PWMLV0_PWMLV_1)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Ground0_Detect_Timer4_PWMW_Level EMB Ground0 Detect Timer4 PWMW Level
+ * @{
+ */
+#define EMB_DETECT_TIMER4_PWMW_LEVEL_LOW        ((uint32_t)0UL)
+#define EMB_DETECT_TIMER4_PWMW_LEVEL_HIGH       (EMB_PWMLV0_PWMLV_0)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup EMB_Ground1_Timerb_PWM_Output_State EMB Ground1 Timerb PWM Output State
+ * @{
+ */
+#define EMB_SET_TIMERB_PWM_OUTPUT_NORMAL        ((uint32_t)0UL)     /*!< TIMB_1_PWMn(n=1~4) output normal */
+#define EMB_SET_TIMERB_PWM_OUTPUT_HIZ           (TMR4_PSCR_OSUH_0)  /*!< TIMB_1_PWMn(n=1~4) output Hi-z */
+#define EMB_SET_TIMERB_PWM_OUTPUT_LOW           (TMR4_PSCR_OSUH_1)  /*!< TIMB_1_PWMn(n=1~4) output low level */
+#define EMB_SET_TIMERB_PWM_OUTPUT_HIGH          (TMR4_PSCR_OSUH)    /*!< TIMB_1_PWMn(n=1~4) output high level */
 /**
  * @}
  */
@@ -171,12 +424,16 @@ typedef struct
  * @defgroup EMB_Flag EMB Flag
  * @{
  */
-#define EMB_FLAG_PORT                           (EMB_STAT_PORTINF)
-#define EMB_FLAG_PWM                            (EMB_STAT_PWMSF)
-#define EMB_FLAG_CMP                            (EMB_STAT_CMPF)
-#define EMB_FLAG_OSC                            (EMB_STAT_OSF)
-#define EMB_FLAG_PORT_STATE                     (EMB_STAT_PORTINST)
-#define EMB_FLAG_PWM_STATE                      (EMB_STAT_PWMST)
+#define EMB_FLAG_PWM                            (EMB_STAT0_PWMSF)
+#define EMB_FLAG_CMP                            (EMB_STAT0_CMPF)
+#define EMB_FLAG_OSC                            (EMB_STAT0_OSF)
+#define EMB_FLAG_PORT_EMBIN1                    (EMB_STAT0_PORTINF0)
+#define EMB_FLAG_PORT_EMBIN2                    (EMB_STAT0_PORTINF1)
+#define EMB_FLAG_PORT_EMBIN3                    (EMB_STAT0_PORTINF2)
+#define EMB_FLAG_PWM_STATE                      (EMB_STAT0_PWMST)
+#define EMB_FLAG_PORT_EMBIN1_STATE              (EMB_STAT0_PORTINST0)
+#define EMB_FLAG_PORT_EMBIN2_STATE              (EMB_STAT0_PORTINST1)
+#define EMB_FLAG_PORT_EMBIN3_STATE              (EMB_STAT0_PORTINST2)
 /**
  * @}
  */
@@ -185,10 +442,12 @@ typedef struct
  * @defgroup EMB_Interrupt EMB Interrupt
  * @{
  */
-#define EMB_INT_PORT                            (EMB_INTEN_PORTINTEN)
-#define EMB_INT_PWM                             (EMB_INTEN_PWMINTEN)
-#define EMB_INT_CMP                             (EMB_INTEN_CMPINTEN)
-#define EMB_INT_OSC                             (EMB_INTEN_OSINTEN)
+#define EMB_INT_PWM                             (EMB_INTEN0_PWMINTEN)
+#define EMB_INT_CMP                             (EMB_INTEN0_CMPINTEN)
+#define EMB_INT_OSC                             (EMB_INTEN0_OSINTEN)
+#define EMB_INT_PORT_EMBIN1                     (EMB_INTEN0_PORTININTEN0)
+#define EMB_INT_PORT_EMBIN2                     (EMB_INTEN0_PORTININTEN1)
+#define EMB_INT_PORT_EMBIN3                     (EMB_INTEN0_PORTININTEN2)
 /**
  * @}
  */
@@ -208,71 +467,20 @@ typedef struct
  * @addtogroup EMB_Global_Functions EMB Global Functions
  * @{
  */
+en_result_t EMB_Group0Timer4Init(const stc_emb_ground0_timer4_init_t *pstcInit);
+en_result_t EMB_Ground0Timer4StructInit(stc_emb_ground0_timer4_init_t *pstcInit);
+en_result_t EMB_Group1TimerbInit(const stc_emb_ground1_timerb_init_t *pstcInit);
+en_result_t EMB_Ground1TimerbStructInit(stc_emb_ground1_timerb_init_t *pstcInit);
+en_result_t EMB_DeInit(uint32_t u32Ground);
 
-/**
- * @brief  Get EMB status
- * @param  [in] u32Status               EMB flag
- *         This parameter can be one of the following values:
- *           @arg EMB_FLAG_PORT: Port input trigger stop PWM
- *           @arg EMB_FLAG_PWM:  PWM same phase trigger stop PWM
- *           @arg EMB_FLAG_CMP: CMP trigger stop PWM
- *           @arg EMB_FLAG_OSC: OSC trigger stop PWM
- *           @arg EMB_FLAG_PORT_STATE: Port input control state
- *           @arg EMB_FLAG_PWM_STATE: PWM same phase occur
- * @retval An en_flag_status_t enumeration value:
- *           - Set: Flag is set
- *           - Reset: Flag is reset
- */
-__STATIC_INLINE en_flag_status_t EMB_GetStatus(uint32_t u32Status)
-{
-    return READ_REG32_BIT(M0P_EMB->STAT, u32Status) ? Set : Reset;
-}
-
-/**
- * @brief  Clear EMB status
- * @param  [in] u32Status           EMB status
- *         This parameter can be one of the following values:
- *           @arg EMB_FLAG_PORT: Port input trigger stop PWM
- *           @arg EMB_FLAG_PWM:  PWM same phase trigger stop PWM
- *           @arg EMB_FLAG_CMP: CMP trigger stop PWM
- *           @arg EMB_FLAG_OSC: OSC trigger stop PWM
- * @retval None
- */
-__STATIC_INLINE void EMB_ClearStatus(uint32_t u32Status)
-{
-    SET_REG32_BIT(M0P_EMB->STATCLR, u32Status);
-}
-
-/**
- * @brief  Get EMB detection port level
- * @param  None
- * @retval Returned value can be one of the following values:
- *           @arg EMB_PORT_LEVEL_HIGH: Detect high level
- *           @arg EMB_PORT_LEVEL_LOW: Detect low level
- */
-__STATIC_INLINE uint32_t EMB_GetDetectPortLevel(void)
-{
-    return bM0P_EMB->CTL_b.INVSEL;
-}
-
-/**
- * @brief  EMB software brake
- * @param  [in] enNewSta                The function new state
- *           @arg  This parameter can be: Enable or Disable
- * @retval None
- */
-__STATIC_INLINE void EMB_SwBrake(en_functional_state_t enNewSta)
-{
-    bM0P_EMB->SOE_b.SOE = enNewSta;
-}
-
-en_result_t EMB_Init(const stc_emb_ctrl_timer4_init_t *pstcInit);
-en_result_t EMB_StructInit(stc_emb_ctrl_timer4_init_t *pstcInit);
-en_result_t EMB_DeInit(void);
-void EMB_IntCmd(uint32_t u32IntSource, en_functional_state_t enNewSta);
-uint32_t EMB_GetPortFilterClkDiv(void);
-void EMB_SetDetectPwmLevel(stc_emb_timer4_pwm_level_t stcPwmLevel);
-stc_emb_timer4_pwm_level_t EMB_GetDetectPwmLevel(void);
+void EMB_SetDetectTimer4PwmLevel(stc_emb_timer4_pwm_level_t stcPwmLevel);
+void EMB_SetTimerbOutputState(uint32_t u32OutputState);
+void EMB_IntCmd(uint32_t u32Ground,
+                    uint32_t u32IntSource,
+                    en_functional_state_t enNewSta);
+en_flag_status_t EMB_GetStatus(uint32_t u32Ground, uint32_t u32Status);
+void EMB_ClearStatus(uint32_t u32Ground, uint32_t u32Status);
+void EMB_SwBrake(uint32_t u32Ground, en_functional_state_t enNewSta);
 /**
  * @}
  */
