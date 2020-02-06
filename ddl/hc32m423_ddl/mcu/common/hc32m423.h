@@ -4073,10 +4073,10 @@ typedef struct
 /*  Bit definition for I2C_CLR register  */
 #define I2C_CLR_STARTFCLR_POS                          (0U)
 #define I2C_CLR_STARTFCLR                              ((uint32_t)0x00000001U)
-#define I2C_CLR_SLADDR0FCL_POS                         (1U)
-#define I2C_CLR_SLADDR0FCL                             ((uint32_t)0x00000002U)
-#define I2C_CLR_SLADDR1FCL_POS                         (2U)
-#define I2C_CLR_SLADDR1FCL                             ((uint32_t)0x00000004U)
+#define I2C_CLR_SLADDR0FCLR_POS                        (1U)
+#define I2C_CLR_SLADDR0FCLR                            ((uint32_t)0x00000002U)
+#define I2C_CLR_SLADDR1FCLR_POS                        (2U)
+#define I2C_CLR_SLADDR1FCLR                            ((uint32_t)0x00000004U)
 #define I2C_CLR_TENDFCLR_POS                           (3U)
 #define I2C_CLR_TENDFCLR                               ((uint32_t)0x00000008U)
 #define I2C_CLR_STOPFCLR_POS                           (4U)
@@ -10070,8 +10070,8 @@ typedef struct
 typedef struct
 {
     __IO uint32_t STARTFCLR;
-    __IO uint32_t SLADDR0FCL;
-    __IO uint32_t SLADDR1FCL;
+    __IO uint32_t SLADDR0FCLR;
+    __IO uint32_t SLADDR1FCLR;
     __IO uint32_t TENDFCLR;
     __IO uint32_t STOPFCLR;
     uint32_t RESERVED0[1];
