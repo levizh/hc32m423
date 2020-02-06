@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-09       Wangmin         First version
+   2020-02-06       Wangmin         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -76,10 +76,10 @@
 #define DEVICE_ADDRESS                  0x06U
 
 /* Define port and pin for SDA and SCL */
-#define I2C_SCL_PORT                    (GPIO_PORT_6)
-#define I2C_SCL_PIN                     (GPIO_PIN_0)
-#define I2C_SDA_PORT                    (GPIO_PORT_6)
-#define I2C_SDA_PIN                     (GPIO_PIN_1)
+#define I2C_SCL_PORT                    (GPIO_PORT_B)
+#define I2C_SCL_PIN                     (GPIO_PIN_6)
+#define I2C_SDA_PORT                    (GPIO_PORT_B)
+#define I2C_SDA_PIN                     (GPIO_PIN_5)
 
 #define TIMEOUT                         ((uint32_t)0x10000)
 
@@ -97,16 +97,6 @@
 /* Define i2c baudrate */
 #define I2C_BAUDRATE                    400000UL
 
-/* I2C interrupt source and number define */
-#define I2C_EEI_IRQn                    (Int008_IRQn)
-#define I2C_EEI_SOURCE                  (INT_IIC_EE1)
-#define I2C_TXI_IRQn                    (Int020_IRQn)
-#define I2C_TXI_SOURCE                  (INT_IIC_TXI)
-#define I2C_RXI_IRQn                    (Int018_IRQn)
-#define I2C_RXI_SOURCE                  (INT_IIC_RXI)
-#define I2C_TEI_IRQn                    (Int016_IRQn)
-#define I2C_TEI_SOURCE                  (INT_IIC_TEI)
-
 /* Define for RGB LED */
 #define LED_R_PORT                      (GPIO_PORT_12)
 #define LED_G_PORT                      (GPIO_PORT_7)
@@ -114,8 +104,10 @@
 #define LED_R_PIN                       (GPIO_PIN_0)
 #define LED_G_PIN                       (GPIO_PIN_0)
 #define LED_B_PIN                       (GPIO_PIN_1)
-#define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
-#define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
+//#define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
+//#define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN)) //todo
+#define LED_G_TOGGLE()
+#define LED_R_TOGGLE()
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -127,10 +119,6 @@
 static void SystemClockConfig(void);
 static void LedConfig(void);
 static uint8_t Slave_Initialize(void);
-static void I2C_EEI_Callback(void);
-static void I2C_TXI_Callback(void);
-static void I2C_RXI_Callback(void);
-static void I2C_TEI_Callback(void);
 static void BufWrite(uint8_t u8Data);
 static uint8_t BufRead(void);
 
@@ -168,11 +156,11 @@ int32_t main(void)
     }
 
     /* Initialize I2C port*/
-    GPIO_SetFunc(I2C_SCL_PORT, I2C_SCL_PIN, GPIO_FUNC_6_I2C);
-    GPIO_SetFunc(I2C_SDA_PORT, I2C_SDA_PIN, GPIO_FUNC_6_I2C);
+    GPIO_SetFunc(I2C_SCL_PORT, I2C_SCL_PIN, GPIO_FUNC_7_I2C);
+    GPIO_SetFunc(I2C_SDA_PORT, I2C_SDA_PIN, GPIO_FUNC_7_I2C);
 
     /* Enable I2C Peripheral*/
-    CLK_FcgPeriphClockCmd(CLK_FCG_I2C, Enable);
+    //CLK_FcgPeriphClockCmd(CLK_FCG_I2C, Enable);//todo
 
     /* Initialize I2C peripheral and enable function*/
     Slave_Initialize();
@@ -225,7 +213,6 @@ static void SystemClockConfig(void)
 static uint8_t Slave_Initialize(void)
 {
     stc_i2c_init_t stcI2cInit;
-    stc_irq_regi_config_t stcIrqRegiCfg;
     float32_t fErr;
 
     I2C_DeInit();
@@ -243,38 +230,22 @@ static uint8_t Slave_Initialize(void)
     I2C_SlaveAdrConfig(I2C_ADR_0, I2C_ADR_CONFIG_7BIT, DEVICE_ADDRESS);
 #endif
 
-    /* Register IRQ handler && configure NVIC. */
-    stcIrqRegiCfg.enIRQn = I2C_EEI_IRQn;
-    stcIrqRegiCfg.enIntSrc = I2C_EEI_SOURCE;
-    stcIrqRegiCfg.pfnCallback = &I2C_EEI_Callback;
-    INTC_IrqRegistration(&stcIrqRegiCfg);
-    NVIC_ClearPendingIRQ(stcIrqRegiCfg.enIRQn);
-    NVIC_SetPriority(stcIrqRegiCfg.enIRQn, DDL_IRQ_PRIORITY_03);
-    NVIC_EnableIRQ(stcIrqRegiCfg.enIRQn);
+    /* configure NVIC. */
+    NVIC_ClearPendingIRQ(I2cRXI_IRQn);
+    NVIC_SetPriority(I2cRXI_IRQn, DDL_IRQ_PRIORITY_03);
+    NVIC_EnableIRQ(I2cRXI_IRQn);
 
-    stcIrqRegiCfg.enIRQn = I2C_RXI_IRQn;
-    stcIrqRegiCfg.enIntSrc = I2C_RXI_SOURCE;
-    stcIrqRegiCfg.pfnCallback = &I2C_RXI_Callback;
-    INTC_IrqRegistration(&stcIrqRegiCfg);
-    NVIC_ClearPendingIRQ(stcIrqRegiCfg.enIRQn);
-    NVIC_SetPriority(stcIrqRegiCfg.enIRQn, DDL_IRQ_PRIORITY_03);
-    NVIC_EnableIRQ(stcIrqRegiCfg.enIRQn);
+    NVIC_ClearPendingIRQ(I2cTXI_IRQn);
+    NVIC_SetPriority(I2cTXI_IRQn, DDL_IRQ_PRIORITY_03);
+    NVIC_EnableIRQ(I2cTXI_IRQn);
 
-    stcIrqRegiCfg.enIRQn = I2C_TXI_IRQn;
-    stcIrqRegiCfg.enIntSrc = I2C_TXI_SOURCE;
-    stcIrqRegiCfg.pfnCallback = &I2C_TXI_Callback;
-    INTC_IrqRegistration(&stcIrqRegiCfg);
-    NVIC_ClearPendingIRQ(stcIrqRegiCfg.enIRQn);
-    NVIC_SetPriority(stcIrqRegiCfg.enIRQn, DDL_IRQ_PRIORITY_03);
-    NVIC_EnableIRQ(stcIrqRegiCfg.enIRQn);
+    NVIC_ClearPendingIRQ(I2cTEI_IRQn);
+    NVIC_SetPriority(I2cTEI_IRQn, DDL_IRQ_PRIORITY_03);
+    NVIC_EnableIRQ(I2cTEI_IRQn);
 
-    stcIrqRegiCfg.enIRQn = I2C_TEI_IRQn;
-    stcIrqRegiCfg.enIntSrc = I2C_TEI_SOURCE;
-    stcIrqRegiCfg.pfnCallback = &I2C_TEI_Callback;
-    INTC_IrqRegistration(&stcIrqRegiCfg);
-    NVIC_ClearPendingIRQ(stcIrqRegiCfg.enIRQn);
-    NVIC_SetPriority(stcIrqRegiCfg.enIRQn, DDL_IRQ_PRIORITY_03);
-    NVIC_EnableIRQ(stcIrqRegiCfg.enIRQn);
+    NVIC_ClearPendingIRQ(I2cEEI_IRQn);
+    NVIC_SetPriority(I2cEEI_IRQn, DDL_IRQ_PRIORITY_03);
+    NVIC_EnableIRQ(I2cEEI_IRQn);
 
     /* I2C function command */
     I2C_Cmd(Enable);
@@ -292,11 +263,14 @@ static uint8_t Slave_Initialize(void)
  */
 static void LedConfig(void)
 {
+#if 0
+  //todo
     stc_gpio_init_t stcGpioInit = {0U};
 
     stcGpioInit.u16PinMode = PIN_MODE_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
+#endif
 }
 
 /**
@@ -304,7 +278,7 @@ static void LedConfig(void)
  * @param   None
  * @retval  None
  */
-static void I2C_EEI_Callback(void)
+void I2C_Err_IrqHandler(void)
 {
     /* If address flag valid */
     if(Set == I2C_GetStatus(I2C_SR_SLADDR0F))
@@ -368,7 +342,7 @@ static void I2C_EEI_Callback(void)
  * @param   None
  * @retval  None
  */
-static void I2C_TXI_Callback(void)
+void I2C_TxEmpty_IrqHandler(void)
 {
     if(Set == I2C_GetStatus(I2C_SR_TEMPTYF))
     {
@@ -391,7 +365,7 @@ static void I2C_TXI_Callback(void)
  * @param   None
  * @retval  None
  */
-static void I2C_RXI_Callback(void)
+void I2C_RxEnd_IrqHandler(void)
 {
     if(Set == I2C_GetStatus(I2C_SR_RFULLF))
     {
@@ -404,7 +378,7 @@ static void I2C_RXI_Callback(void)
  * @param   None
  * @retval  None
  */
-static void I2C_TEI_Callback(void)
+void I2C_TxEnd_IrqHandler(void)
 {
     __IO uint8_t tmp;
     if(Set == I2C_GetStatus(I2C_SR_TENDF))

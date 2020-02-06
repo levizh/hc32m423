@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-09       Wangmin         First version
+   2020-02-05       Wangmin         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -208,7 +208,7 @@ typedef struct
  */
 __STATIC_INLINE void I2C_GenerateStart(void)
 {
-    bM0P_I2C->CR1_b.START = 1U;
+    bM4_I2C->CR1_b.START = 1U;
 }
 
 /**
@@ -218,7 +218,7 @@ __STATIC_INLINE void I2C_GenerateStart(void)
  */
 __STATIC_INLINE void I2C_GenerateReStart(void)
 {
-    bM0P_I2C->CR1_b.RESTART = 1U;
+    bM4_I2C->CR1_b.RESTART = 1U;
 }
 
 /**
@@ -228,7 +228,7 @@ __STATIC_INLINE void I2C_GenerateReStart(void)
  */
 __STATIC_INLINE void I2C_GenerateStop(void)
 {
-    bM0P_I2C->CR1_b.STOP = 1U;
+    bM4_I2C->CR1_b.STOP = 1U;
 }
 
 en_result_t I2C_BaudrateConfig(const stc_i2c_init_t* pstcI2C_InitStruct, float32_t *pf32Err);

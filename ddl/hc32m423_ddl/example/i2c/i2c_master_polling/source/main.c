@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-09       Wangmin         First version
+   2020-02-06       Wangmin         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -75,10 +75,10 @@
 /* Define slave device address for example */
 #define DEVICE_ADDRESS                  0x06U
 /* Define port and pin for SDA and SCL */
-#define I2C_SCL_PORT                    (GPIO_PORT_6)
-#define I2C_SCL_PIN                     (GPIO_PIN_0)
-#define I2C_SDA_PORT                    (GPIO_PORT_6)
-#define I2C_SDA_PIN                     (GPIO_PIN_1)
+#define I2C_SCL_PORT                    (GPIO_PORT_B)
+#define I2C_SCL_PIN                     (GPIO_PIN_6)
+#define I2C_SDA_PORT                    (GPIO_PORT_B)
+#define I2C_SDA_PIN                     (GPIO_PIN_5)
 
 #define TIMEOUT                         ((uint32_t)0x10000)
 
@@ -103,8 +103,10 @@
 #define LED_R_PIN                       (GPIO_PIN_0)
 #define LED_G_PIN                       (GPIO_PIN_0)
 #define LED_B_PIN                       (GPIO_PIN_1)
-#define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
-#define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
+//#define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
+//#define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN)) //todo
+#define LED_G_TOGGLE()
+#define LED_R_TOGGLE()
 
 
 
@@ -160,11 +162,11 @@ int32_t main(void)
     }
 
     /* Initialize I2C port*/
-    GPIO_SetFunc(I2C_SCL_PORT, I2C_SCL_PIN, GPIO_FUNC_6_I2C);
-    GPIO_SetFunc(I2C_SDA_PORT, I2C_SDA_PIN, GPIO_FUNC_6_I2C);
+    GPIO_SetFunc(I2C_SCL_PORT, I2C_SCL_PIN, GPIO_FUNC_7_I2C);
+    GPIO_SetFunc(I2C_SDA_PORT, I2C_SDA_PIN, GPIO_FUNC_7_I2C);
 
     /* Enable I2C Peripheral*/
-    CLK_FcgPeriphClockCmd(CLK_FCG_I2C, Enable);
+    //CLK_FcgPeriphClockCmd(CLK_FCG_I2C, Enable);//todo
 
     /* Initialize I2C peripheral and enable function*/
     Master_Initialize();
@@ -535,12 +537,15 @@ static void JudgeResult(uint8_t u8Result)
  */
 static void LedConfig(void)
 {
+#if 0
+  //todo
     stc_gpio_init_t stcGpioInit = {0U};
 
     stcGpioInit.u16PinMode = PIN_MODE_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
+#endif
 }
 
 

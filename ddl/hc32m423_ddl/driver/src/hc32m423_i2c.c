@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-09       Wangmin         First version
+   2020-02-05       Wangmin         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -216,9 +216,9 @@ en_result_t I2C_BaudrateConfig(const stc_i2c_init_t* pstcI2C_InitStruct, float32
         Baudrate = pstcI2C_InitStruct->u32Baudrate;
 
         /* Judge digital filter status*/
-        if(0U != READ_BIT(M0P_I2C->FLTR, I2C_FLTR_DNFEN))
+        if(0U != READ_BIT(M4_I2C->FLTR, I2C_FLTR_DNFEN))
         {
-            dnfsum = ((M0P_I2C->FLTR & I2C_FLTR_DNF) >> I2C_FLTR_DNF_POS) + 1U;
+            dnfsum = ((M4_I2C->FLTR & I2C_FLTR_DNF) >> I2C_FLTR_DNF_POS) + 1U;
         }
         else
         {
@@ -255,7 +255,7 @@ en_result_t I2C_BaudrateConfig(const stc_i2c_init_t* pstcI2C_InitStruct, float32
         {
             fErr =(WidthHL - (float32_t)((uint32_t)WidthHL)) / WidthHL;
 
-            M0P_I2C->CCR = (pstcI2C_InitStruct->u32I2cClkDiv << I2C_CCR_CKDIV_POS)     \
+            M4_I2C->CCR = (pstcI2C_InitStruct->u32I2cClkDiv << I2C_CCR_CKDIV_POS)     \
                            | (((uint32_t)WidthHL/2U) << I2C_CCR_SLOWW_POS)              \
                            | (((uint32_t)WidthHL - (uint32_t)WidthHL/2U) << I2C_CCR_SHIGHW_POS);
         }
@@ -275,8 +275,8 @@ en_result_t I2C_BaudrateConfig(const stc_i2c_init_t* pstcI2C_InitStruct, float32
 void I2C_DeInit(void)
 {
     /* Reset peripheral register and internal status*/
-    bM0P_I2C->CR1_b.PE = 0U;
-    bM0P_I2C->CR1_b.SWRST = 1U;
+    bM4_I2C->CR1_b.PE = 0U;
+    bM4_I2C->CR1_b.SWRST = 1U;
 }
 
 /**
@@ -312,20 +312,20 @@ en_result_t I2C_Init(const stc_i2c_init_t* pstcI2C_InitStruct, float32_t *pf32Er
         DDL_ASSERT(IS_VALID_CLK_DIV(pstcI2C_InitStruct->u32I2cClkDiv));
 
         /* Register and internal status reset */
-        bM0P_I2C->CR1_b.PE = 0U;
-        bM0P_I2C->CR1_b.SWRST = 1U;
-        bM0P_I2C->CR1_b.PE = 1U;
+        bM4_I2C->CR1_b.PE = 0U;
+        bM4_I2C->CR1_b.SWRST = 1U;
+        bM4_I2C->CR1_b.PE = 1U;
 
         /* I2C baudrate config */
         I2C_BaudrateConfig(pstcI2C_InitStruct, pf32Err);
 
         /* Disable global broadcast address function */
-        bM0P_I2C->CR1_b.GCEN = 1U;
+        bM4_I2C->CR1_b.GCEN = 1U;
 
         /* Release software reset */
-        bM0P_I2C->CR1_b.SWRST = 0U;
+        bM4_I2C->CR1_b.SWRST = 0U;
         /* Disable I2C peripheral */
-        bM0P_I2C->CR1_b.PE = 0U;
+        bM4_I2C->CR1_b.PE = 0U;
     }
     return enRet;
 }
@@ -341,7 +341,7 @@ void I2C_Cmd(en_functional_state_t enNewState)
 {
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    bM0P_I2C->CR1_b.PE = enNewState;
+    bM4_I2C->CR1_b.PE = enNewState;
 }
 
 /**
@@ -359,7 +359,7 @@ void I2C_SmbusConfig(uint32_t SmbusConfig)
 {
     DDL_ASSERT(IS_VALID_SMBUS_CONFIG(SmbusConfig));
 
-    MODIFY_REG(M0P_I2C->CR1, I2C_SMBUS_CONFIG_CLEARMASK, SmbusConfig);
+    MODIFY_REG(M4_I2C->CR1, I2C_SMBUS_CONFIG_CLEARMASK, SmbusConfig);
 }
 
 /**
@@ -372,7 +372,7 @@ void I2C_SmBusCmd(en_functional_state_t enNewState)
 {
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    bM0P_I2C->CR1_b.SMBUS = enNewState;
+    bM4_I2C->CR1_b.SMBUS = enNewState;
 }
 
 /**
@@ -385,7 +385,7 @@ void I2C_SoftwareResetCmd(en_functional_state_t enNewState)
 {
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    bM0P_I2C->CR1_b.SWRST = enNewState;
+    bM4_I2C->CR1_b.SWRST = enNewState;
 }
 
 /**
@@ -398,7 +398,7 @@ void I2C_DigitalFilterConfig(uint32_t DigFilterMode)
 {
     DDL_ASSERT(IS_VALID_DIGITAL_FILTER(DigFilterMode));
 
-    MODIFY_REG(M0P_I2C->FLTR, I2C_FLTR_DNF, DigFilterMode);
+    MODIFY_REG(M4_I2C->FLTR, I2C_FLTR_DNF, DigFilterMode);
 }
 
 /**
@@ -411,7 +411,7 @@ void I2C_DigitalFilterCmd(en_functional_state_t enNewState)
 {
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    bM0P_I2C->FLTR_b.DNFEN = enNewState;
+    bM4_I2C->FLTR_b.DNFEN = enNewState;
 }
 
 /**
@@ -424,7 +424,7 @@ void I2C_AnalogFilterCmd(en_functional_state_t enNewState)
 {
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    bM0P_I2C->FLTR_b.ANFEN = enNewState;
+    bM4_I2C->FLTR_b.ANFEN = enNewState;
 }
 
 /**
@@ -437,7 +437,7 @@ void I2C_GeneralCallCmd(en_functional_state_t enNewState)
 {
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    bM0P_I2C->CR1_b.GCEN = enNewState;
+    bM4_I2C->CR1_b.GCEN = enNewState;
 }
 
 /**
@@ -457,14 +457,14 @@ void I2C_SlaveAdrConfig(uint32_t u32AdrNum, uint32_t u32AdrConfig, uint32_t u32A
     {
         /* if 10 bit address mode */
         DDL_ASSERT(IS_VALIDE_10BIT_ADR(u32Adr));
-        *(__IO uint32_t*)(&M0P_I2C->SLR0 + u32AdrNum) = u32AdrConfig + u32Adr;
+        *(__IO uint32_t*)(&M4_I2C->SLR0 + u32AdrNum) = u32AdrConfig + u32Adr;
     }
     //else if(I2C_ADR_CONFIG_7BIT == u32AdrConfig)
     else
     {
         /* if 7 bit address mode */
         DDL_ASSERT(IS_VALID_7BIT_ADR(u32Adr));
-        *(__IO uint32_t*)(&M0P_I2C->SLR0 + u32AdrNum) = u32AdrConfig + (u32Adr << 1);
+        *(__IO uint32_t*)(&M4_I2C->SLR0 + u32AdrNum) = u32AdrConfig + (u32Adr << 1);
     }
 }
 
@@ -495,11 +495,11 @@ void I2C_IntCmd(uint32_t u32IntEn, en_functional_state_t enNewState)
 
     if(Enable == enNewState)
     {
-        M0P_I2C->CR2 |= u32IntEn;
+        M4_I2C->CR2 |= u32IntEn;
     }
     else
     {
-        M0P_I2C->CR2 &= (uint32_t)~u32IntEn;
+        M4_I2C->CR2 &= (uint32_t)~u32IntEn;
     }
 }
 
@@ -511,7 +511,7 @@ void I2C_IntCmd(uint32_t u32IntEn, en_functional_state_t enNewState)
  */
 void I2C_SendData( uint8_t u8Data)
 {
-    M0P_I2C->DTR = u8Data;
+    M4_I2C->DTR = u8Data;
 }
 
 /**
@@ -520,7 +520,7 @@ void I2C_SendData( uint8_t u8Data)
  */
 uint8_t I2C_ReadData(void)
 {
-    return (uint8_t)M0P_I2C->DRR;
+    return (uint8_t)M4_I2C->DRR;
 }
 
 /**
@@ -533,7 +533,7 @@ void I2C_NackConfig(en_functional_state_t enNewState)
 {
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    bM0P_I2C->CR1_b.ACK = enNewState;
+    bM4_I2C->CR1_b.ACK = enNewState;
 }
 
 /**
@@ -563,7 +563,7 @@ en_flag_status_t I2C_GetStatus(uint32_t u32StatusBit)
 {
     DDL_ASSERT(IS_VALID_RD_STATUS_BIT(u32StatusBit));
 
-    return ((M0P_I2C->SR & u32StatusBit) ? Set : Reset);
+    return ((M4_I2C->SR & u32StatusBit) ? Set : Reset);
 }
 
 /**
@@ -582,11 +582,11 @@ void  I2C_WriteStatus(uint32_t u32StatusBit, en_flag_status_t enStatus)
 
     if(Set == enStatus)
     {
-        M0P_I2C->SR |= u32StatusBit;
+        M4_I2C->SR |= u32StatusBit;
     }
     else
     {
-        M0P_I2C->SR &= (~u32StatusBit);
+        M4_I2C->SR &= (~u32StatusBit);
     }
 }
 
@@ -613,7 +613,7 @@ void I2C_ClearStatus(uint32_t u32StatusBit)
 {
     DDL_ASSERT(IS_VALID_CLEARBIT(u32StatusBit));
 
-    M0P_I2C->CLR |= u32StatusBit;
+    M4_I2C->CLR |= u32StatusBit;
 }
 
 /**
@@ -627,7 +627,7 @@ void I2C_FastAckConfig(en_functional_state_t enNewState)
 {
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    bM0P_I2C->CR1_b.FACKEN = enNewState;
+    bM4_I2C->CR1_b.FACKEN = enNewState;
 }
 
 /**
