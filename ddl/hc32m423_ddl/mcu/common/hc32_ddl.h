@@ -144,9 +144,9 @@ extern "C"
     #include "hc32m423_icg.h"
 #endif /* DDL_ICG_ENABLE */
 
-#if ((DDL_INTERRUPTS_ENABLE == DDL_ON) || (DDL_EXINT_NMI_ENABLE == DDL_ON))
+#if ((DDL_INTERRUPTS_ENABLE == DDL_ON) || (DDL_EXINT_NMI_SWI_ENABLE == DDL_ON))
     #include "hc32m423_interrupts.h"
-#endif /* DDL_INTERRUPTS_ENABLE || DDL_EXINT_NMI_ENABLE */
+#endif /* DDL_INTERRUPTS_ENABLE || DDL_EXINT_SWI_NMI_ENABLE */
 
 #if (DDL_PWC_ENABLE == DDL_ON)
     #include "hc32m423_pwc.h"

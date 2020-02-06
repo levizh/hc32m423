@@ -75,7 +75,7 @@ extern "C"
  * @{
  */
 
-#if (DDL_INTERRUPTS_ENABLE == DDL_ON) || (DDL_EXINT_NMI_ENABLE == DDL_ON)
+#if (DDL_INTERRUPTS_ENABLE == DDL_ON) || (DDL_EXINT_NMI_SWI_ENABLE == DDL_ON)
 
 /*******************************************************************************
  * Global type definitions ('typedef')

@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-05       levi          First version
+   2020-02-06       levi          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co.,Ltd. All rights reserved.
@@ -56,7 +56,7 @@
  **
  ** History:
  **
- **   - 2020-02-05  1.0   First version for Device Driver Library of HC32M423 series MCU.
+ **   - 2020-02-06  1.0   First version for Device Driver Library of HC32M423 series MCU.
  **
  ******************************************************************************/
 
@@ -3951,8 +3951,8 @@ typedef struct
 #define I2C_CR1_SMBUS                                  ((uint32_t)0x00000002U)
 #define I2C_CR1_SMBALRTEN_POS                          (2U)
 #define I2C_CR1_SMBALRTEN                              ((uint32_t)0x00000004U)
-#define I2C_CR1_SMBDEFAULTE_POS                        (3U)
-#define I2C_CR1_SMBDEFAULTE                            ((uint32_t)0x00000008U)
+#define I2C_CR1_SMBDEFAULTEN_POS                       (3U)
+#define I2C_CR1_SMBDEFAULTEN                           ((uint32_t)0x00000008U)
 #define I2C_CR1_SMBHOSTEN_POS                          (4U)
 #define I2C_CR1_SMBHOSTEN                              ((uint32_t)0x00000010U)
 #define I2C_CR1_FACKEN_POS                             (5U)
@@ -9967,7 +9967,7 @@ typedef struct
     __IO uint32_t PE;
     __IO uint32_t SMBUS;
     __IO uint32_t SMBALRTEN;
-    __IO uint32_t SMBDEFAULTE;
+    __IO uint32_t SMBDEFAULTEN;
     __IO uint32_t SMBHOSTEN;
     __IO uint32_t FACKEN;
     __IO uint32_t GCEN;
