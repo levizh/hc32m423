@@ -201,12 +201,13 @@ typedef struct
  * @{
  */
 #define GPIO_FUNC_1         ((uint8_t)0x01U)
-#define GPIO_FUNC_1_ADTRG   (GPIO_FUNC_1)     /*!< ADC external trigger             */
-#define GPIO_FUNC_1_ADST    (GPIO_FUNC_1)     /*!< todo             */
+#define GPIO_FUNC_1_ANA     (GPIO_FUNC_1)     /*!< Analog function */
+#define GPIO_FUNC_1_ADTRG   (GPIO_FUNC_1)     /*!< ADC external trigger */
+#define GPIO_FUNC_1_ADST    (GPIO_FUNC_1)     /*!< todo */
 #define GPIO_FUNC_1_CTCREF  (GPIO_FUNC_1)     /*!< Reference input pin for internal \
                                                clock trimming controller */
-#define GPIO_FUNC_1_MCO     (GPIO_FUNC_1)     /*!< MCO output                       */
-#define GPIO_FUNC_1_VCOUT   (GPIO_FUNC_1)     /*!< Voltage comparator output        */
+#define GPIO_FUNC_1_MCO     (GPIO_FUNC_1)     /*!< MCO output */
+#define GPIO_FUNC_1_VCOUT   (GPIO_FUNC_1)     /*!< Voltage comparator output */
 /**
  * @}
  */
