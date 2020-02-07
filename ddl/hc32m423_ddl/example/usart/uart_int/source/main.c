@@ -5,9 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-03       Hongjh          First version
-   2019-11-04       Hongjh          TX empty interrupt IRQ callback disable TX 
-                                    empyt interrupt when buffer data is empty.
+   2020-02-07       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
