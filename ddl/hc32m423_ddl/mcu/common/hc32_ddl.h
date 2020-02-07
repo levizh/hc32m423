@@ -108,6 +108,10 @@ extern "C"
     #include "hc32m423_clk.h"
 #endif /* DDL_CLK_ENABLE */
 
+#if (DDL_CMP_ENABLE == DDL_ON)
+    #include "hc32m423_cmp.h"
+#endif /* DDL_CMP_ENABLE */
+
 #if (DDL_CRC_ENABLE == DDL_ON)
     #include "hc32m423_crc.h"
 #endif /* DDL_CRC_ENABLE */
@@ -116,9 +120,9 @@ extern "C"
     #include "hc32m423_ctc.h"
 #endif /* DDL_CTC_ENABLE */
 
-#if (DDL_CMP_ENABLE == DDL_ON)
-    #include "hc32m423_cmp.h"
-#endif /* DDL_CMP_ENABLE */
+#if (DDL_DCU_ENABLE == DDL_ON)
+    #include "hc32m423_dcu.h"
+#endif /* DDL_DCU_ENABLE */
 
 #if (DDL_DMA_ENABLE == DDL_ON)
     #include "hc32m423_dma.h"

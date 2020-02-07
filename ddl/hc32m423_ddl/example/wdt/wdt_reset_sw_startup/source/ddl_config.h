@@ -92,6 +92,7 @@ extern "C"
 #define DDL_CMP_ENABLE                              (DDL_OFF)
 #define DDL_CRC_ENABLE                              (DDL_OFF)
 #define DDL_CTC_ENABLE                              (DDL_OFF)
+#define DDL_DCU_ENABLE                              (DDL_OFF)
 #define DDL_DMA_ENABLE                              (DDL_OFF)
 #define DDL_EFM_ENABLE                              (DDL_OFF)
 #define DDL_EKEY_ENABLE                             (DDL_OFF)
@@ -121,7 +122,6 @@ extern "C"
  * @brief This is the list of midware modules to be used.
  * Select the modules you need to use to MW_ON.
  */
-#define MW_LIN_ENABLE                               (MW_OFF)
 #define MW_W25QXX_ENABLE                            (MW_OFF)
 
 /*******************************************************************************

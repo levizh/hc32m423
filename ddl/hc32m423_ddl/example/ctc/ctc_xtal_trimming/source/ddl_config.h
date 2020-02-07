@@ -119,7 +119,6 @@ extern "C"
  * @brief This is the list of midware modules to be used.
  * Select the modules you need to use to MW_ON.
  */
-#define MW_LIN_ENABLE                               (MW_OFF)
 #define MW_W25QXX_ENABLE                            (MW_OFF)
 
 /*******************************************************************************
