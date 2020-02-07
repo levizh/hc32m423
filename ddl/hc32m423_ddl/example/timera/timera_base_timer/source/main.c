@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-04       Yangjp          First version
+   2020-02-07       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -81,7 +81,7 @@
 #define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
 
 /* TIMERA unit definition */
-#define TIMERA_UNIT1                    (M0P_TMRA)
+#define TIMERA_UNIT1                    (M4_TMRA1)
 #define TIMERA_UNIT1_CLOCK              (CLK_FCG_TIMA)
 #define TIMERA_UNIT1_OVF_INT            (TIMERA_INT_OVF)
 #define TIMERA_UNIT1_OVF_INTn           (INT_TMRA_OVF)
@@ -109,7 +109,7 @@ static uint8_t u8TimeraUnit1Cnt = 0U;
  * @param  None
  * @retval None
  */
-static void TimeraUnit1Overflow_IrqCallback(void)
+void TIMERA_1_Ovf_IrqHandler(void)
 {
     u8TimeraUnit1Cnt++;
     if (u8TimeraUnit1Cnt >= 100U)    /* 1s */
@@ -144,7 +144,7 @@ static void Led_Config(void)
     GPIO_StructInit(&stcGpioInit);
 
     /* LED Port/Pin initialization */
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
     LED_R_OFF();
 }
@@ -157,7 +157,6 @@ static void Led_Config(void)
 static void Timera_Config(void)
 {
     stc_timera_init_t stcTimeraInit;
-    stc_irq_regi_config_t stcIrqRegiConf;
 
     /* Configuration structure initialization */
     TIMERA_StructInit(&stcTimeraInit);
@@ -175,13 +174,9 @@ static void Timera_Config(void)
     TIMERA_IntCmd(TIMERA_UNIT1, TIMERA_UNIT1_OVF_INT, Enable);
 
     /* Configuration timera 1 unit interrupt */
-    stcIrqRegiConf.enIntSrc = TIMERA_UNIT1_OVF_INTn;
-    stcIrqRegiConf.enIRQn = TIMERA_UNIT1_OVF_IRQn;
-    stcIrqRegiConf.pfnCallback = &TimeraUnit1Overflow_IrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
-    NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
-    NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
-    NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
+    NVIC_ClearPendingIRQ(TmrA1OVF_IRQn);
+    NVIC_SetPriority(TmrA1OVF_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_EnableIRQ(TmrA1OVF_IRQn);
 
     /* Start TIMERA counter */
     TIMERA_Cmd(TIMERA_UNIT1, Enable);

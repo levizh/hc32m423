@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-27       Yangjp          First version
+   2020-02-07       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -167,7 +167,7 @@ static void WDT_Config(void)
 
     /* WDT structure parameters configure */
     stcWdtInit.u32CountCycle = WDT_COUNTER_CYCLE_4096;
-    stcWdtInit.u32ClockDivision = WDT_CLOCK_DIV16;
+    stcWdtInit.u32ClockDivision = WDT_CLOCK_DIV64;
     stcWdtInit.u32RefreshRange = WDT_RANGE_0TO25PCT;
     stcWdtInit.u32LPModeCountEn = WDT_LPW_MODE_COUNT_STOP;
     stcWdtInit.u32RequestType = WDT_TRIG_EVENT_RESET;
@@ -189,7 +189,7 @@ int32_t main(void)
     GPIO_StructInit(&stcGpioInit);
 
     /* LED Port/Pin initialization */
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
     LED_R_OFF();
 

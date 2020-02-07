@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-04       Yangjp          First version
+   2020-02-07       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -94,7 +94,7 @@
 #define SW1_TRIGGER_EVENT               (EVT_PORT_EIRQ2)
 
 /* TIMERA unit definition */
-#define TIMERA_UNIT1                    (M0P_TMRA)
+#define TIMERA_UNIT1                    (M4_TMRA1)
 #define TIMERA_UNIT1_CLOCK              (CLK_FCG_TIMA)
 #define TIMERA_UNIT1_CMP_INTn           (INT_TMRA_CMP)
 #define TIMERA_UNIT1_CMP_IRQn           (Int016_IRQn)
@@ -136,7 +136,7 @@
  * @param  None
  * @retval None
  */
-static void TimeraUnit1Compare_IrqCallback(void)
+void TIMERA_1_Cmp_IrqHandler(void)
 {
     /* Capture channel 1 */
     if (Set == TIMERA_GetFlag(TIMERA_UNIT1, TIMERA_UNIT1_CH1_INT_FLAG))
@@ -176,7 +176,7 @@ static void Led_Config(void)
     GPIO_StructInit(&stcGpioInit);
 
     /* LED Port/Pin initialization */
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
     LED_R_OFF();
@@ -192,7 +192,6 @@ static void Timera_Config(void)
 {
     stc_timera_init_t stcTimeraInit;
     stc_timera_ic_init_t stcTimeraICInit;
-    stc_irq_regi_config_t stcIrqRegiConf;
     stc_gpio_init_t stcGpioInit;
 
     /* Configuration structure initialization */
@@ -225,18 +224,14 @@ static void Timera_Config(void)
     TIMERA_IntCmd(TIMERA_UNIT1, TIMERA_UNIT1_CH1_INT | TIMERA_UNIT1_CH2_INT, Enable);
 
     /* Configuration timera 1 unit interrupt */
-    stcIrqRegiConf.enIntSrc = TIMERA_UNIT1_CMP_INTn;
-    stcIrqRegiConf.enIRQn = TIMERA_UNIT1_CMP_IRQn;
-    stcIrqRegiConf.pfnCallback = &TimeraUnit1Compare_IrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
-    NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
-    NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
-    NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
+    NVIC_ClearPendingIRQ(TmrA1CMP_IRQn);
+    NVIC_SetPriority(TmrA1CMP_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_EnableIRQ(TmrA1CMP_IRQn);
 
     /* Set external Int Ch.0 trigger timera compare */
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
     GPIO_Init(SW1_PORT, SW1_PIN, &stcGpioInit);
-    TIMERA_SetTriggerSrc(SW1_TRIGGER_EVENT);
+    TIMERA_SetCaptureTriggerSrc(SW1_TRIGGER_EVENT);
 
     /* Start TIMERA counter */
     TIMERA_Cmd(TIMERA_UNIT1, Enable);

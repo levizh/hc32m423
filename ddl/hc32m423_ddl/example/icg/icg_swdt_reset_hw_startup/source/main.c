@@ -169,7 +169,7 @@ int32_t main(void)
      @verbatim
      #define ICG0_SWDT_HARDWARE_START         ICG_FUNCTION_ON
 
-     #define ICG0_SWDT_AUTS                   ICG_SWDT_AFTER_RESET_AUTOSTART
+     #define ICG0_SWDT_AUTST                  ICG_SWDT_AFTER_RESET_AUTOSTART
      #define ICG0_SWDT_ITS                    ICG_SWDT_TRIG_EVENT_RESET
      #define ICG0_SWDT_PERI                   ICG_SWDT_COUNTER_CYCLE_4096
      #define ICG0_SWDT_CKS                    ICG_SWDT_CLOCK_DIV16
@@ -186,7 +186,7 @@ int32_t main(void)
     GPIO_StructInit(&stcGpioInit);
 
     /* LED Port/Pin initialization */
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
     LED_R_OFF();
 

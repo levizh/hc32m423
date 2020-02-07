@@ -113,7 +113,7 @@ static uint8_t u8ExIntCnt = 0U;
  * @param  None
  * @retval None
  */
-static void WDT_IrqCallback(void)
+void WDT_IrqHandler(void)
 {
     en_flag_status_t enFlagSta;
 
@@ -193,9 +193,6 @@ static void SW1_Config(void)
     NVIC_SetPriority(ExInt2_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
     /* Enable NVIC */
     NVIC_EnableIRQ(ExInt2_IRQn);
-
-    /* Enable stop mode wakeup */
-    INTC_WakeupSrcCmd(INTC_WUPENR_EIRQWUEN_2, Enable);
 }
 
 /**
@@ -205,31 +202,12 @@ static void SW1_Config(void)
  */
 static void WDT_Config(void)
 {
-    uint8_t u8Ret;
-    stc_irq_regi_config_t stcIrqRegister;
-
-    /* NVIC configure of WDT */
-    stcIrqRegister.enIntSrc = INT_WDT_NMIUNDF;
-    stcIrqRegister.enIRQn = Int008_IRQn;
-    stcIrqRegister.pfnCallback = &WDT_IrqCallback;
-    u8Ret = INTC_IrqRegistration(&stcIrqRegister);
-    if (Ok != u8Ret)
-    {
-        /* check parameter */
-        while (1)
-        {
-        }
-    }
-
     /* Clear pending */
-    NVIC_ClearPendingIRQ(stcIrqRegister.enIRQn);
+    NVIC_ClearPendingIRQ(Wdt_IRQn);
     /* Set priority */
-    NVIC_SetPriority(stcIrqRegister.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_SetPriority(Wdt_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
     /* Enable NVIC */
-    NVIC_EnableIRQ(stcIrqRegister.enIRQn);
-
-    /* Enable stop mode wakeup */
-    INTC_WakeupSrcCmd(INTC_WUPENR_WDTWUEN, Enable);
+    NVIC_EnableIRQ(Wdt_IRQn);
 }
 
 /**
@@ -277,11 +255,6 @@ int32_t main(void)
         if (1U == u8ExIntCnt)
         {
              PWC_EnterSleepMode();
-        }
-        /* Stop mode */
-        else if (2U == u8ExIntCnt)
-        {
-             PWC_EnterStopMode();
         }
         else
         {

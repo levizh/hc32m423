@@ -85,10 +85,10 @@
 #define SW1_PIN                         (GPIO_PIN_2)
 
 /* WDT count cycle definition */
-#define WDT_COUNT_CYCLE                (4096U)
+#define WDT_COUNT_CYCLE                 (4096U)
 
 /* Reset source definition */
-#define RESET_SOURCE_WDT               (0U)
+#define RESET_SOURCE_WDT                (0U)
 #define RESET_SOURCE_OTHER              (1U)
 
 /*******************************************************************************

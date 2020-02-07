@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-04       Yangjp          First version
+   2020-02-07       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -90,7 +90,7 @@
 #define SW2_TRIGGER_EVENT               (EVT_PORT_EIRQ1)
 
 /* TIMERA unit definition */
-#define TIMERA_UNIT1                    (M0P_TMRA)
+#define TIMERA_UNIT1                    (M4_TMRA1)
 #define TIMERA_UNIT1_CLOCK              (CLK_FCG_TIMA)
 #define TIMERA_UNIT1_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/256U/100U))
 
@@ -180,7 +180,7 @@ static void Led_Config(void)
     GPIO_StructInit(&stcGpioInit);
 
     /* LED Port/Pin initialization */
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
     LED_R_OFF();
 }
@@ -238,17 +238,20 @@ static void SW2_Config(void)
     GPIO_Init(SW2_PORT, SW2_PIN, &stcGpioInit);
 
     /* EXINT Channel 1 (SW2) configure */
-    stcExIntInit.u16ExIntCh = EXINT_CH01;
-    stcExIntInit.u8ExIntFE = EXINT_FILTER_OFF;
-    stcExIntInit.u8ExIntLvl = EXINT_TRIGGER_FALLING;
+    stcExIntInit.u32ExIntCh     = EXINT_CH02;
+    stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
+    stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV8;
+    stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
+    stcExIntInit.u32ExIntFBTime = NMI_EXINT_FBTIM_2US;
+    stcExIntInit.u32ExIntLvl    = EXINT_TRIGGER_RISING;
     EXINT_Init(&stcExIntInit);
 
     /* Clear pending */
-    NVIC_ClearPendingIRQ(EXINT01_IRQn);
+    NVIC_ClearPendingIRQ(ExInt2_IRQn);
     /* Set priority */
-    NVIC_SetPriority(EXINT01_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_SetPriority(ExInt2_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
     /* Enable NVIC */
-    NVIC_EnableIRQ(EXINT01_IRQn);
+    NVIC_EnableIRQ(ExInt2_IRQn);
 }
 
 /**
@@ -299,7 +302,7 @@ static void Timera_Config(void)
     /* Set external Int Ch.1 trigger timera compare */
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
     GPIO_Init(SW2_PORT, SW2_PIN, &stcGpioInit);
-    TIMERA_SetTriggerSrc(SW2_TRIGGER_EVENT);
+    TIMERA_SetCaptureTriggerSrc(SW2_TRIGGER_EVENT);
 }
 
 /**

@@ -113,7 +113,7 @@ static uint8_t u8ExIntCnt = 0U;
  * @param  None
  * @retval None
  */
-static void SWDT_IrqCallback(void)
+void SWDT_IrqHandler(void)
 {
     en_flag_status_t enFlagSta;
 
@@ -195,7 +195,7 @@ static void SW1_Config(void)
     NVIC_EnableIRQ(ExInt2_IRQn);
 
     /* Enable stop mode wakeup */
-    INTC_WakeupSrcCmd(INTC_WUPENR_EIRQWUEN_2, Enable);
+    INTC_WakeupSrcCmd(INTC_WUPEN_EIRQWUEN_2, Enable);
 }
 
 /**
@@ -205,31 +205,15 @@ static void SW1_Config(void)
  */
 static void SWDT_Config(void)
 {
-    uint8_t u8Ret;
-    stc_irq_regi_config_t stcIrqRegister;
-
-    /* NVIC configure of SWDT */
-    stcIrqRegister.enIntSrc = INT_SWDT_NMIUNDF;
-    stcIrqRegister.enIRQn = Int008_IRQn;
-    stcIrqRegister.pfnCallback = &SWDT_IrqCallback;
-    u8Ret = INTC_IrqRegistration(&stcIrqRegister);
-    if (Ok != u8Ret)
-    {
-        /* check parameter */
-        while (1)
-        {
-        }
-    }
-
     /* Clear pending */
-    NVIC_ClearPendingIRQ(stcIrqRegister.enIRQn);
+    NVIC_ClearPendingIRQ(Swdt_IRQn);
     /* Set priority */
-    NVIC_SetPriority(stcIrqRegister.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_SetPriority(Swdt_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
     /* Enable NVIC */
-    NVIC_EnableIRQ(stcIrqRegister.enIRQn);
+    NVIC_EnableIRQ(Swdt_IRQn);
 
     /* Enable stop mode wakeup */
-    INTC_WakeupSrcCmd(INTC_WUPENR_SWDTWUEN, Enable);
+    INTC_WakeupSrcCmd(INTC_WUPEN_SWDTWUEN, Enable);
 }
 
 /**
@@ -245,10 +229,10 @@ int32_t main(void)
      @verbatim
      #define ICG0_SWDT_HARDWARE_START         ICG_FUNCTION_ON
 
-     #define ICG0_SWDT_AUTS                   ICG_SWDT_AFTER_RESET_AUTOSTART
+     #define ICG0_SWDT_AUTST                  ICG_SWDT_AFTER_RESET_AUTOSTART
      #define ICG0_SWDT_ITS                    ICG_SWDT_TRIG_EVENT_INT
      #define ICG0_SWDT_PERI                   ICG_SWDT_COUNTER_CYCLE_256
-     #define ICG0_SWDT_CKS                    ICG_SWDT_CLOCK_DIV128
+     #define ICG0_SWDT_CKS                    ICG_SWDT_CLOCK_DIV32
      #define ICG0_SWDT_WDPT                   ICG_SWDT_RANGE_100PCT
      #define ICG0_SWDT_SLTPOFF                ICG_SWDT_LPW_MODE_COUNT_CONTINUE
      @endverbatim
@@ -260,7 +244,7 @@ int32_t main(void)
     GPIO_StructInit(&stcGpioInit);
 
     /* LED Port/Pin initialization */
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
     LED_R_OFF();

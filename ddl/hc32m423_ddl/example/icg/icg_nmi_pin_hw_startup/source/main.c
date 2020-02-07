@@ -103,9 +103,9 @@
 static void NMI_IrqCallback(void)
 {
     /* NMI Pin */
-    if (Set == NMI_GetNmiSrc((uint8_t)INTC_NMIFR_NMIF))
+    if (Set == NMI_GetNmiSrc(NMI_SRC_NMI_PIN))
     {
-        NMI_ClrNmiSrc((uint8_t)INTC_NMIFR_NMIF);
+        NMI_ClrNmiSrc(NMI_SRC_NMI_PIN);
         LED_R_TOGGLE();
     }
 }
@@ -139,12 +139,12 @@ int32_t main(void)
     NMI_StructInit(&stcNmiInit);
 
     /* LED Port/Pin initialization */
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
     LED_R_OFF();
 
     /* NMI Pin interrupt configure */
-    stcNmiInit.u8NmiSrc = NMI_SRC_NMI_PIN;
+    stcNmiInit.u32NmiSrc = NMI_SRC_NMI_PIN;
     stcNmiInit.pfnNmiCallback = &NMI_IrqCallback;
     NMI_Init(&stcNmiInit);
 

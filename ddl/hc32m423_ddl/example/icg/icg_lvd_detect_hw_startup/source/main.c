@@ -80,13 +80,9 @@
 #define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
 
-/* LED_G Port/Pin definition */
-#define LED_G_PORT                      (GPIO_PORT_A)
-#define LED_G_PIN                       (GPIO_PIN_1)
-
-#define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
-#define LED_G_OFF()                     (GPIO_SetPins(LED_G_PORT, LED_G_PIN))
-#define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
+/* Reset source definition */
+#define RESET_SOURCE_LVD                (0u)
+#define RESET_SOURCE_OTHER              (1u)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -104,60 +100,6 @@
  * Function implementation - global ('extern') and local ('static')
  ******************************************************************************/
 /**
- * @brief  LVD interrupt callback function.
- * @param  None
- * @retval None
- */
-static void LVD_IrqCallback(void)
-{
-    if (Set == PWC_GetLvdFlag(PWC_LVD_FLAG_DET))
-    {
-        PWC_ClearLvdDetFlag();
-        if (Set == PWC_GetLvdFlag(PWC_LVD_FLAG_LVI))
-        {
-            LED_G_OFF();
-            LED_R_ON();
-        }
-        else
-        {
-            LED_G_ON();
-            LED_R_OFF();
-        }
-    }
-}
-
-/**
- * @brief  LVD configuration.
- * @param  None
- * @retval None
- */
-static void LVD_Config(void)
-{
-    uint8_t u8Ret;
-    stc_irq_regi_config_t stcIrqRegister;
-
-    /* NVIC configure of LVD */
-    stcIrqRegister.enIntSrc = INT_PVD_DET;
-    stcIrqRegister.enIRQn = Int022_IRQn;
-    stcIrqRegister.pfnCallback = &LVD_IrqCallback;
-    u8Ret = INTC_IrqRegistration(&stcIrqRegister);
-    if (Ok != u8Ret)
-    {
-        /* check parameter */
-        while (1)
-        {
-        }
-    }
-
-    /* Clear pending */
-    NVIC_ClearPendingIRQ(stcIrqRegister.enIRQn);
-    /* Set priority */
-    NVIC_SetPriority(stcIrqRegister.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
-    /* Enable NVIC */
-    NVIC_EnableIRQ(stcIrqRegister.enIRQn);
-}
-
-/**
  * @brief  Main function of ICG LVD Interrupt.
  * @param  None
  * @retval int32_t return value, if needed
@@ -170,33 +112,44 @@ int32_t main(void)
      @verbatim
      #define ICG1_LVD_HARDWARE_START      ICG_FUNCTION_ON
 
-     #define ICG1_LVD_DFS                 ICG_LVD_FILTER_CLOCK_LRC16
-     #define ICG1_LVD_DFDIS               ICG_LVD_DIGITAL_FILTER_ENABLE
-     #define ICG1_LVD_LVDLVL              ICG_LVD_BELOW2P96_OR_ABOVE3P02
-     #define ICG1_LVD_NMIS                ICG_LVD_INT_TYPE_INTR
-     #define ICG1_LVD_IRS                 ICG_LVD_TRIG_EVENT_INT
-     #define ICG1_LVD_IRDIS               ICG_LVD_INT_AND_RESET_ENABLE
-     #define ICG1_LVD_LVDDIS              ICG_LVD_VOLTAGE_DETECTION_ENABLE
+     #define ICG1_LKUP_DIS                ICG_LOCKUP_RESET_ENABLE
+     #define ICG1_LVD0_LVL                ICG_LVD_BELOW2P82_OR_ABOVE2P90
+     #define ICG1_LVD0_DIS                ICG_LVD_VOLTAGE_DETECTION_ENABLE
      @endverbatim
     ***************************************************************************
     */
+    uint8_t u8ResetSource;
     stc_gpio_init_t stcGpioInit;
+    stc_rmu_rstcause_t stcRmuRstCause;
 
     /* Configure structure initialization */
     GPIO_StructInit(&stcGpioInit);
 
     /* LED Port/Pin initialization */
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
-    GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
     LED_R_OFF();
-    LED_G_ON();
 
-    /* LVD configuration */
-    LVD_Config();
+    /* Get RMU information */
+    RMU_GetResetCause(&stcRmuRstCause);
+    if (Set == stcRmuRstCause.LvdRst)
+    {
+        u8ResetSource = RESET_SOURCE_LVD;
+        LED_R_ON();
+    }
+    else
+    {
+        u8ResetSource = RESET_SOURCE_OTHER;
+    }
+    RMU_ClrResetFlag();
 
     while (1)
     {
+        if (RESET_SOURCE_OTHER == u8ResetSource)
+        {
+            LED_R_TOGGLE();
+            DDL_Delay1ms(1000u);
+        }
     }
 }
 
