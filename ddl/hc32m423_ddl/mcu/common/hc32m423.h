@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-06       levi          First version
+   2020-02-07       levi          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co.,Ltd. All rights reserved.
@@ -56,7 +56,7 @@
  **
  ** History:
  **
- **   - 2020-02-06  1.0   First version for Device Driver Library of HC32M423 series MCU.
+ **   - 2020-02-07  1.0   First version for Device Driver Library of HC32M423 series MCU.
  **
  ******************************************************************************/
 
@@ -793,7 +793,8 @@ typedef struct
     __IO uint32_t UQID0;
     __IO uint32_t UQID1;
     __IO uint32_t UQID2;
-    uint8_t RESERVED2[550];
+    __IO uint32_t UQID3;
+    uint8_t RESERVED2[546];
     __IO uint8_t  HRCCFGR;
 } M4_EFM_TypeDef;
 
@@ -3108,10 +3109,8 @@ typedef struct
 #define EFM_FRMC_ICHE                                  ((uint32_t)0x00010000U)
 #define EFM_FRMC_DCHE_POS                              (17U)
 #define EFM_FRMC_DCHE                                  ((uint32_t)0x00020000U)
-#define EFM_FRMC_PREFETE_POS                           (18U)
-#define EFM_FRMC_PREFETE                               ((uint32_t)0x00040000U)
-#define EFM_FRMC_CRST0_POS                             (19U)
-#define EFM_FRMC_CRST0                                 ((uint32_t)0x00080000U)
+#define EFM_FRMC_CRST_POS                              (19U)
+#define EFM_FRMC_CRST                                  ((uint32_t)0x00080000U)
 
 /*  Bit definition for EFM_FWMC register  */
 #define EFM_FWMC_PEMODE_POS                            (0U)
@@ -3208,6 +3207,9 @@ typedef struct
 
 /*  Bit definition for EFM_UQID2 register  */
 #define EFM_UQID2                                      ((uint32_t)0xFFFFFFFFU)
+
+/*  Bit definition for EFM_UQID3 register  */
+#define EFM_UQID3                                      ((uint32_t)0xFFFFFFFFU)
 
 /*  Bit definition for EFM_HRCCFGR register  */
 #define EFM_HRCCFGR_HRCFREQS_POS                       (0U)
@@ -9171,9 +9173,9 @@ typedef struct
     uint32_t RESERVED0[13];
     __IO uint32_t ICHE;
     __IO uint32_t DCHE;
-    __IO uint32_t PREFETE;
-    __IO uint32_t CRST0;
-    uint32_t RESERVED1[12];
+    uint32_t RESERVED1[1];
+    __IO uint32_t CRST;
+    uint32_t RESERVED2[12];
 } stc_efm_frmc_bit_t;
 
 typedef struct
@@ -9371,6 +9373,42 @@ typedef struct
     uint32_t EFM_UQID2_30;
     uint32_t EFM_UQID2_31;
 } stc_efm_uqid2_bit_t;
+
+typedef struct
+{
+    uint32_t EFM_UQID3_0;
+    uint32_t EFM_UQID3_1;
+    uint32_t EFM_UQID3_2;
+    uint32_t EFM_UQID3_3;
+    uint32_t EFM_UQID3_4;
+    uint32_t EFM_UQID3_5;
+    uint32_t EFM_UQID3_6;
+    uint32_t EFM_UQID3_7;
+    uint32_t EFM_UQID3_8;
+    uint32_t EFM_UQID3_9;
+    uint32_t EFM_UQID3_10;
+    uint32_t EFM_UQID3_11;
+    uint32_t EFM_UQID3_12;
+    uint32_t EFM_UQID3_13;
+    uint32_t EFM_UQID3_14;
+    uint32_t EFM_UQID3_15;
+    uint32_t EFM_UQID3_16;
+    uint32_t EFM_UQID3_17;
+    uint32_t EFM_UQID3_18;
+    uint32_t EFM_UQID3_19;
+    uint32_t EFM_UQID3_20;
+    uint32_t EFM_UQID3_21;
+    uint32_t EFM_UQID3_22;
+    uint32_t EFM_UQID3_23;
+    uint32_t EFM_UQID3_24;
+    uint32_t EFM_UQID3_25;
+    uint32_t EFM_UQID3_26;
+    uint32_t EFM_UQID3_27;
+    uint32_t EFM_UQID3_28;
+    uint32_t EFM_UQID3_29;
+    uint32_t EFM_UQID3_30;
+    uint32_t EFM_UQID3_31;
+} stc_efm_uqid3_bit_t;
 
 typedef struct
 {
@@ -12353,7 +12391,8 @@ typedef struct
     stc_efm_uqid0_bit_t                      UQID0_b;
     stc_efm_uqid1_bit_t                      UQID1_b;
     stc_efm_uqid2_bit_t                      UQID2_b;
-    uint32_t                                 RESERVED2[4400];
+    stc_efm_uqid3_bit_t                      UQID3_b;
+    uint32_t                                 RESERVED2[4368];
     stc_efm_hrccfgr_bit_t                    HRCCFGR_b;
 } bM4_EFM_TypeDef;
 
