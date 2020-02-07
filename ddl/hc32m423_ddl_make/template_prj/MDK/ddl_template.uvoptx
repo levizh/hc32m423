@@ -25,7 +25,7 @@
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
-      <CLKADS>12000000</CLKADS>
+      <CLKADS>8000000</CLKADS>
       <OPTTT>
         <gFlags>1</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
@@ -76,7 +76,8 @@
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
-      <CpuCode>7</CpuCode>
+      <CpuCode>255</CpuCode>
+
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
@@ -115,8 +116,13 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>CMSIS_AGDI</Key>
+          <Name>-X"" -O206 -S0 -C0 -P00 -FO7 -FD1FFFE000 -FC1000 -FN1 -FF0HC32M423 -FS00000000 -FL020000 -FP0($$Device:HC32M423KATB$FlashARM\HC32M423.FLM)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>JL2CM3</Key>
-          <Name>-U158007610 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST2 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD20000000 -FC1000 -FN1 -FF0HC32M120 -FS00 -FL08000 -FP0($$Device:HC32M120J6TB$FlashARM\HC32M120.FLM)</Name>
+          <Name>-U158007610 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST2 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD1FFFE000 -FC1000 -FN1 -FF0HC32M423 -FS00 -FL0020000 -FP0($$Device:HC32M423KATB$FlashARM\HC32M423.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -159,7 +165,7 @@
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
-      <CLKADS>12000000</CLKADS>
+      <CLKADS>8000000</CLKADS>
       <OPTTT>
         <gFlags>1</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
@@ -210,7 +216,7 @@
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
-      <CpuCode>7</CpuCode>
+      <CpuCode>255</CpuCode>
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
@@ -249,16 +255,14 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>JL2CM3</Key>
-          <Name>-U158007610 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST2 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD20000000 -FC1000 -FN1 -FF0HC32M120 -FS00 -FL08000 -FP0($$Device:HC32M120J6TB$FlashARM\HC32M120.FLM)</Name>
+          <Key>CMSIS_AGDI</Key>
+          <Name>-X"" -O206 -S0 -C0 -P00 -FO7 -FD1FFFE000 -FC1000 -FN1 -FF0HC32M423 -FS00000000 -FL020000 -FP0($$Device:HC32M423KATB$FlashARM\HC32M423.FLM)</Name>
         </SetRegEntry>
-        <!--
         <SetRegEntry>
           <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0NEW_DEVICE -FS00 -FL040000 -FP0($$Device:ARMCM0P$Device\ARM\Flash\NEW_DEVICE.FLM))</Name>
+          <Key>JL2CM3</Key>
+          <Name>-U158007610 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST2 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD1FFFE000 -FC1000 -FN1 -FF0HC32M423 -FS00 -FL0020000 -FP0($$Device:HC32M423KATB$FlashARM\HC32M423.FLM)</Name>
         </SetRegEntry>
-        -->
       </TargetDriverDllRegistry>
       <Breakpoint/>
       <Tracepoint>

@@ -1,9 +1,9 @@
 [PlDriver]
 MemConfigValue=$PROJ_DIR$\{SAMPLE_DEPTH}mcu\EWARM\hdsc_hc32m423.svd
 [PlCacheRanges]
-CustomRanges0=0 0 65536 1 2048
+CustomRanges0=0 0 131072 1 2048
 CustomRangesText0=
-CustomRanges1=0 536870912 4096 0 2048
+CustomRanges1=0 536862720 16384 0 2048
 CustomRangesText1=
 CustomRanges2=0 1073741824 536870912 2 0
 CustomRangesText2=Peripheral
