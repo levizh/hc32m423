@@ -283,6 +283,20 @@ typedef struct
  */
 
 /**
+ * @defgroup TIMERB_Event TIMERB Event
+ * @{
+ */
+#define TIMERB_EVT_CMP1                         (TMRB_ECONR_ETEN1)
+#define TIMERB_EVT_CMP2                         (TMRB_ECONR_ETEN2)
+#define TIMERB_EVT_CMP3                         (TMRB_ECONR_ETEN3)
+#define TIMERB_EVT_CMP4                         (TMRB_ECONR_ETEN4)
+#define TIMERB_EVT_CMP5                         (TMRB_ECONR_ETEN5)
+#define TIMERB_EVT_CMP6                         (TMRB_ECONR_ETEN6)
+/**
+ * @}
+ */
+
+/**
  * @defgroup TIMERB_Compare_Match_Event TimerB Compare Match Event
  * @{
  */
@@ -560,32 +574,6 @@ __STATIC_INLINE void TIMERB_Stop(M4_TMRB_TypeDef *TMRBx)
 }
 
 /**
- * @brief  Enable TimerB compare match event.
- * @param  [in] TMRBx                   Pointer to TimerB instance register base
- *         This parameter can be one of the following values:
- *           @arg M4_TMRB:              TimerB unit 1 instance register base
- * @retval None
- */
-__STATIC_INLINE void TIMERB_EnableCmpMatchEvt(M4_TMRB_TypeDef *TMRBx,
-                                                        uint32_t u32Ch)
-{
-    SET_REG16_BIT(TMRBx->ECONR, TMRB_ECONR_ETEN1);
-}
-
-/**
- * @brief  Disable TimerB compare match event.
- * @param  [in] TMRBx                   Pointer to TimerB instance register base
- *         This parameter can be one of the following values:
- *           @arg M4_TMRB:              TimerB unit 1 instance register base
- * @retval None
- */
-__STATIC_INLINE void TIMERB_DisableCmpMatchEvt(M4_TMRB_TypeDef *TMRBx,
-                                                        uint32_t u32Ch)
-{
-    CLEAR_REG16_BIT(TMRBx->ECONR, TMRB_ECONR_ETEN1);
-}
-
-/**
  * @brief  Set TimerB trigger event source.
  * @param  [in] enEvtSrc                Trigger event source @ref en_event_src_t
  * @retval None
@@ -621,6 +609,9 @@ void TIMERB_ClearFlag(M4_TMRB_TypeDef *TMRBx, uint16_t u16Flag);
 void TIMERB_IntCmd(M4_TMRB_TypeDef *TMRBx,
                         uint16_t u16IntSource,
                         en_functional_state_t enNewSta);
+void TIMERB_EventCmd(M4_TMRB_TypeDef *TMRBx,
+                            uint32_t u32EvtSource,
+                            en_functional_state_t enNewSta);
 void TIMERB_SetHwTriggerCondition(M4_TMRB_TypeDef *TMRBx,
                                         uint16_t u16Condition);
 void TIMERB_SetHwStartCondition(M4_TMRB_TypeDef *TMRBx,
@@ -638,6 +629,16 @@ uint16_t TIMERB_GetHwUpCondition(M4_TMRB_TypeDef *TMRBx);
 void TIMERB_SetHwDownCondition(M4_TMRB_TypeDef *TMRBx,
                                         uint16_t u16Condition);
 uint16_t TIMERB_GetHwDownCondition(M4_TMRB_TypeDef *TMRBx);
+ void TIMERB_SetTriangleWaveBufMode(M4_TMRB_TypeDef *TMRBx,
+                                    uint32_t u32Ch,
+                                    uint16_t u16Mode);
+void TIMERB_SetCompare(M4_TMRB_TypeDef *TMRBx,
+                                uint32_t u32Ch,
+                                uint16_t u16Value);
+uint16_t TIMERB_GetCompare(M4_TMRB_TypeDef *TMRBx, uint32_t u32Ch);
+void TIMERB_BufCmd(M4_TMRB_TypeDef *TMRBx,
+                        uint32_t u32BufCh,
+                        en_functional_state_t enNewSta);
 
 /* Initialization and configuration TimerB input capture functions */
 en_result_t TIMERB_IC_Init(M4_TMRB_TypeDef *TMRBx,

@@ -293,10 +293,10 @@
  * @brief Get the specified OCO register address of the specified Timer4 unit
  * @{
  */
-#define TMR4_OCCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCCRUH)) + ((uint32_t)(__CH__))*4UL))
-#define TMR4_OCMRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCMRHUH)) + ((uint32_t)(__CH__))*4UL))
-#define TMR4_OCERx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCERU)) + (((uint32_t)(__CH__))/2UL)*4UL))
-#define TMR4_OCSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCSRU)) + (((uint32_t)(__CH__))/2UL)*4UL))
+#define TMR4_OCCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCCRUH)) + ((uint32_t)(__CH__)) << 2UL))
+#define TMR4_OCMRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCMRHUH)) + ((uint32_t)(__CH__)) << 2UL))
+#define TMR4_OCERx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCERU)) + (((uint32_t)(__CH__)) >> 1UL) << 2UL))
+#define TMR4_OCSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->OCSRU)) + (((uint32_t)(__CH__)) >> 1UL) << 2UL))
 /**
  * @}
  */
@@ -307,10 +307,10 @@
  * @{
  */
 #define TMR4_RCSRx(__TMR4x__)               ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->RCSR))))
-#define TMR4_POCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->POCRU)) + ((uint32_t)(__CH__))*4UL))
-#define TMR4_PDARx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PDARU)) + ((uint32_t)(__CH__))*8UL))
-#define TMR4_PDBRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PDBRU)) + ((uint32_t)(__CH__))*8UL))
-#define TMR4_PFSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PFSRU)) + ((uint32_t)(__CH__))*8UL))
+#define TMR4_POCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->POCRU)) + ((uint32_t)(__CH__)) << 2UL))
+#define TMR4_PDARx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PDARU)) + ((uint32_t)(__CH__)) << 3UL))
+#define TMR4_PDBRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PDBRU)) + ((uint32_t)(__CH__)) << 3UL))
+#define TMR4_PFSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->PFSRU)) + ((uint32_t)(__CH__)) << 3UL))
 /**
  * @}
  */
@@ -321,10 +321,10 @@
  * @{
  */
 #define TMR4_RCSR_RTIDx(__CH__)             ((uint16_t)(TMR4_RCSR_RTIDU << (__CH__)))
-#define TMR4_RCSR_RTIFx(__CH__)             ((uint16_t)(TMR4_RCSR_RTIFU << ((__CH__)*4U)))
-#define TMR4_RCSR_RTICx(__CH__)             ((uint16_t)(TMR4_RCSR_RTICU <<((__CH__)*4U)))
-#define TMR4_RCSR_RTEx(__CH__)              ((uint16_t)(TMR4_RCSR_RTEU << ((__CH__)*4U)))
-#define TMR4_RCSR_RTSx(__CH__)              ((uint16_t)(TMR4_RCSR_RTSU << ((__CH__)*4U)))
+#define TMR4_RCSR_RTIFx(__CH__)             ((uint16_t)(TMR4_RCSR_RTIFU << ((__CH__) << 2U)))
+#define TMR4_RCSR_RTICx(__CH__)             ((uint16_t)(TMR4_RCSR_RTICU << ((__CH__) << 2U)))
+#define TMR4_RCSR_RTEx(__CH__)              ((uint16_t)(TMR4_RCSR_RTEU << ((__CH__) << 2U)))
+#define TMR4_RCSR_RTSx(__CH__)              ((uint16_t)(TMR4_RCSR_RTSU << ((__CH__) << 2U)))
 /**
  * @}
  */
@@ -334,9 +334,9 @@
  * @brief Get the specified SEVT register address of the specified Timer4 unit
  * @{
  */
-#define TMR4_SCCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCCRUH)) + ((uint32_t)(__CH__))*4UL))
-#define TMR4_SCSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCSRUH)) + ((uint32_t)(__CH__))*4UL))
-#define TMR4_SCMRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCMRUH)) + ((uint32_t)(__CH__))*4UL))
+#define TMR4_SCCRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCCRUH)) + ((uint32_t)(__CH__)) << 2UL))
+#define TMR4_SCSRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCSRUH)) + ((uint32_t)(__CH__)) << 2UL))
+#define TMR4_SCMRx(__TMR4x__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMR4x__)->SCMRUH)) + ((uint32_t)(__CH__)) << 2UL))
 /**
  * @}
  */

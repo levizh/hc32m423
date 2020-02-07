@@ -187,6 +187,14 @@
     (TIMERB_IT_CMP5 == (x))                     ||                             \
     (TIMERB_IT_CMP6 == (x)))
 
+#define IS_TIMERB_EVT(x)                                                       \
+(   (TIMERB_EVT_CMP1 == (x))                    ||                             \
+    (TIMERB_EVT_CMP2 == (x))                    ||                             \
+    (TIMERB_EVT_CMP3 == (x))                    ||                             \
+    (TIMERB_EVT_CMP4 == (x))                    ||                             \
+    (TIMERB_EVT_CMP5 == (x))                    ||                             \
+    (TIMERB_EVT_CMP6 == (x)))
+
 #define IS_TIMERB_CMP_EVT_STATE(x)                                             \
 (   (TIMERB_CMP_EVT_ENABLE == (x))              ||                             \
     (TIMERB_CMP_EVT_DISABLE == (x)))
@@ -271,7 +279,7 @@
  * @brief Get the specified BCONR register address of the specified TIMERB unit
  * @{
  */
-#define TMRB_BCONRx(__TMRBx__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMRBx__)->BCONR1)) + ((uint32_t)(__CH__))*4UL))
+#define TMRB_BCONRx(__TMRBx__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMRBx__)->BCONR1)) + ((uint32_t)(__CH__)) << 2UL))
 /**
  * @}
  */
@@ -281,7 +289,7 @@
  * @brief Get the specified CMPAR register address of the specified TIMERB unit
  * @{
  */
-#define TMRB_CMPARx(__TMRBx__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMRBx__)->CMPAR1)) + ((uint32_t)(__CH__))*4UL))
+#define TMRB_CMPARx(__TMRBx__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMRBx__)->CMPAR1)) + ((uint32_t)(__CH__)) << 2UL))
 /**
  * @}
  */
@@ -291,7 +299,7 @@
  * @brief Get the specified CCONR register address of the specified TIMERB unit
  * @{
  */
-#define TMRB_CCONRx(__TMRBx__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMRBx__)->CCONR1)) + ((uint32_t)(__CH__))*4UL))
+#define TMRB_CCONRx(__TMRBx__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMRBx__)->CCONR1)) + ((uint32_t)(__CH__)) << 2UL))
 /**
  * @}
  */
@@ -301,7 +309,7 @@
  * @brief Get the specified PCONR register address of the specified TIMERB unit
  * @{
  */
-#define TMRB_PCONRx(__TMRBx__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMRBx__)->PCONR1)) + ((uint32_t)(__CH__))*4UL))
+#define TMRB_PCONRx(__TMRBx__, __CH__)       ((__IO uint16_t *)((uint32_t)(&((__TMRBx__)->PCONR1)) + ((uint32_t)(__CH__)) << 2UL))
 /**
  * @}
  */
@@ -703,6 +711,42 @@ void TIMERB_IntCmd(M4_TMRB_TypeDef *TMRBx,
 }
 
 /**
+ * @brief  Enable/disable TimerB event function.
+ * @param  [in] TMRBx                   Pointer to TimerB instance register base
+ *         This parameter can be one of the following values:
+ *           @arg M4_TMRB:              TimerB unit 1 instance register base
+ * @param  [in] u16IntSource            TimerB interrupt source
+ *         This parameter can be one of the following values:
+ *           @arg TIMERB_EVT_CMP1:      Channel 1 compare match/capture event
+ *           @arg TIMERB_EVT_CMP2:      Channel 2 compare match/capture event
+ *           @arg TIMERB_EVT_CMP3:      Channel 3 compare match/capture event
+ *           @arg TIMERB_EVT_CMP4:      Channel 4 compare match/capture event
+ *           @arg TIMERB_EVT_CMP5:      Channel 5 compare match/capture event
+ *           @arg TIMERB_EVT_CMP6:      Channel 6 compare match/capture event
+ * @param  [in] enNewSta                The function new state.
+ *           @arg  This parameter can be: Enable or Disable.
+ * @retval None
+ */
+void TIMERB_EventCmd(M4_TMRB_TypeDef *TMRBx,
+                            uint32_t u32EvtSource,
+                            en_functional_state_t enNewSta)
+{
+    /* Check parameters */
+    DDL_ASSERT(IS_TIMERB_INSTANCE(TMRBx));
+    DDL_ASSERT(IS_TIMERB_EVT(u32EvtSource));
+    DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
+
+    if (Enable == enNewSta)
+    {
+        SET_REG16_BIT(TMRBx->ECONR, u32EvtSource);
+    }
+    else
+    {
+        CLEAR_REG16_BIT(TMRBx->ECONR, u32EvtSource);
+    }
+}
+
+/**
  * @brief  Set TimerB hardware trigger counter condition.
  * @param  [in] TMRBx                   Pointer to TimerB instance register base
  *         This parameter can be one of the following values:
@@ -944,54 +988,6 @@ uint16_t TIMERB_GetHwDownCondition(M4_TMRB_TypeDef *TMRBx)
 }
 
 /**
- * @brief  Enable TimerB buffer function.
- * @param  [in] TMRBx                   Pointer to TimerB instance register base
- *         This parameter can be one of the following values:
- *           @arg M4_TMRB:              TimerB unit 1 instance register base
- * @param  [in] u32Ch                   TimerB channel
- *         This parameter can be one of the following values:
- *           @arg TIMERB_BUF_CH12:      TimerB channel 1
- *           @arg TIMERB_BUF_CH34:      TimerB channel 2
- *           @arg TIMERB_BUF_CH56:      TimerB channel 3
- * @retval None
- */
-void TIMERB_EnableBuf(M4_TMRB_TypeDef *TMRBx, uint32_t u32Ch)
-{
-    __IO uint16_t *TMRB_BCONR;
-
-    /* Check parameters */
-    DDL_ASSERT(IS_TIMERB_BUF_CH(u32Ch));
-    DDL_ASSERT(IS_TIMERB_INSTANCE(TMRBx));
-
-    TMRB_BCONR = TMRB_BCONRx(TMRBx, u32Ch);
-    SET_REG16_BIT(*TMRB_BCONR, TMRB_BCONR_BEN);
-}
-
-/**
- * @brief  Disable TimerB buffer function.
- * @param  [in] TMRBx                   Pointer to TimerB instance register base
- *         This parameter can be one of the following values:
- *           @arg M4_TMRB:              TimerB unit 1 instance register base
- * @param  [in] u32Ch                   TimerB channel
- *         This parameter can be one of the following values:
- *           @arg TIMERB_BUF_CH12:      TimerB channel 1
- *           @arg TIMERB_BUF_CH34:      TimerB channel 2
- *           @arg TIMERB_BUF_CH56:      TimerB channel 3
- * @retval None
- */
-void TIMERB_DisableBuf(M4_TMRB_TypeDef *TMRBx, uint32_t u32Ch)
-{
-    __IO uint16_t *TMRB_BCONR;
-
-    /* Check parameters */
-    DDL_ASSERT(IS_TIMERB_BUF_CH(u32Ch));
-    DDL_ASSERT(IS_TIMERB_INSTANCE(TMRBx));
-
-    TMRB_BCONR = TMRB_BCONRx(TMRBx, u32Ch);
-    CLEAR_REG16_BIT(*TMRB_BCONR, TMRB_BCONR_BEN);
-}
-
-/**
  * @brief  Set TimerB triangle wave buffer mode.
  * @param  [in] TMRBx                   Pointer to TimerB instance register base
  *         This parameter can be one of the following values:
@@ -1076,6 +1072,41 @@ uint16_t TIMERB_GetCompare(M4_TMRB_TypeDef *TMRBx, uint32_t u32Ch)
 
     TMRB_CMPAR = TMRB_CMPARx(TMRBx, u32Ch);
     return READ_REG16(*TMRB_CMPAR);
+}
+
+/**
+ * @brief  Enable/disable TimerB buffer function.
+ * @param  [in] TMRBx                   Pointer to TimerB instance register base
+ *         This parameter can be one of the following values:
+ *           @arg M4_TMRB:              TimerB unit 1 instance register base
+ * @param  [in] u32Ch                   TimerB channel
+ *         This parameter can be one of the following values:
+ *           @arg TIMERB_BUF_CH12:      TimerB channel 1
+ *           @arg TIMERB_BUF_CH34:      TimerB channel 2
+ *           @arg TIMERB_BUF_CH56:      TimerB channel 3
+ * @retval None
+ */
+void TIMERB_BufCmd(M4_TMRB_TypeDef *TMRBx,
+                        uint32_t u32BufCh,
+                        en_functional_state_t enNewSta)
+{
+    __IO uint16_t *TMRB_BCONR;
+
+    /* Check parameters */
+    DDL_ASSERT(IS_TIMERB_BUF_CH(u32BufCh));
+    DDL_ASSERT(IS_TIMERB_INSTANCE(TMRBx));
+    DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
+
+    TMRB_BCONR = TMRB_BCONRx(TMRBx, u32BufCh);
+
+    if (Enable == enNewSta)
+    {
+        SET_REG16_BIT(*TMRB_BCONR, TMRB_BCONR_BEN);
+    }
+    else
+    {
+        CLEAR_REG16_BIT(*TMRB_BCONR, TMRB_BCONR_BEN);
+    }
 }
 
 /**
