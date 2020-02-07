@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-04       Hongjh          First version
+   2020-02-07       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -89,7 +89,7 @@
 #define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
 
 /* CTC interrupt number */
-#define CTC_ERR_IRQn                    (Int010_IRQn)
+#define CTC_ERR_IRQn                    (Int000_IRQn)
 
 /* CTC reference clock selection */
 #define CTC_REFCLK_SOURCE               (CTC_REFCLK_XTAL)
@@ -154,7 +154,7 @@ static void LedConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
@@ -205,7 +205,7 @@ int32_t main(void)
     /* Confiure clock output system clock */
     CLK_MCOConfig(CLK_MCOSOURCCE_HRC, CLK_MCODIV_1);
     /* Confiure clock output pin */
-    GPIO_SetFunc(GPIO_PORT_1, GPIO_PIN_5, GPIO_FUNC_1_PULBUZ);
+    GPIO_SetFunc(GPIO_PORT_1, GPIO_PIN_5, GPIO_FUNC_1_MCO);
 
     /* Configure system clock. */
     SystemClockConfig();
@@ -232,7 +232,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = CTC_ERR_IRQn;
     stcIrqRegiConf.enIntSrc = INT_CTC_ERR;
     stcIrqRegiConf.pfnCallback = &CtcErrIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);

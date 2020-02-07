@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-04       Hongjh          First version
+   2020-02-07       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -79,7 +79,7 @@
 #define KEY_PIN                         (GPIO_PIN_1)
 
 /* Red LED Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_12)
+#define LED_R_PORT                      (GPIO_PORT_0)
 #define LED_R_PIN                       (GPIO_PIN_0)
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 
@@ -89,7 +89,7 @@
 #define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
 
 /* CTC interrupt number */
-#define CTC_ERR_IRQn                    (Int010_IRQn)
+#define CTC_ERR_IRQn                    (Int000_IRQn)
 
 /* CTC reference clock selection */
 #define CTC_REFCLK_SOURCE               (CTC_REFCLK_CTCREF)
@@ -164,7 +164,7 @@ static void LedConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
@@ -218,7 +218,7 @@ int32_t main(void)
     SystemClockConfig();
 
     /* Confiure clock output pin */
-    GPIO_SetFunc(GPIO_PORT_1, GPIO_PIN_5, GPIO_FUNC_1_PULBUZ);
+    GPIO_SetFunc(GPIO_PORT_1, GPIO_PIN_5, GPIO_FUNC_1_MCO);
 
 #if (PROJCET_FUNCTION == FUNCTION_GENERATE_CTCREF_CLK)
     {
@@ -238,7 +238,7 @@ int32_t main(void)
     LedConfig();
 
     /* Confiure CTCREF pin */
-    GPIO_SetFunc(GPIO_PORT_6, GPIO_PIN_2, GPIO_FUNC_1_CTCREF);
+    GPIO_SetFunc(GPIO_PORT_0, GPIO_PIN_1, GPIO_FUNC_1_CTCREF);
 
     /* Enable peripheral clock */
     CLK_FcgPeriphClockCmd(FUNCTION_CLK_GATE, Enable);
@@ -256,7 +256,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = CTC_ERR_IRQn;
     stcIrqRegiConf.enIntSrc = INT_CTC_ERR;
     stcIrqRegiConf.pfnCallback = &CtcErrIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
