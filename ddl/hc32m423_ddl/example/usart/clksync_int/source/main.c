@@ -96,7 +96,7 @@ typedef struct
 #define KEY_PIN                         (GPIO_PIN_2)
 
 /* Red LED Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_12)
+#define LED_R_PORT                      (GPIO_PORT_0)
 #define LED_R_PIN                       (GPIO_PIN_0)
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 
@@ -119,20 +119,20 @@ typedef struct
 #define CLKSYNC_TX_GPIO_FUNC            (GPIO_FUNC_5_USART)
 
 /* UART unit definition */
-#define CLKSYNC_UNIT                    (M0P_USART2)
+#define CLKSYNC_UNIT                    (M4_USART2)
 
 /* UART unit interrupt definition */
-#define USART_UNIT_ERR_INT              (INT_USART_2_EI)
-#define USART_UNIT_ERR_IRQn             (Int016_IRQn)
+#define USART_UNIT_ERR_INT              (INT_USART2_EI)
+#define USART_UNIT_ERR_IRQn             (Int000_IRQn)
 
-#define USART_UNIT_RX_INT               (INT_USART_2_RI)
-#define USART_UNIT_RX_IRQn              (Int018_IRQn)
+#define USART_UNIT_RX_INT               (INT_USART2_RI)
+#define USART_UNIT_RX_IRQn              (Int001_IRQn)
 
-#define USART_UNIT_TX_INT               (INT_USART_2_TI)
-#define USART_UNIT_TX_IRQn              (Int020_IRQn)
+#define USART_UNIT_TX_INT               (INT_USART2_TI)
+#define USART_UNIT_TX_IRQn              (Int002_IRQn)
 
-#define USART_UNIT_TCI_INT              (INT_USART_2_TCI)
-#define USART_UNIT_TCI_IRQn             (Int022_IRQn)
+#define USART_UNIT_TCI_INT              (INT_USART2_TCI)
+#define USART_UNIT_TCI_IRQn             (Int003_IRQn)
 
 /* Function clock gate definition  */
 #define FUNCTION_CLK_GATE               (CLK_FCG_UART2)
@@ -159,9 +159,9 @@ static void UsartTxIrqCallback(void);
 static void UsartTcIrqCallback(void);
 static void UsartRxIrqCallback(void);
 static void UsartRxErrIrqCallback(void);
-static void TransmitReceive_IT(M0P_USART_TypeDef *USARTx,
+static void TransmitReceive_IT(M4_USART_TypeDef *USARTx,
                                stc_buffer_handle_t *pstcBufHandle);
-static en_result_t CLKSYNC_TransmitReceive_IT(M0P_USART_TypeDef *USARTx,
+static en_result_t CLKSYNC_TransmitReceive_IT(M4_USART_TypeDef *USARTx,
                                              stc_buffer_handle_t *pstcBufHandle,
                                              uint8_t *pu8TxData,
                                              uint8_t *pu8RxData,
@@ -255,7 +255,7 @@ static void UsartRxErrIrqCallback(void)
  * @param  [in] pstcBufHandle           pointer to a stc_buffer_handle_t structure.
  * @retval None
  */
-static void TransmitReceive_IT(M0P_USART_TypeDef *USARTx,
+static void TransmitReceive_IT(M4_USART_TypeDef *USARTx,
                                stc_buffer_handle_t *pstcBufHandle)
 {
     if (pstcBufHandle->u16RxXferCount != 0U)
@@ -303,7 +303,7 @@ static void TransmitReceive_IT(M0P_USART_TypeDef *USARTx,
  *           - Ok: success
  *           - ErrorInvalidParameter: Invalid parameter
  */
-static en_result_t CLKSYNC_TransmitReceive_IT(M0P_USART_TypeDef *USARTx,
+static en_result_t CLKSYNC_TransmitReceive_IT(M4_USART_TypeDef *USARTx,
                                              stc_buffer_handle_t *pstcBufHandle,
                                              uint8_t *pu8TxData,
                                              uint8_t *pu8RxData,
@@ -379,7 +379,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = USART_UNIT_ERR_IRQn;
     stcIrqRegiConf.enIntSrc = USART_UNIT_ERR_INT;
     stcIrqRegiConf.pfnCallback = &UsartRxErrIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
@@ -388,7 +388,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = USART_UNIT_RX_IRQn;
     stcIrqRegiConf.enIntSrc = USART_UNIT_RX_INT;
     stcIrqRegiConf.pfnCallback = &UsartRxIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_00);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
@@ -397,7 +397,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = USART_UNIT_TX_IRQn;
     stcIrqRegiConf.enIntSrc = USART_UNIT_TX_INT;
     stcIrqRegiConf.pfnCallback = &UsartTxIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
@@ -406,7 +406,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = USART_UNIT_TCI_IRQn;
     stcIrqRegiConf.enIntSrc = USART_UNIT_TCI_INT;
     stcIrqRegiConf.pfnCallback = &UsartTcIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);

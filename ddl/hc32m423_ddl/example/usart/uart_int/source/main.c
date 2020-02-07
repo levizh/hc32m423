@@ -86,7 +86,7 @@ typedef struct
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Red LED Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_12)
+#define LED_R_PORT                      (GPIO_PORT_0)
 #define LED_R_PIN                       (GPIO_PIN_0)
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 
@@ -100,20 +100,20 @@ typedef struct
 #define UART_TX_GPIO_FUNC               (GPIO_FUNC_5_USART)
 
 /* UART unit definition */
-#define UART_UNIT                       (M0P_USART2)
+#define UART_UNIT                       (M4_USART2)
 
 /* UART unit interrupt definition */
-#define UART_UNIT_ERR_INT               (INT_USART_2_EI)
-#define UART_UNIT_ERR_IRQn              (Int016_IRQn)
+#define UART_UNIT_ERR_INT               (INT_USART2_EI)
+#define UART_UNIT_ERR_IRQn              (Int000_IRQn)
 
-#define UART_UNIT_RX_INT                (INT_USART_2_RI)
-#define UART_UNIT_RX_IRQn               (Int018_IRQn)
+#define UART_UNIT_RX_INT                (INT_USART2_RI)
+#define UART_UNIT_RX_IRQn               (Int001_IRQn)
 
-#define UART_UNIT_TX_INT                (INT_USART_2_TI)
-#define UART_UNIT_TX_IRQn               (Int020_IRQn)
+#define UART_UNIT_TX_INT                (INT_USART2_TI)
+#define UART_UNIT_TX_IRQn               (Int002_IRQn)
 
-#define UART_UNIT_TCI_INT               (INT_USART_2_TCI)
-#define UART_UNIT_TCI_IRQn              (Int022_IRQn)
+#define UART_UNIT_TCI_INT               (INT_USART2_TCI)
+#define UART_UNIT_TCI_IRQn              (Int003_IRQn)
 
 /* Ring buffer size */
 #define RING_BUFFER_SIZE                (500U)
@@ -161,7 +161,7 @@ static void LedConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
 }
@@ -182,7 +182,7 @@ static void SystemClockConfig(void)
  * @param  None
  * @retval None
  */
-static void UartRxIrqCallback(void)
+void UartRxIrqCallback(void)
 {
     uint16_t u16Data = USART_RecData(UART_UNIT);
 
@@ -329,7 +329,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = UART_UNIT_ERR_IRQn;
     stcIrqRegiConf.enIntSrc = UART_UNIT_ERR_INT;
     stcIrqRegiConf.pfnCallback = &UartErrIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
@@ -338,7 +338,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = UART_UNIT_RX_IRQn;
     stcIrqRegiConf.enIntSrc = UART_UNIT_RX_INT;
     stcIrqRegiConf.pfnCallback = &UartRxIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
@@ -347,7 +347,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = UART_UNIT_TX_IRQn;
     stcIrqRegiConf.enIntSrc = UART_UNIT_TX_INT;
     stcIrqRegiConf.pfnCallback = &UartTxIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
@@ -356,7 +356,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = UART_UNIT_TCI_IRQn;
     stcIrqRegiConf.enIntSrc = UART_UNIT_TCI_INT;
     stcIrqRegiConf.pfnCallback = &UartTcIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);

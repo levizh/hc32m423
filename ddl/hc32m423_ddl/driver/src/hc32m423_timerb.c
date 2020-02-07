@@ -578,7 +578,12 @@ uint16_t TIMERB_GetClkDiv(M4_TMRB_TypeDef *TMRBx)
  *         This parameter can be one of the following values:
  *           @arg TIMERB_FLAG_OVF:      Overflow flag
  *           @arg TIMERB_FLAG_UDF:      Underflow flag
- *           @arg TIMERB_FLAG_CMP:      Compare match flag
+ *           @arg TIMERB_FLAG_CMP1:     Channel1 compare match flag
+ *           @arg TIMERB_FLAG_CMP2:     Channel2 compare match flag
+ *           @arg TIMERB_FLAG_CMP3:     Channel3 compare match flag
+ *           @arg TIMERB_FLAG_CMP4:     Channel4 compare match flag
+ *           @arg TIMERB_FLAG_CMP5:     Channel5 compare match flag
+ *           @arg TIMERB_FLAG_CMP6:     Channel6 compare match flag
  * @retval An en_flag_status_t enumeration value:
  *           - Set: Flag is set
  *           - Reset: Flag is reset
@@ -621,7 +626,12 @@ en_flag_status_t TIMERB_GetFlag(M4_TMRB_TypeDef *TMRBx, uint16_t u16Flag)
  *         This parameter can be one of the following values:
  *           @arg TIMERB_FLAG_OVF:      Overflow flag
  *           @arg TIMERB_FLAG_UDF:      Underflow flag
- *           @arg TIMERB_FLAG_CMP:      Compare match flag
+ *           @arg TIMERB_FLAG_CMP1:     Channel1 compare match flag
+ *           @arg TIMERB_FLAG_CMP2:     Channel2 compare match flag
+ *           @arg TIMERB_FLAG_CMP3:     Channel3 compare match flag
+ *           @arg TIMERB_FLAG_CMP4:     Channel4 compare match flag
+ *           @arg TIMERB_FLAG_CMP5:     Channel5 compare match flag
+ *           @arg TIMERB_FLAG_CMP6:     Channel6 compare match flag
  * @retval None
  */
 void TIMERB_ClearFlag(M4_TMRB_TypeDef *TMRBx, uint16_t u16Flag)

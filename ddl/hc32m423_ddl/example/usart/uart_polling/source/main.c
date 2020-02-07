@@ -73,7 +73,7 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Red LED Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_12)
+#define LED_R_PORT                      (GPIO_PORT_0)
 #define LED_R_PIN                       (GPIO_PIN_0)
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 
@@ -87,7 +87,7 @@
 #define UART_TX_GPIO_FUNC               (GPIO_FUNC_5_USART)
 
 /* UART unit definition */
-#define UART_UNIT                       (M0P_USART2)
+#define UART_UNIT                       (M4_USART2)
 
 /* Function clock gate definition  */
 #define FUNCTION_CLK_GATE               (CLK_FCG_UART2)
@@ -119,7 +119,7 @@ static void LedConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
 }

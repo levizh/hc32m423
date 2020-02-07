@@ -85,7 +85,7 @@
  * Local function prototypes ('static')
  ******************************************************************************/
 #if (DDL_PRINT_ENABLE == DDL_ON)
-static en_result_t SetUartBaudrate(M0P_USART_TypeDef *USARTx,
+static en_result_t SetUartBaudrate(M4_USART_TypeDef *USARTx,
                                         uint32_t u32Baudrate);
 #endif
 
@@ -255,12 +255,12 @@ int _write(int fd, char *pBuffer, int size)
 {
     for (int i = 0; i < size; i++)
     {
-        while (!READ_REG32_BIT(M0P_USART2->SR, USART_SR_TXE))
+        while (!READ_REG32_BIT(M4_USART2->SR, USART_SR_TXE))
         {
             ;
         }
 
-        WRITE_REG32(M0P_USART2->DR,  ((uint32_t)pBuffer[i] & 0x01FFul));
+        WRITE_REG32(M4_USART2->DR,  ((uint32_t)pBuffer[i] & 0x01FFul));
     }
     return size;
 }
@@ -268,12 +268,12 @@ int _write(int fd, char *pBuffer, int size)
 int32_t fputc(int32_t ch, FILE *f)
 {
     /* Wait TX data register empty */
-    while (!READ_REG32_BIT(M0P_USART2->SR, USART_SR_TXE))
+    while (!READ_REG32_BIT(M4_USART2->SR, USART_SR_TXE))
     {
         ;
     }
 
-    WRITE_REG32(M0P_USART2->DR,  ((uint32_t)ch & 0x01FFul));
+    WRITE_REG32(M4_USART2->DR,  ((uint32_t)ch & 0x01FFul));
 
     return (ch);
 }
@@ -291,7 +291,7 @@ en_result_t DDL_UartInit(void)
     en_result_t enRet = Error;
 
     /* Configure USART TX pin. */
-    WRITE_REG16(M0P_PORT->PWPR, 0xA501U);  /* Unlock */
+    WRITE_REG16(M4_PORT->PWPR, 0xA501U);  /* Unlock */
     MODIFY_REG16(M0P_PORT->PCR12, PORT_PCR_FSEL, (0x05UL << PORT_PCR_FSEL_POS));  /* P12: USART2_TX */
     WRITE_REG16(M0P_PORT->PWPR, 0xA500U);  /* Lock */
 
@@ -301,7 +301,7 @@ en_result_t DDL_UartInit(void)
     WRITE_REG16(M0P_PWC->FPRC, 0xA500U);  /* Lock */
 
     /* Disbale TX/RX && clear interrupt flag */
-    CLEAR_REG32_BIT(M0P_USART2->CR1, (USART_CR1_TE | USART_CR1_RE));
+    CLEAR_REG32_BIT(M4_USART2->CR1, (USART_CR1_TE | USART_CR1_RE));
 
     /***************************************************************************
      * Configure UART
@@ -315,23 +315,23 @@ en_result_t DDL_UartInit(void)
      **************************************************************************/
 
     /* Set CR1 */
-    MODIFY_REG32(M0P_USART2->CR1,
-                 (USART_CR1_SLME | USART_CR1_PS | USART_CR1_PCE |                \
-                  USART_CR1_M | USART_CR1_OVER8 | USART_CR1_MS  |                \
-                  USART_CR1_ML | USART_CR1_NFE | USART_CR1_SBS),                 \
+    MODIFY_REG32(M4_USART2->CR1,
+                 (USART_CR1_SLME | USART_CR1_PS | USART_CR1_PCE |              \
+                  USART_CR1_M | USART_CR1_OVER8 | USART_CR1_MS  |              \
+                  USART_CR1_ML | USART_CR1_NFE | USART_CR1_SBS),               \
                  USART_CR1_OVER8);
 
     /* Set CR2: reset value */
-    WRITE_REG32(M0P_USART2->CR2, 0x00UL);
+    WRITE_REG32(M4_USART2->CR2, 0x00UL);
 
     /* Set CR3: reset value */
-    WRITE_REG32(M0P_USART2->CR3, 0x00UL);
+    WRITE_REG32(M4_USART2->CR3, 0x00UL);
 
     /* Set baudrate */
-    if (Ok == SetUartBaudrate(M0P_USART2, 115200U))
+    if (Ok == SetUartBaudrate(M4_USART2, 115200U))
     {
         /* Enable TX function */
-        SET_REG32_BIT(M0P_USART2->CR1, USART_CR1_TE);
+        SET_REG32_BIT(M4_USART2->CR1, USART_CR1_TE);
         enRet = Ok;
     }
 
@@ -342,16 +342,17 @@ en_result_t DDL_UartInit(void)
  * @brief  Set USART baudrate.
  * @param  [in] USARTx                  Pointer to USART instance register base
  *         This parameter can be one of the following values:
- *           @arg M0P_USART1:           USART unit 1 instance register base
- *           @arg M0P_USART2:           USART unit 2 instance register base
- *           @arg M0P_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART1:           USART unit 1 instance register base
+ *           @arg M4_USART2:           USART unit 2 instance register base
+ *           @arg M4_USART3:           USART unit 3 instance register base
+ *           @arg M4_USART4:           USART unit 4 instance register base
  * @param  [in] u32Baudrate             UART baudrate
  * @retval An en_result_t enumeration value:
  *           - Ok: Set successfully
  *           - ErrorInvalidMode: USART instance mode is not UART
  *           - ErrorInvalidParameter: u32Baudrate is invalid or USARTx is valid USART instance
  */
-static en_result_t SetUartBaudrate(M0P_USART_TypeDef *USARTx,
+static en_result_t SetUartBaudrate(M4_USART_TypeDef *USARTx,
                                         uint32_t u32Baudrate)
 {
     uint32_t B = 0UL;

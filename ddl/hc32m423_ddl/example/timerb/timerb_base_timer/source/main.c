@@ -78,18 +78,13 @@
 #define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
 
 /* TIMERB unit && interrupt number && counter period value definition */
-#define TIMERB_ODD_UNIT                 (M0P_TMRB1)
-#define TIMERB_ODD_UNIT_OVF_INT         (INT_TMRB_1_OVF)
-#define TIMERB_ODD_UNIT_OVF_IRQn        (Int020_IRQn)
-#define TIMERB_ODD_UNIT_PERIOD_VALUE    (SystemCoreClock/512UL/2UL)
-
-#define TIMERB_EVEN_UNIT                (M0P_TMRB2)
-#define TIMERB_EVEN_UNIT_OVF_INT        (INT_TMRB_2_OVF)
-#define TIMERB_EVEN_UNIT_OVF_IRQn       (Int022_IRQn)
-#define TIMERB_EVEN_UNIT_PERIOD_VALUE   (TIMERB_ODD_UNIT_PERIOD_VALUE)
+#define TIMERB_UNIT                     (M4_TMRB)
+#define TIMERB_UNIT_OVF_INT             (INT_TMRB_OVF)
+#define TIMERB_UNIT_OVF_IRQn            (Int000_IRQn)
+#define TIMERB_UNIT_PERIOD_VALUE        (SystemCoreClock/512UL/2UL)
 
 /* Function clock gate definition */
-#define FUNCTION_CLK_GATE               (CLK_FCG_TIMB1 | CLK_FCG_TIMB2)
+#define FUNCTION_CLK_GATE               (CLK_FCG_TIMB)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -99,8 +94,7 @@
  * Local function prototypes ('static')
  ******************************************************************************/
 static void SystemClockConfig(void);
-static void TimerbOddUnitOvfIrqCallback(void);
-static void TimerbEvenUnitOvfIrqCallback(void);
+static void TimerbOvfIrqCallback(void);
 
 /*******************************************************************************
  * Local variable definitions ('static')
@@ -130,43 +124,26 @@ static void LedConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
 }
 
 /**
- * @brief  TIMERB odd unit overflow IRQ callback.
+ * @brief  TIMERB unit overflow IRQ callback.
  * @param  None
  * @retval None
  */
-static void TimerbOddUnitOvfIrqCallback(void)
+static void TimerbOvfIrqCallback(void)
 {
-    static uint32_t m_u32TimerbOddUnitOvfCnt = 0UL;
+    static uint32_t m_u32TimerbUnitOvfCnt = 0UL;
 
-    if ((++m_u32TimerbOddUnitOvfCnt)%2UL)
+    if ((++m_u32TimerbUnitOvfCnt)%2UL)
     {
         LED_G_TOGGLE();
     }
 
-    TIMERB_ClearFlag(TIMERB_ODD_UNIT, TIMERB_FLAG_OVF);
-}
-
-/**
- * @brief  TIMERB even unit overflow IRQ callback
- * @param  None
- * @retval None
- */
-static void TimerbEvenUnitOvfIrqCallback(void)
-{
-    static uint32_t m_u32TimerbEvenUnitOvfCnt = 0UL;
-
-    if (!((++m_u32TimerbEvenUnitOvfCnt)%2UL))
-    {
-        LED_G_TOGGLE();
-    }
-
-    TIMERB_ClearFlag(TIMERB_EVEN_UNIT, TIMERB_FLAG_OVF);
+    TIMERB_ClearFlag(TIMERB_UNIT, TIMERB_FLAG_OVF);
 }
 
 /**
@@ -191,38 +168,23 @@ int32_t main(void)
     /* Initialize TIMERB structure. */
     TIMERB_StructInit(&stcTimerbInit);
     stcTimerbInit.u16ClkDiv = TIMERB_CLKDIV_DIV512;
-    stcTimerbInit.u16SynStartState = TIMERB_SYNC_START_ENABLE;
+    stcTimerbInit.u16PeriodVal = (uint16_t)TIMERB_UNIT_PERIOD_VALUE;
 
-    /* Initialize TIMERB odd unit. */
-    stcTimerbInit.u16PeriodVal = (uint16_t)TIMERB_ODD_UNIT_PERIOD_VALUE;
-    TIMERB_Init(TIMERB_ODD_UNIT, &stcTimerbInit);
-    TIMERB_IntCmd(TIMERB_ODD_UNIT, TIMERB_IT_OVF, Enable);
-
-    /* Register IRQ handler && configure NVIC. */
-    stcIrqRegiConf.enIRQn = TIMERB_ODD_UNIT_OVF_IRQn;
-    stcIrqRegiConf.enIntSrc = TIMERB_ODD_UNIT_OVF_INT;
-    stcIrqRegiConf.pfnCallback = &TimerbOddUnitOvfIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
-    NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
-    NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_02);
-    NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
-
-    /* Initialize TIMERB even unit. */
-    stcTimerbInit.u16PeriodVal = (uint16_t)TIMERB_EVEN_UNIT_PERIOD_VALUE;
-    TIMERB_Init(TIMERB_EVEN_UNIT, &stcTimerbInit);
-    TIMERB_IntCmd(TIMERB_EVEN_UNIT, TIMERB_IT_OVF, Enable);
+    /* Initialize TIMERB unit. */
+    TIMERB_Init(TIMERB_UNIT, &stcTimerbInit);
+    TIMERB_IntCmd(TIMERB_UNIT, TIMERB_IT_OVF, Enable);
 
     /* Register IRQ handler && configure NVIC. */
-    stcIrqRegiConf.enIRQn = TIMERB_EVEN_UNIT_OVF_IRQn;
-    stcIrqRegiConf.enIntSrc = TIMERB_EVEN_UNIT_OVF_INT;
-    stcIrqRegiConf.pfnCallback = &TimerbEvenUnitOvfIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    stcIrqRegiConf.enIRQn = TIMERB_UNIT_OVF_IRQn;
+    stcIrqRegiConf.enIntSrc = TIMERB_UNIT_OVF_INT;
+    stcIrqRegiConf.pfnCallback = &TimerbOvfIrqCallback;
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_02);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
 
     /* Start TIMERB counter. */
-    TIMERB_Start(TIMERB_ODD_UNIT);
+    TIMERB_Start(TIMERB_UNIT);
 
     while (1)
     {

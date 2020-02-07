@@ -81,7 +81,7 @@
 #define UART_SLAVE_TX_GPIO_FUNC         (GPIO_FUNC_5_USART)
 
 /* UART unit definition */
-#define UART_SLAVE_UNIT                 (M0P_USART3)
+#define UART_SLAVE_UNIT                 (M4_USART3)
 
 /* Function clock gate definition  */
 #define FUNCTION_CLK_GATE               (CLK_FCG_UART3)

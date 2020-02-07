@@ -94,20 +94,20 @@ typedef struct
 #define UART_TX_GPIO_FUNC               (GPIO_FUNC_5_USART)
 
 /* UART unit definition */
-#define UART_UNIT                       (M0P_USART3)
+#define UART_UNIT                       (M4_USART3)
 
 /* UART unit interrupt definition */
-#define UART_UNIT_ERR_INT               (INT_USART_3_EI)
-#define UART_UNIT_ERR_IRQn              (Int012_IRQn)
+#define UART_UNIT_ERR_INT               (INT_USART3_EI)
+#define UART_UNIT_ERR_IRQn              (Int000_IRQn)
 
-#define UART_UNIT_RX_INT                (INT_USART_3_RI)
-#define UART_UNIT_RX_IRQn               (Int014_IRQn)
+#define UART_UNIT_RX_INT                (INT_USART3_RI)
+#define UART_UNIT_RX_IRQn               (Int001_IRQn)
 
-#define UART_UNIT_TX_INT                (INT_USART_3_TI)
-#define UART_UNIT_TX_IRQn               (Int016_IRQn)
+#define UART_UNIT_TX_INT                (INT_USART3_TI)
+#define UART_UNIT_TX_IRQn               (Int002_IRQn)
 
-#define UART_UNIT_TCI_INT               (INT_USART_3_TCI)
-#define UART_UNIT_TCI_IRQn              (Int018_IRQn)
+#define UART_UNIT_TCI_INT               (INT_USART3_TCI)
+#define UART_UNIT_TCI_IRQn              (Int003_IRQn)
 
 /* Function clock gate definition */
 #define FUNCTION_CLK_GATE               (CLK_FCG_UART3)
@@ -385,7 +385,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = UART_UNIT_ERR_IRQn;
     stcIrqRegiConf.enIntSrc = UART_UNIT_ERR_INT;
     stcIrqRegiConf.pfnCallback = &UartRxErrIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
@@ -394,7 +394,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = UART_UNIT_RX_IRQn;
     stcIrqRegiConf.enIntSrc = UART_UNIT_RX_INT;
     stcIrqRegiConf.pfnCallback = &UartRxIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_00);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
@@ -403,7 +403,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = UART_UNIT_TX_IRQn;
     stcIrqRegiConf.enIntSrc = UART_UNIT_TX_INT;
     stcIrqRegiConf.pfnCallback = &UartTxIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
@@ -412,7 +412,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = UART_UNIT_TCI_IRQn;
     stcIrqRegiConf.enIntSrc = UART_UNIT_TCI_INT;
     stcIrqRegiConf.pfnCallback = &UartTcIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);

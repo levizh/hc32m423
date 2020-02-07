@@ -101,7 +101,7 @@
 #define CLKSYNC_TX_GPIO_FUNC            (GPIO_FUNC_5_USART)
 
 /* USART unit definition */
-#define CLKSYNC_UNIT                    (M0P_USART2)
+#define CLKSYNC_UNIT                    (M4_USART2)
 
 /* Function clock gate definition  */
 #define FUNCTION_CLK_GATE               (CLK_FCG_UART2)
@@ -125,12 +125,12 @@
  ******************************************************************************/
 static void LedConfig(void);
 static void SystemClockConfig(void);
-static en_result_t USART_WaitOnFlagUntilTimeout(M0P_USART_TypeDef *USARTx,
+static en_result_t USART_WaitOnFlagUntilTimeout(M4_USART_TypeDef *USARTx,
                                                 uint32_t u32Flag,
                                                 en_flag_status_t enStatus,
                                                 uint32_t u32TickStart,
                                                 uint32_t u32Timeout);
-static en_result_t CLKSYNC_TransmitReceive(M0P_USART_TypeDef *USARTx,
+static en_result_t CLKSYNC_TransmitReceive(M4_USART_TypeDef *USARTx,
                                            const uint8_t au8TxData[],
                                            uint8_t au8RxData[],
                                            uint32_t u32Size,
@@ -192,7 +192,7 @@ static void SystemClockConfig(void)
  *           - Ok: success
  *           - ErrorTimeout: timeout
  */
-static en_result_t USART_WaitOnFlagUntilTimeout(M0P_USART_TypeDef *USARTx,
+static en_result_t USART_WaitOnFlagUntilTimeout(M4_USART_TypeDef *USARTx,
                                                 uint32_t u32Flag,
                                                 en_flag_status_t enStatus,
                                                 uint32_t u32TickStart,
@@ -228,7 +228,7 @@ static en_result_t USART_WaitOnFlagUntilTimeout(M0P_USART_TypeDef *USARTx,
  *           - Ok: success
  *           - ErrorInvalidParameter: USARTx/pu8TxData/pu8RxData/u16Size is invalid
  */
-static en_result_t CLKSYNC_TransmitReceive(M0P_USART_TypeDef *USARTx,
+static en_result_t CLKSYNC_TransmitReceive(M4_USART_TypeDef *USARTx,
                                            const uint8_t au8TxData[],
                                            uint8_t au8RxData[],
                                            uint32_t u32Size,
