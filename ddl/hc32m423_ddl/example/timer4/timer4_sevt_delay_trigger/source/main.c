@@ -6,9 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-25       Hongjh          First version
-   2020-01-08       Wuze            Modified the type of 'u32Event0' in structure stc_adc_trg_cfg_t,
-                                    from 'uint32 enEvent0' to 'en_event_src_t enEvent0'. Same with 'u32Event1'.
+   2020-02-07       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -210,7 +208,7 @@ static void WaveIoConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_RESET;
     GPIO_Init(WAVE_IO_PORT, WAVE_IO_PIN, &stcGpioInit);
 }

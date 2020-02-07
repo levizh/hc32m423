@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-25       Hongjh          First version
+   2020-02-07       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -74,7 +74,7 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Wave I/O Port/Pin definition */
-#define WAVE_IO_PORT                    (GPIO_PORT_6)
+#define WAVE_IO_PORT                    (GPIO_PORT_0)
 #define WAVE_IO_PIN                     (GPIO_PIN_3)
 #define WAVE_IO_TOGGLE()                do {        \
     GPIO_TogglePins(WAVE_IO_PORT, WAVE_IO_PIN);     \
@@ -130,7 +130,7 @@ static void WaveIoConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_RESET;
     GPIO_Init(WAVE_IO_PORT, WAVE_IO_PIN, &stcGpioInit);
 }
@@ -175,10 +175,10 @@ int32_t main(void)
     TIMER4_PWM_SetFilterCountValue(TIMER4_PWM_CH, TIMER4_PWM_RT_VAL);
 
     /* Register IRQ handler && configure NVIC. */
-    stcIrqRegiConf.enIRQn = Int014_IRQn;
+    stcIrqRegiConf.enIRQn = Int000_IRQn;
     stcIrqRegiConf.enIntSrc =TIMER4_PWM_RLO_INT_SRC(TIMER4_PWM_CH);
     stcIrqRegiConf.pfnCallback = &Timer4PwmReloadTimerIrqCb;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);

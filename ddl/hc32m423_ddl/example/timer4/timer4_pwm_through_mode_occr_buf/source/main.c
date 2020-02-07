@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-25       Hongjh          First version
+   2020-02-07       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -74,9 +74,9 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* TIM4 PWM Port/Pin definition */
-#define TIM4_1_OXH_PORT                 (GPIO_PORT_6)
+#define TIM4_1_OXH_PORT                 (GPIO_PORT_0)
 #define TIM4_1_OXH_PIN                  (GPIO_PIN_1)
-#define TIM4_1_OXH_GPIO_FUNC            (GPIO_FUNC_4_TIM4)
+#define TIM4_1_OXH_GPIO_FUNC            (GPIO_FUNC_2_TIM4)
 
 /* Function clock gate definition */
 #define FUNCTION_CLK_GATE               (CLK_FCG_TIM4)
@@ -84,7 +84,7 @@
 /* Timer4 Counter period value && interrupt number definition */
 #define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/512UL))    /* 1000 ms */
 #define TIMERB_CNT_UDF_INT              (INT_TMR4_GUDF)
-#define TIMERB_CNT_UDF_IRQn             (Int017_IRQn)
+#define TIMERB_CNT_UDF_IRQn             (Int000_IRQn)
 
 /* Timer4 OCO Channel definition */
 #define TIMER4_OCO_HIGH_CH              (TIMER4_OCO_UH)    /* only TIMER4_OCO_UH  TIMER4_OCO_VH  TIMER4_OCO_WH */
@@ -176,7 +176,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = TIMERB_CNT_UDF_IRQn;
     stcIrqRegiConf.enIntSrc = TIMERB_CNT_UDF_INT;
     stcIrqRegiConf.pfnCallback = &Timer4ZeroMatchIrqCb;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);

@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-25       Hongjh          First version
+   2020-02-07       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -74,11 +74,11 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* TIM4 PWM Port/Pin definition */
-#define TIM4_1_OXH_PORT                 (GPIO_PORT_6)
+#define TIM4_1_OXH_PORT                 (GPIO_PORT_0)
 #define TIM4_1_OXH_PIN                  (GPIO_PIN_1)
-#define TIM4_1_OXH_GPIO_FUNC            (GPIO_FUNC_4_TIM4)
+#define TIM4_1_OXH_GPIO_FUNC            (GPIO_FUNC_2_TIM4)
 
-#define TIM4_1_OXL_PORT                 (GPIO_PORT_6)
+#define TIM4_1_OXL_PORT                 (GPIO_PORT_0)
 #define TIM4_1_OXL_PIN                  (GPIO_PIN_0)
 #define TIM4_1_OXL_GPIO_FUNC            (GPIO_FUNC_2_TIM4)
 
@@ -214,10 +214,10 @@ int32_t main(void)
     }
 
     /* Register IRQ handler && configure NVIC. */
-    stcIrqRegiConf.enIRQn = Int013_IRQn;
+    stcIrqRegiConf.enIRQn = Int000_IRQn;
     stcIrqRegiConf.enIntSrc =TIMER4_OCO_INT_SRC(TIMER4_OCO_LOW_CH);
     stcIrqRegiConf.pfnCallback = &Timer4OcoMatchIrqCb;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);

@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-24       Hongjh          First version
+   2020-02-07       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -83,7 +83,7 @@
 /* Timer4 Counter period value && interrupt number definition */
 #define TIMER4_CNT_CYCLE_VAL            ((uint16_t)(SystemCoreClock/256UL/2UL))    /* 500 ms */
 #define TIMER4_CNT_UDF_INT              (INT_TMR4_GUDF)
-#define TIMER4_CNT_UDF_IRQn             (Int017_IRQn)
+#define TIMER4_CNT_UDF_IRQn             (Int000_IRQn)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -124,7 +124,7 @@ static void LedConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
 }
@@ -172,7 +172,7 @@ int32_t main(void)
     stcIrqRegiConf.enIRQn = TIMER4_CNT_UDF_IRQn;
     stcIrqRegiConf.enIntSrc = TIMER4_CNT_UDF_INT;
     stcIrqRegiConf.pfnCallback = &Timer4ZeroMatchIrqCb;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
