@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-26       chengy          First version
+   2020-02-09       Zhangxl         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -104,6 +104,9 @@ uint32_t SystemCoreClock = HRC_VALUE;  /*!< System clock frequency (Core clock) 
  */
 void SystemInit(void)
 {
+#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
+    SCB->CPACR |= ((3UL << 20) | (3UL << 22)); /* set CP10 and CP11 Full Access */
+#endif
     SystemCoreClockUpdate();
 }
 
@@ -112,13 +115,12 @@ void SystemInit(void)
  * @param  None
  * @retval HRC frequency
  */
-uint32_t HrcUpdate(void)
+static uint32_t HrcUpdate(void)
 {
     uint32_t Hrc_value = 0UL;
-    uint8_t tmp = 0;//M0P_EFM->HRCCFGR & 0x07U;   //todo, levi 20200131
+    uint8_t tmp = M4_EFM->HRCCFGR & 0x07U;
 
-    //if(EFM_HRCCFGR_HRCFREQS_3 == (M0P_EFM->HRCCFGR & EFM_HRCCFGR_HRCFREQS_3))
-    if (1)      //todo, levi 20200131
+    if(EFM_HRCCFGR_HRCFREQS_3 == (M4_EFM->HRCCFGR & EFM_HRCCFGR_HRCFREQS_3))
     {
         switch(tmp)
         {
@@ -171,6 +173,34 @@ uint32_t HrcUpdate(void)
 }
 
 /**
+ * @brief  Update PLL frequency according to Clock Register Values.
+ * @param  None
+ * @retval PLL frequency
+ */
+static uint32_t PllUpdate(void)
+{
+    uint32_t Pll_value = 0UL;
+    uint32_t Hrc_value = 0UL;
+    uint8_t plln = 0U, pllp = 0U, pllm = 0U;
+    /* PLLPCLK = ((pllsrc / pllm) * plln) / pllp */
+    plln = (M4_CMU->PLLCFGR & CMU_PLLCFGR_MPLLN) >> CMU_PLLCFGR_MPLLN_POS;    //.MPLLN;
+    pllp = (M4_CMU->PLLCFGR & CMU_PLLCFGR_MPLLP) >> CMU_PLLCFGR_MPLLP_POS;    //.MPLLP;
+    pllm = (M4_CMU->PLLCFGR & CMU_PLLCFGR_MPLLM);    //.MPLLM;
+    /* use exteranl high speed OSC as PLL source */
+    if (0UL == (M4_CMU->PLLCFGR & CMU_PLLCFGR_PLLSRC_POS))
+    {
+        Pll_value = (XTAL_VALUE) / (pllm + 1ul) * (plln + 1ul) / (pllp + 1ul);
+    }
+    /* use interanl high RC as PLL source */
+    else
+    {
+        Hrc_value = HrcUpdate();
+        Pll_value = (Hrc_value) / (pllm + 1ul) * (plln + 1ul) / (pllp + 1ul);
+    }
+    return Pll_value;
+}
+
+/**
  * @brief  Update SystemCoreClock variable according to Clock Register Values.
  * @param  None
  * @retval None
@@ -179,18 +209,24 @@ void SystemCoreClockUpdate(void)
 {
     uint8_t tmp;
     uint8_t div;
-//    tmp = M0P_CMU->CKSWR & CMU_CKSWR_CKSW;
-//    div = M0P_CMU->SCKDIVR & CMU_SCKDIVR_SCKDIV;//todo, levi 20200131
+    tmp = M4_CMU->CKSWR & CMU_CKSWR_CKSW;
+    div = M4_CMU->SCFGR & CMU_SCFGR_HCLKS;
     switch(tmp)
     {
         case 0x00:  /* use internal high speed RC */
             SystemCoreClock = HrcUpdate();
             break;
-        case 0x01:  /* use external high speed RC */
-            SystemCoreClock = XTAL_VALUE;
+        case 0x01:  /* use internal middle speed RC */
+            SystemCoreClock = MRC_VALUE;
             break;
         case 0x02:  /* use internal low speed RC */
             SystemCoreClock = LRC_VALUE;
+            break;
+        case 0x03:  /* use external high speed RC */
+            SystemCoreClock = XTAL_VALUE;
+            break;
+        case 0x05:  /* use external high speed RC */
+            SystemCoreClock = PllUpdate();
             break;
     }
     switch(div)

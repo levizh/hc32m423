@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-04-28       chengy          First version
+   2020-02-09       Zhangxl         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -93,7 +93,11 @@ extern "C"
  * @{
  */
 #if !defined (HRC_VALUE)
-    #define HRC_VALUE ((uint32_t)8000000)  /*!< Internal high speed RC freq. */
+    #define HRC_VALUE ((uint32_t)8000000)   /*!< Internal high speed RC freq. */
+#endif
+
+#if !defined (MRC_VALUE)
+    #define MRC_VALUE ((uint32_t)8000000)   /*!< Internal middle speed RC freq. */
 #endif
 
 #if !defined (LRC_VALUE)
@@ -101,7 +105,7 @@ extern "C"
 #endif
 
 #if !defined (XTAL_VALUE)
-    #define XTAL_VALUE ((uint32_t)20000000)  /*!< External high speed OSC freq. */
+    #define XTAL_VALUE ((uint32_t)8000000)  /*!< External high speed OSC freq. */
 #endif
 
 /**
@@ -120,7 +124,7 @@ extern "C"
  * @{
  */
 
-extern uint32_t SystemCoreClock;          /*!< System clock frequency (Core clock) */
+extern uint32_t SystemCoreClock;            /*!< System clock frequency (Core clock) */
 
 /**
  * @}
@@ -134,8 +138,8 @@ extern uint32_t SystemCoreClock;          /*!< System clock frequency (Core cloc
  * @{
  */
 
-extern void SystemInit(void);             /*!< Initialize the system */
-extern void SystemCoreClockUpdate(void);  /*!< Update SystemCoreClock variable */
+extern void SystemInit(void);               /*!< Initialize the system */
+extern void SystemCoreClockUpdate(void);    /*!< Update SystemCoreClock variable */
 
 /**
  * @}
