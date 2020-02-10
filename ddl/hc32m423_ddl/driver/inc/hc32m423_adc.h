@@ -6,10 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-09       Wuze            First version
-   2020-01-08       Wuze            1. Modified the type of 'u32Event0' in structure stc_adc_trg_cfg_t,
-                                       from 'uint32 enEvent0' to 'en_event_src_t enEvent0'. Same with 'u32Event1'.
-                                    2. Modified the definitions of @ref ADC_Trigger_Source_Type
+   2020-02-03       Wuze            First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -93,17 +90,16 @@ extern "C"
  */
 typedef struct
 {
-    uint16_t u16ScanConvMode;   /*!< Configures the scan convert mode of ADC.
+    uint16_t u16ScanMode;       /*!< Configures the scan convert mode of ADC.
                                      This parameter can be a value of @ref ADC_Scan_Conv_Mode */
     uint16_t u16Resolution;     /*!< Configures the ADC resolution.
                                      This parameter can be a value of @ref ADC_Resolution */
-    uint16_t u16AutoClearCmd;   /*!< Configures whether the ADC data register is
+    uint16_t u16AutoClrCmd;     /*!< Configures whether the ADC data register is
                                      automatically cleared after the data is read.
                                      This parameter can be a value of @ref ADC_Data_Auto_Clear_Cmd */
     uint16_t u16DataAlign;      /*!< Specifies ADC data alignment to right or to left.
                                      This parameter can be a value of @ref ADC_Data_Align */
-    uint8_t  u8SampTime;        /*!< The channel's sampling time. */
-    uint16_t u16RestrtFrom;     /*!< Specifies the restart channel of sequence A.
+    uint16_t u16SARestrtPos;    /*!< Specifies the restart channel of sequence A.
                                      Sequence A can be interrupted by sequence B. After the
                                      the ending of sequence B, sequence A restarts from the
                                      specified channel.
@@ -115,24 +111,11 @@ typedef struct
  */
 typedef struct
 {
-    uint16_t u16TrgSrc;         /*!< Specifies the trigger source type for the specified sequence.
+    uint16_t u16TrigSrc;        /*!< Specifies the trigger source type for the specified sequence.
                                      This parameter can be a value of @ref ADC_Trigger_Source_Type */
     en_event_src_t enEvent0;    /*!< An @ref en_event_src_t enumeration value. */
     en_event_src_t enEvent1;    /*!< An @ref en_event_src_t enumeration value. */
-} stc_adc_trg_cfg_t;
-
-/**
- * @brief Structure definition of AWD(analog watchdog) configuration.
- */
-typedef struct
-{
-    uint8_t u8AdcPin;           /*!< The ADC pin be configured as an AWD input pin.
-                                     This parameter can be a value of @ref ADC_Pin_Number */
-    uint16_t u16AwdMd;          /*!< The comparison mode of AWD.
-                                     This parameter can be a value of @ref ADC_AWD_Comparison_Mode */
-    uint16_t u16Dr0;            /*!< Threshold value to register ADC_AWD0DR0/ADC_AWD1DR0. */
-    uint16_t u16Dr1;            /*!< Threshold value to register ADC_AWD0DR1/ADC_AWD1DR1. */
-} stc_awd_cfg_t;
+} stc_adc_trig_cfg_t;
 
 /**
  * @}
@@ -150,28 +133,8 @@ typedef struct
  * @defgroup ADC_Sequence ADC Sequence
  * @{
  */
-#define ADC_SEQ_A                   ((uint8_t)0U)
-#define ADC_SEQ_B                   ((uint8_t)1U)
-/**
- * @}
- */
-
-/**
- * @defgroup ADC_AWD_Number ADC AWD Number
- * @{
- */
-#define ADC_AWD_0                   ((uint8_t)0U)
-#define ADC_AWD_1                   ((uint8_t)1U)
-/**
- * @}
- */
-
-/**
- * @defgroup ADC_OPA_Number ADC OPA Number
- * @{
- */
-#define ADC_OPA_1                   ((uint8_t)0)
-#define ADC_OPA_2                   ((uint8_t)1)
+#define ADC_SEQ_A                       ((uint8_t)0U)
+#define ADC_SEQ_B                       ((uint8_t)1U)
 /**
  * @}
  */
@@ -180,8 +143,24 @@ typedef struct
  * @defgroup ADC_Data_Align ADC Data Align
  * @{
  */
-#define ADC_DATA_ALIGN_RIGHT        ((uint16_t)0x0U)
-#define ADC_DATA_ALIGN_LEFT         (ADC_CR0_DFMT)
+#define ADC_DATA_ALIGN_RIGHT            ((uint16_t)0x0U)
+#define ADC_DATA_ALIGN_LEFT             (ADC_CR0_DFMT)
+/**
+ * @}
+ */
+
+/**
+ * @defgroup ADC_Average_Count ADC Average Count
+ * @{
+ */
+#define ADC_AVG_CNT_2                   (0x0U)
+#define ADC_AVG_CNT_4                   (ADC_CR0_AVCNT_0)
+#define ADC_AVG_CNT_8                   (ADC_CR0_AVCNT_1)
+#define ADC_AVG_CNT_16                  (ADC_CR0_AVCNT_1 | ADC_CR0_AVCNT_0)
+#define ADC_AVG_CNT_32                  (ADC_CR0_AVCNT_2)
+#define ADC_AVG_CNT_64                  (ADC_CR0_AVCNT_2 | ADC_CR0_AVCNT_0)
+#define ADC_AVG_CNT_128                 (ADC_CR0_AVCNT_2 | ADC_CR0_AVCNT_1)
+#define ADC_AVG_CNT_256                 (ADC_CR0_AVCNT_2 | ADC_CR0_AVCNT_1 | ADC_CR0_AVCNT_0)
 /**
  * @}
  */
@@ -190,9 +169,9 @@ typedef struct
  * @defgroup ADC_Data_Auto_Clear_Cmd ADC Data Auto Clear Command
  * @{
  */
-#define ADC_AUTO_CLR_DISABLE        ((uint16_t)0x0U)
-#define ADC_AUTO_CLR_ENABLE         (ADC_CR0_CLREN)     /*!< ADC data register is automatically
-                                                             cleared after the data is read. */
+#define ADC_AUTO_CLR_DISABLE            ((uint16_t)0x0U)
+#define ADC_AUTO_CLR_ENABLE             (ADC_CR0_CLREN)     /*!< ADC data register is automatically
+                                                                 cleared after the data is read. */
 /**
  * @}
  */
@@ -201,10 +180,9 @@ typedef struct
  * @defgroup ADC_Resolution ADC Resolution
  * @{
  */
-#define ADC_RESOLUTION_MASK         (ADC_CR0_ACCSEL)
-#define ADC_RESOLUTION_12B          ((uint16_t)0x0U)
-#define ADC_RESOLUTION_10B          (ADC_CR0_ACCSEL_0)
-#define ADC_RESOLUTION_8B           (ADC_CR0_ACCSEL_1)
+#define ADC_RES_12BIT                   ((uint16_t)0x0U)
+#define ADC_RES_10BIT                   (ADC_CR0_ACCSEL_0)
+#define ADC_RES_8BIT                    (ADC_CR0_ACCSEL_1)
 /**
  * @}
  */
@@ -213,11 +191,10 @@ typedef struct
  * @defgroup ADC_Scan_Conv_Mode ADC Scan Convert Mode
  * @{
  */
-#define ADC_MODE_MASK                       (ADC_CR0_MS)
-#define ADC_MODE_SA_SINGLE                  ((uint16_t)0x0U)
-#define ADC_MODE_SA_CONTINUOUS              (ADC_CR0_MS_0)
-#define ADC_MODE_SA_SB_SINGLE               (ADC_CR0_MS_1)
-#define ADC_MODE_SA_CONTINUOUS_SB_SINGLE    (ADC_CR0_MS_0 | ADC_CR0_MS_1)
+#define ADC_MODE_SA_SSHOT               ((uint16_t)0x0U)
+#define ADC_MODE_SA_CONT                (ADC_CR0_MS_0)
+#define ADC_MODE_SA_SB_SSHOT            (ADC_CR0_MS_1)
+#define ADC_MODE_SA_CONT_SB_SSHOT       (ADC_CR0_MS_0 | ADC_CR0_MS_1)
 /**
  * @}
  */
@@ -226,8 +203,8 @@ typedef struct
  * @defgroup ADC_Restart_From ADC Restart From
  * @{
  */
-#define ADC_SA_RESTRT_FROM_INT_CH           ((uint16_t)0x0U)
-#define ADC_SA_RESTRT_FROM_FIRST_CH         (ADC_CR1_RSCHSEL)
+#define ADC_SA_RESTRT_POS_INT_CH        ((uint16_t)0x0U)
+#define ADC_SA_RESTRT_POS_FIRST_CH      (ADC_CR1_RSCHSEL)
 /**
  * @}
  */
@@ -236,21 +213,26 @@ typedef struct
  * @defgroup ADC_Trigger_Source_Type ADC Trigger Source Type
  * @{
  */
-#define ADC_TRGSRC_MASK             (ADC_TRGSR_TRGSELA)
-#define ADC_TRGSRC_EX_PIN           ((uint16_t)0x0U)
-#define ADC_TRGSRC_IN_EVT0          (ADC_TRGSR_TRGSELA_0)
-#define ADC_TRGSRC_IN_EVT1          (ADC_TRGSR_TRGSELA_1)
-#define ADC_TRGSRC_IN_EVT0_EVT1     (ADC_TRGSR_TRGSELA_0 | ADC_TRGSR_TRGSELA_1)
+#define ADC_TRIG_SRC_ADTRG              ((uint16_t)0x0U)            /*!< The trigger source is the falling edge(the low level of the should
+                                                                         hold at least 1.5*PCLK cycle) of external pin ADTRG. */
+#define ADC_TRIG_SRC_EVT0               (ADC_TRGSR_TRGSELA_0)       /*!< The trigger source is a internal event from other periperl.
+                                                                         Only one event can be configured to trigger ADC. */
+#define ADC_TRIG_SRC_EVT1               (ADC_TRGSR_TRGSELA_1)       /*!< The trigger source is a internal event from other periperl.
+                                                                         Only one event can be configured to trigger ADC. */
+#define ADC_TRIG_SRC_EVT0_EVT1          (ADC_TRGSR_TRGSELA_0 | \
+                                         ADC_TRGSR_TRGSELA_1)       /*!< The trigger source are two internal events from other periperl(s).
+                                                                         Two events can be configured to trigger ADC and one of which can trigger the ADC. */
+
 /**
  * @}
  */
 
 /**
- * @defgroup ADC_Extend_Channel_Source_Selection ADC Extend Channel Source Selection
+ * @defgroup ADC_Extend_Channel_Source ADC Extend Channel Source
  * @{
  */
-#define ADC_EX_CH_SEL_ANI11         ((uint8_t)0x0)
-#define ADC_EX_CH_SEL_INTERNAL      (ADC_EXCHSELR_EXCHSEL)
+#define ADC_EXCH_SRC_ADC_PIN            ((uint8_t)0x0)
+#define ADC_EXCH_SRC_INTERNAL           (ADC_EXCHSELR_EXCHSEL)
 /**
  * @}
  */
@@ -259,9 +241,9 @@ typedef struct
  * @defgroup ADC_Eoc_Flag ADC Eoc(End Of Conversion) flag
  * @{
  */
-#define ADC_FLAG_EOCA               (ADC_ISR_EOCAF)
-#define ADC_FLAG_EOCB               (ADC_ISR_EOCBF)
-#define ADC_FLAG_EOC_ALL            (ADC_FLAG_EOCA | ADC_FLAG_EOCB)
+#define ADC_FLAG_EOCA                   (ADC_ISR_EOCAF)
+#define ADC_FLAG_EOCB                   (ADC_ISR_EOCBF)
+#define ADC_FLAG_SA_INTED               (ADC_ISR_SASTPDF)
 /**
  * @}
  */
@@ -270,18 +252,18 @@ typedef struct
  * @defgroup ADC_Pin_Number ADC Pin Number
  * @{
  */
-#define ADC_ANI0                    ((uint8_t)0U)       /*!< Pin P20 */
-#define ADC_ANI1                    ((uint8_t)1U)       /*!< Pin P21 */
-#define ADC_ANI2                    ((uint8_t)2U)       /*!< Pin P22 */
-#define ADC_ANI3                    ((uint8_t)3U)       /*!< Pin P23 */
-#define ADC_ANI4                    ((uint8_t)4U)       /*!< Pin P24 */
-#define ADC_ANI5                    ((uint8_t)5U)       /*!< Pin P25 */
-#define ADC_ANI6                    ((uint8_t)6U)       /*!< Pin P26 */
-#define ADC_ANI7                    ((uint8_t)7U)       /*!< Pin P27 */
-#define ADC_ANI8                    ((uint8_t)8U)       /*!< Pin P147 */
-#define ADC_ANI9                    ((uint8_t)9U)       /*!< Pin P00 */
-#define ADC_ANI10                   ((uint8_t)10U)      /*!< Pin P01 */
-#define ADC_ANI11                   ((uint8_t)11U)      /*!< Pin P120 */
+#define ADC_ANI0                        ((uint8_t)0U)       /*!< Pin P40 */
+#define ADC_ANI1                        ((uint8_t)1U)       /*!< Pin P41 */
+#define ADC_ANI2                        ((uint8_t)2U)       /*!< Pin P42 */
+#define ADC_ANI3                        ((uint8_t)3U)       /*!< Pin P43 */
+#define ADC_ANI4                        ((uint8_t)4U)       /*!< Pin P44 */
+#define ADC_ANI5                        ((uint8_t)5U)       /*!< Pin P45 */
+#define ADC_ANI6                        ((uint8_t)6U)       /*!< Pin P46 */
+#define ADC_ANI7                        ((uint8_t)7U)       /*!< Pin P47 */
+#define ADC_ANI8                        ((uint8_t)8U)       /*!< Pin P11 */
+#define ADC_ANI9                        ((uint8_t)9U)       /*!< Pin P10 */
+#define ADC_PIN_NUM_MAX                 (ADC_ANI9)
+#define ADC_CH_NUM_MAX                  (ADC_ANI9)
 /**
  * @}
  */
@@ -290,7 +272,7 @@ typedef struct
  * @defgroup ADC_Channel_Count ADC Channel Count
  * @{
  */
-#define ADC_CH_COUNT                (12U)
+#define ADC_CH_CNT                      (10U)
 /**
  * @}
  */
@@ -299,57 +281,17 @@ typedef struct
  * @defgroup ADC_Channels ADC Common Channels
  * @{
  */
-#define ADC_CH0                     ((uint16_t)(0x1UL << ADC_ANI0))
-#define ADC_CH1                     ((uint16_t)(0x1UL << ADC_ANI1))
-#define ADC_CH2                     ((uint16_t)(0x1UL << ADC_ANI2))
-#define ADC_CH3                     ((uint16_t)(0x1UL << ADC_ANI3))
-#define ADC_CH4                     ((uint16_t)(0x1UL << ADC_ANI4))
-#define ADC_CH5                     ((uint16_t)(0x1UL << ADC_ANI5))
-#define ADC_CH6                     ((uint16_t)(0x1UL << ADC_ANI6))
-#define ADC_CH7                     ((uint16_t)(0x1UL << ADC_ANI7))
-#define ADC_CH8                     ((uint16_t)(0x1UL << ADC_ANI8))
-#define ADC_CH9                     ((uint16_t)(0x1UL << ADC_ANI9))
-#define ADC_CH10                    ((uint16_t)(0x1UL << ADC_ANI10))
-#define ADC_CH11                    ((uint16_t)(0x1UL << ADC_ANI11))
-#define ADC_CH_ALL                  ((uint16_t)0x0FFFu)
-/**
- * @}
- */
-
-/**
- * @defgroup ADC_AWD_Comparison_Mode ADC AWD(Analog Watchdog) Comparison Mode
- * @{
- */
-#define ADC_AWD_CMP_OUT_RANGE       ((uint16_t)0x0U)
-#define ADC_AWD_CMP_IN_RANGE        ((uint16_t)0x1U)
-/**
- * @}
- */
-
-/**
- * @defgroup ADC_AWD_Combination_Mode ADC AWD(Analog Watchdog) Combination Mode
- * @note If combination mode is valid(ADC_AWD_COMB_OR/ADC_AWD_COMB_AND/ADC_AWD_COMB_XOR) and
-         the channles selected by the AWD0 and AWD1 are deferent, make sure that the channel
-         of AWD1 is converted after the channel conversion of AWD0 ends.
- * @{
- */
-#define ADC_AWD_COMB_MASK           (ADC_AWDCR_AWDCM)
-#define ADC_AWD_COMB_INVALID        ((uint16_t)0x0)
-#define ADC_AWD_COMB_OR             (ADC_AWDCR_AWDCM_0)
-#define ADC_AWD_COMB_AND            (ADC_AWDCR_AWDCM_1)
-#define ADC_AWD_COMB_XOR            (ADC_AWDCR_AWDCM_0 | ADC_AWDCR_AWDCM_1)
-/**
- * @}
- */
-
-/**
- * @defgroup ADC_AWD_State_Flag ADC AWD(Analog Watchdog) State Flag
- * @{
- */
-#define ADC_FLAG_AWD0               (ADC_AWDSR_AWD0F)
-#define ADC_FLAG_AWD1               (ADC_AWDSR_AWD1F)
-#define ADC_FLAG_AWD_COMB           (ADC_AWDSR_AWDCMF)
-#define ADC_FLAG_AWD_ALL            (ADC_FLAG_AWD0 | ADC_AWDSR_AWD1F | ADC_AWDSR_AWDCMF)
+#define ADC_CH0                         ((uint16_t)(0x1UL << ADC_ANI0))
+#define ADC_CH1                         ((uint16_t)(0x1UL << ADC_ANI1))
+#define ADC_CH2                         ((uint16_t)(0x1UL << ADC_ANI2))
+#define ADC_CH3                         ((uint16_t)(0x1UL << ADC_ANI3))
+#define ADC_CH4                         ((uint16_t)(0x1UL << ADC_ANI4))
+#define ADC_CH5                         ((uint16_t)(0x1UL << ADC_ANI5))
+#define ADC_CH6                         ((uint16_t)(0x1UL << ADC_ANI6))
+#define ADC_CH7                         ((uint16_t)(0x1UL << ADC_ANI7))
+#define ADC_CH8                         ((uint16_t)(0x1UL << ADC_ANI8))
+#define ADC_CH9                         ((uint16_t)(0x1UL << ADC_ANI9))
+#define ADC_CH_ALL                      ((uint16_t)0x03FFU)
 /**
  * @}
  */
@@ -377,7 +319,7 @@ typedef struct
  */
 __STATIC_INLINE void ADC_Start(void)
 {
-    bM0P_ADC->STR_b.STRT = 0x1U;
+    bM4_ADC->STR_b.STRT = 0x1U;
 }
 
 /**
@@ -387,7 +329,7 @@ __STATIC_INLINE void ADC_Start(void)
  */
 __STATIC_INLINE void ADC_Stop(void)
 {
-    bM0P_ADC->STR_b.STRT = 0x0U;
+    bM4_ADC->STR_b.STRT = 0x0U;
 }
 
 /**
@@ -399,37 +341,37 @@ __STATIC_INLINE void ADC_Stop(void)
  */
 __STATIC_INLINE en_flag_status_t ADC_GetRunStatus(void)
 {
-    return (en_flag_status_t)(bM0P_ADC->STR_b.STRT);
+    return (en_flag_status_t)(bM4_ADC->STR_b.STRT);
 }
-
 
 en_result_t ADC_Init(const stc_adc_init_t *pstcInit);
 void ADC_DeInit(void);
+
 en_result_t ADC_StructInit(stc_adc_init_t *pstcInit);
-void ADC_AddAdcChannel(uint8_t u8Seq, uint16_t u16Channel);
-void ADC_SetExChannel(uint8_t u8ExCh);
-en_result_t ADC_ConfigTriggerSrc(uint8_t u8Seq, const stc_adc_trg_cfg_t *pstcTrgCfg);
-en_result_t ADC_TriggerSrcStructInit(stc_adc_trg_cfg_t *pstcTrgCfg);
-void ADC_TriggerSrcCmd(uint8_t u8Seq, en_functional_state_t enNewState);
-void ADC_AdcIntCmd(uint8_t u8Seq, en_functional_state_t enNewState);
 
-en_flag_status_t ADC_GetEocFlag(uint8_t u8Flag);
-void ADC_ClrEocFlag(uint8_t u8Flag);
+void ADC_SetScanMode(uint16_t u16Mode);
+en_result_t ADC_ChannelCmd(uint8_t u8Seq, uint16_t u16AdcCh, uint8_t *pu8SplTime, en_functional_state_t enNewState);
 
-en_result_t ADC_PollingSa(uint16_t *pu16Dest, uint8_t u8Length, uint32_t u32Timeout);
-en_result_t ADC_GetAllData(uint16_t *pu16Dest, uint8_t u8Length);
-en_result_t ADC_GetChannelData(uint16_t u16Channel, uint16_t *pu16Dest, uint8_t u8Length);
+void ADC_AvgSetCnt(uint16_t u16AvgCnt);
+void ADC_AvgChannelCmd(uint16_t u16AdcCh, en_functional_state_t enNewState);
+void ADC_SetExChannelSrc(uint8_t u8ExChSrc);
+
+en_result_t ADC_TrigSrcStructInit(stc_adc_trig_cfg_t *pstcCfg);
+en_result_t ADC_TrigSrcConfig(uint8_t u8Seq, const stc_adc_trig_cfg_t *pstcCfg);
+void ADC_TrigSrcCmd(uint8_t u8Seq, en_functional_state_t enNewState);
+
+void ADC_SeqIntCmd(uint8_t u8Seq, en_functional_state_t enNewState);
+en_flag_status_t ADC_SeqGetStatus(uint8_t u8Flag);
+void ADC_SeqClrStatus(uint8_t u8Flag);
+
+void ADC_SH_Config(uint16_t u16AdcCh, uint8_t u8ShCycle);
+void ADC_ContSplCmd(en_functional_state_t enNewState);
+
+en_result_t ADC_PollingSA(uint16_t *pu16AdcData, uint8_t u8Length, uint32_t u32Timeout);
+
+en_result_t ADC_GetAllData(uint16_t *pu16AdcData, uint8_t u8Length);
+en_result_t ADC_GetChannelData(uint16_t u16AdcCh, uint16_t *pu16AdcData, uint8_t u8Length);
 uint16_t ADC_GetValue(uint8_t u8AdcPin);
-
-en_result_t ADC_AwdConfig(uint8_t u8AwdNbr, const stc_awd_cfg_t *pstcAwdCfg);
-void ADC_AwdCmd(uint8_t u8AwdNbr, en_functional_state_t enNewState);
-void ADC_AwdIntCmd(uint8_t u8AwdNbr, en_functional_state_t enNewState);
-void ADC_AwdConfigCombMode(uint16_t u16ComMd);
-
-en_flag_status_t ADC_AwdGetFlag(uint8_t u8Flag);
-void ADC_AwdClrFlag(uint8_t u8Flag);
-
-void ADC_OpaCmd(uint8_t u8OpaNbr, en_functional_state_t enNewState);
 
 /**
  * @}

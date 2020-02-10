@@ -52,8 +52,8 @@
 /* Use contiguous memory regions for simple. */
 MEMORY
 {
-    FLASH  (rx): ORIGIN = 0x00000000, LENGTH = 32K
-    RAM   (rwx): ORIGIN = 0x20000000, LENGTH = 4K
+    FLASH  (rx): ORIGIN = 0x00000000, LENGTH = 128K
+    RAM   (rwx): ORIGIN = 0x1FFFE000, LENGTH = 16K
 }
 
 ENTRY(Reset_Handler)
@@ -67,7 +67,7 @@ SECTIONS
         . = ALIGN(4);
     } >FLASH
 
-    .icg_sec 0x000000C0 :
+    .icg_sec 0x00000240 :
     {
         KEEP(*(.icg_sec))
     } >FLASH

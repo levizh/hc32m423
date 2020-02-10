@@ -45,7 +45,7 @@
 /*  Startup for GCC                                                          */
 /*  Version     V1.0                                                         */
 /*  Date        2019-03-13                                                   */
-/*  Target-mcu  HC32M120                                                     */
+/*  Target-mcu  HC32M423                                                     */
 /*****************************************************************************/
 
 /*
@@ -122,14 +122,14 @@ __Vectors:
                 .long       SysTick_Handler                    /*  -1 SysTick Handler */
 
                 /* Interrupts */
-                .long       EXINT00_Handler
-                .long       EXINT01_Handler
-                .long       EXINT02_Handler
-                .long       EXINT03_Handler
-                .long       EXINT04_Handler
-                .long       EXINT05_Handler
-                .long       EXINT06_Handler
-                .long       EXINT07_Handler
+                .long       IRQ000_Handler
+                .long       IRQ001_Handler
+                .long       IRQ002_Handler
+                .long       IRQ003_Handler
+                .long       IRQ004_Handler
+                .long       IRQ005_Handler
+                .long       IRQ006_Handler
+                .long       IRQ007_Handler
                 .long       IRQ008_Handler
                 .long       IRQ009_Handler
                 .long       IRQ010_Handler
@@ -154,6 +154,75 @@ __Vectors:
                 .long       IRQ029_Handler
                 .long       IRQ030_Handler
                 .long       IRQ031_Handler
+                .long       IRQ032_Handler
+                .long       IRQ033_Handler
+                .long       IRQ034_Handler
+                .long       IRQ035_Handler
+                .long       IRQ036_Handler
+                .long       IRQ037_Handler
+                .long       IRQ038_Handler
+                .long       IRQ039_Handler
+                .long       IRQ040_Handler
+                .long       IRQ041_Handler
+                .long       IRQ042_Handler
+                .long       IRQ043_Handler
+                .long       IRQ044_Handler
+                .long       IRQ045_Handler
+                .long       IRQ046_Handler
+                .long       IRQ047_Handler
+                .long       IRQ048_Handler
+                .long       IRQ049_Handler
+                .long       IRQ050_Handler
+                .long       IRQ051_Handler
+                .long       IRQ052_Handler
+                .long       IRQ053_Handler
+                .long       IRQ054_Handler
+                .long       IRQ055_Handler
+                .long       IRQ056_Handler
+                .long       IRQ057_Handler
+                .long       IRQ058_Handler
+                .long       IRQ059_Handler
+                .long       IRQ060_Handler
+                .long       IRQ061_Handler
+                .long       IRQ062_Handler
+                .long       IRQ063_Handler
+                .long       IRQ064_Handler
+                .long       IRQ065_Handler
+                .long       IRQ066_Handler
+                .long       IRQ067_Handler
+                .long       IRQ068_Handler
+                .long       IRQ069_Handler
+                .long       IRQ070_Handler
+                .long       IRQ071_Handler
+                .long       IRQ072_Handler
+                .long       IRQ073_Handler
+                .long       IRQ074_Handler
+                .long       IRQ075_Handler
+                .long       IRQ076_Handler
+                .long       IRQ077_Handler
+                .long       IRQ078_Handler
+                .long       IRQ079_Handler
+                .long       IRQ080_Handler
+                .long       IRQ081_Handler
+                .long       IRQ082_Handler
+                .long       IRQ083_Handler
+                .long       IRQ084_Handler
+                .long       IRQ085_Handler
+                .long       IRQ086_Handler
+                .long       IRQ087_Handler
+                .long       IRQ088_Handler
+                .long       IRQ089_Handler
+                .long       IRQ090_Handler
+                .long       IRQ091_Handler
+                .long       IRQ092_Handler
+                .long       IRQ093_Handler
+                .long       IRQ094_Handler
+                .long       IRQ095_Handler
+                .long       IRQ096_Handler
+                .long       IRQ097_Handler
+                .long       IRQ098_Handler
+                .long       IRQ099_Handler
+                .long       IRQ100_Handler
 __Vectors_End:
                 .equ        __Vectors_Size, __Vectors_End - __Vectors
                 .size       __Vectors, . - __Vectors
@@ -172,20 +241,6 @@ __Vectors_End:
 Reset_Handler:
                 /* Set stack top pointer. */
                 /*ldr         sp, =__StackTop*/
-                ldr         r2, =0x40014020     /* PWC_FPRC */
-                ldr         r0, =0xA502
-                str         r0, [r2]            /* PWC_FPRC = 0xA502 */
-
-                movs        r0, #1
-                ldr         r1, =0x42280190     /* PWC_RAMCR_RPERDIS */
-                strb        r0, [r1]            /* PWC_RAMCR_RPERDIS = 1 */
-
-                ldr         r1, =0x42280004     /* PWC_STPMCR_CKSHRC */
-                strb        r0, [r1]            /* PWC_STPMCR_CKSHRC = 1 */
-
-                ldr         r0, =0xA500
-                str         r0, [r2]            /* PWC_FPRC = 0xA500 */
-
 /* Single section scheme.
  *
  * The ranges of copy from/to are specified by following symbols
@@ -280,14 +335,14 @@ Default_Handler:
                 Set_Default_Handler    PendSV_Handler
                 Set_Default_Handler    SysTick_Handler
 
-                Set_Default_Handler    EXINT00_Handler
-                Set_Default_Handler    EXINT01_Handler
-                Set_Default_Handler    EXINT02_Handler
-                Set_Default_Handler    EXINT03_Handler
-                Set_Default_Handler    EXINT04_Handler
-                Set_Default_Handler    EXINT05_Handler
-                Set_Default_Handler    EXINT06_Handler
-                Set_Default_Handler    EXINT07_Handler
+                Set_Default_Handler    IRQ000_Handler
+                Set_Default_Handler    IRQ001_Handler
+                Set_Default_Handler    IRQ002_Handler
+                Set_Default_Handler    IRQ003_Handler
+                Set_Default_Handler    IRQ004_Handler
+                Set_Default_Handler    IRQ005_Handler
+                Set_Default_Handler    IRQ006_Handler
+                Set_Default_Handler    IRQ007_Handler
                 Set_Default_Handler    IRQ008_Handler
                 Set_Default_Handler    IRQ009_Handler
                 Set_Default_Handler    IRQ010_Handler
@@ -312,5 +367,74 @@ Default_Handler:
                 Set_Default_Handler    IRQ029_Handler
                 Set_Default_Handler    IRQ030_Handler
                 Set_Default_Handler    IRQ031_Handler
+                Set_Default_Handler    IRQ032_Handler
+                Set_Default_Handler    IRQ033_Handler
+                Set_Default_Handler    IRQ034_Handler
+                Set_Default_Handler    IRQ035_Handler
+                Set_Default_Handler    IRQ036_Handler
+                Set_Default_Handler    IRQ037_Handler
+                Set_Default_Handler    IRQ038_Handler
+                Set_Default_Handler    IRQ039_Handler
+                Set_Default_Handler    IRQ040_Handler
+                Set_Default_Handler    IRQ041_Handler
+                Set_Default_Handler    IRQ042_Handler
+                Set_Default_Handler    IRQ043_Handler
+                Set_Default_Handler    IRQ044_Handler
+                Set_Default_Handler    IRQ045_Handler
+                Set_Default_Handler    IRQ046_Handler
+                Set_Default_Handler    IRQ047_Handler
+                Set_Default_Handler    IRQ048_Handler
+                Set_Default_Handler    IRQ049_Handler
+                Set_Default_Handler    IRQ050_Handler
+                Set_Default_Handler    IRQ051_Handler
+                Set_Default_Handler    IRQ052_Handler
+                Set_Default_Handler    IRQ053_Handler
+                Set_Default_Handler    IRQ054_Handler
+                Set_Default_Handler    IRQ055_Handler
+                Set_Default_Handler    IRQ056_Handler
+                Set_Default_Handler    IRQ057_Handler
+                Set_Default_Handler    IRQ058_Handler
+                Set_Default_Handler    IRQ059_Handler
+                Set_Default_Handler    IRQ060_Handler
+                Set_Default_Handler    IRQ061_Handler
+                Set_Default_Handler    IRQ062_Handler
+                Set_Default_Handler    IRQ063_Handler
+                Set_Default_Handler    IRQ064_Handler
+                Set_Default_Handler    IRQ065_Handler
+                Set_Default_Handler    IRQ066_Handler
+                Set_Default_Handler    IRQ067_Handler
+                Set_Default_Handler    IRQ068_Handler
+                Set_Default_Handler    IRQ069_Handler
+                Set_Default_Handler    IRQ070_Handler
+                Set_Default_Handler    IRQ071_Handler
+                Set_Default_Handler    IRQ072_Handler
+                Set_Default_Handler    IRQ073_Handler
+                Set_Default_Handler    IRQ074_Handler
+                Set_Default_Handler    IRQ075_Handler
+                Set_Default_Handler    IRQ076_Handler
+                Set_Default_Handler    IRQ077_Handler
+                Set_Default_Handler    IRQ078_Handler
+                Set_Default_Handler    IRQ079_Handler
+                Set_Default_Handler    IRQ080_Handler
+                Set_Default_Handler    IRQ081_Handler
+                Set_Default_Handler    IRQ082_Handler
+                Set_Default_Handler    IRQ083_Handler
+                Set_Default_Handler    IRQ084_Handler
+                Set_Default_Handler    IRQ085_Handler
+                Set_Default_Handler    IRQ086_Handler
+                Set_Default_Handler    IRQ087_Handler
+                Set_Default_Handler    IRQ088_Handler
+                Set_Default_Handler    IRQ089_Handler
+                Set_Default_Handler    IRQ090_Handler
+                Set_Default_Handler    IRQ091_Handler
+                Set_Default_Handler    IRQ092_Handler
+                Set_Default_Handler    IRQ093_Handler
+                Set_Default_Handler    IRQ094_Handler
+                Set_Default_Handler    IRQ095_Handler
+                Set_Default_Handler    IRQ096_Handler
+                Set_Default_Handler    IRQ097_Handler
+                Set_Default_Handler    IRQ098_Handler
+                Set_Default_Handler    IRQ099_Handler
+                Set_Default_Handler    IRQ100_Handler
 
                 .end

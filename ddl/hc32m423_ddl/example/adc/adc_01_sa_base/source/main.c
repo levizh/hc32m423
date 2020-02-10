@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-09       Wuze            First version
+   2020-02-03       Wuze            First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -73,15 +73,19 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* ADC channels definition for this example. */
-#define VAR_VOL_CHANNEL             (ADC_CH9)
-#define ADC_SA_CHANNEL              (ADC_CH0 | ADC_CH2 | ADC_CH4 | VAR_VOL_CHANNEL)
-#define ADC_SA_CHANNEL_COUNT        (4U)
+#define ADC_SA_NORMAL_CHANNEL       (ADC_CH0 | ADC_CH1)
+#define ADC_SA_VOL_CHANNEL          (ADC_CH9)
+#define ADC_SA_CHANNEL              (ADC_SA_NORMAL_CHANNEL | ADC_SA_VOL_CHANNEL)
+#define ADC_SA_CHANNEL_COUNT        (3u)
 
-/* ADC channel sampling time. */
-#define ADC_SAMPLE_TIME             ((uint8_t)30)
+#define ADC_AVG_CHANNEL             (ADC_SA_NORMAL_CHANNEL)
+
+/* ADC channel sampling time.        ADC_CH0  ADC_CH1    ADC_CH9
+   This depends on the application. */
+#define ADC_SA_CHANNEL_SAMPLE_TIME  { 0x20,     0x30,      0x20 }
 
 /* ADC resolution definition. */
-#define ADC_RESOLUTION              (ADC_RESOLUTION_12B)
+#define ADC_RESOLUTION              (ADC_RES_12BIT)
 
 /* ADC accuracy. */
 #define ADC_ACCURACY                (1UL << 12U)
@@ -93,7 +97,7 @@
 #define TIMEOUT_MS                  (10U)
 
 /* Variable voltage channel ADC value definition. */
-#define var_vol_value               (m_au16AdcSaVal[3U])
+#define vol_value                   (m_au16AdcSaVal[3U])
 
 /* Debug printing definition. */
 #if (DDL_PRINT_ENABLE == DDL_ON)
@@ -117,7 +121,7 @@ static void AdcInitConfig(void);
 static void AdcChannelConfig(void);
 
 static void AdcSetChannelPinAnalogMode(uint16_t u16Channel);
-static void AdcSetPinAnalogMode(uint8_t u8PinNbr);
+static void AdcSetPinAnalogMode(uint8_t u8PinNum);
 
 /*******************************************************************************
  * Local variable definitions ('static')
@@ -154,9 +158,9 @@ int32_t main(void)
 
     while (1U)
     {
-        ADC_PollingSa(m_au16AdcSaVal, ADC_SA_CHANNEL_COUNT, TIMEOUT_MS);
+        ADC_PollingSA(m_au16AdcSaVal, ADC_SA_CHANNEL_COUNT, TIMEOUT_MS);
 #if (DDL_PRINT_ENABLE == DDL_ON)
-        m_f32Vol = ((float)var_vol_value * ADC_VREF) / ((float)ADC_ACCURACY);
+        m_f32Vol = ((float)vol_value * ADC_VREF) / ((float)ADC_ACCURACY);
         DBG("\nThe voltage is %.3f.", m_f32Vol);
         DDL_Delay1ms(1000U);
 #endif // #if (DDL_PRINT_ENABLE == DDL_ON)
@@ -171,10 +175,7 @@ int32_t main(void)
 static void SystemClockConfig(void)
 {
     /* Set EFM read latency when system clock greater than 24MHz. */
-    EFM_SetLatency(EFM_LATENCY_1);
-
-    /* Configure the system clock to HRC32MHz. */
-    CLK_HRCInit(CLK_HRC_ON, CLK_HRCFREQ_32);
+    //EFM_SetLatency(EFM_LATENCY_1);
 }
 
 /**
@@ -198,7 +199,7 @@ static void AdcConfig(void)
  */
 static void AdcClockConfig(void)
 {
-    CLK_SetADClkDiv(CLK_HCLK_DIV2);
+    //CLK_SetADClkDiv(CLK_HCLK_DIV2);
 }
 
 /**
@@ -214,11 +215,10 @@ static void AdcInitConfig(void)
     ADC_StructInit(&stcInit);
 
     /* User configurations. */
-    stcInit.u16Resolution = ADC_RESOLUTION;
-    stcInit.u8SampTime    = ADC_SAMPLE_TIME;
+    //stcInit.u16Resolution = ADC_RESOLUTION;
     
     /* 1. Enable ADC peripheral. */
-    CLK_FcgPeriphClockCmd(CLK_FCG_ADC, Enable);
+    //CLK_FcgPeriphClockCmd(CLK_FCG_ADC, Enable);
 
     /* 2. Initializes ADC. */
     ADC_Init(&stcInit);
@@ -231,11 +231,17 @@ static void AdcInitConfig(void)
  */
 static void AdcChannelConfig(void)
 {
+    uint8_t au8SplTime[] = ADC_SA_CHANNEL_SAMPLE_TIME;
+
     /* 1. Set the ADC pin to analog input mode. */
     AdcSetChannelPinAnalogMode(ADC_SA_CHANNEL);
 
-    /* 2. Add ADC channels. */
-    ADC_AddAdcChannel(ADC_SEQ_A, ADC_SA_CHANNEL);
+    /* 2. Enable ADC channels. */
+    ADC_ChannelCmd(ADC_SEQ_A, ADC_SA_CHANNEL, au8SplTime, Enable);
+
+    /* 3. Configures average channel if needed. */
+    ADC_AvgSetCnt(ADC_AVG_CNT_8);
+    ADC_AvgChannelCmd(ADC_AVG_CHANNEL, Enable);
 }
 
 /**
@@ -245,94 +251,84 @@ static void AdcChannelConfig(void)
  */
 static void AdcSetChannelPinAnalogMode(uint16_t u16Channel)
 {
-    uint8_t u8PinNbr;
+    uint8_t u8PinNum;
 
-    u8PinNbr    = 0U;
+    u8PinNum    = 0U;
     u16Channel &= ADC_CH_ALL;
 
     while (u16Channel != 0U)
     {
         if (u16Channel & 0x1U)
         {
-            AdcSetPinAnalogMode(u8PinNbr);
+            AdcSetPinAnalogMode(u8PinNum);
         }
 
         u16Channel >>= 1U;
-        u8PinNbr++;
+        u8PinNum++;
     }
 }
 
 /**
  * @brief  Set specified ADC pin to analog mode.
- * @param  [in]  u8PinNbr           The ADC pin number.
+ * @param  [in]  u8PinNum           The ADC pin number.
  *                                  This parameter can be a value of @ref ADC_Pin_Number
  * @retval None
  */
-static void AdcSetPinAnalogMode(uint8_t u8PinNbr)
+static void AdcSetPinAnalogMode(uint8_t u8PinNum)
 {
-    uint8_t u8Port = GPIO_PORT_2;
+    uint8_t u8Port = GPIO_PORT_4;
     uint8_t u8Pin  = GPIO_PIN_0;
     uint8_t u8Flag = 1U;
 
-    switch (u8PinNbr)
+    switch (u8PinNum)
     {
     case ADC_ANI0:
-        u8Port = GPIO_PORT_2;
+        u8Port = GPIO_PORT_4;
         u8Pin  = GPIO_PIN_0;
         break;
 
     case ADC_ANI1:
-        u8Port = GPIO_PORT_2;
+        u8Port = GPIO_PORT_4;
         u8Pin  = GPIO_PIN_1;
         break;
 
     case ADC_ANI2:
-        u8Port = GPIO_PORT_2;
+        u8Port = GPIO_PORT_4;
         u8Pin  = GPIO_PIN_2;
         break;
 
     case ADC_ANI3:
-        u8Port = GPIO_PORT_2;
+        u8Port = GPIO_PORT_4;
         u8Pin  = GPIO_PIN_3;
         break;
 
     case ADC_ANI4:
-        u8Port = GPIO_PORT_2;
+        u8Port = GPIO_PORT_4;
         u8Pin  = GPIO_PIN_4;
         break;
 
     case ADC_ANI5:
-        u8Port = GPIO_PORT_2;
+        u8Port = GPIO_PORT_4;
         u8Pin  = GPIO_PIN_5;
         break;
 
     case ADC_ANI6:
-        u8Port = GPIO_PORT_2;
+        u8Port = GPIO_PORT_4;
         u8Pin  = GPIO_PIN_6;
         break;
 
     case ADC_ANI7:
-        u8Port = GPIO_PORT_2;
+        u8Port = GPIO_PORT_4;
         u8Pin  = GPIO_PIN_7;
         break;
 
     case ADC_ANI8:
-        u8Port = GPIO_PORT_14;
-        u8Pin  = GPIO_PIN_7;
-        break;
-
-    case ADC_ANI9:
-        u8Port = GPIO_PORT_0;
-        u8Pin  = GPIO_PIN_0;
-        break;
-
-    case ADC_ANI10:
-        u8Port = GPIO_PORT_0;
+        u8Port = GPIO_PORT_1;
         u8Pin  = GPIO_PIN_1;
         break;
 
-    case ADC_ANI11:
-        u8Port = GPIO_PORT_12;
+    case ADC_ANI9:
+        u8Port = GPIO_PORT_1;
         u8Pin  = GPIO_PIN_0;
         break;
 
@@ -343,7 +339,7 @@ static void AdcSetPinAnalogMode(uint8_t u8PinNbr)
 
     if (u8Flag != 0U)
     {
-        GPIO_SetFunc(u8Port, u8Pin, GPIO_FUNC_1_ANIN);
+        GPIO_SetFunc(u8Port, u8Pin, GPIO_FUNC_1_ADST);
     }
 }
 

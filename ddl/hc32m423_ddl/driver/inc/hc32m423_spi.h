@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-03       Wuze            First version
+   2020-02-03       Wuze            First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -108,10 +108,10 @@ typedef struct
                                          This parameter can be a value of @ref SPI_NSS_Active_Level */
     uint32_t u32SpiMode;            /*!< SPI mode.
                                          This parameter can be a value of @ref SPI_Mode */
-    uint32_t u32BaudRatePrescaler;  /*!< SPI baud rate prescaler.
+    uint32_t u32BRPrescaler;        /*!< SPI baud rate prescaler.
                                          This parameter can be a value of @ref SPI_Baud_Rate_Prescaler */
-    uint32_t u32DataSize;           /*!< SPI data size, 8 bit or 16 bit.
-                                         This parameter can be a value of @ref SPI_Data_Size */
+    uint32_t u32BitWidth;           /*!< SPI data bit width, 8 bit or 16 bit.
+                                         This parameter can be a value of @ref SPI_Data_Bit_Width */
     uint32_t u32FirstBit;           /*!< MSB first or LSB first.
                                          This parameter can be a value of @ref SPI_First_Bit */
 } stc_spi_init_t;
@@ -256,11 +256,11 @@ typedef struct
  */
 
 /**
- * @defgroup SPI_Data_Size SPI Data Size
+ * @defgroup SPI_Data_Bit_Width SPI Data Bit Width
  * @{
  */
-#define SPI_DATA_SIZE_8BIT          (0UL)
-#define SPI_DATA_SIZE_16BIT         (SPI_CFG2_DSIZE)
+#define SPI_BW_8BIT                 (0UL)
+#define SPI_BW_16BIT                (SPI_CFG2_DSIZE)
 /**
  * @}
  */
@@ -330,9 +330,9 @@ typedef struct
  *   @arg  Disable:                 Disable SPI function.
  * @retval None
  */
-__STATIC_INLINE void SPI_FunctionCmd(en_functional_state_t enNewState)
+__STATIC_INLINE void SPI_Cmd(en_functional_state_t enNewState)
 {
-    bM0P_SPI->CR1_b.SPE = (uint32_t)enNewState;
+    bM4_SPI->CR1_b.SPE = (uint32_t)enNewState;
 }
 
 /**
@@ -351,11 +351,11 @@ __STATIC_INLINE void SPI_FunctionCmd(en_functional_state_t enNewState)
  *   @arg  Set: The specified flag has set.
  *   @arg  Reset: The specified flag has not set.
  */
-__STATIC_INLINE en_flag_status_t SPI_GetFlag(uint32_t u32Flag)
+__STATIC_INLINE en_flag_status_t SPI_GetStatus(uint32_t u32Flag)
 {
     en_flag_status_t enFlag = Reset;
 
-    if ((M0P_SPI->SR & u32Flag) != 0U)
+    if ((M4_SPI->SR & u32Flag) != 0U)
     {
         enFlag = Set;
     }
@@ -375,10 +375,10 @@ __STATIC_INLINE en_flag_status_t SPI_GetFlag(uint32_t u32Flag)
  *   @arg  SPI_FLAG_CLR_ALL
  * @retval None
  */
-__STATIC_INLINE void SPI_ClearFlag(uint32_t u32Flag)
+__STATIC_INLINE void SPI_ClrStatus(uint32_t u32Flag)
 {
     u32Flag &= SPI_FLAG_CLR_ALL;
-    M0P_SPI->SR &= (uint32_t)(~u32Flag);
+    M4_SPI->SR &= (uint32_t)(~u32Flag);
 }
 
 /**
@@ -388,7 +388,7 @@ __STATIC_INLINE void SPI_ClearFlag(uint32_t u32Flag)
  */
 __STATIC_INLINE uint32_t SPI_ReadDataReg(void)
 {
-    return M0P_SPI->DR;
+    return M4_SPI->DR;
 }
 
 /**
@@ -398,7 +398,7 @@ __STATIC_INLINE uint32_t SPI_ReadDataReg(void)
  */
 __STATIC_INLINE void SPI_WriteDataReg(uint32_t u32Data)
 {
-    M0P_SPI->DR = u32Data;
+    M4_SPI->DR = u32Data;
 }
 
 
