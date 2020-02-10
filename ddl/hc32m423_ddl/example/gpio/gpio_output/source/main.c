@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-24       Zhangxl         First version
+   2020-02-10       Zhangxl         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -72,13 +72,13 @@
 /*******************************************************************************
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
-#define LED_R_PORT      (GPIO_PORT_0)
-#define LED_G_PORT      (GPIO_PORT_0)
-#define LED_B_PORT      (GPIO_PORT_0)
+#define LED_R_PORT      (GPIO_PORT_A)
+#define LED_G_PORT      (GPIO_PORT_A)
+#define LED_B_PORT      (GPIO_PORT_1)
 
-#define LED_R_PIN       (GPIO_PIN_0)
-#define LED_G_PIN       (GPIO_PIN_1)
-#define LED_B_PIN       (GPIO_PIN_2)
+#define LED_R_PIN       (GPIO_PIN_4)
+#define LED_G_PIN       (GPIO_PIN_5)
+#define LED_B_PIN       (GPIO_PIN_0)
 
 #define LED_R_ON()      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_G_ON()      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
