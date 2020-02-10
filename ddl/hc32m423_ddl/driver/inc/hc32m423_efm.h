@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-05-06       Chengy          First version
+   2020-02-06       Heqb          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -108,8 +108,8 @@ typedef struct
     uint32_t            u32InsCache;    /*!< Specifies the instruction cache on or off.
                                             This parameter can be a value of @ref EFM_InsCache_State.       */
 
-    uint32_t            u32CacheEn;     /*!< Specifies the data cache on or off.
-                                            This parameter can be a value of @ref EFM_CacheEn_State.        */
+    uint32_t            u32DataCache;   /*!< Specifies the data cache on or off.
+                                            This parameter can be a value of @ref EFM_DataCache_State.        */
 
     uint32_t            u32BusState;    /*!< Specifies the bus state busy or release while program & erase.
                                             This parameter can be a value of @ref EFM_Bus_State.            */
@@ -123,6 +123,7 @@ typedef struct
     uint32_t            u32UniqueID0;      /*!< unique ID 0.       */
     uint32_t            u32UniqueID1;      /*!< unique ID 1.       */
     uint32_t            u32UniqueID2;      /*!< unique ID 2.       */
+    uint32_t            u32UniqueID3;      /*!< unique ID 3.       */
 } stc_efm_unique_id_t;
 
 /**
@@ -143,7 +144,7 @@ typedef struct
  * @{
  */
 #define EFM_START_ADDR              (0x00000000UL)
-#define EFM_END_ADDR                (0x0000FFFFul)
+#define EFM_END_ADDR                (0x0001FFFFUL)
 /**
  * @}
  */
@@ -216,6 +217,198 @@ typedef struct
 #define EFM_SECTOR61_ADRR           (0x00007A00UL)
 #define EFM_SECTOR62_ADRR           (0x00007C00UL)
 #define EFM_SECTOR63_ADRR           (0x00007E00UL)
+#define EFM_SECTOR64_ADRR           (0x00008000UL)
+#define EFM_SECTOR65_ADRR           (0x00008200UL)
+#define EFM_SECTOR66_ADRR           (0x00008400UL)
+#define EFM_SECTOR67_ADRR           (0x00008600UL)
+#define EFM_SECTOR68_ADRR           (0x00008800UL)
+#define EFM_SECTOR69_ADRR           (0x00008A00UL)
+#define EFM_SECTOR70_ADRR           (0x00008C00UL)
+#define EFM_SECTOR71_ADRR           (0x00008E00UL)
+#define EFM_SECTOR72_ADRR           (0x00009000UL)
+#define EFM_SECTOR73_ADRR           (0x00009200UL)
+#define EFM_SECTOR74_ADRR           (0x00009400UL)
+#define EFM_SECTOR75_ADRR           (0x00009600UL)
+#define EFM_SECTOR76_ADRR           (0x00009800UL)
+#define EFM_SECTOR77_ADRR           (0x00009A00UL)
+#define EFM_SECTOR78_ADRR           (0x00009C00UL)
+#define EFM_SECTOR79_ADRR           (0x00009E00UL)
+#define EFM_SECTOR80_ADRR           (0x0000A000UL)
+#define EFM_SECTOR81_ADRR           (0x0000A200UL)
+#define EFM_SECTOR82_ADRR           (0x0000A400UL)
+#define EFM_SECTOR83_ADRR           (0x0000A600UL)
+#define EFM_SECTOR84_ADRR           (0x0000A800UL)
+#define EFM_SECTOR85_ADRR           (0x0000AA00UL)
+#define EFM_SECTOR86_ADRR           (0x0000AC00UL)
+#define EFM_SECTOR87_ADRR           (0x0000AE00UL)
+#define EFM_SECTOR88_ADRR           (0x0000B000UL)
+#define EFM_SECTOR89_ADRR           (0x0000B200UL)
+#define EFM_SECTOR90_ADRR           (0x0000B400UL)
+#define EFM_SECTOR91_ADRR           (0x0000B600UL)
+#define EFM_SECTOR92_ADRR           (0x0000B800UL)
+#define EFM_SECTOR93_ADRR           (0x0000BA00UL)
+#define EFM_SECTOR94_ADRR           (0x0000BC00UL)
+#define EFM_SECTOR95_ADRR           (0x0000BE00UL)
+#define EFM_SECTOR96_ADRR           (0x0000C000UL)
+#define EFM_SECTOR97_ADRR           (0x0000C200UL)
+#define EFM_SECTOR98_ADRR           (0x0000C400UL)
+#define EFM_SECTOR99_ADRR           (0x0000C600UL)
+#define EFM_SECTOR100_ADRR          (0x0000C800UL)
+#define EFM_SECTOR101_ADRR          (0x0000CA00UL)
+#define EFM_SECTOR102_ADRR          (0x0000CC00UL)
+#define EFM_SECTOR103_ADRR          (0x0000CE00UL)
+#define EFM_SECTOR104_ADRR          (0x0000D000UL)
+#define EFM_SECTOR105_ADRR          (0x0000D200UL)
+#define EFM_SECTOR106_ADRR          (0x0000D400UL)
+#define EFM_SECTOR107_ADRR          (0x0000D600UL)
+#define EFM_SECTOR108_ADRR          (0x0000D800UL)
+#define EFM_SECTOR109_ADRR          (0x0000DA00UL)
+#define EFM_SECTOR110_ADRR          (0x0000DC00UL)
+#define EFM_SECTOR111_ADRR          (0x0000DE00UL)
+#define EFM_SECTOR112_ADRR          (0x0000E000UL)
+#define EFM_SECTOR113_ADRR          (0x0000E200UL)
+#define EFM_SECTOR114_ADRR          (0x0000E400UL)
+#define EFM_SECTOR115_ADRR          (0x0000E600UL)
+#define EFM_SECTOR116_ADRR          (0x0000E800UL)
+#define EFM_SECTOR117_ADRR          (0x0000EA00UL)
+#define EFM_SECTOR118_ADRR          (0x0000EC00UL)
+#define EFM_SECTOR119_ADRR          (0x0000EE00UL)
+#define EFM_SECTOR120_ADRR          (0x0000F000UL)
+#define EFM_SECTOR121_ADRR          (0x0000F200UL)
+#define EFM_SECTOR122_ADRR          (0x0000F400UL)
+#define EFM_SECTOR123_ADRR          (0x0000F600UL)
+#define EFM_SECTOR124_ADRR          (0x0000F800UL)
+#define EFM_SECTOR125_ADRR          (0x0000FA00UL)
+#define EFM_SECTOR126_ADRR          (0x0000FC00UL)
+#define EFM_SECTOR127_ADRR          (0x0000FE00UL)
+#define EFM_SECTOR128_ADRR          (0x00010000UL)
+#define EFM_SECTOR129_ADRR          (0x00010200UL)
+#define EFM_SECTOR130_ADRR          (0x00010400UL)
+#define EFM_SECTOR131_ADRR          (0x00010600UL)
+#define EFM_SECTOR132_ADRR          (0x00010800UL)
+#define EFM_SECTOR133_ADRR          (0x00010A00UL)
+#define EFM_SECTOR134_ADRR          (0x00010C00UL)
+#define EFM_SECTOR135_ADRR          (0x00010E00UL)
+#define EFM_SECTOR136_ADRR          (0x00011000UL)
+#define EFM_SECTOR137_ADRR          (0x00011200UL)
+#define EFM_SECTOR138_ADRR          (0x00011400UL)
+#define EFM_SECTOR139_ADRR          (0x00011600UL)
+#define EFM_SECTOR140_ADRR          (0x00011800UL)
+#define EFM_SECTOR141_ADRR          (0x00011A00UL)
+#define EFM_SECTOR142_ADRR          (0x00011C00UL)
+#define EFM_SECTOR143_ADRR          (0x00011E00UL)
+#define EFM_SECTOR144_ADRR          (0x00012000UL)
+#define EFM_SECTOR145_ADRR          (0x00012200UL)
+#define EFM_SECTOR146_ADRR          (0x00012400UL)
+#define EFM_SECTOR147_ADRR          (0x00012600UL)
+#define EFM_SECTOR148_ADRR          (0x00012800UL)
+#define EFM_SECTOR149_ADRR          (0x00012A00UL)
+#define EFM_SECTOR150_ADRR          (0x00012C00UL)
+#define EFM_SECTOR151_ADRR          (0x00012E00UL)
+#define EFM_SECTOR152_ADRR          (0x00013000UL)
+#define EFM_SECTOR153_ADRR          (0x00013200UL)
+#define EFM_SECTOR154_ADRR          (0x00013400UL)
+#define EFM_SECTOR155_ADRR          (0x00013600UL)
+#define EFM_SECTOR156_ADRR          (0x00013800UL)
+#define EFM_SECTOR157_ADRR          (0x00013A00UL)
+#define EFM_SECTOR158_ADRR          (0x00013C00UL)
+#define EFM_SECTOR159_ADRR          (0x00013E00UL)
+#define EFM_SECTOR160_ADRR          (0x00014000UL)
+#define EFM_SECTOR161_ADRR          (0x00014200UL)
+#define EFM_SECTOR162_ADRR          (0x00014400UL)
+#define EFM_SECTOR163_ADRR          (0x00014600UL)
+#define EFM_SECTOR164_ADRR          (0x00014800UL)
+#define EFM_SECTOR165_ADRR          (0x00014A00UL)
+#define EFM_SECTOR166_ADRR          (0x00014C00UL)
+#define EFM_SECTOR167_ADRR          (0x00014E00UL)
+#define EFM_SECTOR168_ADRR          (0x00015000UL)
+#define EFM_SECTOR169_ADRR          (0x00015200UL)
+#define EFM_SECTOR170_ADRR          (0x00015400UL)
+#define EFM_SECTOR171_ADRR          (0x00015600UL)
+#define EFM_SECTOR172_ADRR          (0x00015800UL)
+#define EFM_SECTOR173_ADRR          (0x00015A00UL)
+#define EFM_SECTOR174_ADRR          (0x00015C00UL)
+#define EFM_SECTOR175_ADRR          (0x00015E00UL)
+#define EFM_SECTOR176_ADRR          (0x00016000UL)
+#define EFM_SECTOR177_ADRR          (0x00016200UL)
+#define EFM_SECTOR178_ADRR          (0x00016400UL)
+#define EFM_SECTOR179_ADRR          (0x00016600UL)
+#define EFM_SECTOR180_ADRR          (0x00016800UL)
+#define EFM_SECTOR181_ADRR          (0x00016A00UL)
+#define EFM_SECTOR182_ADRR          (0x00016C00UL)
+#define EFM_SECTOR183_ADRR          (0x00016E00UL)
+#define EFM_SECTOR184_ADRR          (0x00017000UL)
+#define EFM_SECTOR185_ADRR          (0x00017200UL)
+#define EFM_SECTOR186_ADRR          (0x00017400UL)
+#define EFM_SECTOR187_ADRR          (0x00017600UL)
+#define EFM_SECTOR188_ADRR          (0x00017800UL)
+#define EFM_SECTOR189_ADRR          (0x00017A00UL)
+#define EFM_SECTOR190_ADRR          (0x00017C00UL)
+#define EFM_SECTOR191_ADRR          (0x00017E00UL)
+#define EFM_SECTOR192_ADRR          (0x00018000UL)
+#define EFM_SECTOR193_ADRR          (0x00018200UL)
+#define EFM_SECTOR194_ADRR          (0x00018400UL)
+#define EFM_SECTOR195_ADRR          (0x00018600UL)
+#define EFM_SECTOR196_ADRR          (0x00018800UL)
+#define EFM_SECTOR197_ADRR          (0x00018A00UL)
+#define EFM_SECTOR198_ADRR          (0x00018C00UL)
+#define EFM_SECTOR199_ADRR          (0x00018E00UL)
+#define EFM_SECTOR200_ADRR          (0x00019000UL)
+#define EFM_SECTOR201_ADRR          (0x00019200UL)
+#define EFM_SECTOR202_ADRR          (0x00019400UL)
+#define EFM_SECTOR203_ADRR          (0x00019600UL)
+#define EFM_SECTOR204_ADRR          (0x00019800UL)
+#define EFM_SECTOR205_ADRR          (0x00019A00UL)
+#define EFM_SECTOR206_ADRR          (0x00019C00UL)
+#define EFM_SECTOR207_ADRR          (0x00019E00UL)
+#define EFM_SECTOR208_ADRR          (0x0001A000UL)
+#define EFM_SECTOR209_ADRR          (0x0001A200UL)
+#define EFM_SECTOR210_ADRR          (0x0001A400UL)
+#define EFM_SECTOR211_ADRR          (0x0001A600UL)
+#define EFM_SECTOR212_ADRR          (0x0001A800UL)
+#define EFM_SECTOR213_ADRR          (0x0001AA00UL)
+#define EFM_SECTOR214_ADRR          (0x0001AC00UL)
+#define EFM_SECTOR215_ADRR          (0x0001AE00UL)
+#define EFM_SECTOR216_ADRR          (0x0001B000UL)
+#define EFM_SECTOR217_ADRR          (0x0001B200UL)
+#define EFM_SECTOR218_ADRR          (0x0001B400UL)
+#define EFM_SECTOR219_ADRR          (0x0001B600UL)
+#define EFM_SECTOR220_ADRR          (0x0001B800UL)
+#define EFM_SECTOR221_ADRR          (0x0001BA00UL)
+#define EFM_SECTOR222_ADRR          (0x0001BC00UL)
+#define EFM_SECTOR223_ADRR          (0x0001BE00UL)
+#define EFM_SECTOR224_ADRR          (0x0001C000UL)
+#define EFM_SECTOR225_ADRR          (0x0001C200UL)
+#define EFM_SECTOR226_ADRR          (0x0001C400UL)
+#define EFM_SECTOR227_ADRR          (0x0001C600UL)
+#define EFM_SECTOR228_ADRR          (0x0001C800UL)
+#define EFM_SECTOR229_ADRR          (0x0001CA00UL)
+#define EFM_SECTOR230_ADRR          (0x0001CC00UL)
+#define EFM_SECTOR231_ADRR          (0x0001CE00UL)
+#define EFM_SECTOR232_ADRR          (0x0001D000UL)
+#define EFM_SECTOR233_ADRR          (0x0001D200UL)
+#define EFM_SECTOR234_ADRR          (0x0001D400UL)
+#define EFM_SECTOR235_ADRR          (0x0001D600UL)
+#define EFM_SECTOR236_ADRR          (0x0001D800UL)
+#define EFM_SECTOR237_ADRR          (0x0001DA00UL)
+#define EFM_SECTOR238_ADRR          (0x0001DC00UL)
+#define EFM_SECTOR239_ADRR          (0x0001DE00UL)
+#define EFM_SECTOR240_ADRR          (0x0001E000UL)
+#define EFM_SECTOR241_ADRR          (0x0001E200UL)
+#define EFM_SECTOR242_ADRR          (0x0001E400UL)
+#define EFM_SECTOR243_ADRR          (0x0001E600UL)
+#define EFM_SECTOR244_ADRR          (0x0001E800UL)
+#define EFM_SECTOR245_ADRR          (0x0001EA00UL)
+#define EFM_SECTOR246_ADRR          (0x0001EC00UL)
+#define EFM_SECTOR247_ADRR          (0x0001EE00UL)
+#define EFM_SECTOR248_ADRR          (0x0001F000UL)
+#define EFM_SECTOR249_ADRR          (0x0001F200UL)
+#define EFM_SECTOR250_ADRR          (0x0001F400UL)
+#define EFM_SECTOR251_ADRR          (0x0001F600UL)
+#define EFM_SECTOR252_ADRR          (0x0001F800UL)
+#define EFM_SECTOR253_ADRR          (0x0001FA00UL)
+#define EFM_SECTOR254_ADRR          (0x0001FC00UL)
+#define EFM_SECTOR255_ADRR          (0x0001FE00UL)
 /**
  * @}
  */
@@ -236,6 +429,12 @@ typedef struct
  */
 #define EFM_LATENCY_0               (0x00000000UL)
 #define EFM_LATENCY_1               (0x00000001UL)
+#define EFM_LATENCY_2               (0x00000002UL)
+#define EFM_LATENCY_3               (0x00000003UL)
+#define EFM_LATENCY_4               (0x00000004UL)
+#define EFM_LATENCY_5               (0x00000005UL)
+#define EFM_LATENCY_6               (0x00000006UL)
+#define EFM_LATENCY_7               (0x00000007UL)
 /**
  * @}
  */
@@ -244,7 +443,7 @@ typedef struct
  * @defgroup EFM_CacheRst_State EFM data cache reset state
  * @{
  */
-#define EFM_CACHERST_ON             (EFM_FRMC_CRST0)
+#define EFM_CACHERST_ON             (EFM_FRMC_CRST)
 #define EFM_CACHERST_OFF            (0x00000000UL)
 /**
  * @}
@@ -254,18 +453,18 @@ typedef struct
  * @defgroup EFM_InsCache_State EFM instruction cache state
  * @{
  */
-#define EFM_INSCACHE_ON             (EFM_FRMC_PREFETE)
+#define EFM_INSCACHE_ON             (EFM_FRMC_ICHE)
 #define EFM_INSCACHE_OFF            (0x00000000UL)
 /**
  * @}
  */
 
 /**
- * @defgroup EFM_CacheEn_State EFM data cache state
+ * @defgroup EFM_DataCache_State EFM data cache state
  * @{
  */
-#define EFM_CACHEEN_ON              (EFM_FRMC_CACHE)
-#define EFM_CACHEEN_OFF             (0x00000000UL)
+#define EFM_DATACACHE_ON              (EFM_FRMC_DCHE)
+#define EFM_DATACACHE_OFF             (0x00000000UL)
 /**
  * @}
  */

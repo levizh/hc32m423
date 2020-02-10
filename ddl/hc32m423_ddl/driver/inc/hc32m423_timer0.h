@@ -6,8 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-20       Heqb          First version
-   2019-12-11       Heqb          Add timeout function for register write
+   2020-02-03       Heqb          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -99,14 +98,14 @@ typedef struct
                                          and this parameter can be a value of
                                          @ref TIMER0_Clock_Source_define*/
 
-    uint32_t       u32Tmr0Fun;        /*!< specifies the TIMER0 function,
+    uint32_t       u32Tmr0Func;        /*!< specifies the TIMER0 function,
                                          compare output or capture input
                                          @ref TIMER0_Function_define */
 
     uint32_t       u32HwTrigFunc;     /*!< specifies the TIMER0 compare
                                          function hardware trigger function, and
                                          this parameter can be a value of @ref
-                                         TIMER0_HardwareTrigger_Func_define */
+                                         TIMER0_HWTrig_Func_define */
 
     uint16_t       u16CmpValue;       /*!< specifies the TIMER0 counter value
                                          This value can be set 0-0xFFFF */
@@ -138,7 +137,16 @@ typedef struct
 #define TIMER0_CLK_DIV256   (uint32_t)(8UL<<TMR0_BCONR_CKDIVA_POS)
 #define TIMER0_CLK_DIV512   (uint32_t)(9UL<<TMR0_BCONR_CKDIVA_POS)
 #define TIMER0_CLK_DIV1024  (uint32_t)(10UL<<TMR0_BCONR_CKDIVA_POS)
+/**
+ * @}
+ */
 
+/**
+ * @defgroup TIMER0_Channel_Index TIMER0 Channel Index
+ * @{
+ */
+#define TIMER0_ChannelA             ((uint8_t)0U)
+#define TIMER0_ChannelB             ((uint8_t)1U)
 /**
  * @}
  */
@@ -148,7 +156,6 @@ typedef struct
  */
 #define TIMER0_CLK_SRC_HCLK         (0x00000000UL)
 #define TIMER0_CLK_SRC_INTHWTRIG    (TMR0_BCONR_SYNCLKA)
-#define TIMER0_CLK_SRC_LRC          (TMR0_BCONR_SYNSA)
 /**
  * @}
  */
@@ -162,14 +169,23 @@ typedef struct
  * @}
  */
 
-/** @defgroup TIMER0_HardwareTrigger_Func_define TIMER0 hardware trigger function define
+/** @defgroup TIMER0_HWTrig_Func_define TIMER0 hardware trigger function define
  * @{
  */
 #define TIMER0_BT_HWTRG_FUNC_START  (TMR0_BCONR_HSTAA)
 #define TIMER0_BT_HWTRG_FUNC_CLEAR  (TMR0_BCONR_HCLEA)
 #define TIMER0_BT_HWTRG_FUNC_STOP   (TMR0_BCONR_HSTPA)
 #define TIMER0_BT_HWTRG_FUNC_NONE   (0x00000000UL)
+/**
+ * @}
+ */
 
+/**
+ * @defgroup TIMER0_CAMPAR_FLAG TIMER0 Compare Status
+ * @{
+ */
+#define TIMER0_CMP_A                (TMR0_STFLR_CMFA)
+#define TIMER0_CMP_B                (TMR0_STFLR_CMFB)
 /**
  * @}
  */
@@ -191,20 +207,23 @@ typedef struct
  */
 
 en_result_t TIMER0_StructInit(stc_tim0_init_t* pstcInitStruct);
-en_result_t TIMER0_Init(const stc_tim0_init_t* pstcBaseInit);
-en_result_t TIMER0_DeInit(void);
+en_result_t TIMER0_Init(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel,
+                                   const stc_tim0_init_t* pstcBaseInit);
+void TIMER0_DeInit(M4_TMR0_TypeDef* TMR0x);
 
-en_result_t TIMER0_Cmd(en_functional_state_t enNewState);
-en_result_t TIMER0_IntCmd(en_functional_state_t enNewState);
+en_result_t TIMER0_Cmd(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel,
+                        en_functional_state_t enNewState);
+en_result_t TIMER0_IntCmd(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel,
+                        en_functional_state_t enNewState);
 
-en_flag_status_t TIMER0_GetFlag(void);
-en_result_t TIMER0_ClearFlag(void);
-uint16_t TIMER0_GetCntReg(void);
-en_result_t TIMER0_WriteCntReg(uint16_t u16Cnt);
-uint16_t TIMER0_GetCmpReg(void);
-en_result_t TIMER0_WriteCmpReg(uint16_t u16Cnt);
+en_flag_status_t TIMER0_GetFlag(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel);
+en_result_t TIMER0_ClearFlag(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel);
+uint16_t TIMER0_GetCntReg(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel);
+en_result_t TIMER0_WriteCntReg(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel, uint16_t u16Value);
+uint16_t TIMER0_GetCmpReg(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel);
+en_result_t TIMER0_WriteCmpReg(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel, uint16_t u16Value);
 
-void TIMER0_SetTriggerSrc(en_event_src_t enEvent);
+void TIMER0_SetTriggerSrc(M4_TMR0_TypeDef* TMR0x, en_event_src_t enEvent);
 
 /**
  * @}

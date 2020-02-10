@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-20       Heqb            First version
+   2020-02-06       Heqb            First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -123,12 +123,12 @@ int32_t main(void)
         CRC_Calculate(CRC_CRC32, (uint8_t *)&au8SrcData[0U], CRC32_InitVal, 1U, CRC_BW_8);
 
         /* Calculates half word data's CRC16 checksum and CRC32 checksum. */
-        au16SrcData[0U] = 0x2019U;
+        au16SrcData[0U] = 0x2020U;
         CRC_Calculate(CRC_CRC16, (uint16_t *)&au16SrcData[0U], CRC16_InitVal, 1U, CRC_BW_16);
         CRC_Calculate(CRC_CRC32, (uint16_t *)&au16SrcData[0U], CRC32_InitVal, 1U, CRC_BW_16);
 
         /* Calculates word data's CRC16 checksum and CRC32 checksum. */
-        au32SrcData[0U] = 0x20190610UL;
+        au32SrcData[0U] = 0x20200210UL;
         CRC_Calculate(CRC_CRC16, (uint32_t *)&au32SrcData[0U], CRC16_InitVal, 1U, CRC_BW_32);
         CRC_Calculate(CRC_CRC32, (uint32_t *)&au32SrcData[0U], CRC32_InitVal, 1U, CRC_BW_32);
 
@@ -163,7 +163,7 @@ int32_t main(void)
  */
 static void CrcConfig(void)
 {
-    ENABLE_CRC();
+    //ENABLE_CRC();
 
 }
 

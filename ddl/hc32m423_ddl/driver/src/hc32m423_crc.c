@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-19       Heqb            First version
+   2020-02-03       Heqb            First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -87,25 +87,25 @@
  * @{
  */
 /* Definition of CRC32 data register. */
-#define CRC32_DAT_REG               (M0P_CRC->DAT0)
+#define CRC32_DAT_REG               (M4_CRC->DAT0)
 
 /* Definition of CRC32 initial value register. */
-#define CRC32_INIT_REG              (M0P_CRC->RESLT)
+#define CRC32_INIT_REG              (M4_CRC->RESLT)
 
 /* Definition of CRC32 result value register. */
-#define CRC32_RSLT_REG              (M0P_CRC->RESLT)
+#define CRC32_RSLT_REG              (M4_CRC->RESLT)
 
 /* Definition of CRC16 data register. */
-#define CRC16_DAT_REG               (*((__IO uint16_t *)&M0P_CRC->DAT0))
+#define CRC16_DAT_REG               (*((__IO uint16_t *)&M4_CRC->DAT0))
 
 /* Definition of CRC16 initial value register. */
-#define CRC16_INIT_REG              (*((__IO uint16_t *)&M0P_CRC->RESLT))
+#define CRC16_INIT_REG              (*((__IO uint16_t *)&M4_CRC->RESLT))
 
 /* Definition of CRC16 result value register. */
-#define CRC16_RSLT_REG              (*((__IO uint16_t *)&M0P_CRC->RESLT))
+#define CRC16_RSLT_REG              (*((__IO uint16_t *)&M4_CRC->RESLT))
 
 /* Definition data register in 8 bit width. */
-#define CRC8_DAT_REG                (*((__IO uint8_t *)&M0P_CRC->DAT0))
+#define CRC8_DAT_REG                (*((__IO uint8_t *)&M4_CRC->DAT0))
 /**
  * @}
  */
@@ -183,7 +183,7 @@ uint32_t CRC_Calculate(uint32_t u32CrcProtocol,
     if ((pvData != NULL) && (u32Length != 0U) &&
         ((u8BitWidth == CRC_BW_8) || (u8BitWidth == CRC_BW_16) || (u8BitWidth == CRC_BW_32)))
     {
-         bM0P_CRC->CR_b.CR = u32CrcProtocol;
+         bM4_CRC->CR_b.CR = u32CrcProtocol;
 
         if (u32CrcProtocol == CRC_CRC32)
         {
@@ -251,7 +251,7 @@ en_flag_status_t CRC_Check(uint32_t u32CrcProtocol,
     if ((pvData != NULL) && (u32Length != 0U) &&
         ((u8BitWidth == CRC_BW_8) || (u8BitWidth == CRC_BW_16) || (u8BitWidth == CRC_BW_32)))
     {
-        bM0P_CRC->CR_b.CR = u32CrcProtocol;
+        bM4_CRC->CR_b.CR = u32CrcProtocol;
 
         if (u32CrcProtocol == CRC_CRC32)
         {
@@ -284,7 +284,7 @@ en_flag_status_t CRC_Check(uint32_t u32CrcProtocol,
             CRC16_DAT_REG = (uint16_t)u32CheckSum;
         }
 
-        if ((M0P_CRC->CR & CRC_FLAG_MASK) != 0U)
+        if ((M4_CRC->CR & CRC_FLAG_MASK) != 0U)
         {
             enFlag = Set;
         }
