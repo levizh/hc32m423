@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-16       Heqb            First version
+   2020-02-06       Heqb            First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -78,11 +78,11 @@
 /* Disable CRC. */
 #define DISABLE_CRC()               (CLK_FcgPeriphClockCmd(CLK_FCG_CRC, Disable))
 
-#define LED_R_PORT      (GPIO_PORT_12)
-#define LED_G_PORT      (GPIO_PORT_7)
+#define LED_R_PORT      (GPIO_PORT_0)
+#define LED_G_PORT      (GPIO_PORT_0)
 
-#define LED_R_PIN       (GPIO_PIN_0)
-#define LED_G_PIN       (GPIO_PIN_0)
+#define LED_R_PIN       (GPIO_PIN_1)
+#define LED_G_PIN       (GPIO_PIN_2)
 
 #define LED_R_ON()      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_G_ON()      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
@@ -215,7 +215,7 @@ int32_t main(void)
  */
 static void CrcConfig(void)
 {
-    ENABLE_CRC();
+    //ENABLE_CRC();
 
 }
 
@@ -282,7 +282,7 @@ uint32_t CalaCRC32(const uint8_t *pu8Data, uint32_t u32InitVal, uint8_t u8ByteWi
         {
             crc ^= (*pu8Data++);         
             for (j = 0U; j < 8U; j++)  
-            {  
+            {
                 if (crc & 0x1U) 
                 {
                     crc = (crc >> 1U) ^ 0xEDB88320UL; /*0xEDB88320= reverse 0x04C11DB7*/ 
@@ -291,9 +291,9 @@ uint32_t CalaCRC32(const uint8_t *pu8Data, uint32_t u32InitVal, uint8_t u8ByteWi
                 {
                 crc = (crc >> 1U);  
                 }
-            } 
+            }
         }
-    }  
+    }
     crc =~crc;
 
     return crc; 

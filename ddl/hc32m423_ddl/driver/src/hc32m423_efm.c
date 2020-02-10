@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-05-06       Chengy          First version
+   2020-02-06       Heqb          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -91,59 +91,65 @@
 
 /*  Parameter validity check for flash latency. */
 #define IS_VALID_EFM_LATENCY(latency)                                          \
-(       ((latency) == EFM_LATENCY_0)            ||                             \
-        ((latency) == EFM_LATENCY_1))
+(   ((latency) == EFM_LATENCY_0)            ||                                 \
+    ((latency) == EFM_LATENCY_1)            ||                                 \
+    ((latency) == EFM_LATENCY_2)            ||                                 \
+    ((latency) == EFM_LATENCY_3)            ||                                 \
+    ((latency) == EFM_LATENCY_4)            ||                                 \
+    ((latency) == EFM_LATENCY_5)            ||                                 \
+    ((latency) == EFM_LATENCY_6)            ||                                 \
+    ((latency) == EFM_LATENCY_7))
 
 /*  Parameter validity check for operate mode. */
 #define IS_VALID_EFM_OPERATE_MD(MD)                                            \
-(       ((MD) == EFM_MODE_PROGRAMSINGLE)        ||                             \
-        ((MD) == EFM_MODE_PROGRAMREADBACK)      ||                             \
-        ((MD) == EFM_MODE_PROGRAMSEQUENCE)      ||                             \
-        ((MD) == EFM_MODE_ERASESECTOR)          ||                             \
-        ((MD) == EFM_MODE_ERASECHIP)            ||                             \
-        ((MD) == EFM_MODE_READONLY)             ||                             \
-        ((MD) == EFM_MODE_READONLY1)            ||                             \
-        ((MD) == EFM_MODE_READONLY2))
+(   ((MD) == EFM_MODE_PROGRAMSINGLE)        ||                                 \
+    ((MD) == EFM_MODE_PROGRAMREADBACK)      ||                                 \
+    ((MD) == EFM_MODE_PROGRAMSEQUENCE)      ||                                 \
+    ((MD) == EFM_MODE_ERASESECTOR)          ||                                 \
+    ((MD) == EFM_MODE_ERASECHIP)            ||                                 \
+    ((MD) == EFM_MODE_READONLY)             ||                                 \
+    ((MD) == EFM_MODE_READONLY1)            ||                                 \
+    ((MD) == EFM_MODE_READONLY2))
 
 /*  Parameter validity check for flash interrupt select. */
 #define IS_VALID_EFM_INT_SEL(SEL)                                              \
-(       ((SEL) == EFM_INT_EOP)                  ||                             \
-        ((SEL) == EFM_INT_PEERR)                ||                             \
-        ((SEL) == EFM_INT_RDCOLERR))
+(   ((SEL) == EFM_INT_EOP)                  ||                                 \
+    ((SEL) == EFM_INT_PEERR)                ||                                 \
+    ((SEL) == EFM_INT_RDCOLERR))
 
 /*  Parameter validity check for flash flag. */
 #define IS_VALID_EFM_FLAG(flag)                                                \
-(       ((flag) == EFM_FLAG_PEWERR)             ||                             \
-        ((flag) == EFM_FLAG_PEPRTERR)           ||                             \
-        ((flag) == EFM_FLAG_PGMISMTCHERR)       ||                             \
-        ((flag) == EFM_FLAG_OPTEND)             ||                             \
-        ((flag) == EFM_FLAG_COLERR)             ||                             \
-        ((flag) == EFM_FLAG_RDY))
+(   ((flag) == EFM_FLAG_PEWERR)             ||                                 \
+    ((flag) == EFM_FLAG_PEPRTERR)           ||                                 \
+    ((flag) == EFM_FLAG_PGMISMTCHERR)       ||                                 \
+    ((flag) == EFM_FLAG_OPTEND)             ||                                 \
+    ((flag) == EFM_FLAG_COLERR)             ||                                 \
+    ((flag) == EFM_FLAG_RDY))
 
 /*  Parameter validity check for bus state while flash program or erase. */
 #define IS_VALID_EFM_BUS_STATE(state)                                          \
-(       ((state) == EFM_BUS_BUSY)               ||                             \
-        ((state) == EFM_BUS_RELEASE))
+(   ((state) == EFM_BUS_BUSY)               ||                                 \
+    ((state) == EFM_BUS_RELEASE))
 
 /*  Parameter validity check for efm data cache reset state. */
 #define IS_VALID_EFM_CACHERST_STATE(state)                                     \
-(       ((state) == EFM_CACHERST_ON)            ||                             \
-        ((state) == EFM_CACHERST_OFF))
+(   ((state) == EFM_CACHERST_ON)            ||                                 \
+    ((state) == EFM_CACHERST_OFF))
 
 /*  Parameter validity check for efm instruction cache state. */
 #define IS_VALID_EFM_INSCACHE_STATE(state)                                     \
-(       ((state) == EFM_INSCACHE_ON)            ||                             \
-        ((state) == EFM_INSCACHE_OFF))
+(   ((state) == EFM_INSCACHE_ON)            ||                                 \
+    ((state) == EFM_INSCACHE_OFF))
 
 /*  Parameter validity check for efm data cache state. */
-#define IS_VALID_EFM_CACHEEN_STATE(state)                                      \
-(       ((state) == EFM_CACHEEN_ON)             ||                             \
-        ((state) == EFM_CACHEEN_OFF))
+#define IS_VALID_EFM_DATACACHE_STATE(state)                                      \
+(   ((state) == EFM_DATACACHE_ON)           ||                                 \
+    ((state) == EFM_DATACACHE_OFF))
 
 #define IS_VALID_EFM_ADDR(addr)                                                \
-(       (((addr) == EFM_START_ADDR)             ||                             \
-        ((addr) >= (EFM_START_ADDR + 1U)))      &&                             \
-        ((addr) <= EFM_END_ADDR))
+(   (((addr) == EFM_START_ADDR)             ||                                 \
+    ((addr) >= (EFM_START_ADDR + 1U)))      &&                                 \
+    ((addr) <= EFM_END_ADDR))
 
 /**
  * @}
@@ -180,8 +186,8 @@
  */
 void EFM_Unlock(void)
 {
-    M0P_EFM->FAPRT = EFM_KEY1;
-    M0P_EFM->FAPRT = EFM_KEY2;
+    M4_EFM->FAPRT = EFM_KEY1;
+    M4_EFM->FAPRT = EFM_KEY2;
 }
 /**
  * @brief  EFM Lock.
@@ -190,7 +196,7 @@ void EFM_Unlock(void)
  */
 void EFM_Lock(void)
 {
-    M0P_EFM->FAPRT = 0x00001111U;
+    M4_EFM->FAPRT = 0x00001111U;
 }
 
 /**
@@ -203,7 +209,7 @@ void EFM_Cmd(en_functional_state_t enNewState)
 {
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    M0P_EFM->FSTP = ((Enable == enNewState) ? EFM_ON : EFM_OFF);
+    M4_EFM->FSTP = ((Enable == enNewState) ? EFM_ON : EFM_OFF);
 }
 
 /**
@@ -211,6 +217,7 @@ void EFM_Cmd(en_functional_state_t enNewState)
  * @param  [in] pstcEfmCfg         The pointer of efm config structure.
  *   @arg u32Latency    Specifies the efm latency.
  *   @arg u32InsCache   Specifies the instruction cache on or off.
+ *   @arg u32DataCache  Specifies the data cache on or off.
  *   @arg u32BusState   Specifies the bus state busy or release while program & erase.
  * @retval An en_result_t enumeration value:
  *           - Ok: Initialize success
@@ -228,8 +235,9 @@ en_result_t EFM_StrucInit(stc_efm_cfg_t *pstcEfmCfg)
     else
     {
         /* Configure to default value */
-        pstcEfmCfg->u32Latency  = EFM_LATENCY_1;
+        pstcEfmCfg->u32Latency  = EFM_LATENCY_7;
         pstcEfmCfg->u32InsCache = EFM_INSCACHE_OFF;
+        pstcEfmCfg->u32DataCache = EFM_DATACACHE_OFF;
         pstcEfmCfg->u32BusState = EFM_BUS_BUSY;
     }
 
@@ -240,7 +248,9 @@ en_result_t EFM_StrucInit(stc_efm_cfg_t *pstcEfmCfg)
  * @brief  Efm Config.
  * @param  [in] pstcEfmCfg         The pointer of efm config structure.
  *   @arg u32Latency    Specifies the efm latency.
+ *   @arg u32CacheRst   Specifies the data cache reset on or off.
  *   @arg u32InsCache   Specifies the instruction cache on or off.
+ *   @arg u32DataChche  Specifies the data cache on or off.
  *   @arg u32BusState   Specifies the bus state busy or release while program & erase.
  * @retval An en_result_t enumeration value:
  *           - Ok: Configure success
@@ -261,13 +271,13 @@ en_result_t EFM_Config(const stc_efm_cfg_t *pstcEfmCfg)
         DDL_ASSERT(IS_VALID_EFM_BUS_STATE(pstcEfmCfg->u32BusState));
         DDL_ASSERT(IS_VALID_EFM_CACHERST_STATE(pstcEfmCfg->u32CacheRst));
         DDL_ASSERT(IS_VALID_EFM_INSCACHE_STATE(pstcEfmCfg->u32InsCache));
-        DDL_ASSERT(IS_VALID_EFM_CACHEEN_STATE(pstcEfmCfg->u32CacheEn));
+        DDL_ASSERT(IS_VALID_EFM_DATACACHE_STATE(pstcEfmCfg->u32DataCache));
 
         /* Config efm. */
-        MODIFY_REG(M0P_EFM->FRMC, EFM_FRMC_FLWT | EFM_FRMC_CACHE | EFM_FRMC_PREFETE | EFM_FRMC_CRST0,
-                pstcEfmCfg->u32Latency | pstcEfmCfg->u32CacheEn |
+        MODIFY_REG(M4_EFM->FRMC, EFM_FRMC_FLWT | EFM_FRMC_ICHE | EFM_FRMC_DCHE | EFM_FRMC_CRST0,
+                pstcEfmCfg->u32Latency | pstcEfmCfg->u32DataCache |
                 pstcEfmCfg->u32InsCache | pstcEfmCfg->u32CacheRst);
-        MODIFY_REG(M0P_EFM->FWMC, EFM_FWMC_BUSHLDCTL, pstcEfmCfg->u32BusState);
+        MODIFY_REG(M4_EFM->FWMC, EFM_FWMC_BUSHLDCTL, pstcEfmCfg->u32BusState);
     }
 
     return enRet;
@@ -279,6 +289,12 @@ en_result_t EFM_Config(const stc_efm_cfg_t *pstcEfmCfg)
  *  This parameter can be one of the following values:
  *   @arg    EFM_LATENCY_0               FLASH 0 Latency cycle
  *   @arg    EFM_LATENCY_1               FLASH 1 Latency cycle
+ *   @arg    EFM_LATENCY_2               FLASH 2 Latency cycle
+ *   @arg    EFM_LATENCY_3               FLASH 3 Latency cycle
+ *   @arg    EFM_LATENCY_4               FLASH 4 Latency cycle
+ *   @arg    EFM_LATENCY_5               FLASH 5 Latency cycle
+ *   @arg    EFM_LATENCY_6               FLASH 6 Latency cycle
+ *   @arg    EFM_LATENCY_7               FLASH 7 Latency cycle
  * @retval None
  */
 void EFM_SetLatency(uint32_t u32Latency)
@@ -287,7 +303,7 @@ void EFM_SetLatency(uint32_t u32Latency)
     DDL_ASSERT(IS_VALID_EFM_LATENCY(u32Latency));
 
     /* Set the code latency value. */
-    MODIFY_REG(M0P_EFM->FRMC, EFM_FRMC_FLWT, u32Latency);
+    MODIFY_REG(M4_EFM->FRMC, EFM_FRMC_FLWT, u32Latency);
 }
 
 /**
@@ -302,11 +318,11 @@ void EFM_DataCacheRstCmd(en_functional_state_t enNewState)
 
     if(Enable == enNewState)
     {
-        SET_BIT(M0P_EFM->FRMC, EFM_FRMC_CRST0);
+        SET_BIT(M4_EFM->FRMC, EFM_FRMC_CRST);
     }
     else
     {
-        CLEAR_BIT(M0P_EFM->FRMC, EFM_FRMC_CRST0);
+        CLEAR_BIT(M4_EFM->FRMC, EFM_FRMC_CRST);
     }
 }
 
@@ -322,11 +338,11 @@ void EFM_InstructionCacheCmd(en_functional_state_t enNewState)
 
     if(Enable == enNewState)
     {
-        SET_BIT(M0P_EFM->FRMC, EFM_FRMC_PREFETE);
+        SET_BIT(M4_EFM->FRMC, EFM_FRMC_ICHE);
     }
     else
     {
-        CLEAR_BIT(M0P_EFM->FRMC, EFM_FRMC_PREFETE);
+        CLEAR_BIT(M4_EFM->FRMC, EFM_FRMC_ICHE);
     }
 }
 
@@ -342,11 +358,11 @@ void EFM_CacheCmd(en_functional_state_t enNewState)
 
     if(Enable == enNewState)
     {
-        SET_BIT(M0P_EFM->FRMC, EFM_FRMC_CACHE);
+        SET_BIT(M4_EFM->FRMC, EFM_FRMC_DCHE);
     }
     else
     {
-        CLEAR_BIT(M0P_EFM->FRMC, EFM_FRMC_CACHE);
+        CLEAR_BIT(M4_EFM->FRMC, EFM_FRMC_DCHE);
     }
 }
 
@@ -369,11 +385,11 @@ void EFM_SetOperateMode(uint32_t u32PeMode)
     DDL_ASSERT(IS_VALID_EFM_OPERATE_MD(u32PeMode));
 
     /* Enable operate mode modified. */
-    SET_BIT(M0P_EFM->FWMC, EFM_FWMC_PEMODE);
+    SET_BIT(M4_EFM->FWMC, EFM_FWMC_PEMODE);
     /* Set the program or erase mode. */
-    MODIFY_REG(M0P_EFM->FWMC, EFM_FWMC_PEMOD, u32PeMode);
+    MODIFY_REG(M4_EFM->FWMC, EFM_FWMC_PEMOD, u32PeMode);
     /* Disable operate mode modified. */
-    CLEAR_BIT(M0P_EFM->FWMC, EFM_FWMC_PEMODE);
+    CLEAR_BIT(M4_EFM->FWMC, EFM_FWMC_PEMODE);
 }
 
 /**
@@ -399,13 +415,13 @@ void EFM_InterruptCmd(uint32_t u32EfmInt, en_functional_state_t enNewState)
     switch(u32EfmInt)
     {
         case EFM_INT_EOP:
-            MODIFY_REG(M0P_EFM->FITE, EFM_FITE_OPTENDITE, u8state);
+            MODIFY_REG(M4_EFM->FITE, EFM_FITE_OPTENDITE, u8state << EFM_FITE_OPTENDITE_POS);
             break;
         case EFM_INT_PEERR:
-            MODIFY_REG(M0P_EFM->FITE, EFM_FITE_PEERRITE, u8state);
+            MODIFY_REG(M4_EFM->FITE, EFM_FITE_PEERRITE, u8state);
             break;
         case EFM_INT_RDCOLERR:
-            MODIFY_REG(M0P_EFM->FITE, EFM_FITE_RDCOLERRITE, u8state);
+            MODIFY_REG(M4_EFM->FITE, EFM_FITE_RDCOLERRITE, u8state << EFM_FITE_RDCOLERRITE_POS);
             break;
         default:
             break;
@@ -430,7 +446,7 @@ en_flag_status_t EFM_GetFlagStatus(uint32_t u32flag)
 {
     DDL_ASSERT(IS_VALID_EFM_FLAG(u32flag));
 
-    return ((0UL == (M0P_EFM->FSR & u32flag)) ? Reset :Set);
+    return ((0UL == (M4_EFM->FSR & u32flag)) ? Reset :Set);
 }
 
 /**
@@ -446,7 +462,7 @@ en_flag_status_t EFM_GetFlagStatus(uint32_t u32flag)
  */
 void EFM_ClearFlag(uint32_t u32flag)
 {
-    SET_BIT(M0P_EFM->FSCLR, u32flag);
+    SET_BIT(M4_EFM->FSCLR, u32flag);
 }
 
 /**
@@ -459,9 +475,9 @@ void EFM_ClearFlag(uint32_t u32flag)
 void EFM_SetWinProtectAddr(stc_efm_win_protect_addr_t stcAddr)
 {
     /* Set protect area start address */
-    MODIFY_REG(M0P_EFM->FPMTSW, EFM_FPMTSW_FPMTSW, stcAddr.u32StartAddr);
+    MODIFY_REG(M4_EFM->FPMTSW, EFM_FPMTSW_FPMTSW, stcAddr.u32StartAddr);
     /* Set protect area end address */
-    MODIFY_REG(M0P_EFM->FPMTEW, EFM_FPMTEW_FPMTEW, stcAddr.u32EndAddr);
+    MODIFY_REG(M4_EFM->FPMTEW, EFM_FPMTEW_FPMTEW, stcAddr.u32EndAddr);
 }
 
 /**
@@ -476,7 +492,7 @@ void EFM_SetBusState(uint32_t u32State)
 {
     DDL_ASSERT(IS_VALID_EFM_BUS_STATE(u32State));
 
-    MODIFY_REG(M0P_EFM->FWMC, EFM_FWMC_BUSHLDCTL, u32State);
+    MODIFY_REG(M4_EFM->FWMC, EFM_FWMC_BUSHLDCTL, u32State);
 }
 
 /**
@@ -486,42 +502,48 @@ void EFM_SetBusState(uint32_t u32State)
  * @retval An en_result_t enumeration value:
  *           - Ok: program success
  *           - Error: program error
+ *           - ErrorInvalidParameter: Invalid parameter
  *           - ErrorTimeout: program error timeout
  */
 en_result_t EFM_ProgramWord(uint32_t u32Addr, uint32_t u32Data)
 {
-    en_result_t enRet = Ok;
+    en_result_t enRet = ErrorInvalidParameter;
     uint16_t u16tmp = 0U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
 
-    /* CLear the error flag. */
-    EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
-                  EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
-                  EFM_FLAG_CLR_COLERRCLR);
-
-    /* Set single program mode. */
-    EFM_SetOperateMode(EFM_MODE_PROGRAMSINGLE);
-    /* program data. */
-    *(uint32_t*)u32Addr = u32Data;
-
-    while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
+    if(u32Addr % 2U == 0U)
     {
-        u16tmp ++;
-        if(u16tmp > EFM_TIMEOUT)
+        enRet = Ok;
+        /* CLear the error flag. */
+        EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
+                      EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
+                      EFM_FLAG_CLR_COLERRCLR);
+
+        /* Set single program mode. */
+        EFM_SetOperateMode(EFM_MODE_PROGRAMSINGLE);
+        /* program data. */
+        *(uint32_t*)u32Addr = u32Data;
+
+        while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
         {
-            enRet = ErrorTimeout;
+            u16tmp ++;
+            if(u16tmp > EFM_TIMEOUT)
+            {
+                enRet = ErrorTimeout;
+            }
         }
-    }
 
-    if(u32Data != *(uint32_t*)u32Addr)
-    {
-        enRet = Error;
-    }
+        if(u32Data != *(uint32_t*)u32Addr)
+        {
+            enRet = Error;
+        }
 
-    EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
-    /* Set read only mode. */
-    EFM_SetOperateMode(EFM_MODE_READONLY);
+        EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
+        /* Set read only mode. */
+        EFM_SetOperateMode(EFM_MODE_READONLY);
+
+    }
 
     return enRet;
 }
@@ -533,89 +555,47 @@ en_result_t EFM_ProgramWord(uint32_t u32Addr, uint32_t u32Data)
  * @retval An en_result_t enumeration value:
  *           - Ok: program success
  *           - Error: program error
+ *           - ErrorInvalidParameter: Invalid parameter
  *           - ErrorTimeout: program error timeout
  */
 en_result_t EFM_ProgramHalfWord(uint32_t u32Addr, uint16_t u16Data)
 {
-    en_result_t enRet = Ok;
+    en_result_t enRet = ErrorInvalidParameter;
     uint16_t u16tmp = 0U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
-
-    /* CLear the error flag. */
-    EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
-                  EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
-                  EFM_FLAG_CLR_COLERRCLR);
-
-    /* Set single program mode. */
-    EFM_SetOperateMode(EFM_MODE_PROGRAMSINGLE);
-    /* program data. */
-    *((volatile uint16_t*)u32Addr) = u16Data;
-
-    while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
+    if(u32Addr % 2U == 0U)
     {
-        u16tmp ++;
-        if(u16tmp > EFM_TIMEOUT)
+        enRet = Ok;
+        /* CLear the error flag. */
+        EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
+                      EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
+                      EFM_FLAG_CLR_COLERRCLR);
+
+        /* Set single program mode. */
+        EFM_SetOperateMode(EFM_MODE_PROGRAMSINGLE);
+        /* program data. */
+        *((volatile uint16_t*)u32Addr) = u16Data;
+
+        while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
         {
-            enRet = ErrorTimeout;
+            u16tmp ++;
+            if(u16tmp > EFM_TIMEOUT)
+            {
+                enRet = ErrorTimeout;
+            }
         }
-    }
 
-    if(u16Data != *((volatile uint16_t*)u32Addr))
-    {
-        enRet = Error;
-    }
-
-    EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
-    /* Set read only mode. */
-    EFM_SetOperateMode(EFM_MODE_READONLY);
-
-    return enRet;
-}
-
-/**
- * @brief  Flash single program byte without read back.
- * @param  [in] u32Addr                   The specified program address.
- * @param  [in] u8Data                    The specified program data.
- * @retval An en_result_t enumeration value:
- *           - Ok: program success
- *           - Error: program error
- *           - ErrorTimeout: program error timeout
- */
-en_result_t EFM_ProgramByte(uint32_t u32Addr, uint8_t u8Data)
-{
-    en_result_t enRet = Ok;
-    uint16_t u16tmp = 0U;
-
-    DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
-
-    /* CLear the error flag. */
-    EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
-                  EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
-                  EFM_FLAG_CLR_COLERRCLR);
-
-    /* Set single program mode. */
-    EFM_SetOperateMode(EFM_MODE_PROGRAMSINGLE);
-    /* program data. */
-    *((volatile uint8_t*)u32Addr) = u8Data;
-
-    while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
-    {
-        u16tmp ++;
-        if(u16tmp > EFM_TIMEOUT)
+        if(u16Data != *((volatile uint16_t*)u32Addr))
         {
-            enRet = ErrorTimeout;
+            enRet = Error;
         }
-    }
 
-    if(u8Data != *((volatile uint8_t*)u32Addr))
-    {
-        enRet = Error;
-    }
+        EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
+        /* Set read only mode. */
+        EFM_SetOperateMode(EFM_MODE_READONLY);
 
-    EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
-    /* Set read only mode. */
-    EFM_SetOperateMode(EFM_MODE_READONLY);
+        }
 
     return enRet;
 }
@@ -627,44 +607,48 @@ en_result_t EFM_ProgramByte(uint32_t u32Addr, uint8_t u8Data)
  * @retval An en_result_t enumeration value:
  *           - Ok: program success
  *           - Error: program error
+ *           - ErrorInvalidParameter: Invalid parameter
  *           - ErrorTimeout: program error timeout
  */
 en_result_t EFM_ProgramWordRB(uint32_t u32Addr, uint32_t u32Data)
 {
-    en_result_t enRet = Ok;
+    en_result_t enRet = ErrorInvalidParameter;
     uint16_t u16tmp = 0U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
-
-    /* CLear the error flag. */
-    EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
-                  EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
-                  EFM_FLAG_CLR_COLERRCLR);
-
-    /* Set single program mode. */
-    EFM_SetOperateMode(EFM_MODE_PROGRAMREADBACK);
-    /* program data. */
-    *(uint32_t*)u32Addr = u32Data;
-
-    while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
+    if(u32Addr % 2U == 0U)
     {
-        u16tmp ++;
-        if(u16tmp > EFM_TIMEOUT)
+        enRet = Ok;
+        /* CLear the error flag. */
+        EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
+                      EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
+                      EFM_FLAG_CLR_COLERRCLR);
+
+        /* Set single program mode. */
+        EFM_SetOperateMode(EFM_MODE_PROGRAMREADBACK);
+        /* program data. */
+        *(uint32_t*)u32Addr = u32Data;
+
+        while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
         {
-            enRet = ErrorTimeout;
+            u16tmp ++;
+            if(u16tmp > EFM_TIMEOUT)
+            {
+                enRet = ErrorTimeout;
+            }
         }
-    }
 
-    if(Set == EFM_GetFlagStatus(EFM_FLAG_PGMISMTCHERR))
-    {
-        /* clear flag PGMISMTCH */
-        EFM_ClearFlag(EFM_FLAG_CLR_PGMISMTCHCLR);
-        enRet = Error;
-    }
+        if(Set == EFM_GetFlagStatus(EFM_FLAG_PGMISMTCHERR))
+        {
+            /* clear flag PGMISMTCH */
+            EFM_ClearFlag(EFM_FLAG_CLR_PGMISMTCHCLR);
+            enRet = Error;
+        }
 
-    EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
-    /* Set read only mode. */
-    EFM_SetOperateMode(EFM_MODE_READONLY);
+        EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
+        /* Set read only mode. */
+        EFM_SetOperateMode(EFM_MODE_READONLY);
+    }
 
     return enRet;
 }
@@ -676,93 +660,48 @@ en_result_t EFM_ProgramWordRB(uint32_t u32Addr, uint32_t u32Data)
  * @retval An en_result_t enumeration value:
  *           - Ok: program success
  *           - Error: program error
+ *           - ErrorInvalidParameter: Invalid parameter
  *           - ErrorTimeout: program error timeout
  */
 en_result_t EFM_ProgramHalfWordRB(uint32_t u32Addr, uint16_t u16Data)
 {
-    en_result_t enRet = Ok;
+    en_result_t enRet = ErrorInvalidParameter;
     uint16_t u16tmp = 0U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
-
-    /* CLear the error flag. */
-    EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
-                  EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
-                  EFM_FLAG_CLR_COLERRCLR);
-
-    /* Set single program mode. */
-    EFM_SetOperateMode(EFM_MODE_PROGRAMREADBACK);
-    /* program data. */
-    *((volatile uint16_t*)u32Addr) = u16Data;
-
-    while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
+    if(u32Addr % 2U == 0U)
     {
-        u16tmp ++;
-        if(u16tmp > EFM_TIMEOUT)
+        enRet = Ok;
+        /* CLear the error flag. */
+        EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
+                      EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
+                      EFM_FLAG_CLR_COLERRCLR);
+
+        /* Set single program mode. */
+        EFM_SetOperateMode(EFM_MODE_PROGRAMREADBACK);
+        /* program data. */
+        *((volatile uint16_t*)u32Addr) = u16Data;
+
+        while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
         {
-            enRet = ErrorTimeout;
+            u16tmp ++;
+            if(u16tmp > EFM_TIMEOUT)
+            {
+                enRet = ErrorTimeout;
+            }
         }
-    }
 
-    if(Set == EFM_GetFlagStatus(EFM_FLAG_PGMISMTCHERR))
-    {
-        /* clear flag PGMISMTCH */
-        EFM_ClearFlag(EFM_FLAG_CLR_PGMISMTCHCLR);
-        enRet = Error;
-    }
-
-    EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
-    /* Set read only mode. */
-    EFM_SetOperateMode(EFM_MODE_READONLY);
-
-    return enRet;
-}
-
-/**
- * @brief  Flash single program byte with read back.
- * @param  [in] u32Addr                   The specified program address.
- * @param  [in] u8Data                    The specified program data.
- * @retval An en_result_t enumeration value:
- *           - Ok: program success
- *           - Error: program error
- *           - ErrorTimeout: program error timeout
- */
-en_result_t EFM_ProgramByteRB(uint32_t u32Addr, uint8_t u8Data)
-{
-    en_result_t enRet = Ok;
-    uint16_t u16tmp = 0U;
-
-    DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
-
-    /* CLear the error flag. */
-    EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
-                  EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
-                  EFM_FLAG_CLR_COLERRCLR);
-
-    /* Set single program mode. */
-    EFM_SetOperateMode(EFM_MODE_PROGRAMREADBACK);
-    /* program data. */
-    *((volatile uint8_t*)u32Addr) = u8Data;
-
-    while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
-    {
-        u16tmp ++;
-        if(u16tmp > EFM_TIMEOUT)
+        if(Set == EFM_GetFlagStatus(EFM_FLAG_PGMISMTCHERR))
         {
-            enRet = ErrorTimeout;
+            /* clear flag PGMISMTCH */
+            EFM_ClearFlag(EFM_FLAG_CLR_PGMISMTCHCLR);
+            enRet = Error;
         }
-    }
 
-    if(Set == EFM_GetFlagStatus(EFM_FLAG_PGMISMTCHERR))
-    {
-        /* clear flag PGMISMTCH */
-        EFM_ClearFlag(EFM_FLAG_CLR_PGMISMTCHCLR);
-        enRet = Error;
+        EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
+        /* Set read only mode. */
+        EFM_SetOperateMode(EFM_MODE_READONLY);
     }
-
-    EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
-    /* Set read only mode. */
-    EFM_SetOperateMode(EFM_MODE_READONLY);
 
     return enRet;
 }
@@ -774,68 +713,73 @@ en_result_t EFM_ProgramByteRB(uint32_t u32Addr, uint8_t u8Data)
  * @param  [in] *pBuf                     The pointer of specified program data.
  * @retval An en_result_t enumeration value:
  *           - Ok: program success
+ *           - Error: program error
+ *           - ErrorInvalidParameter: Invalid parameter
  *           - ErrorTimeout: program error timeout
  */
 en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
 {
-    en_result_t enRet = Ok;
+    en_result_t enRet = ErrorInvalidParameter;
     uint16_t u16tmp = 0U;
     uint32_t *u32pSrc = pBuf;
     uint32_t *u32pDest = (uint32_t *)u32Addr;
-    uint32_t u32LoopWords = u32Len >> 2;
-    uint32_t u32RemainBytes = u32Len % 4UL;
+    uint32_t u32LoopWords = u32Len >> 2U;
+    uint32_t u32RemainBytes = u32Len % 4U;
 
     DDL_ASSERT(IS_VALID_EFM_ADDR(u32Addr));
     DDL_ASSERT(IS_VALID_POINTER(pBuf));
-
-    /* CLear the error flag. */
-    EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
-                  EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
-                  EFM_FLAG_CLR_COLERRCLR);
-
-    /* Set sequence program mode. */
-    EFM_SetOperateMode(EFM_MODE_PROGRAMSEQUENCE);
-
-    /* program data. */
-    while(u32LoopWords--)
+    if(u32Addr % 2U == 0U)
     {
-        *u32pDest++ = *u32pSrc++;
-        /* wait operate end. */
-        while(Set != EFM_GetFlagStatus(EFM_FLAG_OPTEND))
+        enRet = ok;
+        /* CLear the error flag. */
+        EFM_ClearFlag(EFM_FLAG_CLR_PEWERRCLR    | EFM_FLAG_CLR_PEPRTERRCLR |
+                      EFM_FLAG_CLR_PGMISMTCHCLR | EFM_FLAG_CLR_OPTENDCLR   |
+                      EFM_FLAG_CLR_COLERRCLR);
+
+        /* Set sequence program mode. */
+        EFM_SetOperateMode(EFM_MODE_PROGRAMSEQUENCE);
+
+        /* program data. */
+        while(u32LoopWords--)
         {
-            u16tmp++;
+            *u32pDest++ = *u32pSrc++;
+            /* wait operate end. */
+            while(Set != EFM_GetFlagStatus(EFM_FLAG_OPTEND))
+            {
+                u16tmp++;
+                if(u16tmp > EFM_TIMEOUT)
+                {
+                    enRet = ErrorTimeout;
+                }
+            }
+            /* clear end flag. */
+            EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
+        }
+        if(u32RemainBytes)
+        {
+            uint8_t *u8pDest = (uint8_t*)u32pDest;
+            uint8_t *u8pSrc = (uint8_t*)u32pSrc;
+            while(u32RemainBytes--)
+            {
+                *u8pDest++ = *u8pSrc++;
+            }
+        }
+
+        /* Set read only mode. */
+        EFM_SetOperateMode(EFM_MODE_READONLY);
+
+        u16tmp = 0U;
+        while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
+        {
+            u16tmp ++;
             if(u16tmp > EFM_TIMEOUT)
             {
                 enRet = ErrorTimeout;
             }
         }
-        /* clear end flag. */
+        /* CLear the end of operate flag */
         EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
     }
-    if(u32RemainBytes)
-    {
-        uint8_t *u8pDest = (uint8_t*)u32pDest;
-        uint8_t *u8pSrc = (uint8_t*)u32pSrc;
-        while(u32RemainBytes--)
-        {
-            *u8pDest++ = *u8pSrc++;
-        }
-    }
-
-    /* Set read only mode. */
-    EFM_SetOperateMode(EFM_MODE_READONLY);
-
-    u16tmp = 0U;
-    while(Set != EFM_GetFlagStatus(EFM_FLAG_RDY))
-    {
-        u16tmp ++;
-        if(u16tmp > EFM_TIMEOUT)
-        {
-            enRet = ErrorTimeout;
-        }
-    }
-    /* CLear the end of operate flag */
-    EFM_ClearFlag(EFM_FLAG_CLR_OPTENDCLR);
 
     return enRet;
 }
@@ -846,7 +790,6 @@ en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
  * @retval An en_result_t enumeration value:
  *           - Ok: program success
  *           - ErrorTimeout: program error timeout
- * @note   The address should be word align.
  */
 en_result_t EFM_SectorErase(uint32_t u32Addr)
 {
@@ -887,7 +830,6 @@ en_result_t EFM_SectorErase(uint32_t u32Addr)
  * @retval An en_result_t enumeration value:
  *           - Ok: program success
  *           - ErrorTimeout: program error timeout
- * @note   The address should be word align.
  */
 en_result_t EFM_ChipErase(void)
 {
@@ -932,10 +874,10 @@ stc_efm_unique_id_t EFM_ReadUID(void)
 {
     stc_efm_unique_id_t stcUID;
 
-    stcUID.u32UniqueID0 = M0P_EFM->UQID0;
-    stcUID.u32UniqueID1 = M0P_EFM->UQID1;
-    stcUID.u32UniqueID2 = M0P_EFM->UQID2;
-
+    stcUID.u32UniqueID0 = M4_EFM->UQID0;
+    stcUID.u32UniqueID1 = M4_EFM->UQID1;
+    stcUID.u32UniqueID2 = M4_EFM->UQID2;
+    stcUID.u32UniqueID3 = M4_EFM->UQID3;
     return stcUID;
 }
 

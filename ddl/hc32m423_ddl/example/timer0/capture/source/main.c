@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-20       Heqb          First version
+   2020-02-03       Heqb          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -86,11 +86,13 @@
 #define TIMER0_IRQn     (Int014_IRQn)
 #define TIMER0_SOURCE   (INT_TMR0_GCMP)
 
-#define LRC_FRQ         (32768U)
-
 #define SW2_PORT        (GPIO_PORT_2)
 #define SW2_PIN         (GPIO_PIN_1)
 
+#define TMR0x           (M4_TMR02)
+#define Chx             (TIMER0_ChannelA)
+
+#define HCLK_FRQ        (0U)
 #define CAPTURE_CNT_MAX (2U)
 
 /*******************************************************************************
@@ -122,15 +124,15 @@ static void Timer0CompareIrqCallback(void)
 {       
     if(CaptureCnt != CAPTURE_CNT_MAX)
     {
-        CaptureData[CaptureCnt] = TIMER0_GetCmpReg();
+        CaptureData[CaptureCnt] = TIMER0_GetCmpReg(TMR0x, Chx);
         CaptureCnt++;
     }
     else
     {
         /* Finish timer0 capture */
-        TIMER0_Cmd(Disable);
+        TIMER0_Cmd(TMR0x, Chx, Disable);
     }
-    TIMER0_ClearFlag();
+    TIMER0_ClearFlag(TMR0x, Chx);
 }
 
 /**
@@ -156,7 +158,7 @@ int32_t main(void)
 
     /* Config EXINT (INTP1 SW2)function for hardware trigger */
     GPIO_StructInit(&stcGpioIni);
-    stcGpioIni.u16ExInt = PIN_EXINT_ON;
+    //stcGpioIni.u16ExInt = PIN_EXINT_ON;
     GPIO_Init(SW2_PORT, SW2_PIN, &stcGpioIni);
     EXINT_StructInit(&stcExintCfg);
     stcExintCfg.u16ExIntCh = EXINT_CH01;
@@ -169,21 +171,21 @@ int32_t main(void)
     CLK_FcgPeriphClockCmd(CLK_FCG_AOS, Enable);
 
     /* Enable timer0 peripheral clock */
-    CLK_FcgPeriphClockCmd(CLK_FCG_TIM0, Enable);
+    //CLK_FcgPeriphClockCmd(CLK_FCG_TIM0, Enable);
 
     /* TIMER0 capture function initialize */
     TIMER0_StructInit(&stcTimer0Ini);
     stcTimer0Ini.u32ClockDivision = TIMER0_CLK_DIV256; /* Config clock division */
-    stcTimer0Ini.u32ClockSource = TIMER0_CLK_SRC_LRC;  /* Chose clock source */
-    stcTimer0Ini.u32Tmr0Fun = TIMER0_FUNC_CAPTURE;     /* Chose capture mode */
-    TIMER0_Init(&stcTimer0Ini);
+    stcTimer0Ini.u32ClockSource = TIMER0_CLK_SRC_HCLK;  /* Chose clock source */
+    stcTimer0Ini.u32Tmr0Func = TIMER0_FUNC_CAPTURE;     /* Chose capture mode */
+    TIMER0_Init(TMR0x, Chx, &stcTimer0Ini);
 
     /* Set internal hardware capture source */
-    TIMER0_SetTriggerSrc(EVT_PORT_EIRQ1);
+    TIMER0_SetTriggerSrc(TMR0x, EVT_PORT_EIRQ1);
 
     /* Register IRQ handler && configure NVIC. */
-    stcIrqRegiCfg.enIRQn = TIMER0_IRQn;
-    stcIrqRegiCfg.enIntSrc = TIMER0_SOURCE;
+    //stcIrqRegiCfg.enIRQn = TIMER0_IRQn;
+    //stcIrqRegiCfg.enIntSrc = TIMER0_SOURCE;
     stcIrqRegiCfg.pfnCallback = &Timer0CompareIrqCallback;
     INTC_IrqRegistration(&stcIrqRegiCfg);
     NVIC_ClearPendingIRQ(stcIrqRegiCfg.enIRQn);
@@ -191,9 +193,9 @@ int32_t main(void)
     NVIC_EnableIRQ(stcIrqRegiCfg.enIRQn);
 
     /* Timer0 interrupt function enable */
-    TIMER0_IntCmd(Enable);
+    TIMER0_IntCmd(TMR0x, Chx, Enable);
     /* Timer function kick start */
-    TIMER0_Cmd(Enable);
+    TIMER0_Cmd(TMR0x, Chx, Enable);
 
     while(CAPTURE_CNT_MAX != CaptureCnt)
     {
@@ -242,8 +244,8 @@ static void LedConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
-    stcGpioInit.u16PinState = PIN_STATE_SET;
+    //stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    //stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
 }
 

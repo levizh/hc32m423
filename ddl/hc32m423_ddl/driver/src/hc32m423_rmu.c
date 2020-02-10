@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-25       Wangmin         First version
+   2020-02-05       Heqb         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -127,15 +127,19 @@ en_result_t RMU_GetResetCause(stc_rmu_rstcause_t *pstcData)
     }
     else
     {
-        u16RstReg = M0P_RMU->RSTF0;
+        u16RstReg = M4_RMU->RSTF0;
 
         pstcData->MultiRst = u16RstReg & RMU_RSTF0_MULTIRF ? Set : Reset;
         pstcData->XtalErrRst = u16RstReg & RMU_RSTF0_XTALERF ? Set : Reset;
         pstcData->CpuLockErrRst = u16RstReg & RMU_RSTF0_CPULKUPRF ? Set : Reset;
         pstcData->RamParityErrRst = u16RstReg & RMU_RSTF0_RAMPERF ? Set : Reset;
         pstcData->SoftwareRst = u16RstReg & RMU_RSTF0_SWRF ? Set : Reset;
+        pstcData->ClkFreqErrRst = u16RstReg & RMU_RSTF0_CKFERF ? Set : Reset;
         pstcData->WdtRst = u16RstReg & RMU_RSTF0_WDRF ? Set : Reset;
-        pstcData->LvdRst = u16RstReg & RMU_RSTF0_LVRF ? Set : Reset;
+        pstcData->SwdtRst = u16RstReg & RMU_RSTF0_SWDRF ? Set : Reset;
+        pstcData->Lvd2Rst = u16RstReg & RMU_RSTF0_LV2RF ? Set : Reset;
+        pstcData->Lvd1Rst = u16RstReg & RMU_RSTF0_LV1RF ? Set : Reset;
+        pstcData->Lvd0Rst = u16RstReg & RMU_RSTF0_LV0RF ? Set : Reset;
         pstcData->RstPinRst = u16RstReg & RMU_RSTF0_PINRF ? Set : Reset;
         pstcData->PowerOnRst = u16RstReg & RMU_RSTF0_PORF ? Set : Reset;
 
@@ -146,7 +150,8 @@ en_result_t RMU_GetResetCause(stc_rmu_rstcause_t *pstcData)
 /**
  * @brief  Clear reset flag.
  * @param  None
- * @retval en_result_t Indication clear operation result.
+ * @retval Ok: Success
+ *         ErrorTimeout: Process timeout
  * @note   clear reset flag should be done after read RMU_RSTF0 register.
  */
 en_result_t RMU_ClrResetFlag(void)
@@ -161,15 +166,8 @@ en_result_t RMU_ClrResetFlag(void)
     do
     {
         u32timeout++;
-        bM0P_RMU->RSTF0_b.CLRF = 1U;
-        /* Wait for register clear */
-        __NOP();
-        __NOP();
-        __NOP();
-        __NOP();
-        __NOP();
-        __NOP();
-        u16status = M0P_RMU->RSTF0;
+        bM4_RMU->RSTF0_b.CLRF = 1U;
+        u16status = M4_RMU->RSTF0;
     }while((u32timeout != RMU_FLAG_TIM) && u16status);
 
     /* Disable RMU register write */

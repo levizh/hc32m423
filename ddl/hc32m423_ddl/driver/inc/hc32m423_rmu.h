@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-25       Wangmin         First version
+   2020-02-05       Heqb         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -92,11 +92,15 @@ typedef struct
 {
     en_flag_status_t   MultiRst;              /*!< Multiply reset cause*/
     en_flag_status_t   XtalErrRst;            /*!< Xtal error reset*/
-    en_flag_status_t   CpuLockErrRst;         /*!< M0+ Lockup reset */
+    en_flag_status_t   CpuLockErrRst;         /*!< M4 Lockup reset */
     en_flag_status_t   RamParityErrRst;       /*!< Ram parity error reset*/
     en_flag_status_t   SoftwareRst;           /*!< Software reset*/
+    en_flag_status_t   ClkFreqErrRst;         /*!< Clk freqence error reset*/
     en_flag_status_t   WdtRst;                /*!< Watchdog timer reset*/
-    en_flag_status_t   LvdRst;                /*!< Low power detect reset*/
+    en_flag_status_t   SwdtRst;               /*!< Special watchdog timer reset*/
+    en_flag_status_t   Lvd2Rst;               /*!< Low voltage detect 2 reset*/
+    en_flag_status_t   Lvd1Rst;               /*!< Low voltage detect 1 reset*/
+    en_flag_status_t   Lvd0Rst;               /*!< Low voltage detect 0 reset*/
     en_flag_status_t   RstPinRst;             /*!< Reset pin reset*/
     en_flag_status_t   PowerOnRst;            /*!< Power on reset*/
 
@@ -117,8 +121,8 @@ typedef struct
 /** @defgroup RMU_REG_Write_Configuration RMU register write Configuration
   * @{
   */
-#define RMU_REG_WRITE_ENABLE()      (M0P_PWC->FPRC = 0xa502U)
-#define RMU_REG_WRITE_DISABLE()     (M0P_PWC->FPRC = 0xa500U)
+#define RMU_REG_WRITE_ENABLE()      (M4_EMU->FPRC = 0xa502U)
+#define RMU_REG_WRITE_DISABLE()     (M4_EMU->FPRC = 0xa500U)
 
 /**
   * @}

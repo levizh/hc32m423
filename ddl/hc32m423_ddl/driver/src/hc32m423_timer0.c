@@ -6,8 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-20       Heqb          First version
-   2019-12-11       Heqb          Add timeout function for register write
+   2020-02-03       Heqb          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -82,13 +81,18 @@
  * @defgroup TIMER0_Local_Macros TIMER0 Local Macros
  * @{
  */
-/* Delay count for time out */
-#define TIMER0_TMOUT 0x2000UL
 
 /**
  * @defgroup TIMER0_Check_Parameters_Validity TIMER0 Check Parameters Validity
  * @{
  */
+#define IS_VALID_UNIT(x)                                                       \
+(   ((x) == M4_TMR01)                              ||                          \
+    ((x) == M4_TMR02))
+
+#define IS_VALID_CHANNEL(x)                                                    \
+(   ((x) == TIMER0_ChannelA)                       ||                          \
+    ((x) == TIMER0_ChannelB))
 
 #define IS_VALID_CLK_DIVISION(x)                                               \
 (   ((x) == TIMER0_CLK_DIV1)                       ||                          \
@@ -105,8 +109,7 @@
 
 #define IS_VALID_CLK_SRC(x)                                                    \
 (   ((x) == TIMER0_CLK_SRC_HCLK)                   ||                          \
-    ((x) == TIMER0_CLK_SRC_INTHWTRIG)              ||                          \
-    ((x) == TIMER0_CLK_SRC_LRC))
+    ((x) == TIMER0_CLK_SRC_INTHWTRIG))
 
 #define IS_VALID_HWTRG_FUNC(x)                                                 \
 (   ((x) == TIMER0_BT_HWTRG_FUNC_START)            ||                          \
@@ -146,40 +149,7 @@
  * @{
  */
 
-/**
- * @brief  Get Clock mode
- * @param  None
- *
- * @retval TIMER0 Clock mode
- *         - TIMER0_CLK_SYNC
- *         - TIMER0_CLK_ASYNC
- */
-static uint32_t TIMER0_GetClkMode(void)
-{
-    return (M0P_TMR0->BCONR & TIMER0_CLK_SRC_LRC);
-}
-
-/**
- * @brief  Time delay for register write in asynchronous mode
- * @param  None
- *
- * @retval None
- */
-static void AsyncDelay(void)
-{
-    uint32_t i;
-    if(TIMER0_CLK_SRC_LRC == TIMER0_GetClkMode())
-    {
-        for(i=0U; i<SystemCoreClock/10000U; i++)
-        {
-            __NOP();
-        }
-    }
-}
-
-/**
- * @}
- */
+#define TIMER0_CHB_POS                  (16U)
 
 /**
  * @defgroup TIMER0_Global_Functions TIMER0 Global Functions
@@ -201,8 +171,8 @@ en_result_t TIMER0_StructInit(stc_tim0_init_t* pstcInitStruct)
     {
         pstcInitStruct->u32ClockDivision = TIMER0_CLK_DIV1;
         pstcInitStruct->u32ClockSource = TIMER0_CLK_SRC_HCLK;
-        pstcInitStruct->u32Tmr0Fun = TIMER0_FUNC_CMP;
-        pstcInitStruct->u16CmpValue = 0xFFFFu;
+        pstcInitStruct->u32Tmr0Func = TIMER0_FUNC_CMP;
+        pstcInitStruct->u16CmpValue = 0xFFFFU;
         pstcInitStruct->u32HwTrigFunc = TIMER0_BT_HWTRG_FUNC_NONE;
         enRet = Ok;
     }
@@ -212,279 +182,344 @@ en_result_t TIMER0_StructInit(stc_tim0_init_t* pstcInitStruct)
 
 /**
  * @brief  Timer0 peripheral function initialize
- * @param  [in] pstcTmr0Init    Timer0 function base parameter structure
+ * @param  [in] TMR0x            Pointer to TIMER0 instance register base.
+ * This parameter can be a value of the following:
+ *  @arg M4P_TMR01               TIMER0 unit 1 instance register base
+ *  @arg M4P_TMR02               TIMER0 unit 2 instance register base
+ * @param  [in] u8Channel        TIMER0_ChannelA or TIMER0_ChannelB
+ * @param  [in] pstcTmr0Init     TIMER0 function base parameter structure
  *   @arg  See the structure definition for @ref stc_tim0_init_t
  * @retval Ok: Success
- * @retval ErrorInvalidParameter: Parameter error
- * @retval ErrorTimeout: Process timeout
+ *         ErrorInvalidParameter: Parameter error
  * @note   In capture mode, don't need configure member u32HwTrigFunc and u16CmpValue
  */
-en_result_t TIMER0_Init(const stc_tim0_init_t* pstcTmr0Init)
+en_result_t TIMER0_Init(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel,
+                              const stc_tim0_init_t* pstcTmr0Init)
 {
     en_result_t enRet = ErrorInvalidParameter;
-    uint32_t u32TimeOut = 0UL;
+    uint32_t u32temp = 0U;
     if (pstcTmr0Init != NULL)
     {
         enRet = Ok;
+        DDL_ASSERT(IS_VALID_UNIT(TMR0x));
+        DDL_ASSERT(IS_VALID_CHANNEL(u8Channel));
         DDL_ASSERT(IS_VALID_CLK_DIVISION(pstcTmr0Init->u32ClockDivision));
         DDL_ASSERT(IS_VALID_CLK_SRC(pstcTmr0Init->u32ClockSource));
-        DDL_ASSERT(IS_VALID_TMR0_FUNC(pstcTmr0Init->u32Tmr0Fun));
+        DDL_ASSERT(IS_VALID_TMR0_FUNC(pstcTmr0Init->u32Tmr0Func));
         DDL_ASSERT(IS_VALID_HWTRG_FUNC(pstcTmr0Init->u32HwTrigFunc));
-
+        u32temp = pstcTmr0Init->u32ClockDivision \
+                  | pstcTmr0Init->u32ClockSource \
+                  | pstcTmr0Init->u32HwTrigFunc  \
+                  | pstcTmr0Init->u32Tmr0Func;
         /* Configure register to default value, TIMER0 enter synchronous mode */
-        TIMER0_DeInit();
-        AsyncDelay();
-        while(0x00000000UL != M0P_TMR0->BCONR)
+        TIMER0_DeInit(TMR0x);
+
+        if(u8Channel == TIMER0_ChannelA)
         {
-            if(u32TimeOut++ > TIMER0_TMOUT)
-            {
-                enRet = ErrorTimeout;
-                break;
-            }
-        }
-
-        /* Set timer compare value */
-        M0P_TMR0->CMPAR = pstcTmr0Init->u16CmpValue;
-
-        /* Configure clock division, function mode, Hardware trigger function */
-        M0P_TMR0->BCONR = (pstcTmr0Init->u32ClockDivision
-                        + pstcTmr0Init->u32HwTrigFunc
-                        + pstcTmr0Init->u32Tmr0Fun);
-        AsyncDelay();
-
-        /* Configure clock source and clock mode*/
-        if(TIMER0_CLK_SRC_LRC == pstcTmr0Init->u32ClockSource)
-        {
-            bM0P_TMR0->BCONR_b.SYNSA = 1U;
-            AsyncDelay();
-            u32TimeOut = 0UL;
-            while(1U != bM0P_TMR0->BCONR_b.SYNSA)
-            {
-                if(u32TimeOut++ > TIMER0_TMOUT)
-                {
-                    enRet = ErrorTimeout;
-                    break;
-                }
-            }
+            /* Set timer0_CHA compare value */
+            TMR0x->CMPAR = pstcTmr0Init->u16CmpValue;
+            /* Configure clock division, clock source, function mode, Hardware trigger function */
+            TMR0x->BCONR = u32temp;
         }
         else
         {
-            MODIFY_REG32(M0P_TMR0->BCONR, TMR0_BCONR_SYNCLKA, pstcTmr0Init->u32ClockSource);
-            bM0P_TMR0->BCONR_b.SYNSA = 0U;
-            AsyncDelay();
-            u32TimeOut = 0UL;
-            while(1U != bM0P_TMR0->BCONR_b.SYNSA)
-            {
-                if(u32TimeOut++ > TIMER0_TMOUT)
-                {
-                    enRet = ErrorTimeout;
-                    break;
-                }
-            }
-        }   
-
+            /* Set timer0_CHB compare value */
+            TMR0x->CMPBR = pstcTmr0Init->u16CmpValue;
+            /* Configure clock division, clock source, function mode, Hardware trigger function */
+            TMR0x->BCONR = u32temp << TIMER0_CHB_POS;
+        }
     }
-    
     return enRet;
 }
 
 /**
  * @brief  Get Timer0 status flag
- * @param  [in] None
+ * @param  [in] TMR0x            Pointer to TIMER0 instance register base.
+ * This parameter can be a value of the following:
+ *  @arg M4_TMR01               TIMER0 unit 1 instance register base
+ *  @arg M4_TMR02               TIMER0 unit 2 instance register base
+ * @param  [in] u8Channel        TIMER0_ChannelA or TIMER0_ChannelB
  *
  * @retval Set                   Flag is set
  *         Reset                 Flag is reset
- * @note   Macksure timer0 function is disable in asynchronous mode
  */
-en_flag_status_t TIMER0_GetFlag(void)
+en_flag_status_t TIMER0_GetFlag(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel)
 {
-    return (en_flag_status_t)bM0P_TMR0->STFLR_b.CMFA;
+    uint8_t enRet = 0U;
+    DDL_ASSERT(IS_VALID_UNIT(TMR0x));
+    DDL_ASSERT(IS_VALID_CHANNEL(u8Channel));
+    switch (u8Channel)
+    {
+    case TIMER0_ChannelA:
+        enRet = TMR0x->STFLR & TMR0_STFLR_CMFA;
+        break;
+    case TIMER0_ChannelB:
+        enRet = TMR0x->STFLR & TMR0_STFLR_CMFB;
+        break;
+    default:
+        break;
+    }
+    return (en_flag_status_t)enRet;
 }
 
 /**
  * @brief  Clear Timer0 status flag
- * @param  [in] None
+ * @param  [in] TMR0x            Pointer to TIMER0 instance register base.
+ * This parameter can be a value of the following:
+ *  @arg M4_TMR01               TIMER0 unit 1 instance register base
+ *  @arg M4_TMR02               TIMER0 unit 2 instance register base
+ * @param  [in] u8Channel        TIMER0_ChannelA or TIMER0_ChannelB
  *
  * @retval Ok: Success
- * @retval ErrorTimeout: Process timeout
  */
-en_result_t TIMER0_ClearFlag(void)
+en_result_t TIMER0_ClearFlag(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel)
 {
     en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0UL;
-    bM0P_TMR0->STFLR_b.CMFA = 0U;
-    AsyncDelay();
-    while(0U != bM0P_TMR0->STFLR_b.CMFA)
+
+    DDL_ASSERT(IS_VALID_UNIT(TMR0x));
+    DDL_ASSERT(IS_VALID_CHANNEL(u8Channel));
+    /*Clear the Flag*/
+    switch (u8Channel)
     {
-        if(u32TimeOut++ > TIMER0_TMOUT)
-        {
-            enRet = ErrorTimeout;
+        case TIMER0_ChannelA:
+            CLEAR_BIT(TMR0x->STFLR, TMR0_STFLR_CMFA);
             break;
-        }
+        case TIMER0_ChannelB:
+            CLEAR_BIT(TMR0x->STFLR, TMR0_STFLR_CMFB);
+            break;
+        default:
+            break;
     }
     return enRet;
 }
 
 /**
  * @brief  Command the timer0 function
- * @param  [in] enNewState    Disable or Enable the function
+ * @param  [in] TMR0x            Pointer to TIMER0 instance register base.
+ * This parameter can be a value of the following:
+ *  @arg M4_TMR01               TIMER0 unit 1 instance register base
+ *  @arg M4_TMR02               TIMER0 unit 2 instance register base
+ * @param  [in] u8Channel        TIMER0_ChannelA or TIMER0_ChannelB
+ * @param  [in] enNewState       Disable or Enable the function
  *
  * @retval Ok: Success
- * @retval ErrorTimeout: Process timeout
  */
-en_result_t TIMER0_Cmd(en_functional_state_t enNewState)
+en_result_t TIMER0_Cmd(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel,
+                                en_functional_state_t enNewState)
 {
     en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0UL;
+    DDL_ASSERT(IS_VALID_UNIT(TMR0x));
+    DDL_ASSERT(IS_VALID_CHANNEL(u8Channel));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
-
-    bM0P_TMR0->BCONR_b.CSTA = enNewState;
-    AsyncDelay();
-    while(enNewState != bM0P_TMR0->BCONR_b.CSTA)
+    switch (u8Channel)
     {
-        if(u32TimeOut++ > TIMER0_TMOUT)
-        {
-            enRet = ErrorTimeout;
+        case TIMER0_ChannelA:
+            MODIFY_REG32(TMR0x->BCONR, TMR0_BCONR_CSTA, enNewState);
             break;
-        }
+        case TIMER0_ChannelB:
+            MODIFY_REG32(TMR0x->BCONR, TMR0_BCONR_CSTB, enNewState<<TIMER0_CHB_POS);
+            break;
+        default:
+            break;
     }
     return enRet;
 }
 
 /**
  * @brief  Timer0 interrupt function command
- * @param  [in] enNewState    Disable or Enable the function
+ * @param  [in] TMR0x            Pointer to TIMER0 instance register base.
+ * This parameter can be a value of the following:
+ *  @arg M4_TMR01               TIMER0 unit 1 instance register base
+ *  @arg M4_TMR02               TIMER0 unit 2 instance register base
+ * @param  [in] u8Channel        TIMER0_ChannelA or TIMER0_ChannelB
+ * @param  [in] enNewState       Disable or Enable the function
  *
  * @retval Ok: Success
- * @retval ErrorTimeout: Process timeout
  */
-en_result_t TIMER0_IntCmd(en_functional_state_t enNewState)
+en_result_t TIMER0_IntCmd(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel,
+                        en_functional_state_t enNewState)
 {
     en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0UL;
+    DDL_ASSERT(IS_VALID_UNIT(TMR0x));
+    DDL_ASSERT(IS_VALID_CHANNEL(u8Channel));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    bM0P_TMR0->BCONR_b.INTENA = enNewState;
-    AsyncDelay();
-    while(enNewState != bM0P_TMR0->BCONR_b.INTENA)
+    switch (u8Channel)
     {
-        if(u32TimeOut++ > TIMER0_TMOUT)
-        {
-            enRet = ErrorTimeout;
+        case TIMER0_ChannelA:
+            MODIFY_REG32(TMR0x->BCONR, TMR0_BCONR_INTENA, \
+                        enNewState << TMR0_BCONR_INTENA_POS);
             break;
-        }
+        case TIMER0_ChannelB:
+            MODIFY_REG32(TMR0x->BCONR, TMR0_BCONR_INTENB, \
+                        enNewState << TMR0_BCONR_INTENB_POS);
+            break;
+        default:
+            break;
     }
+
     return enRet;
 }
 
 /**
  * @brief  Get Timer0 counter register
- * @param  [in] None
- *
+ * @param  [in] TMR0x            Pointer to TIMER0 instance register base.
+ * This parameter can be a value of the following:
+ *  @arg M4_TMR01               TIMER0 unit 1 instance register base
+ *  @arg M4_TMR02               TIMER0 unit 2 instance register base
+ * @param  [in] u8Channel        TIMER0_ChannelA or TIMER0_ChannelB
  * @retval The counter register data
  * @note   Macksure timer0 function is disable in asynchronous mode
  */
-uint16_t TIMER0_GetCntReg(void)
+uint16_t TIMER0_GetCntReg(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel)
 {
-    return (uint16_t)M0P_TMR0->CNTAR&0xFFFFu;
+    int16_t u16CntVal = 0U;
+    DDL_ASSERT(IS_VALID_UNIT(TMR0x));
+    DDL_ASSERT(IS_VALID_CHANNEL(u8Channel));
+    switch (u8Channel)
+    {
+        case TIMER0_ChannelA:
+            u16CntVal = TMR0x->CNTAR & 0xFFFFU;
+            break;
+        case TIMER0_ChannelB:
+            u16CntVal = TMR0x->CNTBR & 0xFFFFU;
+            break;
+        default:
+            break;
+    }
+    return u16CntVal;
 }
 
 /**
  * @brief  Write Timer0 counter register
- * @param  [in] u16Cnt The data to write to the counter register
+ * @param  [in] TMR0x            Pointer to TIMER0 instance register base.
+ * This parameter can be a value of the following:
+ *  @arg M4_TMR01               TIMER0 unit 1 instance register base
+ *  @arg M4_TMR02               TIMER0 unit 2 instance register base
+ * @param  [in] u8Channel        TIMER0_ChannelA or TIMER0_ChannelB
+ * @param  [in] u16Value         The data to write to the counter register
  *
  * @retval Ok: Success
- * @retval ErrorTimeout: Process timeout
+ * @note   Setting the count requires stop timer0
  */
-en_result_t TIMER0_WriteCntReg(uint16_t u16Cnt)
+en_result_t TIMER0_WriteCntReg(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel,
+                                                       uint16_t u16Value)
 {
     en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0UL;
-    M0P_TMR0->CNTAR = (uint32_t)u16Cnt;
-    AsyncDelay();
-    while((uint32_t)u16Cnt != M0P_TMR0->CNTAR)
+    DDL_ASSERT(IS_VALID_UNIT(TMR0x));
+    DDL_ASSERT(IS_VALID_CHANNEL(u8Channel));
+    switch (u8Channel)
     {
-        if(u32TimeOut++ > TIMER0_TMOUT)
-        {
-            enRet = ErrorTimeout;
+        case TIMER0_ChannelA:
+            TMR0x->CNTAR = (uint32_t)u16Value;
             break;
-        }
+        case TIMER0_ChannelB:
+            TMR0x->CNTBR = (uint32_t)u16Value;
+            break;
+        default:
+            break;
     }
     return enRet;
 }
 
 /**
  * @brief  Get Timer0 base compare count register
- * @param  [in] None
+ * @param  [in] TMR0x            Pointer to TIMER0 instance register base.
+ * This parameter can be a value of the following:
+ *  @arg M4_TMR01               TIMER0 unit 1 instance register base
+ *  @arg M4_TMR02               TIMER0 unit 2 instance register base
+ * @param  [in] u8Channel        TIMER0_ChannelA or TIMER0_ChannelB
  *
  * @retval The compare register data
- * @note   Macksure timer0 function is disable in asynchronous mode
  */
-uint16_t TIMER0_GetCmpReg(void)
+uint16_t TIMER0_GetCmpReg(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel)
 {
-    return (uint16_t)M0P_TMR0->CMPAR&0xFFFFu;
+    uint16_t u16CmpVal = 0U;
+    DDL_ASSERT(IS_VALID_UNIT(TMR0x));
+    DDL_ASSERT(IS_VALID_CHANNEL(u8Channel));
+    switch (u8Channel)
+    {
+        case TIMER0_ChannelA:
+            u16CmpVal = TMR0x->CMPAR & 0xFFFFU;
+            break;
+        case TIMER0_ChannelB:
+            u16CmpVal = TMR0x->CMPBR & 0xFFFFU;
+            break;
+        default:
+            break;
+    }
+    return u16CmpVal;
 }
 
 /**
  * @brief  Write Timer0 compare count register
- * @param  [in] u16Cnt  The data to write to the compare register
+ * @param  [in] TMR0x            Pointer to TIMER0 instance register base.
+ * This parameter can be a value of the following:
+ *  @arg M4_TMR01               TIMER0 unit 1 instance register base
+ *  @arg M4_TMR02               TIMER0 unit 2 instance register base
+ * @param  [in] u8Channel        TIMER0_ChannelA or TIMER0_ChannelB
+ * @param  [in] u16Value         The data to write to the compare register
  *
  * @retval Ok: Success
- * @retval ErrorTimeout: Process timeout
  */
-en_result_t TIMER0_WriteCmpReg(uint16_t u16Cnt)
+en_result_t TIMER0_WriteCmpReg(M4_TMR0_TypeDef* TMR0x, uint8_t u8Channel,
+                                                       uint16_t u16Value)
 {
     en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0UL;
-    M0P_TMR0->CMPAR = (uint32_t)u16Cnt;
-    AsyncDelay();
-    while((uint32_t)u16Cnt != M0P_TMR0->CMPAR)
+    DDL_ASSERT(IS_VALID_UNIT(TMR0x));
+    DDL_ASSERT(IS_VALID_CHANNEL(u8Channel));
+    switch (u8Channel)
     {
-        if(u32TimeOut++ > TIMER0_TMOUT)
-        {
-            enRet = ErrorTimeout;
+        case TIMER0_ChannelA:
+            TMR0x->CMPAR = (uint32_t)u16Value;
             break;
-        }
+        case TIMER0_ChannelB:
+            TMR0x->CMPBR = (uint32_t)u16Value;
+            break;
+        default:
+            break;
     }
     return enRet;
 }
 
 /**
- * @brief  Timer0 peripheral base function initialize
- * @param  [in] None
+ * @brief  De-Initialize TIMER0 function
+ * @param  [in] TMR0x            Pointer to TIMER0 instance register base.
+ * This parameter can be a value of the following:
+ *  @arg M4_TMR01               TIMER0 unit 1 instance register base
+ *  @arg M4_TMR02               TIMER0 unit 2 instance register base
  *
- * @retval Ok: Success
- * @retval ErrorTimeout: Process timeout
+ * @retval None
  */
-en_result_t TIMER0_DeInit(void)
+void TIMER0_DeInit(M4_TMR0_TypeDef* TMR0x)
 {
-    en_result_t enRet = Ok;
-    uint32_t u32TimeOut = 0UL;
-    M0P_TMR0->BCONR = 0x00000000UL;
-    AsyncDelay();
-    while(0x00000000UL != M0P_TMR0->BCONR)
-    {
-        if(u32TimeOut++ > TIMER0_TMOUT)
-        {
-            enRet = ErrorTimeout;
-            break;
-        }
-    }
-    M0P_TMR0->CMPAR = 0x0000FFFFul;
-    M0P_TMR0->CNTAR = 0x00000000UL;
-    M0P_TMR0->STFLR = 0x00000000UL;
-    return enRet;
+    TMR0x->BCONR = 0x00000000UL;
+    TMR0x->CMPAR = 0x0000FFFFUL;
+    TMR0x->CNTAR = 0x00000000UL;
+    TMR0x->STFLR = 0x00000000UL;
 }
 
 /**
  * @brief  Set external trigger source for Timer0
- * @param  [in] enEvent         External event source, @ref en_event_src_t
+ * @param  [in] TMR0x            Pointer to TIMER0 instance register base.
+ * This parameter can be a value of the following:
+ *  @arg M4_TMR01               TIMER0 unit 1 instance register base
+ *  @arg M4_TMR02               TIMER0 unit 2 instance register base
+ * @param  [in] enEvent        External event source, @ref en_event_src_t
  *
  * @retval None
  */
-void TIMER0_SetTriggerSrc(en_event_src_t enEvent)
+void TIMER0_SetTriggerSrc(M4_TMR0_TypeDef* TMR0x, en_event_src_t enEvent)
 {
-    M0P_AOS->TMR0_HTSSR_f.TRGSEL = enEvent;  
+    DDL_ASSERT(IS_VALID_UNIT(TMR0x));
+    if(TMR0x == M4_TMR01)
+    {
+        M4_AOS->TMR00_HTSSR = enEvent;
+    }
+    else
+    {
+        M4_AOS->TMR01_HTSSR = enEvent;
+    }
 }
 
 /**
