@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-06       Yangjp          First version
+   2020-02-10       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -74,7 +74,7 @@
  ******************************************************************************/
 /* LED_R Port/Pin definition */
 #define LED_R_PORT                      (GPIO_PORT_A)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PIN                       (GPIO_PIN_4)
 
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))

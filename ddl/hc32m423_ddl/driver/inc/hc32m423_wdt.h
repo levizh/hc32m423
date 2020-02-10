@@ -135,7 +135,7 @@ typedef struct
 #define WDT_CLOCK_DIV128                        ((uint32_t)(WDT_CR_CKS_0 | WDT_CR_CKS_1 | WDT_CR_CKS_2))  /*!< PCLK1/128 */
 #define WDT_CLOCK_DIV256                        ((uint32_t)WDT_CR_CKS_3)                                  /*!< PCLK1/256 */
 #define WDT_CLOCK_DIV512                        ((uint32_t)(WDT_CR_CKS_0 | WDT_CR_CKS_3))                 /*!< PCLK1/512 */
-#define WDT_CLOCK_DIV1024                       ((uint32_t)(WDT_CR_CKS_1 | WDT_CR_CKS_3)                  /*!< PCLK1/1024 */
+#define WDT_CLOCK_DIV1024                       ((uint32_t)(WDT_CR_CKS_1 | WDT_CR_CKS_3))                  /*!< PCLK1/1024 */
 #define WDT_CLOCK_DIV2048                       ((uint32_t)(WDT_CR_CKS_0 | WDT_CR_CKS_1 | WDT_CR_CKS_3))  /*!< PCLK1/2048 */
 #define WDT_CLOCK_DIV8192                       ((uint32_t)(WDT_CR_CKS_0 | WDT_CR_CKS_2 | WDT_CR_CKS_3))  /*!< PCLK1/8192 */
 /**

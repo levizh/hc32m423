@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-27       Yangjp          First version
+   2020-02-10       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -112,6 +112,7 @@ extern "C"
 #define DDL_TIMERA_ENABLE                           (DDL_OFF)
 #define DDL_TIMERB_ENABLE                           (DDL_OFF)
 #define DDL_USART_ENABLE                            (DDL_OFF)
+#define DDL_WDT_ENABLE                              (DDL_OFF)
 
 /* Midware module on-off define */
 #define MW_ON                                       (1U)

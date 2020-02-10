@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-06       Yangjp          First version
+   2020-02-10       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -74,7 +74,7 @@
  ******************************************************************************/
 /* LED_R Port/Pin definition */
 #define LED_R_PORT                      (GPIO_PORT_A)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PIN                       (GPIO_PIN_4)
 
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
@@ -82,15 +82,15 @@
 
 /* LED_G Port/Pin definition */
 #define LED_G_PORT                      (GPIO_PORT_A)
-#define LED_G_PIN                       (GPIO_PIN_1)
+#define LED_G_PIN                       (GPIO_PIN_5)
 
 #define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
 #define LED_G_OFF()                     (GPIO_SetPins(LED_G_PORT, LED_G_PIN))
 #define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
 
 /* SW1 Port/Pin definition */
-#define SW1_PORT                        (GPIO_PORT_2)
-#define SW1_PIN                         (GPIO_PIN_2)
+#define SW1_PORT                        (GPIO_PORT_D)
+#define SW1_PIN                         (GPIO_PIN_7)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -146,9 +146,9 @@ void SWDT_IrqHandler(void)
  * @param  None
  * @retval None
  */
-void EXINT02_Handler(void)
+void EXINT07_SWINT15_IrqHandler(void)
 {
-    if (Set == EXINT_GetExIntSrc(EXINT_CH02))
+    if (Set == EXINT_GetExIntSrc(EXINT_CH07))
     {
         u8ExIntCnt++;
         if (u8ExIntCnt >= 3U)
@@ -157,7 +157,7 @@ void EXINT02_Handler(void)
         }
         LED_R_OFF();
         LED_G_OFF();
-        EXINT_ClrExIntSrc(EXINT_CH02);
+        EXINT_ClrExIntSrc(EXINT_CH07);
     }
 }
 
@@ -175,11 +175,12 @@ static void SW1_Config(void)
     GPIO_StructInit(&stcGpioInit);
     EXINT_StructInit(&stcExIntInit);
 
-    /* External interrupt Ch.2 initialize */
+    /* External interrupt initialize */
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
     GPIO_Init(SW1_PORT, SW1_PIN, &stcGpioInit);
 
-    stcExIntInit.u32ExIntCh     = EXINT_CH02;
+    /* External interrupt configure */
+    stcExIntInit.u32ExIntCh     = EXINT_CH07;
     stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
     stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV8;
     stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
@@ -188,14 +189,14 @@ static void SW1_Config(void)
     EXINT_Init(&stcExIntInit);
 
     /* Clear pending */
-    NVIC_ClearPendingIRQ(ExInt2_IRQn);
+    NVIC_ClearPendingIRQ(ExInt7_IRQn);
     /* Set priority */
-    NVIC_SetPriority(ExInt2_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_SetPriority(ExInt7_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
     /* Enable NVIC */
-    NVIC_EnableIRQ(ExInt2_IRQn);
+    NVIC_EnableIRQ(ExInt7_IRQn);
 
     /* Enable stop mode wakeup */
-    INTC_WakeupSrcCmd(INTC_WUPEN_EIRQWUEN_2, Enable);
+    INTC_WakeupSrcCmd(INTC_WUPEN_EIRQWUEN_7, Enable);
 }
 
 /**
@@ -232,7 +233,7 @@ int32_t main(void)
      #define ICG0_SWDT_AUTST                  ICG_SWDT_AFTER_RESET_AUTOSTART
      #define ICG0_SWDT_ITS                    ICG_SWDT_TRIG_EVENT_INT
      #define ICG0_SWDT_PERI                   ICG_SWDT_COUNTER_CYCLE_256
-     #define ICG0_SWDT_CKS                    ICG_SWDT_CLOCK_DIV32
+     #define ICG0_SWDT_CKS                    ICG_SWDT_CLOCK_DIV64
      #define ICG0_SWDT_WDPT                   ICG_SWDT_RANGE_100PCT
      #define ICG0_SWDT_SLTPOFF                ICG_SWDT_LPW_MODE_COUNT_CONTINUE
      @endverbatim

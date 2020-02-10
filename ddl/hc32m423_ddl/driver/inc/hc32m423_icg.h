@@ -412,7 +412,7 @@ extern "C"
 #define ICG0_SWDT_AUTST                         (ICG_SWDT_AFTER_RESET_AUTOSTART)
 #define ICG0_SWDT_ITS                           (ICG_SWDT_TRIG_EVENT_INT)
 #define ICG0_SWDT_PERI                          (ICG_SWDT_COUNTER_CYCLE_256)
-#define ICG0_SWDT_CKS                           (ICG_SWDT_CLOCK_DIV32)
+#define ICG0_SWDT_CKS                           (ICG_SWDT_CLOCK_DIV64)
 #define ICG0_SWDT_WDPT                          (ICG_SWDT_RANGE_100PCT)
 #define ICG0_SWDT_SLTPOFF                       (ICG_SWDT_LPW_MODE_COUNT_CONTINUE)
 
@@ -439,7 +439,7 @@ extern "C"
 #define ICG0_HRC_HARDWARE_START                 (ICG_FUNCTION_OFF)
 
 /* HRC register config */
-#define ICG0_HRC_FRQSEL                         (ICG_HRC_FREQ_16MHZ)
+#define ICG0_HRC_FRQSEL                         (ICG_HRC_FREQ_8MHZ)
 #define ICG0_HRC_STOP                           (ICG_HRC_ENABLE)
 
 /* HRC register config value */
@@ -520,8 +520,8 @@ extern "C"
 /* WDT register config */
 #define ICG7_WDT_AUTST                          (ICG_WDT_AFTER_RESET_AUTOSTART)
 #define ICG7_WDT_ITS                            (ICG_WDT_TRIG_EVENT_INT)
-#define ICG7_WDT_PERI                           (ICG_WDT_COUNTER_CYCLE_16384)
-#define ICG7_WDT_CKS                            (ICG_WDT_CLOCK_DIV512)
+#define ICG7_WDT_PERI                           (ICG_WDT_COUNTER_CYCLE_4096)
+#define ICG7_WDT_CKS                            (ICG_WDT_CLOCK_DIV256)
 #define ICG7_WDT_WDPT                           (ICG_WDT_RANGE_100PCT)
 #define ICG7_WDT_SLTPOFF                        (ICG_WDT_LPW_MODE_COUNT_CONTINUE)
 

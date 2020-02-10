@@ -119,7 +119,7 @@
     (WDT_CLOCK_DIV256 == (x))                  ||                             \
     (WDT_CLOCK_DIV512 == (x))                  ||                             \
     (WDT_CLOCK_DIV1024 == (x))                 ||                             \
-    (WDT_CLOCK_DIV2028 == (x))                 ||                             \
+    (WDT_CLOCK_DIV2048 == (x))                 ||                             \
     (WDT_CLOCK_DIV8192 == (x)))
 
 #define IS_WDT_ALLOW_REFRESH_RANGE(x)                                         \

@@ -112,6 +112,7 @@ extern "C"
 #define DDL_TIMERA_ENABLE                           (DDL_ON)
 #define DDL_TIMERB_ENABLE                           (DDL_OFF)
 #define DDL_USART_ENABLE                            (DDL_OFF)
+#define DDL_WDT_ENABLE                              (DDL_OFF)
 
 /* Midware module on-off define */
 #define MW_ON                                       (1U)

@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-06       Yangjp          First version
+   2020-02-10       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -74,7 +74,7 @@
  ******************************************************************************/
 /* LED_R Port/Pin definition */
 #define LED_R_PORT                      (GPIO_PORT_A)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PIN                       (GPIO_PIN_4)
 
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
@@ -82,15 +82,15 @@
 
 /* LED_G Port/Pin definition */
 #define LED_G_PORT                      (GPIO_PORT_A)
-#define LED_G_PIN                       (GPIO_PIN_1)
+#define LED_G_PIN                       (GPIO_PIN_5)
 
 #define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
 #define LED_G_OFF()                     (GPIO_SetPins(LED_G_PORT, LED_G_PIN))
 #define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
 
 /* SW1 Port/Pin definition */
-#define SW1_PORT                        (GPIO_PORT_2)
-#define SW1_PIN                         (GPIO_PIN_2)
+#define SW1_PORT                        (GPIO_PORT_D)
+#define SW1_PIN                         (GPIO_PIN_7)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -128,14 +128,8 @@ void WDT_IrqHandler(void)
             LED_R_TOGGLE();
         }
         /* Sleep mode */
-        else if (1U == u8ExIntCnt)
-        {
-            LED_G_TOGGLE();
-        }
-        /* Stop mode */
         else
         {
-            LED_R_TOGGLE();
             LED_G_TOGGLE();
         }
     }
@@ -146,18 +140,18 @@ void WDT_IrqHandler(void)
  * @param  None
  * @retval None
  */
-void EXINT02_Handler(void)
+void EXINT07_SWINT15_IrqHandler(void)
 {
-    if (Set == EXINT_GetExIntSrc(EXINT_CH02))
+    if (Set == EXINT_GetExIntSrc(EXINT_CH07))
     {
         u8ExIntCnt++;
-        if (u8ExIntCnt >= 3U)
+        if (u8ExIntCnt >= 2U)
         {
             u8ExIntCnt = 0U;
         }
         LED_R_OFF();
         LED_G_OFF();
-        EXINT_ClrExIntSrc(EXINT_CH02);
+        EXINT_ClrExIntSrc(EXINT_CH07);
     }
 }
 
@@ -175,11 +169,12 @@ static void SW1_Config(void)
     GPIO_StructInit(&stcGpioInit);
     EXINT_StructInit(&stcExIntInit);
 
-    /* External interrupt Ch.2 initialize */
+    /* External interrupt initialize */
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
     GPIO_Init(SW1_PORT, SW1_PIN, &stcGpioInit);
 
-    stcExIntInit.u32ExIntCh     = EXINT_CH02;
+    /* External interrupt configure */
+    stcExIntInit.u32ExIntCh     = EXINT_CH07;
     stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
     stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV8;
     stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
@@ -188,11 +183,11 @@ static void SW1_Config(void)
     EXINT_Init(&stcExIntInit);
 
     /* Clear pending */
-    NVIC_ClearPendingIRQ(ExInt2_IRQn);
+    NVIC_ClearPendingIRQ(ExInt7_IRQn);
     /* Set priority */
-    NVIC_SetPriority(ExInt2_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_SetPriority(ExInt7_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
     /* Enable NVIC */
-    NVIC_EnableIRQ(ExInt2_IRQn);
+    NVIC_EnableIRQ(ExInt7_IRQn);
 }
 
 /**
@@ -221,14 +216,14 @@ int32_t main(void)
      ***************************************************************************
      @brief Modify hc32m423_icg.h file of define
      @verbatim
-     #define ICG0_WDT_HARDWARE_START         ICG_FUNCTION_ON
+     #define ICG7_WDT_HARDWARE_START         ICG_FUNCTION_ON
 
-     #define ICG0_WDT_AUTS                   ICG_WDT_AFTER_RESET_AUTOSTART
-     #define ICG0_WDT_ITS                    ICG_WDT_TRIG_EVENT_INT
-     #define ICG0_WDT_PERI                   ICG_WDT_COUNTER_CYCLE_256
-     #define ICG0_WDT_CKS                    ICG_WDT_CLOCK_DIV128
-     #define ICG0_WDT_WDPT                   ICG_WDT_RANGE_100PCT
-     #define ICG0_WDT_SLTPOFF                ICG_WDT_LPW_MODE_COUNT_CONTINUE
+     #define ICG7_WDT_AUTST                  ICG_WDT_AFTER_RESET_AUTOSTART
+     #define ICG7_WDT_ITS                    ICG_WDT_TRIG_EVENT_INT
+     #define ICG7_WDT_PERI                   ICG_WDT_COUNTER_CYCLE_4096
+     #define ICG7_WDT_CKS                    ICG_WDT_CLOCK_DIV256
+     #define ICG7_WDT_WDPT                   ICG_WDT_RANGE_100PCT
+     #define ICG7_WDT_SLTPOFF                ICG_WDT_LPW_MODE_COUNT_CONTINUE
      @endverbatim
      ***************************************************************************
      */

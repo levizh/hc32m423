@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-27       Yangjp          First version
+   2020-02-10       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -73,16 +73,16 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* LED_R Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_12)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PORT                      (GPIO_PORT_A)
+#define LED_R_PIN                       (GPIO_PIN_4)
 
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
 
 /* LED_G Port/Pin definition */
-#define LED_G_PORT                      (GPIO_PORT_7)
-#define LED_G_PIN                       (GPIO_PIN_0)
+#define LED_G_PORT                      (GPIO_PORT_A)
+#define LED_G_PIN                       (GPIO_PIN_5)
 
 #define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
 #define LED_G_OFF()                     (GPIO_SetPins(LED_G_PORT, LED_G_PIN))
@@ -126,7 +126,7 @@ int32_t main(void)
     GPIO_StructInit(&stcGpioInit);
 
     /* LED Port/Pin initialization */
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
     LED_R_OFF();
