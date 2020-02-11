@@ -74,13 +74,13 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* TIM4 PWM Port/Pin definition */
-#define TIM4_1_OXH_PORT                 (GPIO_PORT_0)
-#define TIM4_1_OXH_PIN                  (GPIO_PIN_1)
-#define TIM4_1_OXH_GPIO_FUNC            (GPIO_FUNC_2_TIM4)
+#define TIM4_OXH_PORT                   (GPIO_PORT_7)
+#define TIM4_OXH_PIN                    (GPIO_PIN_1)
+#define TIM4_OXH_GPIO_FUNC              (GPIO_FUNC_2_TIM4)
 
-#define TIM4_1_OXL_PORT                 (GPIO_PORT_0)
-#define TIM4_1_OXL_PIN                  (GPIO_PIN_0)
-#define TIM4_1_OXL_GPIO_FUNC            (GPIO_FUNC_2_TIM4)
+#define TIM4_OXL_PORT                   (GPIO_PORT_7)
+#define TIM4_OXL_PIN                    (GPIO_PIN_4)
+#define TIM4_OXL_GPIO_FUNC              (GPIO_FUNC_2_TIM4)
 
 /* Function clock gate definition */
 #define FUNCTION_CLK_GATE               (CLK_FCG_TIM4)
@@ -215,8 +215,8 @@ int32_t main(void)
     }
 
     /* Initialize PWM I/O */
-    GPIO_SetFunc(TIM4_1_OXH_PORT, TIM4_1_OXH_PIN, TIM4_1_OXH_GPIO_FUNC);
-    GPIO_SetFunc(TIM4_1_OXL_PORT, TIM4_1_OXL_PIN, TIM4_1_OXL_GPIO_FUNC);
+    GPIO_SetFunc(TIM4_OXH_PORT, TIM4_OXH_PIN, TIM4_OXH_GPIO_FUNC);
+    GPIO_SetFunc(TIM4_OXL_PORT, TIM4_OXL_PIN, TIM4_OXL_GPIO_FUNC);
 
     /* Timer4 PWM: Get pwm couple channel */
     u32PwmCh = TIMER4_PWM_CH(TIMER4_OCO_HIGH_CH);
