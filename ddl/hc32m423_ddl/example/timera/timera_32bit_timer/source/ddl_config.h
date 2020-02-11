@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file  timera/timera_base_timer/source/ddl_config.h
+ * @file  timera/timera_32bit_timer/source/ddl_config.h
  * @brief This file contains HC32 Series Device Driver Library usage management.
  @verbatim
    Change Logs:
