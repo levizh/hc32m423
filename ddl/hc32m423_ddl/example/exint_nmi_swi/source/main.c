@@ -61,7 +61,7 @@
  */
 
 /**
- * @addtogroup EXINT_NMI
+ * @addtogroup EXINT_NMI_SWI
  * @{
  */
 
@@ -72,20 +72,35 @@
 /*******************************************************************************
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
-#define EXINT2_PORT     (GPIO_PORT_0)
-#define EXINT2_PIN      (GPIO_PIN_0)
-#define EXINT4_PORT     (GPIO_PORT_0)
-#define EXINT4_PIN      (GPIO_PIN_1)
-#define EXINT5_PORT     (GPIO_PORT_0)
-#define EXINT5_PIN      (GPIO_PIN_2)
+/* KEY1 EXINT5 */
+#define KEY1_INT_CH     (EXINT_CH05)
+#define KEY1_INT_PORT   (GPIO_PORT_0)
+#define KEY1_INT_PIN    (GPIO_PIN_2)
+#define KEY1_INT_SRC    (INT_PORT_EIRQ5)
+#define KEY1_INT_IRQn   (ExInt5_IRQn)
+/* KEY2 EXINT4 */
+#define KEY2_INT_CH     (EXINT_CH04)
+#define KEY2_INT_PORT   (GPIO_PORT_0)
+#define KEY2_INT_PIN    (GPIO_PIN_1)
+#define KEY2_INT_SRC    (INT_PORT_EIRQ4)
+#define KEY2_INT_IRQn   (ExInt4_IRQn)
+/* KEY3 NMI Pin */
+#define KEY3_INT_PORT   (GPIO_PORT_E)
+#define KEY3_INT_PIN    (GPIO_PIN_2)
+/* KEY4 EXINT7 */
+#define KEY4_INT_CH     (EXINT_CH07)
+#define KEY4_INT_PORT   (GPIO_PORT_D)
+#define KEY4_INT_PIN    (GPIO_PIN_7)
+#define KEY4_INT_SRC    (INT_PORT_EIRQ7)
+#define KEY4_INT_IRQn   (Int000_IRQn)
 
-#define LED_R_PORT      (GPIO_PORT_0)
-#define LED_G_PORT      (GPIO_PORT_0)
-#define LED_B_PORT      (GPIO_PORT_0)
+#define LED_R_PORT      (GPIO_PORT_A)
+#define LED_G_PORT      (GPIO_PORT_A)
+#define LED_B_PORT      (GPIO_PORT_1)
 
-#define LED_R_PIN       (GPIO_PIN_0)
-#define LED_G_PIN       (GPIO_PIN_1)
-#define LED_B_PIN       (GPIO_PIN_2)
+#define LED_R_PIN       (GPIO_PIN_4)
+#define LED_G_PIN       (GPIO_PIN_5)
+#define LED_B_PIN       (GPIO_PIN_0)
 
 #define LED_R_ON()      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_G_ON()      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
@@ -120,21 +135,21 @@
  * Function implementation - global ('extern') and local ('static')
  ******************************************************************************/
 /**
- * @brief  External interrupt Ch.2 ISR
+ * @brief  KEY1 (External interrupt Ch.5) ISR
  * @param  None
  * @retval None
  */
-void EXINT02_SWINT10_IrqHandler(void)
+void EXINT05_SWINT13_IrqHandler(void)
 {
-   if (Set == EXINT_GetExIntSrc(EXINT_CH02))
+   if (Set == EXINT_GetExIntSrc(EXINT_CH05))
    {
-        EXINT_ClrExIntSrc(EXINT_CH02);
+        EXINT_ClrExIntSrc(EXINT_CH05);
         LED_R_TOGGLE();
    }
 }
 
 /**
- * @brief  External interrupt Ch.4 ISR
+ * @brief  KEY2 (External interrupt Ch.4) ISR
  * @param  None
  * @retval None
  */
@@ -148,15 +163,15 @@ void EXINT04_SWINT12_IrqHandler(void)
 }
 
 /**
- * @brief  External interrupt Ch.5 callback function
+ * @brief  KEY4 (External interrupt Ch.7) callback function
  * @param  None
  * @retval None
  */
-void EXINT05_IrqCallback(void)
+void KEY4_IrqCallback(void)
 {
-   if (Set == EXINT_GetExIntSrc(EXINT_CH05))
+   if (Set == EXINT_GetExIntSrc(KEY4_INT_CH))
    {
-        EXINT_ClrExIntSrc(EXINT_CH05);
+        EXINT_ClrExIntSrc(KEY4_INT_CH);
         LED_G_OFF();
         LED_B_TOGGLE();
    }
@@ -247,25 +262,25 @@ int32_t main(void)
     /* Software interrupt will occur once enable */
     INTC_SWICmd(INTC_SWIER_SWIE14, Enable);
 
-    /* External interrupt Ch.1 & Ch.2 & Ch.8 initialize */
+    /* KEY1, KEY2, KEY4 initialize */
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
-    GPIO_Init(EXINT2_PORT, EXINT2_PIN, &stcGpioInit);
-    GPIO_Init(EXINT4_PORT, EXINT4_PIN, &stcGpioInit);
-    GPIO_Init(EXINT5_PORT, EXINT5_PIN, &stcGpioInit);
+    GPIO_Init(KEY1_INT_PORT, KEY1_INT_PIN, &stcGpioInit);
+    GPIO_Init(KEY2_INT_PORT, KEY2_INT_PIN, &stcGpioInit);
+    GPIO_Init(KEY4_INT_PORT, KEY4_INT_PIN, &stcGpioInit);
 
     EXINT_StructInit(&stcExIntInit);
 
-    /* EXINT Channel 2 (SW1) configure *///todo
-    stcExIntInit.u32ExIntCh     = EXINT_CH02;
+    /* EXINT Channel 5 (KEY1) configure */
+    stcExIntInit.u32ExIntCh     = KEY1_INT_CH;
     stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
-    stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV8;
+    stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV1;
     stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
     stcExIntInit.u32ExIntFBTime = NMI_EXINT_FBTIM_2US;
     stcExIntInit.u32ExIntLvl    = EXINT_TRIGGER_FALLING;
     EXINT_Init(&stcExIntInit);
 
-    /* EXINT Channel 1 (SW2) and Channel 8 (P147) configure *///todo
-    stcExIntInit.u32ExIntCh     = EXINT_CH02;
+    /* EXINT Channel 4 (KEY2) configure */
+    stcExIntInit.u32ExIntCh     = KEY2_INT_CH;
     stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
     stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV8;
     stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
@@ -273,10 +288,19 @@ int32_t main(void)
     stcExIntInit.u32ExIntLvl    = EXINT_TRIGGER_RISING;
     EXINT_Init(&stcExIntInit);
 
-    /* Set IRQ handler 0 as the external interrupt Channel 5 entry */
-    stcIrqRegister.enIRQn       = Int000_IRQn;
-    stcIrqRegister.enIntSrc     = INT_PORT_EIRQ5;
-    stcIrqRegister.pfnCallback  = &EXINT05_IrqCallback;
+     /* EXINT Channel 7 (KEY4) configure */
+    stcExIntInit.u32ExIntCh     = KEY4_INT_CH;
+    stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
+    stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV32;
+    stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
+    stcExIntInit.u32ExIntFBTime = NMI_EXINT_FBTIM_2US;
+    stcExIntInit.u32ExIntLvl    = EXINT_TRIGGER_BOTH;
+    EXINT_Init(&stcExIntInit);
+
+    /* Set IRQ handler 0 as the external interrupt Channel 7 (KEY4) entry */
+    stcIrqRegister.enIRQn       = KEY4_INT_IRQn;
+    stcIrqRegister.enIntSrc     = KEY4_INT_SRC;
+    stcIrqRegister.pfnCallback  = &KEY4_IrqCallback;
     u8Ret = INTC_IrqSignIn(&stcIrqRegister);
     if (Ok != u8Ret)
     {
@@ -287,35 +311,35 @@ int32_t main(void)
         }
     }
     /* NVIC configure */
-    /* EXINT2, fixed entry */
-    NVIC_ClearPendingIRQ(ExInt2_IRQn);
-    NVIC_SetPriority(ExInt1_IRQn, DDL_IRQ_PRIORITY_14);
-    NVIC_EnableIRQ(ExInt1_IRQn);
+    /* IRQ013_Handler, fixed entry for EXINT5*/
+    NVIC_ClearPendingIRQ(KEY1_INT_IRQn);
+    NVIC_SetPriority(KEY1_INT_IRQn, DDL_IRQ_PRIORITY_14);
+    NVIC_EnableIRQ(KEY1_INT_IRQn);
 
-    /* EXINT4, fixed entry */
-    NVIC_ClearPendingIRQ(ExInt4_IRQn);
-    NVIC_SetPriority(ExInt2_IRQn, DDL_IRQ_PRIORITY_15);
-    NVIC_EnableIRQ(ExInt2_IRQn);
+    /* IRQ012_Handler, fixed entry for EXINT4*/
+    NVIC_ClearPendingIRQ(KEY2_INT_IRQn);
+    NVIC_SetPriority(KEY2_INT_IRQn, DDL_IRQ_PRIORITY_15);
+    NVIC_EnableIRQ(KEY2_INT_IRQn);
 
-    /* IRQ000 for EXINT5 */
-    NVIC_ClearPendingIRQ(Int000_IRQn);
-    NVIC_SetPriority(Int000_IRQn, DDL_IRQ_PRIORITY_03);
-    NVIC_EnableIRQ(Int000_IRQn);
+    /* IRQ000_Handler for KEY4 */
+    NVIC_ClearPendingIRQ(KEY4_INT_IRQn);
+    NVIC_SetPriority(KEY4_INT_IRQn, DDL_IRQ_PRIORITY_03);
+    NVIC_EnableIRQ(KEY4_INT_IRQn);
 
     /* NMI Pin interrupt configure */
     NMI_StructInit(&stcNmiInit);
-    stcNmiInit.u32NmiFAE         = NMI_FILTER_A_ON;
-    stcNmiInit.u32NmiFAClk       = NMI_FACLK_HCLK_DIV64;
-    stcNmiInit.u32NmiFBE         = NMI_FILTER_B_ON;
-    stcNmiInit.u32NmiFBTime      = NMI_EXINT_FBTIM_2US;
-    stcNmiInit.u32NmiTigger      = NMI_TRIGGER_RISING;
-    stcNmiInit.u32NmiSrc         = NMI_SRC_NMI_PIN;
+    stcNmiInit.u32NmiFAE        = NMI_FILTER_A_ON;
+    stcNmiInit.u32NmiFAClk      = NMI_FACLK_HCLK_DIV64;
+    stcNmiInit.u32NmiFBE        = NMI_FILTER_B_ON;
+    stcNmiInit.u32NmiFBTime     = NMI_EXINT_FBTIM_2US;
+    stcNmiInit.u32NmiTigger     = NMI_TRIGGER_RISING;
+    stcNmiInit.u32NmiSrc        = NMI_SRC_NMI_PIN;
     stcNmiInit.pfnNmiCallback   = &NMI_IrqCallback;
     NMI_Init(&stcNmiInit);
 
     while (1)
     {
-        ;// wait SW1/2/NMI key pressed
+        ;// wait KEY1/KEY2/KEY3(NMI)/KEY4 key pressed
     }
 }
 
