@@ -199,7 +199,7 @@ int32_t main(void)
 
     DCU_WriteReg16Data1(DCU_UNIT, 0x22222222UL);
 
-    while (Set != m_enOpIntStatus)    /* Wait add overflow */
+    while (Set != m_enOpIntStatus)    /* Wait sub underflow */
     {
     }
 

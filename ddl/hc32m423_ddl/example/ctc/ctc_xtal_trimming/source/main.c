@@ -75,30 +75,27 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Key Port/Pin definition */
-#define KEY_PORT                        (GPIO_PORT_2)
-#define KEY_PIN                         (GPIO_PIN_1)
+#define KEY_PORT                        (GPIO_PORT_D)
+#define KEY_PIN                         (GPIO_PIN_7)
 
 /* Red LED Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_12)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PORT                      (GPIO_PORT_A)
+#define LED_R_PIN                       (GPIO_PIN_4)
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 
 /* Green LED Port/Pin definition */
-#define LED_G_PORT                      (GPIO_PORT_7)
-#define LED_G_PIN                       (GPIO_PIN_0)
+#define LED_G_PORT                      (GPIO_PORT_A)
+#define LED_G_PIN                       (GPIO_PIN_5)
 #define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
-
-/* CTC interrupt number */
-#define CTC_ERR_IRQn                    (Int000_IRQn)
 
 /* CTC reference clock selection */
 #define CTC_REFCLK_SOURCE               (CTC_REFCLK_XTAL)
 
 /* CTC TRMVAL value */
-#define CTC_TRMVAL_VALUE                (0x21UL)       /* -31 */
+#define CTC_TRMVAL_VALUE                (0x21UL)        /* -31 */
 
 /* CTC reference clock freqency */
-#define CTC_TRIMMING_REFCLK_FREQ        (20000000UL)     /* 20MHz */
+#define CTC_TRIMMING_REFCLK_FREQ        (80000000UL)    /* 8MHz */
 
 /* Internal high speed RC freqency */
 #define CTC_TRIMMING_HRC_FREQ           (CTC_TRIMMING_HRC_48MHZ)
@@ -152,8 +149,9 @@ static void SystemClockConfig(void)
  */
 static void LedConfig(void)
 {
-    stc_gpio_init_t stcGpioInit = {0};
+    stc_gpio_init_t stcGpioInit;
 
+    GPIO_StructInit(&stcGpioInit);
     stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
@@ -205,7 +203,7 @@ int32_t main(void)
     /* Confiure clock output system clock */
     CLK_MCOConfig(CLK_MCOSOURCCE_HRC, CLK_MCODIV_1);
     /* Confiure clock output pin */
-    GPIO_SetFunc(GPIO_PORT_1, GPIO_PIN_5, GPIO_FUNC_1_MCO);
+    GPIO_SetFunc(GPIO_PORT_D, GPIO_PIN_3, GPIO_FUNC_1_MCO);
 
     /* Configure system clock. */
     SystemClockConfig();
@@ -229,7 +227,7 @@ int32_t main(void)
     CTC_Init(&stcCtcInit);
 
     /* Register CTC error IRQ handler && configure NVIC. */
-    stcIrqRegiConf.enIRQn = CTC_ERR_IRQn;
+    stcIrqRegiConf.enIRQn = Int000_IRQn;
     stcIrqRegiConf.enIntSrc = INT_CTC_ERR;
     stcIrqRegiConf.pfnCallback = &CtcErrIrqCallback;
     INTC_IrqSignIn(&stcIrqRegiConf);
@@ -239,7 +237,7 @@ int32_t main(void)
 
     CTC_ErrIntCmd(Enable);
 
-    /* User key : SW2 */
+    /* User key */
     while (Pin_Reset != GPIO_ReadInputPortPin(KEY_PORT, KEY_PIN))
     {
     }
