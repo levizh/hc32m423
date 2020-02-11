@@ -183,9 +183,9 @@ static uint32_t PllUpdate(void)
     uint32_t Hrc_value = 0UL;
     uint8_t plln = 0U, pllp = 0U, pllm = 0U;
     /* PLLPCLK = ((pllsrc / pllm) * plln) / pllp */
-    plln = (M4_CMU->PLLCFGR & CMU_PLLCFGR_MPLLN) >> CMU_PLLCFGR_MPLLN_POS;    //.MPLLN;
-    pllp = (M4_CMU->PLLCFGR & CMU_PLLCFGR_MPLLP) >> CMU_PLLCFGR_MPLLP_POS;    //.MPLLP;
-    pllm = (M4_CMU->PLLCFGR & CMU_PLLCFGR_MPLLM);    //.MPLLM;
+    plln = (M4_CMU->PLLCFGR & CMU_PLLCFGR_PLLN) >> CMU_PLLCFGR_PLLN_POS;    //.MPLLN;
+    pllp = (M4_CMU->PLLCFGR & CMU_PLLCFGR_PLLP) >> CMU_PLLCFGR_PLLP_POS;    //.MPLLP;
+    pllm = (M4_CMU->PLLCFGR & CMU_PLLCFGR_PLLM);    //.MPLLM;
     /* use exteranl high speed OSC as PLL source */
     if (0UL == (M4_CMU->PLLCFGR & CMU_PLLCFGR_PLLSRC_POS))
     {

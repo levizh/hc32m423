@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-07       levi          First version
+   2020-02-11       levi          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co.,Ltd. All rights reserved.
@@ -56,7 +56,7 @@
  **
  ** History:
  **
- **   - 2020-02-07  1.0   First version for Device Driver Library of HC32M423 series MCU.
+ **   - 2020-02-11  1.0   First version for Device Driver Library of HC32M423 series MCU.
  **
  ******************************************************************************/
 
@@ -820,29 +820,6 @@ typedef struct
 } M4_EMB_TypeDef;
 
 /**
- * @brief EMU
- */
-typedef struct
-{
-    __IO uint8_t  STPMCR;
-    uint8_t RESERVED0[3];
-    __IO uint16_t PWRC;
-    uint8_t RESERVED1[2];
-    __IO uint8_t  PWRMONR;
-    uint8_t RESERVED2[3];
-    __IO uint8_t  RAMCR;
-    uint8_t RESERVED3[3];
-    __IO uint32_t LVDCR0;
-    __IO uint8_t  LVDCSR1;
-    uint8_t RESERVED4[11];
-    __IO uint16_t FPRC;
-    uint8_t RESERVED5[30];
-    __IO uint16_t DBGC;
-    uint8_t RESERVED6[190];
-    __IO uint16_t RSTF0;
-} M4_EMU_TypeDef;
-
-/**
  * @brief FCM
  */
 typedef struct
@@ -1244,6 +1221,29 @@ typedef struct
 } M4_INTC_TypeDef;
 
 /**
+ * @brief PWR
+ */
+typedef struct
+{
+    __IO uint8_t  STPMCR;
+    uint8_t RESERVED0[3];
+    __IO uint16_t PWRC;
+    uint8_t RESERVED1[2];
+    __IO uint8_t  PWRMONR;
+    uint8_t RESERVED2[3];
+    __IO uint8_t  RAMCR;
+    uint8_t RESERVED3[3];
+    __IO uint32_t LVDCR0;
+    __IO uint8_t  LVDCSR1;
+    uint8_t RESERVED4[11];
+    __IO uint16_t FPRC;
+    uint8_t RESERVED5[30];
+    __IO uint16_t DBGC;
+    uint8_t RESERVED6[190];
+    __IO uint16_t RSTF0;
+} M4_PWR_TypeDef;
+
+/**
  * @brief RMU
  */
 typedef struct
@@ -1515,12 +1515,12 @@ typedef struct
 #define M4_DMA                               ((M4_DMA_TypeDef *)0x40053000UL)
 #define M4_EFM                               ((M4_EFM_TypeDef *)0x40010400UL)
 #define M4_EMB                               ((M4_EMB_TypeDef *)0x40017C00UL)
-#define M4_EMU                               ((M4_EMU_TypeDef *)0x40054000UL)
 #define M4_FCM                               ((M4_FCM_TypeDef *)0x40048400UL)
 #define M4_GPIO                              ((M4_GPIO_TypeDef *)0x40053800UL)
 #define M4_I2C                               ((M4_I2C_TypeDef *)0x4004E000UL)
 #define M4_ICG                               ((M4_ICG_TypeDef *)0x00000240UL)
 #define M4_INTC                              ((M4_INTC_TypeDef *)0x40051000UL)
+#define M4_PWR                               ((M4_PWR_TypeDef *)0x40054000UL)
 #define M4_RMU                               ((M4_RMU_TypeDef *)0x40054100UL)
 #define M4_SPI                               ((M4_SPI_TypeDef *)0x4001C000UL)
 #define M4_SWDT                              ((M4_SWDT_TypeDef *)0x40049400UL)
@@ -2060,8 +2060,8 @@ typedef struct
 #define CMU_OSCSTBSR_HRCSTBF                           ((uint8_t)0x01U)
 #define CMU_OSCSTBSR_XTALSTBF_POS                      (3U)
 #define CMU_OSCSTBSR_XTALSTBF                          ((uint8_t)0x08U)
-#define CMU_OSCSTBSR_MPLLSTBF_POS                      (5U)
-#define CMU_OSCSTBSR_MPLLSTBF                          ((uint8_t)0x20U)
+#define CMU_OSCSTBSR_PLLSTBF_POS                       (5U)
+#define CMU_OSCSTBSR_PLLSTBF                           ((uint8_t)0x20U)
 
 /*  Bit definition for CMU_MCOCFGR register  */
 #define CMU_MCOCFGR_MCO1SEL_POS                        (0U)
@@ -2145,29 +2145,29 @@ typedef struct
 #define CMU_MRCCR_MRCSTP                               ((uint8_t)0x01U)
 
 /*  Bit definition for CMU_PLLCFGR register  */
-#define CMU_PLLCFGR_MPLLM_POS                          (0U)
-#define CMU_PLLCFGR_MPLLM                              ((uint32_t)0x00000007U)
-#define CMU_PLLCFGR_MPLLM_0                            ((uint32_t)0x00000001U)
-#define CMU_PLLCFGR_MPLLM_1                            ((uint32_t)0x00000002U)
-#define CMU_PLLCFGR_MPLLM_2                            ((uint32_t)0x00000004U)
+#define CMU_PLLCFGR_PLLM_POS                           (0U)
+#define CMU_PLLCFGR_PLLM                               ((uint32_t)0x00000007U)
+#define CMU_PLLCFGR_PLLM_0                             ((uint32_t)0x00000001U)
+#define CMU_PLLCFGR_PLLM_1                             ((uint32_t)0x00000002U)
+#define CMU_PLLCFGR_PLLM_2                             ((uint32_t)0x00000004U)
 #define CMU_PLLCFGR_PLLSRC_POS                         (7U)
 #define CMU_PLLCFGR_PLLSRC                             ((uint32_t)0x00000080U)
-#define CMU_PLLCFGR_MPLLN_POS                          (8U)
-#define CMU_PLLCFGR_MPLLN                              ((uint32_t)0x00003F00U)
-#define CMU_PLLCFGR_MPLLN_0                            ((uint32_t)0x00000100U)
-#define CMU_PLLCFGR_MPLLN_1                            ((uint32_t)0x00000200U)
-#define CMU_PLLCFGR_MPLLN_2                            ((uint32_t)0x00000400U)
-#define CMU_PLLCFGR_MPLLN_3                            ((uint32_t)0x00000800U)
-#define CMU_PLLCFGR_MPLLN_4                            ((uint32_t)0x00001000U)
-#define CMU_PLLCFGR_MPLLN_5                            ((uint32_t)0x00002000U)
-#define CMU_PLLCFGR_MPLLP_POS                          (28U)
-#define CMU_PLLCFGR_MPLLP                              ((uint32_t)0x30000000U)
-#define CMU_PLLCFGR_MPLLP_0                            ((uint32_t)0x10000000U)
-#define CMU_PLLCFGR_MPLLP_1                            ((uint32_t)0x20000000U)
+#define CMU_PLLCFGR_PLLN_POS                           (8U)
+#define CMU_PLLCFGR_PLLN                               ((uint32_t)0x00003F00U)
+#define CMU_PLLCFGR_PLLN_0                             ((uint32_t)0x00000100U)
+#define CMU_PLLCFGR_PLLN_1                             ((uint32_t)0x00000200U)
+#define CMU_PLLCFGR_PLLN_2                             ((uint32_t)0x00000400U)
+#define CMU_PLLCFGR_PLLN_3                             ((uint32_t)0x00000800U)
+#define CMU_PLLCFGR_PLLN_4                             ((uint32_t)0x00001000U)
+#define CMU_PLLCFGR_PLLN_5                             ((uint32_t)0x00002000U)
+#define CMU_PLLCFGR_PLLP_POS                           (28U)
+#define CMU_PLLCFGR_PLLP                               ((uint32_t)0x30000000U)
+#define CMU_PLLCFGR_PLLP_0                             ((uint32_t)0x10000000U)
+#define CMU_PLLCFGR_PLLP_1                             ((uint32_t)0x20000000U)
 
 /*  Bit definition for CMU_PLLCR register  */
-#define CMU_PLLCR_MPLLOFF_POS                          (0U)
-#define CMU_PLLCR_MPLLOFF                              ((uint8_t)0x01U)
+#define CMU_PLLCR_PLLOFF_POS                           (0U)
+#define CMU_PLLCR_PLLOFF                               ((uint8_t)0x01U)
 
 /*  Bit definition for CMU_TPIUCKCFGR register  */
 #define CMU_TPIUCKCFGR_TPIUCKS_POS                     (0U)
@@ -3422,200 +3422,6 @@ typedef struct
 
 
 /*******************************************************************************
-                Bit definition for Peripheral EMU
-*******************************************************************************/
-/*  Bit definition for PWR_STPMCR register  */
-#define PWR_STPMCR_FLNWT_POS                           (0U)
-#define PWR_STPMCR_FLNWT                               ((uint8_t)0x01U)
-#define PWR_STPMCR_CKSMRC_POS                          (1U)
-#define PWR_STPMCR_CKSMRC                              ((uint8_t)0x02U)
-#define PWR_STPMCR_HAPORDIS_POS                        (3U)
-#define PWR_STPMCR_HAPORDIS                            ((uint8_t)0x08U)
-#define PWR_STPMCR_STPDAS_POS                          (6U)
-#define PWR_STPMCR_STPDAS                              ((uint8_t)0x40U)
-#define PWR_STPMCR_STOP_POS                            (7U)
-#define PWR_STPMCR_STOP                                ((uint8_t)0x80U)
-
-/*  Bit definition for PWR_PWRC register  */
-#define PWR_PWRC_PWDRV_POS                             (0U)
-#define PWR_PWRC_PWDRV                                 ((uint16_t)0x003FU)
-#define PWR_PWRC_PWDRV_0                               ((uint16_t)0x0001U)
-#define PWR_PWRC_PWDRV_1                               ((uint16_t)0x0002U)
-#define PWR_PWRC_PWDRV_2                               ((uint16_t)0x0004U)
-#define PWR_PWRC_PWDRV_3                               ((uint16_t)0x0008U)
-#define PWR_PWRC_PWDRV_4                               ((uint16_t)0x0010U)
-#define PWR_PWRC_PWDRV_5                               ((uint16_t)0x0020U)
-#define PWR_PWRC_ACTV_POS                              (6U)
-#define PWR_PWRC_ACTV                                  ((uint16_t)0x0040U)
-#define PWR_PWRC_DVS_POS                               (7U)
-#define PWR_PWRC_DVS                                   ((uint16_t)0x0080U)
-#define PWR_PWRC_VHRCE_POS                             (8U)
-#define PWR_PWRC_VHRCE                                 ((uint16_t)0x0100U)
-#define PWR_PWRC_VPLLE_POS                             (9U)
-#define PWR_PWRC_VPLLE                                 ((uint16_t)0x0200U)
-#define PWR_PWRC_HCHDTDIS_POS                          (10U)
-#define PWR_PWRC_HCHDTDIS                              ((uint16_t)0x0400U)
-#define PWR_PWRC_PLHDTDIS_POS                          (11U)
-#define PWR_PWRC_PLHDTDIS                              ((uint16_t)0x0800U)
-#define PWR_PWRC_HDTDIS_POS                            (12U)
-#define PWR_PWRC_HDTDIS                                ((uint16_t)0x1000U)
-#define PWR_PWRC_HRCPWRDY_POS                          (13U)
-#define PWR_PWRC_HRCPWRDY                              ((uint16_t)0x2000U)
-#define PWR_PWRC_PLLPWRDY_POS                          (14U)
-#define PWR_PWRC_PLLPWRDY                              ((uint16_t)0x4000U)
-
-/*  Bit definition for PWR_PWRMONR register  */
-#define PWR_PWRMONR_PWMONSEL_POS                       (0U)
-#define PWR_PWRMONR_PWMONSEL                           ((uint8_t)0x01U)
-#define PWR_PWRMONR_PWMONE_POS                         (1U)
-#define PWR_PWRMONR_PWMONE                             ((uint8_t)0x02U)
-
-/*  Bit definition for PWR_RAMCR register  */
-#define PWR_RAMCR_RPERDIS_POS                          (4U)
-#define PWR_RAMCR_RPERDIS                              ((uint8_t)0x10U)
-#define PWR_RAMCR_SRPEF_POS                            (5U)
-#define PWR_RAMCR_SRPEF                                ((uint8_t)0x20U)
-#define PWR_RAMCR_HRPEF_POS                            (6U)
-#define PWR_RAMCR_HRPEF                                ((uint8_t)0x40U)
-#define PWR_RAMCR_CRPEF_POS                            (7U)
-#define PWR_RAMCR_CRPEF                                ((uint8_t)0x80U)
-
-/*  Bit definition for PWR_LVDCR0 register  */
-#define PWR_LVDCR0_L1IEGS_POS                          (2U)
-#define PWR_LVDCR0_L1IEGS                              ((uint32_t)0x0000000CU)
-#define PWR_LVDCR0_L1IEGS_0                            ((uint32_t)0x00000004U)
-#define PWR_LVDCR0_L1IEGS_1                            ((uint32_t)0x00000008U)
-#define PWR_LVDCR0_L1LVL_POS                           (4U)
-#define PWR_LVDCR0_L1LVL                               ((uint32_t)0x000000F0U)
-#define PWR_LVDCR0_L1LVL_0                             ((uint32_t)0x00000010U)
-#define PWR_LVDCR0_L1LVL_1                             ((uint32_t)0x00000020U)
-#define PWR_LVDCR0_L1LVL_2                             ((uint32_t)0x00000040U)
-#define PWR_LVDCR0_L1LVL_3                             ((uint32_t)0x00000080U)
-#define PWR_LVDCR0_L1NFS_POS                           (8U)
-#define PWR_LVDCR0_L1NFS                               ((uint32_t)0x00000300U)
-#define PWR_LVDCR0_L1NFS_0                             ((uint32_t)0x00000100U)
-#define PWR_LVDCR0_L1NFS_1                             ((uint32_t)0x00000200U)
-#define PWR_LVDCR0_L1NFDIS_POS                         (10U)
-#define PWR_LVDCR0_L1NFDIS                             ((uint32_t)0x00000400U)
-#define PWR_LVDCR0_L1NMIS_POS                          (11U)
-#define PWR_LVDCR0_L1NMIS                              ((uint32_t)0x00000800U)
-#define PWR_LVDCR0_L1IRS_POS                           (12U)
-#define PWR_LVDCR0_L1IRS                               ((uint32_t)0x00001000U)
-#define PWR_LVDCR0_L1IRE_POS                           (13U)
-#define PWR_LVDCR0_L1IRE                               ((uint32_t)0x00002000U)
-#define PWR_LVDCR0_L1CMPOE_POS                         (14U)
-#define PWR_LVDCR0_L1CMPOE                             ((uint32_t)0x00004000U)
-#define PWR_LVDCR0_L1EN_POS                            (15U)
-#define PWR_LVDCR0_L1EN                                ((uint32_t)0x00008000U)
-#define PWR_LVDCR0_EXVCCINEN_POS                       (16U)
-#define PWR_LVDCR0_EXVCCINEN                           ((uint32_t)0x00010000U)
-#define PWR_LVDCR0_L2IEGS_POS                          (18U)
-#define PWR_LVDCR0_L2IEGS                              ((uint32_t)0x000C0000U)
-#define PWR_LVDCR0_L2IEGS_0                            ((uint32_t)0x00040000U)
-#define PWR_LVDCR0_L2IEGS_1                            ((uint32_t)0x00080000U)
-#define PWR_LVDCR0_L2LVL_POS                           (20U)
-#define PWR_LVDCR0_L2LVL                               ((uint32_t)0x00F00000U)
-#define PWR_LVDCR0_L2LVL_0                             ((uint32_t)0x00100000U)
-#define PWR_LVDCR0_L2LVL_1                             ((uint32_t)0x00200000U)
-#define PWR_LVDCR0_L2LVL_2                             ((uint32_t)0x00400000U)
-#define PWR_LVDCR0_L2LVL_3                             ((uint32_t)0x00800000U)
-#define PWR_LVDCR0_L2NFS_POS                           (24U)
-#define PWR_LVDCR0_L2NFS                               ((uint32_t)0x03000000U)
-#define PWR_LVDCR0_L2NFS_0                             ((uint32_t)0x01000000U)
-#define PWR_LVDCR0_L2NFS_1                             ((uint32_t)0x02000000U)
-#define PWR_LVDCR0_L2NFDIS_POS                         (26U)
-#define PWR_LVDCR0_L2NFDIS                             ((uint32_t)0x04000000U)
-#define PWR_LVDCR0_L2NMIS_POS                          (27U)
-#define PWR_LVDCR0_L2NMIS                              ((uint32_t)0x08000000U)
-#define PWR_LVDCR0_L2IRS_POS                           (28U)
-#define PWR_LVDCR0_L2IRS                               ((uint32_t)0x10000000U)
-#define PWR_LVDCR0_L2IRE_POS                           (29U)
-#define PWR_LVDCR0_L2IRE                               ((uint32_t)0x20000000U)
-#define PWR_LVDCR0_L2CMPOE_POS                         (30U)
-#define PWR_LVDCR0_L2CMPOE                             ((uint32_t)0x40000000U)
-#define PWR_LVDCR0_L2EN_POS                            (31U)
-#define PWR_LVDCR0_L2EN                                ((uint32_t)0x80000000U)
-
-/*  Bit definition for PWR_LVDCSR1 register  */
-#define PWR_LVDCSR1_L1MON_POS                          (0U)
-#define PWR_LVDCSR1_L1MON                              ((uint8_t)0x01U)
-#define PWR_LVDCSR1_L2MON_POS                          (1U)
-#define PWR_LVDCSR1_L2MON                              ((uint8_t)0x02U)
-#define PWR_LVDCSR1_L1DETF_POS                         (2U)
-#define PWR_LVDCSR1_L1DETF                             ((uint8_t)0x04U)
-#define PWR_LVDCSR1_L2DETF_POS                         (3U)
-#define PWR_LVDCSR1_L2DETF                             ((uint8_t)0x08U)
-#define PWR_LVDCSR1_L0MON_POS                          (4U)
-#define PWR_LVDCSR1_L0MON                              ((uint8_t)0x10U)
-#define PWR_LVDCSR1_L0CMPOE_POS                        (7U)
-#define PWR_LVDCSR1_L0CMPOE                            ((uint8_t)0x80U)
-
-/*  Bit definition for PWR_FPRC register  */
-#define PWR_FPRC_CKRWE_POS                             (0U)
-#define PWR_FPRC_CKRWE                                 ((uint16_t)0x0001U)
-#define PWR_FPRC_PWRWE_POS                             (1U)
-#define PWR_FPRC_PWRWE                                 ((uint16_t)0x0002U)
-#define PWR_FPRC_FPRCB2_POS                            (2U)
-#define PWR_FPRC_FPRCB2                                ((uint16_t)0x0004U)
-#define PWR_FPRC_LVRWE_POS                             (3U)
-#define PWR_FPRC_LVRWE                                 ((uint16_t)0x0008U)
-#define PWR_FPRC_FPRCB4_POS                            (4U)
-#define PWR_FPRC_FPRCB4                                ((uint16_t)0x0010U)
-#define PWR_FPRC_FPRCB5_POS                            (5U)
-#define PWR_FPRC_FPRCB5                                ((uint16_t)0x0020U)
-#define PWR_FPRC_FPRCB6_POS                            (6U)
-#define PWR_FPRC_FPRCB6                                ((uint16_t)0x0040U)
-#define PWR_FPRC_FPRCB7_POS                            (7U)
-#define PWR_FPRC_FPRCB7                                ((uint16_t)0x0080U)
-#define PWR_FPRC_FPRCWE_POS                            (8U)
-#define PWR_FPRC_FPRCWE                                ((uint16_t)0xFF00U)
-#define PWR_FPRC_FPRCWE_0                              ((uint16_t)0x0100U)
-#define PWR_FPRC_FPRCWE_1                              ((uint16_t)0x0200U)
-#define PWR_FPRC_FPRCWE_2                              ((uint16_t)0x0400U)
-#define PWR_FPRC_FPRCWE_3                              ((uint16_t)0x0800U)
-#define PWR_FPRC_FPRCWE_4                              ((uint16_t)0x1000U)
-#define PWR_FPRC_FPRCWE_5                              ((uint16_t)0x2000U)
-#define PWR_FPRC_FPRCWE_6                              ((uint16_t)0x4000U)
-#define PWR_FPRC_FPRCWE_7                              ((uint16_t)0x8000U)
-
-/*  Bit definition for PWR_DBGC register  */
-#define PWR_DBGC_DBGEN_POS                             (0U)
-#define PWR_DBGC_DBGEN                                 ((uint16_t)0x0001U)
-#define PWR_DBGC_TRSTF_POS                             (15U)
-#define PWR_DBGC_TRSTF                                 ((uint16_t)0x8000U)
-
-/*  Bit definition for PWR_RSTF0 register  */
-#define PWR_RSTF0_PORF_POS                             (0U)
-#define PWR_RSTF0_PORF                                 ((uint16_t)0x0001U)
-#define PWR_RSTF0_PINRF_POS                            (1U)
-#define PWR_RSTF0_PINRF                                ((uint16_t)0x0002U)
-#define PWR_RSTF0_LV0RF_POS                            (2U)
-#define PWR_RSTF0_LV0RF                                ((uint16_t)0x0004U)
-#define PWR_RSTF0_LV1RF_POS                            (3U)
-#define PWR_RSTF0_LV1RF                                ((uint16_t)0x0008U)
-#define PWR_RSTF0_LV2RF_POS                            (4U)
-#define PWR_RSTF0_LV2RF                                ((uint16_t)0x0010U)
-#define PWR_RSTF0_SWDRF_POS                            (5U)
-#define PWR_RSTF0_SWDRF                                ((uint16_t)0x0020U)
-#define PWR_RSTF0_WDRF_POS                             (6U)
-#define PWR_RSTF0_WDRF                                 ((uint16_t)0x0040U)
-#define PWR_RSTF0_CKFERF_POS                           (7U)
-#define PWR_RSTF0_CKFERF                               ((uint16_t)0x0080U)
-#define PWR_RSTF0_SWRF_POS                             (8U)
-#define PWR_RSTF0_SWRF                                 ((uint16_t)0x0100U)
-#define PWR_RSTF0_RAMPERF_POS                          (10U)
-#define PWR_RSTF0_RAMPERF                              ((uint16_t)0x0400U)
-#define PWR_RSTF0_CPULKUPRF_POS                        (12U)
-#define PWR_RSTF0_CPULKUPRF                            ((uint16_t)0x1000U)
-#define PWR_RSTF0_XTALERF_POS                          (13U)
-#define PWR_RSTF0_XTALERF                              ((uint16_t)0x2000U)
-#define PWR_RSTF0_MULTIRF_POS                          (14U)
-#define PWR_RSTF0_MULTIRF                              ((uint16_t)0x4000U)
-#define PWR_RSTF0_CLRF_POS                             (15U)
-#define PWR_RSTF0_CLRF                                 ((uint16_t)0x8000U)
-
-
-/*******************************************************************************
                 Bit definition for Peripheral FCM
 *******************************************************************************/
 /*  Bit definition for FCM_LVR register  */
@@ -4499,6 +4305,200 @@ typedef struct
 #define INTC_IER_IER14                                 ((uint32_t)0x00004000U)
 #define INTC_IER_IER15_POS                             (15U)
 #define INTC_IER_IER15                                 ((uint32_t)0x00008000U)
+
+
+/*******************************************************************************
+                Bit definition for Peripheral PWR
+*******************************************************************************/
+/*  Bit definition for PWR_STPMCR register  */
+#define PWR_STPMCR_FLNWT_POS                           (0U)
+#define PWR_STPMCR_FLNWT                               ((uint8_t)0x01U)
+#define PWR_STPMCR_CKSMRC_POS                          (1U)
+#define PWR_STPMCR_CKSMRC                              ((uint8_t)0x02U)
+#define PWR_STPMCR_HAPORDIS_POS                        (3U)
+#define PWR_STPMCR_HAPORDIS                            ((uint8_t)0x08U)
+#define PWR_STPMCR_STPDAS_POS                          (6U)
+#define PWR_STPMCR_STPDAS                              ((uint8_t)0x40U)
+#define PWR_STPMCR_STOP_POS                            (7U)
+#define PWR_STPMCR_STOP                                ((uint8_t)0x80U)
+
+/*  Bit definition for PWR_PWRC register  */
+#define PWR_PWRC_PWDRV_POS                             (0U)
+#define PWR_PWRC_PWDRV                                 ((uint16_t)0x003FU)
+#define PWR_PWRC_PWDRV_0                               ((uint16_t)0x0001U)
+#define PWR_PWRC_PWDRV_1                               ((uint16_t)0x0002U)
+#define PWR_PWRC_PWDRV_2                               ((uint16_t)0x0004U)
+#define PWR_PWRC_PWDRV_3                               ((uint16_t)0x0008U)
+#define PWR_PWRC_PWDRV_4                               ((uint16_t)0x0010U)
+#define PWR_PWRC_PWDRV_5                               ((uint16_t)0x0020U)
+#define PWR_PWRC_ACTV_POS                              (6U)
+#define PWR_PWRC_ACTV                                  ((uint16_t)0x0040U)
+#define PWR_PWRC_DVS_POS                               (7U)
+#define PWR_PWRC_DVS                                   ((uint16_t)0x0080U)
+#define PWR_PWRC_VHRCE_POS                             (8U)
+#define PWR_PWRC_VHRCE                                 ((uint16_t)0x0100U)
+#define PWR_PWRC_VPLLE_POS                             (9U)
+#define PWR_PWRC_VPLLE                                 ((uint16_t)0x0200U)
+#define PWR_PWRC_HCHDTDIS_POS                          (10U)
+#define PWR_PWRC_HCHDTDIS                              ((uint16_t)0x0400U)
+#define PWR_PWRC_PLHDTDIS_POS                          (11U)
+#define PWR_PWRC_PLHDTDIS                              ((uint16_t)0x0800U)
+#define PWR_PWRC_HDTDIS_POS                            (12U)
+#define PWR_PWRC_HDTDIS                                ((uint16_t)0x1000U)
+#define PWR_PWRC_HRCPWRDY_POS                          (13U)
+#define PWR_PWRC_HRCPWRDY                              ((uint16_t)0x2000U)
+#define PWR_PWRC_PLLPWRDY_POS                          (14U)
+#define PWR_PWRC_PLLPWRDY                              ((uint16_t)0x4000U)
+
+/*  Bit definition for PWR_PWRMONR register  */
+#define PWR_PWRMONR_PWMONSEL_POS                       (0U)
+#define PWR_PWRMONR_PWMONSEL                           ((uint8_t)0x01U)
+#define PWR_PWRMONR_PWMONE_POS                         (1U)
+#define PWR_PWRMONR_PWMONE                             ((uint8_t)0x02U)
+
+/*  Bit definition for PWR_RAMCR register  */
+#define PWR_RAMCR_RPERDIS_POS                          (4U)
+#define PWR_RAMCR_RPERDIS                              ((uint8_t)0x10U)
+#define PWR_RAMCR_SRPEF_POS                            (5U)
+#define PWR_RAMCR_SRPEF                                ((uint8_t)0x20U)
+#define PWR_RAMCR_HRPEF_POS                            (6U)
+#define PWR_RAMCR_HRPEF                                ((uint8_t)0x40U)
+#define PWR_RAMCR_CRPEF_POS                            (7U)
+#define PWR_RAMCR_CRPEF                                ((uint8_t)0x80U)
+
+/*  Bit definition for PWR_LVDCR0 register  */
+#define PWR_LVDCR0_L1IEGS_POS                          (2U)
+#define PWR_LVDCR0_L1IEGS                              ((uint32_t)0x0000000CU)
+#define PWR_LVDCR0_L1IEGS_0                            ((uint32_t)0x00000004U)
+#define PWR_LVDCR0_L1IEGS_1                            ((uint32_t)0x00000008U)
+#define PWR_LVDCR0_L1LVL_POS                           (4U)
+#define PWR_LVDCR0_L1LVL                               ((uint32_t)0x000000F0U)
+#define PWR_LVDCR0_L1LVL_0                             ((uint32_t)0x00000010U)
+#define PWR_LVDCR0_L1LVL_1                             ((uint32_t)0x00000020U)
+#define PWR_LVDCR0_L1LVL_2                             ((uint32_t)0x00000040U)
+#define PWR_LVDCR0_L1LVL_3                             ((uint32_t)0x00000080U)
+#define PWR_LVDCR0_L1NFS_POS                           (8U)
+#define PWR_LVDCR0_L1NFS                               ((uint32_t)0x00000300U)
+#define PWR_LVDCR0_L1NFS_0                             ((uint32_t)0x00000100U)
+#define PWR_LVDCR0_L1NFS_1                             ((uint32_t)0x00000200U)
+#define PWR_LVDCR0_L1NFDIS_POS                         (10U)
+#define PWR_LVDCR0_L1NFDIS                             ((uint32_t)0x00000400U)
+#define PWR_LVDCR0_L1NMIS_POS                          (11U)
+#define PWR_LVDCR0_L1NMIS                              ((uint32_t)0x00000800U)
+#define PWR_LVDCR0_L1IRS_POS                           (12U)
+#define PWR_LVDCR0_L1IRS                               ((uint32_t)0x00001000U)
+#define PWR_LVDCR0_L1IRE_POS                           (13U)
+#define PWR_LVDCR0_L1IRE                               ((uint32_t)0x00002000U)
+#define PWR_LVDCR0_L1CMPOE_POS                         (14U)
+#define PWR_LVDCR0_L1CMPOE                             ((uint32_t)0x00004000U)
+#define PWR_LVDCR0_L1EN_POS                            (15U)
+#define PWR_LVDCR0_L1EN                                ((uint32_t)0x00008000U)
+#define PWR_LVDCR0_EXVCCINEN_POS                       (16U)
+#define PWR_LVDCR0_EXVCCINEN                           ((uint32_t)0x00010000U)
+#define PWR_LVDCR0_L2IEGS_POS                          (18U)
+#define PWR_LVDCR0_L2IEGS                              ((uint32_t)0x000C0000U)
+#define PWR_LVDCR0_L2IEGS_0                            ((uint32_t)0x00040000U)
+#define PWR_LVDCR0_L2IEGS_1                            ((uint32_t)0x00080000U)
+#define PWR_LVDCR0_L2LVL_POS                           (20U)
+#define PWR_LVDCR0_L2LVL                               ((uint32_t)0x00F00000U)
+#define PWR_LVDCR0_L2LVL_0                             ((uint32_t)0x00100000U)
+#define PWR_LVDCR0_L2LVL_1                             ((uint32_t)0x00200000U)
+#define PWR_LVDCR0_L2LVL_2                             ((uint32_t)0x00400000U)
+#define PWR_LVDCR0_L2LVL_3                             ((uint32_t)0x00800000U)
+#define PWR_LVDCR0_L2NFS_POS                           (24U)
+#define PWR_LVDCR0_L2NFS                               ((uint32_t)0x03000000U)
+#define PWR_LVDCR0_L2NFS_0                             ((uint32_t)0x01000000U)
+#define PWR_LVDCR0_L2NFS_1                             ((uint32_t)0x02000000U)
+#define PWR_LVDCR0_L2NFDIS_POS                         (26U)
+#define PWR_LVDCR0_L2NFDIS                             ((uint32_t)0x04000000U)
+#define PWR_LVDCR0_L2NMIS_POS                          (27U)
+#define PWR_LVDCR0_L2NMIS                              ((uint32_t)0x08000000U)
+#define PWR_LVDCR0_L2IRS_POS                           (28U)
+#define PWR_LVDCR0_L2IRS                               ((uint32_t)0x10000000U)
+#define PWR_LVDCR0_L2IRE_POS                           (29U)
+#define PWR_LVDCR0_L2IRE                               ((uint32_t)0x20000000U)
+#define PWR_LVDCR0_L2CMPOE_POS                         (30U)
+#define PWR_LVDCR0_L2CMPOE                             ((uint32_t)0x40000000U)
+#define PWR_LVDCR0_L2EN_POS                            (31U)
+#define PWR_LVDCR0_L2EN                                ((uint32_t)0x80000000U)
+
+/*  Bit definition for PWR_LVDCSR1 register  */
+#define PWR_LVDCSR1_L1MON_POS                          (0U)
+#define PWR_LVDCSR1_L1MON                              ((uint8_t)0x01U)
+#define PWR_LVDCSR1_L2MON_POS                          (1U)
+#define PWR_LVDCSR1_L2MON                              ((uint8_t)0x02U)
+#define PWR_LVDCSR1_L1DETF_POS                         (2U)
+#define PWR_LVDCSR1_L1DETF                             ((uint8_t)0x04U)
+#define PWR_LVDCSR1_L2DETF_POS                         (3U)
+#define PWR_LVDCSR1_L2DETF                             ((uint8_t)0x08U)
+#define PWR_LVDCSR1_L0MON_POS                          (4U)
+#define PWR_LVDCSR1_L0MON                              ((uint8_t)0x10U)
+#define PWR_LVDCSR1_L0CMPOE_POS                        (7U)
+#define PWR_LVDCSR1_L0CMPOE                            ((uint8_t)0x80U)
+
+/*  Bit definition for PWR_FPRC register  */
+#define PWR_FPRC_CKRWE_POS                             (0U)
+#define PWR_FPRC_CKRWE                                 ((uint16_t)0x0001U)
+#define PWR_FPRC_PWRWE_POS                             (1U)
+#define PWR_FPRC_PWRWE                                 ((uint16_t)0x0002U)
+#define PWR_FPRC_FPRCB2_POS                            (2U)
+#define PWR_FPRC_FPRCB2                                ((uint16_t)0x0004U)
+#define PWR_FPRC_LVRWE_POS                             (3U)
+#define PWR_FPRC_LVRWE                                 ((uint16_t)0x0008U)
+#define PWR_FPRC_FPRCB4_POS                            (4U)
+#define PWR_FPRC_FPRCB4                                ((uint16_t)0x0010U)
+#define PWR_FPRC_FPRCB5_POS                            (5U)
+#define PWR_FPRC_FPRCB5                                ((uint16_t)0x0020U)
+#define PWR_FPRC_FPRCB6_POS                            (6U)
+#define PWR_FPRC_FPRCB6                                ((uint16_t)0x0040U)
+#define PWR_FPRC_FPRCB7_POS                            (7U)
+#define PWR_FPRC_FPRCB7                                ((uint16_t)0x0080U)
+#define PWR_FPRC_FPRCWE_POS                            (8U)
+#define PWR_FPRC_FPRCWE                                ((uint16_t)0xFF00U)
+#define PWR_FPRC_FPRCWE_0                              ((uint16_t)0x0100U)
+#define PWR_FPRC_FPRCWE_1                              ((uint16_t)0x0200U)
+#define PWR_FPRC_FPRCWE_2                              ((uint16_t)0x0400U)
+#define PWR_FPRC_FPRCWE_3                              ((uint16_t)0x0800U)
+#define PWR_FPRC_FPRCWE_4                              ((uint16_t)0x1000U)
+#define PWR_FPRC_FPRCWE_5                              ((uint16_t)0x2000U)
+#define PWR_FPRC_FPRCWE_6                              ((uint16_t)0x4000U)
+#define PWR_FPRC_FPRCWE_7                              ((uint16_t)0x8000U)
+
+/*  Bit definition for PWR_DBGC register  */
+#define PWR_DBGC_DBGEN_POS                             (0U)
+#define PWR_DBGC_DBGEN                                 ((uint16_t)0x0001U)
+#define PWR_DBGC_TRSTF_POS                             (15U)
+#define PWR_DBGC_TRSTF                                 ((uint16_t)0x8000U)
+
+/*  Bit definition for PWR_RSTF0 register  */
+#define PWR_RSTF0_PORF_POS                             (0U)
+#define PWR_RSTF0_PORF                                 ((uint16_t)0x0001U)
+#define PWR_RSTF0_PINRF_POS                            (1U)
+#define PWR_RSTF0_PINRF                                ((uint16_t)0x0002U)
+#define PWR_RSTF0_LV0RF_POS                            (2U)
+#define PWR_RSTF0_LV0RF                                ((uint16_t)0x0004U)
+#define PWR_RSTF0_LV1RF_POS                            (3U)
+#define PWR_RSTF0_LV1RF                                ((uint16_t)0x0008U)
+#define PWR_RSTF0_LV2RF_POS                            (4U)
+#define PWR_RSTF0_LV2RF                                ((uint16_t)0x0010U)
+#define PWR_RSTF0_SWDRF_POS                            (5U)
+#define PWR_RSTF0_SWDRF                                ((uint16_t)0x0020U)
+#define PWR_RSTF0_WDRF_POS                             (6U)
+#define PWR_RSTF0_WDRF                                 ((uint16_t)0x0040U)
+#define PWR_RSTF0_CKFERF_POS                           (7U)
+#define PWR_RSTF0_CKFERF                               ((uint16_t)0x0080U)
+#define PWR_RSTF0_SWRF_POS                             (8U)
+#define PWR_RSTF0_SWRF                                 ((uint16_t)0x0100U)
+#define PWR_RSTF0_RAMPERF_POS                          (10U)
+#define PWR_RSTF0_RAMPERF                              ((uint16_t)0x0400U)
+#define PWR_RSTF0_CPULKUPRF_POS                        (12U)
+#define PWR_RSTF0_CPULKUPRF                            ((uint16_t)0x1000U)
+#define PWR_RSTF0_XTALERF_POS                          (13U)
+#define PWR_RSTF0_XTALERF                              ((uint16_t)0x2000U)
+#define PWR_RSTF0_MULTIRF_POS                          (14U)
+#define PWR_RSTF0_MULTIRF                              ((uint16_t)0x4000U)
+#define PWR_RSTF0_CLRF_POS                             (15U)
+#define PWR_RSTF0_CLRF                                 ((uint16_t)0x8000U)
 
 
 /*******************************************************************************
@@ -6668,7 +6668,7 @@ typedef struct
     uint32_t RESERVED0[2];
     __IO uint32_t XTALSTBF;
     uint32_t RESERVED1[1];
-    __IO uint32_t MPLLSTBF;
+    __IO uint32_t PLLSTBF;
     uint32_t RESERVED2[2];
 } stc_cmu_oscstbsr_bit_t;
 
@@ -6739,26 +6739,26 @@ typedef struct
 
 typedef struct
 {
-    __IO uint32_t MPLLM0;
-    __IO uint32_t MPLLM1;
-    __IO uint32_t MPLLM2;
+    __IO uint32_t PLLM0;
+    __IO uint32_t PLLM1;
+    __IO uint32_t PLLM2;
     uint32_t RESERVED0[4];
     __IO uint32_t PLLSRC;
-    __IO uint32_t MPLLN0;
-    __IO uint32_t MPLLN1;
-    __IO uint32_t MPLLN2;
-    __IO uint32_t MPLLN3;
-    __IO uint32_t MPLLN4;
-    __IO uint32_t MPLLN5;
+    __IO uint32_t PLLN0;
+    __IO uint32_t PLLN1;
+    __IO uint32_t PLLN2;
+    __IO uint32_t PLLN3;
+    __IO uint32_t PLLN4;
+    __IO uint32_t PLLN5;
     uint32_t RESERVED1[14];
-    __IO uint32_t MPLLP0;
-    __IO uint32_t MPLLP1;
+    __IO uint32_t PLLP0;
+    __IO uint32_t PLLP1;
     uint32_t RESERVED2[2];
 } stc_cmu_pllcfgr_bit_t;
 
 typedef struct
 {
-    __IO uint32_t MPLLOFF;
+    __IO uint32_t PLLOFF;
     uint32_t RESERVED0[7];
 } stc_cmu_pllcr_bit_t;
 
@@ -9585,146 +9585,6 @@ typedef struct
 
 typedef struct
 {
-    __IO uint32_t FLNWT;
-    __IO uint32_t CKSMRC;
-    uint32_t RESERVED0[1];
-    __IO uint32_t HAPORDIS;
-    uint32_t RESERVED1[2];
-    __IO uint32_t STPDAS;
-    __IO uint32_t STOP;
-} stc_pwr_stpmcr_bit_t;
-
-typedef struct
-{
-    __IO uint32_t PWDRV0;
-    __IO uint32_t PWDRV1;
-    __IO uint32_t PWDRV2;
-    __IO uint32_t PWDRV3;
-    __IO uint32_t PWDRV4;
-    __IO uint32_t PWDRV5;
-    __IO uint32_t ACTV;
-    __IO uint32_t DVS;
-    __IO uint32_t VHRCE;
-    __IO uint32_t VPLLE;
-    __IO uint32_t HCHDTDIS;
-    __IO uint32_t PLHDTDIS;
-    __IO uint32_t HDTDIS;
-    __IO uint32_t HRCPWRDY;
-    __IO uint32_t PLLPWRDY;
-    uint32_t RESERVED0[1];
-} stc_pwr_pwrc_bit_t;
-
-typedef struct
-{
-    __IO uint32_t PWMONSEL;
-    __IO uint32_t PWMONE;
-    uint32_t RESERVED0[6];
-} stc_pwr_pwrmonr_bit_t;
-
-typedef struct
-{
-    uint32_t RESERVED0[4];
-    __IO uint32_t RPERDIS;
-    __IO uint32_t SRPEF;
-    __IO uint32_t HRPEF;
-    __IO uint32_t CRPEF;
-} stc_pwr_ramcr_bit_t;
-
-typedef struct
-{
-    uint32_t RESERVED0[2];
-    __IO uint32_t L1IEGS0;
-    __IO uint32_t L1IEGS1;
-    __IO uint32_t L1LVL0;
-    __IO uint32_t L1LVL1;
-    __IO uint32_t L1LVL2;
-    __IO uint32_t L1LVL3;
-    __IO uint32_t L1NFS0;
-    __IO uint32_t L1NFS1;
-    __IO uint32_t L1NFDIS;
-    __IO uint32_t L1NMIS;
-    __IO uint32_t L1IRS;
-    __IO uint32_t L1IRE;
-    __IO uint32_t L1CMPOE;
-    __IO uint32_t L1EN;
-    __IO uint32_t EXVCCINEN;
-    uint32_t RESERVED1[1];
-    __IO uint32_t L2IEGS0;
-    __IO uint32_t L2IEGS1;
-    __IO uint32_t L2LVL0;
-    __IO uint32_t L2LVL1;
-    __IO uint32_t L2LVL2;
-    __IO uint32_t L2LVL3;
-    __IO uint32_t L2NFS0;
-    __IO uint32_t L2NFS1;
-    __IO uint32_t L2NFDIS;
-    __IO uint32_t L2NMIS;
-    __IO uint32_t L2IRS;
-    __IO uint32_t L2IRE;
-    __IO uint32_t L2CMPOE;
-    __IO uint32_t L2EN;
-} stc_pwr_lvdcr0_bit_t;
-
-typedef struct
-{
-    __IO uint32_t L1MON;
-    __IO uint32_t L2MON;
-    __IO uint32_t L1DETF;
-    __IO uint32_t L2DETF;
-    __IO uint32_t L0MON;
-    uint32_t RESERVED0[2];
-    __IO uint32_t L0CMPOE;
-} stc_pwr_lvdcsr1_bit_t;
-
-typedef struct
-{
-    __IO uint32_t CKRWE;
-    __IO uint32_t PWRWE;
-    __IO uint32_t FPRCB2;
-    __IO uint32_t LVRWE;
-    __IO uint32_t FPRCB4;
-    __IO uint32_t FPRCB5;
-    __IO uint32_t FPRCB6;
-    __IO uint32_t FPRCB7;
-    __IO uint32_t FPRCWE0;
-    __IO uint32_t FPRCWE1;
-    __IO uint32_t FPRCWE2;
-    __IO uint32_t FPRCWE3;
-    __IO uint32_t FPRCWE4;
-    __IO uint32_t FPRCWE5;
-    __IO uint32_t FPRCWE6;
-    __IO uint32_t FPRCWE7;
-} stc_pwr_fprc_bit_t;
-
-typedef struct
-{
-    __IO uint32_t DBGEN;
-    uint32_t RESERVED0[14];
-    __IO uint32_t TRSTF;
-} stc_pwr_dbgc_bit_t;
-
-typedef struct
-{
-    __IO uint32_t PORF;
-    __IO uint32_t PINRF;
-    __IO uint32_t LV0RF;
-    __IO uint32_t LV1RF;
-    __IO uint32_t LV2RF;
-    __IO uint32_t SWDRF;
-    __IO uint32_t WDRF;
-    __IO uint32_t CKFERF;
-    __IO uint32_t SWRF;
-    uint32_t RESERVED0[1];
-    __IO uint32_t RAMPERF;
-    uint32_t RESERVED1[1];
-    __IO uint32_t CPULKUPRF;
-    __IO uint32_t XTALERF;
-    __IO uint32_t MULTIRF;
-    __IO uint32_t CLRF;
-} stc_pwr_rstf0_bit_t;
-
-typedef struct
-{
     __IO uint32_t LVR0;
     __IO uint32_t LVR1;
     __IO uint32_t LVR2;
@@ -10624,6 +10484,146 @@ typedef struct
     __IO uint32_t IER15;
     uint32_t RESERVED0[16];
 } stc_intc_ier_bit_t;
+
+typedef struct
+{
+    __IO uint32_t FLNWT;
+    __IO uint32_t CKSMRC;
+    uint32_t RESERVED0[1];
+    __IO uint32_t HAPORDIS;
+    uint32_t RESERVED1[2];
+    __IO uint32_t STPDAS;
+    __IO uint32_t STOP;
+} stc_pwr_stpmcr_bit_t;
+
+typedef struct
+{
+    __IO uint32_t PWDRV0;
+    __IO uint32_t PWDRV1;
+    __IO uint32_t PWDRV2;
+    __IO uint32_t PWDRV3;
+    __IO uint32_t PWDRV4;
+    __IO uint32_t PWDRV5;
+    __IO uint32_t ACTV;
+    __IO uint32_t DVS;
+    __IO uint32_t VHRCE;
+    __IO uint32_t VPLLE;
+    __IO uint32_t HCHDTDIS;
+    __IO uint32_t PLHDTDIS;
+    __IO uint32_t HDTDIS;
+    __IO uint32_t HRCPWRDY;
+    __IO uint32_t PLLPWRDY;
+    uint32_t RESERVED0[1];
+} stc_pwr_pwrc_bit_t;
+
+typedef struct
+{
+    __IO uint32_t PWMONSEL;
+    __IO uint32_t PWMONE;
+    uint32_t RESERVED0[6];
+} stc_pwr_pwrmonr_bit_t;
+
+typedef struct
+{
+    uint32_t RESERVED0[4];
+    __IO uint32_t RPERDIS;
+    __IO uint32_t SRPEF;
+    __IO uint32_t HRPEF;
+    __IO uint32_t CRPEF;
+} stc_pwr_ramcr_bit_t;
+
+typedef struct
+{
+    uint32_t RESERVED0[2];
+    __IO uint32_t L1IEGS0;
+    __IO uint32_t L1IEGS1;
+    __IO uint32_t L1LVL0;
+    __IO uint32_t L1LVL1;
+    __IO uint32_t L1LVL2;
+    __IO uint32_t L1LVL3;
+    __IO uint32_t L1NFS0;
+    __IO uint32_t L1NFS1;
+    __IO uint32_t L1NFDIS;
+    __IO uint32_t L1NMIS;
+    __IO uint32_t L1IRS;
+    __IO uint32_t L1IRE;
+    __IO uint32_t L1CMPOE;
+    __IO uint32_t L1EN;
+    __IO uint32_t EXVCCINEN;
+    uint32_t RESERVED1[1];
+    __IO uint32_t L2IEGS0;
+    __IO uint32_t L2IEGS1;
+    __IO uint32_t L2LVL0;
+    __IO uint32_t L2LVL1;
+    __IO uint32_t L2LVL2;
+    __IO uint32_t L2LVL3;
+    __IO uint32_t L2NFS0;
+    __IO uint32_t L2NFS1;
+    __IO uint32_t L2NFDIS;
+    __IO uint32_t L2NMIS;
+    __IO uint32_t L2IRS;
+    __IO uint32_t L2IRE;
+    __IO uint32_t L2CMPOE;
+    __IO uint32_t L2EN;
+} stc_pwr_lvdcr0_bit_t;
+
+typedef struct
+{
+    __IO uint32_t L1MON;
+    __IO uint32_t L2MON;
+    __IO uint32_t L1DETF;
+    __IO uint32_t L2DETF;
+    __IO uint32_t L0MON;
+    uint32_t RESERVED0[2];
+    __IO uint32_t L0CMPOE;
+} stc_pwr_lvdcsr1_bit_t;
+
+typedef struct
+{
+    __IO uint32_t CKRWE;
+    __IO uint32_t PWRWE;
+    __IO uint32_t FPRCB2;
+    __IO uint32_t LVRWE;
+    __IO uint32_t FPRCB4;
+    __IO uint32_t FPRCB5;
+    __IO uint32_t FPRCB6;
+    __IO uint32_t FPRCB7;
+    __IO uint32_t FPRCWE0;
+    __IO uint32_t FPRCWE1;
+    __IO uint32_t FPRCWE2;
+    __IO uint32_t FPRCWE3;
+    __IO uint32_t FPRCWE4;
+    __IO uint32_t FPRCWE5;
+    __IO uint32_t FPRCWE6;
+    __IO uint32_t FPRCWE7;
+} stc_pwr_fprc_bit_t;
+
+typedef struct
+{
+    __IO uint32_t DBGEN;
+    uint32_t RESERVED0[14];
+    __IO uint32_t TRSTF;
+} stc_pwr_dbgc_bit_t;
+
+typedef struct
+{
+    __IO uint32_t PORF;
+    __IO uint32_t PINRF;
+    __IO uint32_t LV0RF;
+    __IO uint32_t LV1RF;
+    __IO uint32_t LV2RF;
+    __IO uint32_t SWDRF;
+    __IO uint32_t WDRF;
+    __IO uint32_t CKFERF;
+    __IO uint32_t SWRF;
+    uint32_t RESERVED0[1];
+    __IO uint32_t RAMPERF;
+    uint32_t RESERVED1[1];
+    __IO uint32_t CPULKUPRF;
+    __IO uint32_t XTALERF;
+    __IO uint32_t MULTIRF;
+    __IO uint32_t CLRF;
+} stc_pwr_rstf0_bit_t;
 
 typedef struct
 {
@@ -12416,26 +12416,6 @@ typedef struct
 
 typedef struct
 {
-    stc_pwr_stpmcr_bit_t                     STPMCR_b;
-    uint32_t                                 RESERVED0[24];
-    stc_pwr_pwrc_bit_t                       PWRC_b;
-    uint32_t                                 RESERVED1[16];
-    stc_pwr_pwrmonr_bit_t                    PWRMONR_b;
-    uint32_t                                 RESERVED2[24];
-    stc_pwr_ramcr_bit_t                      RAMCR_b;
-    uint32_t                                 RESERVED3[24];
-    stc_pwr_lvdcr0_bit_t                     LVDCR0_b;
-    stc_pwr_lvdcsr1_bit_t                    LVDCSR1_b;
-    uint32_t                                 RESERVED4[88];
-    stc_pwr_fprc_bit_t                       FPRC_b;
-    uint32_t                                 RESERVED5[240];
-    stc_pwr_dbgc_bit_t                       DBGC_b;
-    uint32_t                                 RESERVED6[1520];
-    stc_pwr_rstf0_bit_t                      RSTF0_b;
-} bM4_EMU_TypeDef;
-
-typedef struct
-{
     stc_fcm_lvr_bit_t                        LVR_b;
     stc_fcm_uvr_bit_t                        UVR_b;
     stc_fcm_cntr_bit_t                       CNTR_b;
@@ -12822,6 +12802,26 @@ typedef struct
 
 typedef struct
 {
+    stc_pwr_stpmcr_bit_t                     STPMCR_b;
+    uint32_t                                 RESERVED0[24];
+    stc_pwr_pwrc_bit_t                       PWRC_b;
+    uint32_t                                 RESERVED1[16];
+    stc_pwr_pwrmonr_bit_t                    PWRMONR_b;
+    uint32_t                                 RESERVED2[24];
+    stc_pwr_ramcr_bit_t                      RAMCR_b;
+    uint32_t                                 RESERVED3[24];
+    stc_pwr_lvdcr0_bit_t                     LVDCR0_b;
+    stc_pwr_lvdcsr1_bit_t                    LVDCSR1_b;
+    uint32_t                                 RESERVED4[88];
+    stc_pwr_fprc_bit_t                       FPRC_b;
+    uint32_t                                 RESERVED5[240];
+    stc_pwr_dbgc_bit_t                       DBGC_b;
+    uint32_t                                 RESERVED6[1520];
+    stc_pwr_rstf0_bit_t                      RSTF0_b;
+} bM4_PWR_TypeDef;
+
+typedef struct
+{
     stc_rmu_rstf0_bit_t                      RSTF0_b;
 } bM4_RMU_TypeDef;
 
@@ -13064,11 +13064,11 @@ typedef struct
 #define bM4_DMA                              ((bM4_DMA_TypeDef *)0x42A60000UL)
 #define bM4_EFM                              ((bM4_EFM_TypeDef *)0x42208000UL)
 #define bM4_EMB                              ((bM4_EMB_TypeDef *)0x422F8000UL)
-#define bM4_EMU                              ((bM4_EMU_TypeDef *)0x42A80000UL)
 #define bM4_FCM                              ((bM4_FCM_TypeDef *)0x42908000UL)
 #define bM4_GPIO                             ((bM4_GPIO_TypeDef *)0x42A70000UL)
 #define bM4_I2C                              ((bM4_I2C_TypeDef *)0x429C0000UL)
 #define bM4_INTC                             ((bM4_INTC_TypeDef *)0x42A20000UL)
+#define bM4_PWR                              ((bM4_PWR_TypeDef *)0x42A80000UL)
 #define bM4_RMU                              ((bM4_RMU_TypeDef *)0x42A82000UL)
 #define bM4_SPI                              ((bM4_SPI_TypeDef *)0x42380000UL)
 #define bM4_SWDT                             ((bM4_SWDT_TypeDef *)0x42928000UL)
