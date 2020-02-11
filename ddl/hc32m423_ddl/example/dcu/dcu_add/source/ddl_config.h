@@ -1,11 +1,11 @@
 /**
  *******************************************************************************
- * @file  timera/timera_base_timer/source/ddl_config.h
+ * @file  timerb/timerb_base_timer/source/ddl_config.h
  * @brief This file contains HC32 Series Device Driver Library usage management.
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-07       Yangjp          First version
+   2020-02-01       Zhangxl         First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -86,19 +86,18 @@ extern "C"
 #define DDL_ICG_ENABLE                              (DDL_ON)
 #define DDL_UTILITY_ENABLE                          (DDL_ON)
 #define DDL_PRINT_ENABLE                            (DDL_OFF)
-
 #define DDL_ADC_ENABLE                              (DDL_OFF)
 #define DDL_CLK_ENABLE                              (DDL_ON)
 #define DDL_CMP_ENABLE                              (DDL_OFF)
 #define DDL_CRC_ENABLE                              (DDL_OFF)
 #define DDL_CTC_ENABLE                              (DDL_OFF)
-#define DDL_DCU_ENABLE                              (DDL_OFF)
+#define DDL_DCU_ENABLE                              (DDL_ON)
 #define DDL_DMA_ENABLE                              (DDL_OFF)
 #define DDL_EFM_ENABLE                              (DDL_OFF)
 #define DDL_EKEY_ENABLE                             (DDL_OFF)
 #define DDL_EMB_ENABLE                              (DDL_OFF)
 #define DDL_EVENT_PORT_ENABLE                       (DDL_OFF)
-#define DDL_EXINT_NMI_SWI_ENABLE                    (DDL_ON)
+#define DDL_EXINT_NMI_ENABLE                        (DDL_OFF)
 #define DDL_GPIO_ENABLE                             (DDL_ON)
 #define DDL_I2C_ENABLE                              (DDL_OFF)
 #define DDL_INTERRUPTS_ENABLE                       (DDL_ON)
@@ -109,7 +108,7 @@ extern "C"
 #define DDL_TIMER0_ENABLE                           (DDL_OFF)
 #define DDL_TIMER2_ENABLE                           (DDL_OFF)
 #define DDL_TIMER4_ENABLE                           (DDL_OFF)
-#define DDL_TIMERA_ENABLE                           (DDL_ON)
+#define DDL_TIMERA_ENABLE                           (DDL_OFF)
 #define DDL_TIMERB_ENABLE                           (DDL_OFF)
 #define DDL_USART_ENABLE                            (DDL_OFF)
 #define DDL_WDT_ENABLE                              (DDL_OFF)

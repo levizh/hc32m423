@@ -74,8 +74,8 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Wave I/O Port/Pin definition */
-#define WAVE_IO_PORT                    (GPIO_PORT_0)
-#define WAVE_IO_PIN                     (GPIO_PIN_3)
+#define WAVE_IO_PORT                    (GPIO_PORT_7)
+#define WAVE_IO_PIN                     (GPIO_PIN_1)
 #define WAVE_IO_TOGGLE()                do {        \
     GPIO_TogglePins(WAVE_IO_PORT, WAVE_IO_PIN);     \
 } while(0)
@@ -130,6 +130,7 @@ static void WaveIoConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
+    GPIO_StructInit(&stcGpioInit);
     stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_RESET;
     GPIO_Init(WAVE_IO_PORT, WAVE_IO_PIN, &stcGpioInit);
@@ -180,7 +181,7 @@ int32_t main(void)
     stcIrqRegiConf.pfnCallback = &Timer4PwmReloadTimerIrqCb;
     INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
-    NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
+    NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
 
     /* Start pwm count */

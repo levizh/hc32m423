@@ -156,9 +156,6 @@
 (   (TIMERA_CHANNEL_CH1 == (x))                 ||                             \
     (TIMERA_CHANNEL_CH2 == (x)))
 
-#define IS_TIMERA_CACHE_CHANNEL(x)                                             \
-(   (TIMERA_CHANNEL_CH1 == (x)))
-
 #define IS_TIMERA_COUNT_MODE(x)                                                \
 (   (TIMERA_SAWTOOTH_WAVE == (x))               ||                             \
     (TIMERA_TRIANGLE_WAVE == (x)))
@@ -1437,10 +1434,7 @@ en_result_t TIMERA_OC_DeInit(M4_TMRA_TypeDef *TMRAx,
 
         if ((M4_TMRA3 == TMRAx) || (M4_TMRA4 == TMRAx))
         {
-            if (TIMERA_CHANNEL_CH1 == u8Channel)
-            {
-                WRITE_REG16(TMRAx->BCONR, 0x0000U);
-            }
+            WRITE_REG16(TMRAx->BCONR, 0x0000U);
         }
     }
 
@@ -1505,10 +1499,7 @@ en_result_t TIMERA_OC_Init(M4_TMRA_TypeDef *TMRAx, uint8_t u8Channel,
 
         if ((M4_TMRA3 == TMRAx) || (M4_TMRA4 == TMRAx))
         {
-            if (TIMERA_CHANNEL_CH1 == u8Channel)
-            {
-                WRITE_REG16(TMRAx->BCONR, (pstcOcInit->u16CacheState | pstcOcInit->u16CacheTransmitCondition));
-            }
+            WRITE_REG16(TMRAx->BCONR, (pstcOcInit->u16CacheState | pstcOcInit->u16CacheTransmitCondition));
         }
     }
 
@@ -1794,44 +1785,25 @@ void TIMERA_OC_SetForceOutputPolarity(M4_TMRA_TypeDef *TMRAx,
  *         This parameter can be one of the following values:
  *           @arg M4_TMRA3:             TimerA unit 3 instance register base
  *           @arg M4_TMRA4:             TimerA unit 4 instance register base
- * @param  [in] u8Channel               TimerA output compare channel
-           This parameter can be one of the following values:
-             @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
  * @param  [in] enNewSta                The function new state.
  *           @arg  This parameter can be: Enable or Disable.
- * @retval An en_result_t enumeration value:
- *           - Ok: Configure success
- *           - ErrorInvalidParameter: u8Channel is invalid
+ * @retval None
  */
-en_result_t TIMERA_OC_CacheCmd(M4_TMRA_TypeDef *TMRAx,
-                               uint8_t u8Channel,
-                               en_functional_state_t enNewSta)
+void TIMERA_OC_CacheCmd(M4_TMRA_TypeDef *TMRAx,
+                        en_functional_state_t enNewSta)
 {
-    en_result_t enRet = Ok;
+    /* Check parameters */
+    DDL_ASSERT(IS_TIMERA_SPECIAL_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
-    /* Check channel validity */
-    if ((u8Channel % 2U) != 0U)
+    if (Enable == enNewSta)
     {
-        enRet = ErrorInvalidParameter;
+        SET_REG16_BIT(TMRAx->BCONR, TMRA_BCONR_BEN);
     }
     else
     {
-        /* Check parameters */
-        DDL_ASSERT(IS_TIMERA_SPECIAL_INSTANCE(TMRAx));
-        DDL_ASSERT(IS_TIMERA_CACHE_CHANNEL(u8Channel));
-        DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
-
-        if (Enable == enNewSta)
-        {
-            SET_REG16_BIT(TMRAx->BCONR, TMRA_BCONR_BEN);
-        }
-        else
-        {
-            CLEAR_REG16_BIT(TMRAx->BCONR, TMRA_BCONR_BEN);
-        }
+        CLEAR_REG16_BIT(TMRAx->BCONR, TMRA_BCONR_BEN);
     }
-
-    return enRet;
 }
 
 /**
@@ -1840,40 +1812,21 @@ en_result_t TIMERA_OC_CacheCmd(M4_TMRA_TypeDef *TMRAx,
  *         This parameter can be one of the following values:
  *           @arg M4_TMRA3:             TimerA unit 3 instance register base
  *           @arg M4_TMRA4:             TimerA unit 4 instance register base
- * @param  [in] u8Channel               TimerA output compare channel
-           This parameter can be one of the following values:
-             @arg TIMERA_CHANNEL_CH1:   TimerA PWM Channel 1
  * @param  [in] u16Condition            TimerA input capture condition
  *         This parameter can be one or any combination of the following values:
  *           @arg TIMERA_OC_CACHE_TRANSMIT_CREST:   In Triangular wave crest transmit cache value
  *           @arg TIMERA_OC_CACHE_TRANSMIT_TROUGH:  In Triangular wave trough transmit cache value
  *           @arg TIMERA_OC_CACHE_TRANSMIT_INVALID: Invalid cache transmit
- * @retval An en_result_t enumeration value:
- *           - Ok: Configure success
- *           - ErrorInvalidParameter: u8Channel is invalid
+ * @retval None
  */
-en_result_t TIMERA_OC_SetCacheTransmitCondition(M4_TMRA_TypeDef *TMRAx,
-                                                uint8_t u8Channel,
-                                                uint16_t u16Condition)
+void TIMERA_OC_SetCacheTransmitCondition(M4_TMRA_TypeDef *TMRAx,
+                                         uint16_t u16Condition)
 {
-    en_result_t enRet = Ok;
+    /* Check parameters */
+    DDL_ASSERT(IS_TIMERA_SPECIAL_INSTANCE(TMRAx));
+    DDL_ASSERT(IS_TIMERA_OC_CACHE_TRANS_CONDITION(u16Condition));
 
-    /* Check channel validity */
-    if ((u8Channel % 2U) != 0U)
-    {
-        enRet = ErrorInvalidParameter;
-    }
-    else
-    {
-        /* Check parameters */
-        DDL_ASSERT(IS_TIMERA_SPECIAL_INSTANCE(TMRAx));
-        DDL_ASSERT(IS_TIMERA_CACHE_CHANNEL(u8Channel));
-        DDL_ASSERT(IS_TIMERA_OC_CACHE_TRANS_CONDITION(u16Condition));
-
-        MODIFY_REG16(TMRAx->BCONR, TIMERA_BCONR_BSE_MASK, u16Condition);
-    }
-
-    return enRet;
+    MODIFY_REG16(TMRAx->BCONR, TIMERA_BCONR_BSE_MASK, u16Condition);
 }
 
 /**

@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-07       Yangjp          First version
+   2020-02-11       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -74,15 +74,15 @@
  ******************************************************************************/
 /* LED_R Port/Pin definition */
 #define LED_R_PORT                      (GPIO_PORT_A)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PIN                       (GPIO_PIN_4)
 
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
 
 /* SW1 Port/Pin definition */
-#define SW1_PORT                        (GPIO_PORT_2)
-#define SW1_PIN                         (GPIO_PIN_2)
+#define SW1_PORT                        (GPIO_PORT_D)
+#define SW1_PIN                         (GPIO_PIN_7)
 
 /* SW2 Port/Pin definition */
 #define SW2_PORT                        (GPIO_PORT_2)
@@ -90,16 +90,14 @@
 #define SW2_TRIGGER_EVENT               (EVT_PORT_EIRQ1)
 
 /* TIMERA unit definition */
-#define TIMERA_UNIT1                    (M4_TMRA1)
-#define TIMERA_UNIT1_CLOCK              (CLK_FCG_TIMA)
-#define TIMERA_UNIT1_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/256U/100U))
+#define TIMERA_UNIT3                    (M4_TMRA3)
+#define TIMERA_UNIT3_CLOCK              (CLK_FCG_TIMA3)
+#define TIMERA_UNIT3_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/256U/100U))
 
 /* TIMERA channel 1 Port/Pin definition */
-#define TIMERA_UNIT1_CH1                (TIMERA_CHANNEL_CH1)
-#define TIMERA_UNIT1_CH1_CACHE_CH       (TIMERA_CHANNEL_CH2)
-#define TIMERA_UNIT1_CH1_PORT           (GPIO_PORT_7)
-#define TIMERA_UNIT1_CH1_PIN            (GPIO_PIN_3)
-#define TIMERA_UNIT1_CH1_FUNC           (GPIO_FUNC_7_TIMA)
+#define TIMERA_UNIT3_CH1_PORT           (GPIO_PORT_7)
+#define TIMERA_UNIT3_CH1_PIN            (GPIO_PIN_1)
+#define TIMERA_UNIT3_CH1_FUNC           (GPIO_FUNC_4_TIMA)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -122,12 +120,12 @@ static uint8_t u8Sw1IntFlag = 0U, u8Sw2IntFlag = 0U;
  * @param  None
  * @retval None
  */
-void EXINT02_Handler(void)
+void EXINT07_SWINT15_IrqHandler(void)
 {
-    if (Set == EXINT_GetExIntSrc(EXINT_CH02))
+    if (Set == EXINT_GetExIntSrc(EXINT_CH07))
     {
         u8Sw1IntFlag = 1U;
-        EXINT_ClrExIntSrc(EXINT_CH02);
+        EXINT_ClrExIntSrc(EXINT_CH07);
     }
 }
 
@@ -136,7 +134,7 @@ void EXINT02_Handler(void)
  * @param  None
  * @retval None
  */
-void EXINT01_Handler(void)
+void EXINT01_SWINT09_IrqHandler(void)
 {
     if (Set == EXINT_GetExIntSrc(EXINT_CH01))
     {
@@ -144,13 +142,13 @@ void EXINT01_Handler(void)
         {
             u8Sw2IntFlag = 1U;
             LED_R_ON();
-            TIMERA_SetHwTriggerCondition(TIMERA_UNIT1, TIMERA_HWSTOP_SPECIFY_EVT);
+            TIMERA_SetHwTriggerCondition(TIMERA_UNIT3, TIMERA_HWSTOP_SPECIFY_EVT);
         }
         else
         {
             u8Sw2IntFlag = 0U;
             LED_R_OFF();
-            TIMERA_SetHwTriggerCondition(TIMERA_UNIT1, TIMERA_HWSTART_SPECIFY_EVT);
+            TIMERA_SetHwTriggerCondition(TIMERA_UNIT3, TIMERA_HWSTART_SPECIFY_EVT);
         }
         EXINT_ClrExIntSrc(EXINT_CH01);
     }
@@ -163,8 +161,8 @@ void EXINT01_Handler(void)
  */
 static void SystemClk_Config(void)
 {
-    /* Configure the system clock to HRC32MHz. */
-    CLK_HRCInit(CLK_HRC_ON, CLK_HRCFREQ_32);
+    /* Configure the system clock to HRC 48MHz. */
+    CLK_HRCInit(CLK_HRC_ON, CLK_HRCFREQ_48);
 }
 
 /**
@@ -199,11 +197,12 @@ static void SW1_Config(void)
     GPIO_StructInit(&stcGpioInit);
     EXINT_StructInit(&stcExIntInit);
 
-    /* External interrupt Ch.2 initialize */
+    /* External interrupt initialize */
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
     GPIO_Init(SW1_PORT, SW1_PIN, &stcGpioInit);
 
-    stcExIntInit.u32ExIntCh     = EXINT_CH02;
+    /* External interrupt configure */
+    stcExIntInit.u32ExIntCh     = EXINT_CH07;
     stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
     stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV8;
     stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
@@ -212,11 +211,11 @@ static void SW1_Config(void)
     EXINT_Init(&stcExIntInit);
 
     /* Clear pending */
-    NVIC_ClearPendingIRQ(ExInt2_IRQn);
+    NVIC_ClearPendingIRQ(ExInt7_IRQn);
     /* Set priority */
-    NVIC_SetPriority(ExInt2_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_SetPriority(ExInt7_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
     /* Enable NVIC */
-    NVIC_EnableIRQ(ExInt2_IRQn);
+    NVIC_EnableIRQ(ExInt7_IRQn);
 }
 
 /**
@@ -233,25 +232,25 @@ static void SW2_Config(void)
     GPIO_StructInit(&stcGpioInit);
     EXINT_StructInit(&stcExIntInit);
 
-    /* External interrupt Ch.1 initialize */
+    /* External interrupt initialize */
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
     GPIO_Init(SW2_PORT, SW2_PIN, &stcGpioInit);
 
-    /* EXINT Channel 1 (SW2) configure */
-    stcExIntInit.u32ExIntCh     = EXINT_CH02;
+    /* External interrupt configure */
+    stcExIntInit.u32ExIntCh     = EXINT_CH01;
     stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
     stcExIntInit.u32ExIntFAClk  = EXINT_FACLK_HCLK_DIV8;
     stcExIntInit.u32ExIntFBE    = EXINT_FILTER_B_ON;
     stcExIntInit.u32ExIntFBTime = NMI_EXINT_FBTIM_2US;
-    stcExIntInit.u32ExIntLvl    = EXINT_TRIGGER_RISING;
+    stcExIntInit.u32ExIntLvl    = EXINT_TRIGGER_FALLING;
     EXINT_Init(&stcExIntInit);
 
     /* Clear pending */
-    NVIC_ClearPendingIRQ(ExInt2_IRQn);
+    NVIC_ClearPendingIRQ(ExInt1_IRQn);
     /* Set priority */
-    NVIC_SetPriority(ExInt2_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_SetPriority(ExInt1_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
     /* Enable NVIC */
-    NVIC_EnableIRQ(ExInt2_IRQn);
+    NVIC_EnableIRQ(ExInt1_IRQn);
 }
 
 /**
@@ -270,23 +269,23 @@ static void Timera_Config(void)
     GPIO_StructInit(&stcGpioInit);
 
     /* Configuration peripheral clock */
-    CLK_FcgPeriphClockCmd(TIMERA_UNIT1_CLOCK, Enable);
+    CLK_FcgPeriphClockCmd(TIMERA_UNIT3_CLOCK, Enable);
     CLK_FcgPeriphClockCmd(CLK_FCG_AOS, Enable);
 
     /* Configuration TIMERA capture Port */
-    GPIO_SetFunc(TIMERA_UNIT1_CH1_PORT, TIMERA_UNIT1_CH1_PIN, TIMERA_UNIT1_CH1_FUNC);
+    GPIO_SetFunc(TIMERA_UNIT3_CH1_PORT, TIMERA_UNIT3_CH1_PIN, TIMERA_UNIT3_CH1_FUNC);
 
-    /* Configuration timera 1 unit structure */
+    /* Configuration timera unit 3 structure */
     stcTimeraInit.u16CountMode = TIMERA_TRIANGLE_WAVE;
     stcTimeraInit.u16ClkDiv = TIMERA_CLKDIV_DIV256;
     /* Period_Value(10ms) = SystemClock(SystemCoreClock) / TimerA_Clock_Division(1024) / Frequency(100) */
     /* PWM output frequency = 1Sec / (Period_Value * 2) = 50Hz, Because the TimerA counting mode is triangle
        wave and Set the compare match to trigger PWM output inversion */
-    stcTimeraInit.u16PeriodVal = TIMERA_UNIT1_PERIOD_VALUE;
+    stcTimeraInit.u16PeriodVal = TIMERA_UNIT3_PERIOD_VALUE;
     stcTimeraInit.u16HwStartCondition = TIMERA_HWSTART_SPECIFY_EVT;
-    TIMERA_Init(TIMERA_UNIT1, &stcTimeraInit);
+    TIMERA_Init(TIMERA_UNIT3, &stcTimeraInit);
 
-    /* Configuration timera 1 unit compare structure */
+    /* Configuration timera unit 3 compare structure */
     stcTimeraOCInit.u16CompareVal = 0U;
     stcTimeraOCInit.u16StartCountOutput = TIMERA_OC_STARTCOUNT_OUTPUT_LOW;
     stcTimeraOCInit.u16StopCountOutput = TIMERA_OC_STOPCOUNT_OUTPUT_LOW;
@@ -296,10 +295,10 @@ static void Timera_Config(void)
     stcTimeraOCInit.u16CacheState = TIMERA_OC_CACHE_ENABLE;
     stcTimeraOCInit.u16CacheTransmitCondition = TIMERA_OC_CACHE_TRANSMIT_CREST;
     /* Enable channel 1 */
-    TIMERA_OC_Init(TIMERA_UNIT1, TIMERA_UNIT1_CH1, &stcTimeraOCInit);
-    TIMERA_OC_PwmCmd(TIMERA_UNIT1, TIMERA_UNIT1_CH1, Enable);
+    TIMERA_OC_Init(TIMERA_UNIT3, TIMERA_CHANNEL_CH1, &stcTimeraOCInit);
+    TIMERA_OC_PwmCmd(TIMERA_UNIT3, TIMERA_CHANNEL_CH1, Enable);
 
-    /* Set external Int Ch.1 trigger timera compare */
+    /* Set external Int trigger timera compare */
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
     GPIO_Init(SW2_PORT, SW2_PIN, &stcGpioInit);
     TIMERA_SetCaptureTriggerSrc(SW2_TRIGGER_EVENT);
@@ -328,7 +327,7 @@ int32_t main(void)
     Timera_Config();
 
     u16CurrValue = 0U;
-    u16PeriodValue = TIMERA_GetPeriod(TIMERA_UNIT1);
+    u16PeriodValue = TIMERA_GetPeriod(TIMERA_UNIT3);
 
     while (1)
     {
@@ -340,7 +339,7 @@ int32_t main(void)
             {
                 u16CurrValue = 0U;
             }
-            TIMERA_OC_SetCompare(TIMERA_UNIT1, TIMERA_UNIT1_CH1_CACHE_CH, u16CurrValue);
+            TIMERA_OC_SetCompare(TIMERA_UNIT3, TIMERA_CHANNEL_CH2, u16CurrValue);
         }
     }
 }

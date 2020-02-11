@@ -1,11 +1,11 @@
 /**
  *******************************************************************************
- * @file  timera/timera_base_timer/source/main.c
- * @brief This example demonstrates TIMERA base count function.
+ * @file  dcu/dcu_sub/source/main.c
+ * @brief This example demonstrates DCU sub function.
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-07       Yangjp          First version
+   2020-02-11       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -61,7 +61,7 @@
  */
 
 /**
- * @addtogroup TIMERA_Base_Timer
+ * @addtogroup DCU_Sub
  * @{
  */
 
@@ -72,21 +72,25 @@
 /*******************************************************************************
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
-/* LED_R Port/Pin definition */
+/* DCU unit definition */
+#define DCU_UNIT                        (M4_DCU)
+
+/* Function clock gate definition */
+#define FUNCTION_CLK_GATE               (CLK_FCG_DCU)
+
+/* LED Red Color Port/Pin definition */
 #define LED_R_PORT                      (GPIO_PORT_A)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PIN                       (GPIO_PIN_4)
 
-#define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
-#define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
-#define LED_R_TOGGLE()                  (GPIO_TogglePins(LED_R_PORT, LED_R_PIN))
+/* LED Green Color Port/Pin definition */
+#define LED_G_PORT                      (GPIO_PORT_A)
+#define LED_G_PIN                       (GPIO_PIN_5)
 
-/* TIMERA unit definition */
-#define TIMERA_UNIT1                    (M4_TMRA1)
-#define TIMERA_UNIT1_CLOCK              (CLK_FCG_TIMA)
-#define TIMERA_UNIT1_OVF_INT            (TIMERA_INT_OVF)
-#define TIMERA_UNIT1_OVF_INTn           (INT_TMRA_OVF)
-#define TIMERA_UNIT1_OVF_IRQn           (Int016_IRQn)
-#define TIMERA_UNIT1_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/1024U/100U))
+/* LED green & red */
+#define LED_R_ON()                      (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
+#define LED_R_OFF()                     (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
+#define LED_G_ON()                      (GPIO_SetPins(LED_G_PORT, LED_G_PIN))
+#define LED_G_OFF()                     (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -95,108 +99,127 @@
 /*******************************************************************************
  * Local function prototypes ('static')
  ******************************************************************************/
+static void LedConfig(void);
+static void DcuIrqCallback(void);
 
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static uint8_t u8TimeraUnit1Cnt = 0U;
+static en_int_status_t m_enOpIntStatus = Reset;
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
  ******************************************************************************/
 /**
- * @brief  TIMERA 1 unit overflow interrupt callback function.
+ * @brief  Configure red/green LED.
  * @param  None
  * @retval None
  */
-void TIMERA_1_Ovf_IrqHandler(void)
-{
-    u8TimeraUnit1Cnt++;
-    if (u8TimeraUnit1Cnt >= 100U)    /* 1s */
-    {
-        u8TimeraUnit1Cnt = 0U;
-        LED_R_TOGGLE();
-    }
-    TIMERA_ClearFlag(TIMERA_UNIT1, TIMERA_FLAG_OVF);
-}
-
-/**
- * @brief  Configure System clock.
- * @param  None
- * @retval None
- */
-static void SystemClk_Config(void)
-{
-    /* Configure the system clock to HRC32MHz. */
-    CLK_HRCInit(CLK_HRC_ON, CLK_HRCFREQ_32);
-}
-
-/**
- * @brief  Configure LED.
- * @param  None
- * @retval None
- */
-static void Led_Config(void)
+static void LedConfig(void)
 {
     stc_gpio_init_t stcGpioInit;
 
-    /* Configure structure initialization */
     GPIO_StructInit(&stcGpioInit);
-
-    /* LED Port/Pin initialization */
     stcGpioInit.u16PinDir = PIN_DIR_OUT;
+    stcGpioInit.u16PinState = PIN_STATE_SET;
+    GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
-    LED_R_OFF();
 }
 
 /**
- * @brief  Configure TimerA function.
+ * @brief  DCU irq callback function.
  * @param  None
  * @retval None
  */
-static void Timera_Config(void)
+static void DcuIrqCallback(void)
 {
-    stc_timera_init_t stcTimeraInit;
-
-    /* Configuration structure initialization */
-    TIMERA_StructInit(&stcTimeraInit);
-
-    /* Configuration peripheral clock */
-    CLK_FcgPeriphClockCmd(TIMERA_UNIT1_CLOCK, Enable);
-
-    /* Configuration timera 1 unit structure */
-    stcTimeraInit.u16CountMode = TIMERA_SAWTOOTH_WAVE;
-    stcTimeraInit.u16CountDir = TIMERA_COUNT_UP;
-    stcTimeraInit.u16ClkDiv = TIMERA_CLKDIV_DIV1024;
-    /* Period_Value(10ms) = SystemClock(SystemCoreClock) / TimerA_Clock_Division(1024) / Frequency(100) */
-    stcTimeraInit.u16PeriodVal = TIMERA_UNIT1_PERIOD_VALUE;
-    TIMERA_Init(TIMERA_UNIT1, &stcTimeraInit);
-    TIMERA_IntCmd(TIMERA_UNIT1, TIMERA_UNIT1_OVF_INT, Enable);
-
-    /* Configuration timera 1 unit interrupt */
-    NVIC_ClearPendingIRQ(TmrA1OVF_IRQn);
-    NVIC_SetPriority(TmrA1OVF_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
-    NVIC_EnableIRQ(TmrA1OVF_IRQn);
-
-    /* Start TIMERA counter */
-    TIMERA_Cmd(TIMERA_UNIT1, Enable);
+    if (Set == DCU_GetFlag(DCU_UNIT, DCU_FLAG_OPERATION))
+    {
+        m_enOpIntStatus = Set;
+        DCU_ClearFlag(DCU_UNIT, DCU_FLAG_OPERATION);
+    }
 }
 
 /**
- * @brief  Main function of TIMERA base timer.
+ * @brief  Main function of DCU sub project
  * @param  None
  * @retval int32_t return value, if needed
  */
 int32_t main(void)
 {
-    /* Configure system clock. */
-    SystemClk_Config();
+    uint32_t i;
+    stc_dcu_init_t stcDcuInit;
+    en_result_t enTestResult = Ok;
+    stc_irq_regi_config_t stcIrqRegiCfg;
+    uint32_t u32UnderflowData0;
+    uint32_t au32Data0Val[4];
+    uint32_t au32Data2Val[4];
+    uint32_t au32Data1Val[4] = {0x00000000, 0x22222222, 0x22222222, 0x22222222};
+    uint32_t u32CalTimes = ARRAY_SZ(au32Data1Val);
 
-    /* Configure LED. */
-    Led_Config();
+    /* Initialize LED */
+    LedConfig();
 
-    /* Configure TimerA */
-    Timera_Config();
+    /* Enable peripheral clock */
+    CLK_FcgPeriphClockCmd(FUNCTION_CLK_GATE, Enable);
+
+    /* Initialize DCU */
+    DCU_StructInit(&stcDcuInit);
+    stcDcuInit.u32IntCmd = DCU_INT_ENABLE;
+    stcDcuInit.u32IntSel = DCU_INT_OPERATION;
+    stcDcuInit.u32Mode = DCU_SUB;
+    stcDcuInit.u32DataSize = DCU_DATA_BITS_32;
+    DCU_Init(DCU_UNIT, &stcDcuInit);
+
+    /* Set DCU IRQ */
+    stcIrqRegiCfg.enIRQn = Int000_IRQn;
+    stcIrqRegiCfg.pfnCallback = &DcuIrqCallback;
+    stcIrqRegiCfg.enIntSrc = INT_DCU;
+    INTC_IrqSignIn(&stcIrqRegiCfg);
+    NVIC_SetPriority(stcIrqRegiCfg.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_ClearPendingIRQ(stcIrqRegiCfg.enIRQn);
+    NVIC_EnableIRQ(stcIrqRegiCfg.enIRQn);
+
+    DCU_WriteReg32Data0(DCU_UNIT, 0x88888888UL);
+
+    for (i = 0u; i < u32CalTimes; i++)
+    {
+        DCU_WriteReg32Data1(DCU_UNIT, au32Data1Val[i]);
+
+        au32Data0Val[i] = DCU_ReadReg32Data0(DCU_UNIT);
+        au32Data2Val[i] = DCU_ReadReg32Data2(DCU_UNIT);
+
+        /* Compare DCU regisger DATA0 && DATA2 value: DATA0 value == 2 * DATA2 value */
+        if (au32Data0Val[i] != (2ul * au32Data2Val[i]))
+        {
+            enTestResult = Error;
+            break;
+        }
+    }
+
+    DCU_WriteReg16Data1(DCU_UNIT, 0x22222222UL);
+
+    while (Set != m_enOpIntStatus)    /* Wait sub underflow */
+    {
+    }
+
+    u32UnderflowData0 = DCU_ReadReg32Data0(DCU_UNIT);
+
+    /* Compare DCU regisger DATA0 value: DATA0 value == 0 - 0x22222222UL */
+    if (u32UnderflowData0 != (0 - 0x22222222UL))
+    {
+        enTestResult = Error;
+        break;
+    }
+
+    if (Ok == enTestResult)
+    {
+        LED_G_ON();  /* Test pass && meet the expected */
+    }
+    else
+    {
+        LED_R_ON();  /* Test fail && don't meet the expected */
+    }
 
     while (1)
     {

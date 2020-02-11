@@ -710,12 +710,10 @@ void TIMERA_OC_SetPeriodMatchOutputPolarity(M4_TMRA_TypeDef *TMRAx,
 void TIMERA_OC_SetForceOutputPolarity(M4_TMRA_TypeDef *TMRAx,
                                       uint8_t u8Channel,
                                       uint16_t u16Polarity);
-en_result_t TIMERA_OC_CacheCmd(M4_TMRA_TypeDef *TMRAx,
-                               uint8_t u8Channel,
-                               en_functional_state_t enNewSta);
-en_result_t TIMERA_OC_SetCacheTransmitCondition(M4_TMRA_TypeDef *TMRAx,
-                                                uint8_t u8Channel,
-                                                uint16_t u16Condition);
+void TIMERA_OC_CacheCmd(M4_TMRA_TypeDef *TMRAx,
+                        en_functional_state_t enNewSta);
+void TIMERA_OC_SetCacheTransmitCondition(M4_TMRA_TypeDef *TMRAx,
+                                         uint16_t u16Condition);
 
 /* Interrupts and flags management functions */
 void TIMERA_IntCmd(M4_TMRA_TypeDef *TMRAx, uint16_t u16IntSource,

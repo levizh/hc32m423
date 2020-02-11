@@ -74,8 +74,8 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Wave I/O Port/Pin definition */
-#define WAVE_IO_PORT                    (GPIO_PORT_6)
-#define WAVE_IO_PIN                     (GPIO_PIN_3)
+#define WAVE_IO_PORT                    (GPIO_PORT_7)
+#define WAVE_IO_PIN                     (GPIO_PIN_1)
 #define WAVE_IO_TOGGLE()                do {        \
     GPIO_TogglePins(WAVE_IO_PORT, WAVE_IO_PIN);     \
     GPIO_TogglePins(WAVE_IO_PORT, WAVE_IO_PIN);     \
@@ -97,7 +97,7 @@
 #define ADC_SAMPLE_TIME                 (10U)
 
 /* ADC resolution definition. */
-#define ADC_RESOLUTION                  (ADC_RESOLUTION_12B)
+#define ADC_RESOLUTION                  (ADC_RES_12BIT)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -239,7 +239,7 @@ static void AdcInitConfig(void)
     ADC_StructInit(&stcInit);
 
     /* User configurations. */
-    stcInit.u16ScanConvMode = ADC_MODE_SA_SB_SINGLE;
+    stcInit.u16ScanMode = ADC_MODE_SA_SB_SSHOT;
     stcInit.u16Resolution   = ADC_RESOLUTION;
     stcInit.u8SampTime      = ADC_SAMPLE_TIME;
     ADC_Init(&stcInit);

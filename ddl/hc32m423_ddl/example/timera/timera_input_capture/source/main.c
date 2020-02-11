@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-07       Yangjp          First version
+   2020-02-11       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -74,7 +74,7 @@
  ******************************************************************************/
 /* LED_R Port/Pin definition */
 #define LED_R_PORT                      (GPIO_PORT_A)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PIN                       (GPIO_PIN_4)
 
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
@@ -82,39 +82,31 @@
 
 /* LED_G Port/Pin definition */
 #define LED_G_PORT                      (GPIO_PORT_A)
-#define LED_G_PIN                       (GPIO_PIN_1)
+#define LED_G_PIN                       (GPIO_PIN_5)
 
 #define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
 #define LED_G_OFF()                     (GPIO_SetPins(LED_G_PORT, LED_G_PIN))
 #define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
 
 /* SW1 Port/Pin definition */
-#define SW1_PORT                        (GPIO_PORT_2)
-#define SW1_PIN                         (GPIO_PIN_2)
-#define SW1_TRIGGER_EVENT               (EVT_PORT_EIRQ2)
+#define SW1_PORT                        (GPIO_PORT_D)
+#define SW1_PIN                         (GPIO_PIN_7)
+#define SW1_TRIGGER_EVENT               (EVT_PORT_EIRQ7)
 
 /* TIMERA unit definition */
-#define TIMERA_UNIT1                    (M4_TMRA1)
-#define TIMERA_UNIT1_CLOCK              (CLK_FCG_TIMA)
-#define TIMERA_UNIT1_CMP_INTn           (INT_TMRA_CMP)
-#define TIMERA_UNIT1_CMP_IRQn           (Int016_IRQn)
-#define TIMERA_UNIT1_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/256U/100U))
+#define TIMERA_UNIT3                    (M4_TMRA3)
+#define TIMERA_UNIT3_CLOCK              (CLK_FCG_TIMA3)
+#define TIMERA_UNIT3_PERIOD_VALUE       ((uint16_t)(SystemCoreClock/256U/100U))
 
 /* TIMERA channel 1 Port/Pin definition */
-#define TIMERA_UNIT1_CH1                (TIMERA_CHANNEL_CH1)
-#define TIMERA_UNIT1_CH1_PORT           (GPIO_PORT_7)
-#define TIMERA_UNIT1_CH1_PIN            (GPIO_PIN_3)
-#define TIMERA_UNIT1_CH1_FUNC           (GPIO_FUNC_7_TIMA)
-#define TIMERA_UNIT1_CH1_INT_FLAG       (TIMERA_FLAG_CMP1)
-#define TIMERA_UNIT1_CH1_INT            (TIMERA_INT_CMP1)
+#define TIMERA_UNIT3_CH1_PORT           (GPIO_PORT_7)
+#define TIMERA_UNIT3_CH1_PIN            (GPIO_PIN_1)
+#define TIMERA_UNIT3_CH1_FUNC           (GPIO_FUNC_4_TIMA)
 
 /* TIMERA channel 2 Port/Pin definition */
-#define TIMERA_UNIT1_CH2                (TIMERA_CHANNEL_CH2)
-#define TIMERA_UNIT1_CH2_PORT           (GPIO_PORT_7)
-#define TIMERA_UNIT1_CH2_PIN            (GPIO_PIN_2)
-#define TIMERA_UNIT1_CH2_FUNC           (GPIO_FUNC_7_TIMA)
-#define TIMERA_UNIT1_CH2_INT_FLAG       (TIMERA_FLAG_CMP2)
-#define TIMERA_UNIT1_CH2_INT            (TIMERA_INT_CMP2)
+#define TIMERA_UNIT3_CH2_PORT           (GPIO_PORT_7)
+#define TIMERA_UNIT3_CH2_PIN            (GPIO_PIN_2)
+#define TIMERA_UNIT3_CH2_FUNC           (GPIO_FUNC_4_TIMA)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -132,23 +124,23 @@
  * Function implementation - global ('extern') and local ('static')
  ******************************************************************************/
 /**
- * @brief  TIMERA 1 unit compare interrupt callback function.
+ * @brief  TIMERA unit 3 compare interrupt callback function.
  * @param  None
  * @retval None
  */
-void TIMERA_1_Cmp_IrqHandler(void)
+void TIMERA_3_Cmp_IrqHandler(void)
 {
     /* Capture channel 1 */
-    if (Set == TIMERA_GetFlag(TIMERA_UNIT1, TIMERA_UNIT1_CH1_INT_FLAG))
+    if (Set == TIMERA_GetFlag(TIMERA_UNIT3, TIMERA_FLAG_CMP1))
     {
         LED_R_TOGGLE();
-        TIMERA_ClearFlag(TIMERA_UNIT1, TIMERA_UNIT1_CH1_INT_FLAG);
+        TIMERA_ClearFlag(TIMERA_UNIT3, TIMERA_FLAG_CMP1);
     }
     /* Capture channel 2 */
-    if (Set == TIMERA_GetFlag(TIMERA_UNIT1, TIMERA_UNIT1_CH2_INT_FLAG))
+    if (Set == TIMERA_GetFlag(TIMERA_UNIT3, TIMERA_FLAG_CMP2))
     {
         LED_G_TOGGLE();
-        TIMERA_ClearFlag(TIMERA_UNIT1, TIMERA_UNIT1_CH2_INT_FLAG);
+        TIMERA_ClearFlag(TIMERA_UNIT3, TIMERA_FLAG_CMP2);
     }
 }
 
@@ -159,8 +151,8 @@ void TIMERA_1_Cmp_IrqHandler(void)
  */
 static void SystemClk_Config(void)
 {
-    /* Configure the system clock to HRC32MHz. */
-    CLK_HRCInit(CLK_HRC_ON, CLK_HRCFREQ_32);
+    /* Configure the system clock to HRC 48MHz. */
+    CLK_HRCInit(CLK_HRC_ON, CLK_HRCFREQ_48);
 }
 
 /**
@@ -199,34 +191,34 @@ static void Timera_Config(void)
     GPIO_StructInit(&stcGpioInit);
 
     /* Configuration peripheral clock */
-    CLK_FcgPeriphClockCmd(TIMERA_UNIT1_CLOCK, Enable);
+    CLK_FcgPeriphClockCmd(TIMERA_UNIT3_CLOCK, Enable);
     CLK_FcgPeriphClockCmd(CLK_FCG_AOS, Enable);
 
     /* Configuration TIMERA capture Port */
-    GPIO_SetFunc(TIMERA_UNIT1_CH1_PORT, TIMERA_UNIT1_CH1_PIN, TIMERA_UNIT1_CH1_FUNC);
-    GPIO_SetFunc(TIMERA_UNIT1_CH2_PORT, TIMERA_UNIT1_CH2_PIN, TIMERA_UNIT1_CH2_FUNC);
+    GPIO_SetFunc(TIMERA_UNIT3_CH1_PORT, TIMERA_UNIT3_CH1_PIN, TIMERA_UNIT3_CH1_FUNC);
+    GPIO_SetFunc(TIMERA_UNIT3_CH2_PORT, TIMERA_UNIT3_CH2_PIN, TIMERA_UNIT3_CH2_FUNC);
 
-    /* Configuration timera 1 unit structure */
+    /* Configuration timera unit 1 structure */
     stcTimeraInit.u16CountMode = TIMERA_SAWTOOTH_WAVE;
     stcTimeraInit.u16CountDir = TIMERA_COUNT_UP;
     stcTimeraInit.u16ClkDiv = TIMERA_CLKDIV_DIV256;
     /* Period_Value(10ms) = SystemClock(SystemCoreClock) / TimerA_Clock_Division(256) / Frequency(100) */
-    stcTimeraInit.u16PeriodVal = TIMERA_UNIT1_PERIOD_VALUE;
-    TIMERA_Init(TIMERA_UNIT1, &stcTimeraInit);
+    stcTimeraInit.u16PeriodVal = TIMERA_UNIT3_PERIOD_VALUE;
+    TIMERA_Init(TIMERA_UNIT3, &stcTimeraInit);
 
-    /* Configuration timera 1 unit capture structure */
+    /* Configuration timera unit 1 capture structure */
     stcTimeraICInit.u16PwmFilterState = TIMERA_IC_PWM_FILTER_DISABLE;
     stcTimeraICInit.u16CaptureCondition = TIMERA_IC_PWM_RISING | TIMERA_IC_SPECIFY_EVT;
     /* Enable channel 1 */
-    TIMERA_IC_Init(TIMERA_UNIT1, TIMERA_UNIT1_CH1, &stcTimeraICInit);
+    TIMERA_IC_Init(TIMERA_UNIT3, TIMERA_CHANNEL_CH1, &stcTimeraICInit);
     /* Enable channel 2 */
-    TIMERA_IC_Init(TIMERA_UNIT1, TIMERA_UNIT1_CH2, &stcTimeraICInit);
-    TIMERA_IntCmd(TIMERA_UNIT1, TIMERA_UNIT1_CH1_INT | TIMERA_UNIT1_CH2_INT, Enable);
+    TIMERA_IC_Init(TIMERA_UNIT3, TIMERA_CHANNEL_CH2, &stcTimeraICInit);
+    TIMERA_IntCmd(TIMERA_UNIT3, TIMERA_INT_CMP1 | TIMERA_INT_CMP2, Enable);
 
-    /* Configuration timera 1 unit interrupt */
-    NVIC_ClearPendingIRQ(TmrA1CMP_IRQn);
-    NVIC_SetPriority(TmrA1CMP_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
-    NVIC_EnableIRQ(TmrA1CMP_IRQn);
+    /* Configuration timera unit 1 interrupt */
+    NVIC_ClearPendingIRQ(TmrA3CMP_IRQn);
+    NVIC_SetPriority(TmrA3CMP_IRQn, DDL_IRQ_PRIORITY_DEFAULT);
+    NVIC_EnableIRQ(TmrA3CMP_IRQn);
 
     /* Set external Int Ch.0 trigger timera compare */
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
@@ -234,7 +226,7 @@ static void Timera_Config(void)
     TIMERA_SetCaptureTriggerSrc(SW1_TRIGGER_EVENT);
 
     /* Start TIMERA counter */
-    TIMERA_Cmd(TIMERA_UNIT1, Enable);
+    TIMERA_Cmd(TIMERA_UNIT3, Enable);
 }
 
 /**
