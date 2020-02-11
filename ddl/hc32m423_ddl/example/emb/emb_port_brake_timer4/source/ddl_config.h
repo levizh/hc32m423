@@ -97,7 +97,7 @@ extern "C"
 #define DDL_EKEY_ENABLE                             (DDL_OFF)
 #define DDL_EMB_ENABLE                              (DDL_ON)
 #define DDL_EVENT_PORT_ENABLE                       (DDL_OFF)
-#define DDL_EXINT_NMI_ENABLE                        (DDL_OFF)
+#define DDL_EXINT_NMI_SWI_ENABLE                    (DDL_OFF)
 #define DDL_GPIO_ENABLE                             (DDL_ON)
 #define DDL_I2C_ENABLE                              (DDL_OFF)
 #define DDL_INTERRUPTS_ENABLE                       (DDL_ON)
