@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-06-28       Yangjp          First version
+   2020-02-11       Yangjp          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -117,7 +117,7 @@ void SysTick_Resume(void);
     /* Exported function */
     void DDL_AssertHandler(const uint8_t *file, int16_t line);
 #else
-    #define DDL_ASSERT(x)               ((void)0U)
+    #define DDL_ASSERT(x)               ((void)0UL)
 #endif /* __DEBUG */
 
 #if (DDL_PRINT_ENABLE == DDL_ON)

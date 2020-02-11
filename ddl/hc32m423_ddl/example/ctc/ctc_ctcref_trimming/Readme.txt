@@ -19,7 +19,7 @@ GCC工程，由Eclipse IDE外挂GNU-ARM Toolchain，再结合pyOCD GDB Server实
 
 说明：
 1、首先设置CTC_CR1 TRMVAL为0x21，使内部高速时钟频率在48±0.24MHz范围外
-2、然后输入CTCREF引脚20MHz时钟，通过CTCREF校准内部高速时钟48MHz，校准偏差为0.5%，
+2、然后输入CTCREF引脚8MHz时钟，通过CTCREF校准内部高速时钟48MHz，校准偏差为0.5%，
    目标频率为48±0.24MHz范围内
 
 ================================================================================
@@ -44,12 +44,12 @@ STK_HC32M423_LQFP64_050_V10
    测试板A：用于展示校准内部高速时钟
    测试板B：输出XTAL时钟，作为测试板A CTCREF时钟源
 2）连接DAP模块J9,J10
-3）按照如下方式，连接两个测试板引脚(J6_P15: J6表示接插件丝印，P15表示信号丝印;其
+3）按照如下方式，连接两个测试板引脚(J4_TXD1: J4表示接插件丝印，TXD1表示信号丝印;其
    他表示与此相同)
    测试板A          测试板B
-   J3_P62  <----->  J6_P15
-   ISP_GND <----->  ISP_GND
-4）测试板A J6_P15与示波器相连
+   J4_P01  <----->  J4_TXD1
+       GND <----->  GND
+4）测试板A J4_TXD1与示波器相连
 5）按照如下，修改main.c文件宏定义
    #define PROJCET_FUNCTION                FUNCTION_GENERATE_CTCREF_CLK
 6）重新编译，下载代码至测试板B
