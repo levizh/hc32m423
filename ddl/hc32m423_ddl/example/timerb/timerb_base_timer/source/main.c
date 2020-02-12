@@ -73,8 +73,8 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Green LED Port/Pin definition */
-#define LED_G_PORT                      (GPIO_PORT_7)
-#define LED_G_PIN                       (GPIO_PIN_0)
+#define LED_G_PORT                      (GPIO_PORT_A)
+#define LED_G_PIN                       (GPIO_PIN_5)
 #define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
 
 /* TIMERB unit && interrupt number && counter period value definition */

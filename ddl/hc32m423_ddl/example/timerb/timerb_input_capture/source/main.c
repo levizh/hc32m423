@@ -82,12 +82,12 @@ typedef struct
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* EXINT channel/IRQn definition */
-#define EXINT_CH                            (EXINT_CH01)      /* P21: INTP1 */
-#define EXINT_INT                           (INT_PORT_EIRQ1)
+#define EXINT_CH                            (EXINT_CH04)
+#define EXINT_INT                           (INT_PORT_EIRQ4)
 #define EXINT_IRQn                          (Int000_IRQn)
 
 /* EXINT Port/Pin definition */
-#define EXINT_PORT                          (GPIO_PORT_2)
+#define EXINT_PORT                          (GPIO_PORT_0)
 #define EXINT_PIN                           (GPIO_PIN_1)
 
 /* Green LED Port/Pin definition */
@@ -100,6 +100,7 @@ typedef struct
 #define TIMERB_UNIT_PERIOD_VALUE            (SystemCoreClock/512UL)
 #define TIMERB_UNIT_CMP_INT                 (INT_TMRB_CMP)
 #define TIMERB_UNIT_CMP_IRQn                (Int001_IRQn)
+#define EVT_TRIG_TIMERB_CNT                 (EVT_PORT_EIRQ4)
 
 /* TIMERB input capture channel definition */
 #define TIMERB_IC_ODD_CH                    (TIMERB_CH1)
@@ -115,15 +116,15 @@ typedef struct
 #define TIMERB_OC_CH_COMPARE_VALUE          (TIMERB_UNIT_PERIOD_VALUE/2UL)
 
 /* TIMERB TIMB_t_PWM1 Port/Pin definition */
-#define TIMERB_IC_ODD_CH_PWM_PORT           (GPIO_PORT_1)     /* P15: TIMB_1_PWM1 */
-#define TIMERB_IC_ODD_CH_PWM_PIN            (GPIO_PIN_5)
+#define TIMERB_IC_ODD_CH_PWM_PORT           (GPIO_PORT_7)     /* P71: TIMB_1_PWM1 */
+#define TIMERB_IC_ODD_CH_PWM_PIN            (GPIO_PIN_1)
 #define TIMERB_IC_ODD_CH_PWM_GPIO_FUNC      (GPIO_FUNC_3_TIMB)
 
-#define TIMERB_IC_EVEN_CH_PWM_PORT          (GPIO_PORT_1)     /* P16: TIMB_1_PWM2 */
-#define TIMERB_IC_EVEN_CH_PWM_PIN           (GPIO_PIN_6)
+#define TIMERB_IC_EVEN_CH_PWM_PORT          (GPIO_PORT_7)     /* P75: TIMB_1_PWM2 */
+#define TIMERB_IC_EVEN_CH_PWM_PIN           (GPIO_PIN_5)
 #define TIMERB_IC_EVEN_CH_PWM_GPIO_FUNC     (GPIO_FUNC_3_TIMB)
 
-#define TIMERB_OC_CH_PWM_PORT               (GPIO_PORT_0)     /* P62: TIMB_1_PWM3 */
+#define TIMERB_OC_CH_PWM_PORT               (GPIO_PORT_7)     /* P72: TIMB_1_PWM3 */
 #define TIMERB_OC_CH_PWM_PIN                (GPIO_PIN_2)
 #define TIMERB_OC_CH_PWM_GPIO_FUNC          (GPIO_FUNC_3_TIMB)
 
@@ -297,7 +298,7 @@ int32_t main(void)
     stcGpioInit.u16ExInt = PIN_EXINT_ON;
     GPIO_Init(EXINT_PORT, EXINT_PIN, &stcGpioInit);
 
-    /* EXINT Channel 0 (SW2) configure */
+    /* EXINT Channel configure */
     EXINT_StructInit(&stcExIntInit);
     stcExIntInit.u32ExIntCh     = EXINT_CH;
     stcExIntInit.u32ExIntFAE    = EXINT_FILTER_A_ON;
@@ -313,7 +314,7 @@ int32_t main(void)
     stcIrqRegiConf.pfnCallback = &ExintIrqCallback;
     INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
-    NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
+    NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_DEFAULT);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
 
     /* Configure TIM_<t>_PWM. */
@@ -348,7 +349,7 @@ int32_t main(void)
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
 
     /* Set trigger source. */
-    TIMERB_SetTriggerSrc(EVT_PORT_EIRQ1);
+    TIMERB_SetTriggerSrc(EVT_TRIG_TIMERB_CNT);
 
     /* Start TIMERB start count condition. */
     TIMERB_SetHwStartCondition(TIMERB_UNIT, TIMERB_HWSTART_TIMB_EVT);

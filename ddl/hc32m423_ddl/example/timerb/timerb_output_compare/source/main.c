@@ -90,12 +90,12 @@
 #define TIMERB_EVEN_CH_INT_CMP          (TIMERB_IT_CMP2)
 
 /* TIMERB TIMB_t_PWMn(t=1, n=1~4 Port/Pin definition */
-#define TIMERB_ODD_CH_PWM_PORT          (GPIO_PORT_1)     /* P15: TIMB_1_PWM1 */
-#define TIMERB_ODD_CH_PWM_PIN           (GPIO_PIN_5)
+#define TIMERB_ODD_CH_PWM_PORT          (GPIO_PORT_7)     /* P72: TIMB_1_PWM1 */
+#define TIMERB_ODD_CH_PWM_PIN           (GPIO_PIN_1)
 #define TIMERB_ODD_CH_PWM_GPIO_FUNC     (GPIO_FUNC_3_TIMB)
 
-#define TIMERB_EVEN_CH_PWM_PORT         (GPIO_PORT_1)     /* P16: TIMB_2_PWM1 */
-#define TIMERB_EVEN_CH_PWM_PIN          (GPIO_PIN_6)
+#define TIMERB_EVEN_CH_PWM_PORT         (GPIO_PORT_7)     /* P75: TIMB_1_PWM2 */
+#define TIMERB_EVEN_CH_PWM_PIN          (GPIO_PIN_5)
 #define TIMERB_EVEN_CH_PWM_GPIO_FUNC    (GPIO_FUNC_3_TIMB)
 
 /* Function clock gate definition  */
