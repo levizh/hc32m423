@@ -84,33 +84,33 @@ typedef struct
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Red LED Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_0)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PORT                      (GPIO_PORT_A)
+#define LED_R_PIN                       (GPIO_PIN_4)
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 
 /* UART RX/TX Port/Pin definition */
-#define UART_RX_PORT                    (GPIO_PORT_1)
-#define UART_RX_PIN                     (GPIO_PIN_1)      /* P11: USART2_RX */
+#define UART_RX_PORT                    (GPIO_PORT_3)
+#define UART_RX_PIN                     (GPIO_PIN_3)      /* P33: USART4_RX */
 #define UART_RX_GPIO_FUNC               (GPIO_FUNC_5_USART)
 
-#define UART_TX_PORT                    (GPIO_PORT_1)
-#define UART_TX_PIN                     (GPIO_PIN_2)      /* P12: USART2_TX */
+#define UART_TX_PORT                    (GPIO_PORT_7)
+#define UART_TX_PIN                     (GPIO_PIN_0)      /* P70: USART4_TX */
 #define UART_TX_GPIO_FUNC               (GPIO_FUNC_5_USART)
 
 /* UART unit definition */
-#define UART_UNIT                       (M4_USART2)
+#define UART_UNIT                       (M4_USART4)
 
 /* UART unit interrupt definition */
-#define UART_UNIT_ERR_INT               (INT_USART2_EI)
+#define UART_UNIT_ERR_INT               (INT_USART4_EI)
 #define UART_UNIT_ERR_IRQn              (Int000_IRQn)
 
-#define UART_UNIT_RX_INT                (INT_USART2_RI)
+#define UART_UNIT_RX_INT                (INT_USART4_RI)
 #define UART_UNIT_RX_IRQn               (Int001_IRQn)
 
-#define UART_UNIT_TX_INT                (INT_USART2_TI)
+#define UART_UNIT_TX_INT                (INT_USART4_TI)
 #define UART_UNIT_TX_IRQn               (Int002_IRQn)
 
-#define UART_UNIT_TCI_INT               (INT_USART2_TCI)
+#define UART_UNIT_TCI_INT               (INT_USART4_TCI)
 #define UART_UNIT_TCI_IRQn              (Int003_IRQn)
 
 /* Ring buffer size */
@@ -118,7 +118,7 @@ typedef struct
 #define IS_RING_BUFFER_EMPYT(x)         (0U == ((x)->u16UsedSize))
 
 /* Function clock gate definition  */
-#define FUNCTION_CLK_GATE               (CLK_FCG_UART2)
+#define FUNCTION_CLK_GATE               (CLK_FCG_UART4)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')

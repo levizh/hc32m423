@@ -96,24 +96,24 @@ typedef struct
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Key Port/Pin definition */
-#define KEY_PORT                        (GPIO_PORT_2)
-#define KEY_PIN                         (GPIO_PIN_1)
+#define KEY_PORT                        (GPIO_PORT_D)
+#define KEY_PIN                         (GPIO_PIN_7)
 
 /* Red LED Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_0)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PORT                      (GPIO_PORT_A)
+#define LED_R_PIN                       (GPIO_PIN_4)
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 #define LED_R_OFF()                     (GPIO_SetPins(LED_R_PORT, LED_R_PIN))
 
 /* Green LED Port/Pin definition */
-#define LED_G_PORT                      (GPIO_PORT_7)
-#define LED_G_PIN                       (GPIO_PIN_0)
+#define LED_G_PORT                      (GPIO_PORT_A)
+#define LED_G_PIN                       (GPIO_PIN_5)
 #define LED_G_TOGGLE()                  (GPIO_TogglePins(LED_G_PORT, LED_G_PIN))
 #define LED_G_OFF()                     (GPIO_SetPins(LED_G_PORT, LED_G_PIN))
 
 /* UART TX Port/Pin definition */
-#define UART_MASTER_TX_PORT             (GPIO_PORT_1)
-#define UART_MASTER_TX_PIN              (GPIO_PIN_3)      /* P13: USART3_TX */
+#define UART_MASTER_TX_PORT             (GPIO_PORT_7)
+#define UART_MASTER_TX_PIN              (GPIO_PIN_2)      /* P72: USART3_TX */
 #define UART_MASTER_TX_GPIO_FUNC        (GPIO_FUNC_5_USART)
 
 /* UART unit definition */
@@ -193,7 +193,7 @@ static void LedConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
@@ -309,7 +309,7 @@ static void UartMasterUnitErrIrqCallback(void)
 int32_t main(void)
 {
     stc_irq_regi_config_t stcIrqRegiConf;
-    stc_key_t stcKeySw2 = {
+    stc_key_t stcKeySw = {
         .u8Port = KEY_PORT,
         .u8Pin = KEY_PIN,
         .enPressPinState = Pin_Reset,
@@ -383,7 +383,7 @@ int32_t main(void)
     while (1)
     {
         /* Wait key release */
-        while (KeyRelease !=  KeyGetState(&stcKeySw2))
+        while (KeyRelease !=  KeyGetState(&stcKeySw))
         {
             ;
         }

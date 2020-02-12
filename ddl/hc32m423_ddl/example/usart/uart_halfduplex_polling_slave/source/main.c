@@ -76,8 +76,8 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* UART TX Port/Pin definition */
-#define UART_SLAVE_TX_PORT              (GPIO_PORT_1)
-#define UART_SLAVE_TX_PIN               (GPIO_PIN_3)      /* P13: USART3_TX */
+#define UART_SLAVE_TX_PORT              (GPIO_PORT_7)
+#define UART_SLAVE_TX_PIN               (GPIO_PIN_2)      /* P72: USART3_TX */
 #define UART_SLAVE_TX_GPIO_FUNC         (GPIO_FUNC_5_USART)
 
 /* UART unit definition */

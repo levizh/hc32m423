@@ -73,24 +73,24 @@
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Red LED Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_0)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PORT                      (GPIO_PORT_A)
+#define LED_R_PIN                       (GPIO_PIN_4)
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 
 /* UART RX/TX Port/Pin definition */
-#define UART_RX_PORT                    (GPIO_PORT_1)
-#define UART_RX_PIN                     (GPIO_PIN_1)      /* P11: USART2_RX */
+#define UART_RX_PORT                    (GPIO_PORT_3)
+#define UART_RX_PIN                     (GPIO_PIN_3)      /* P33: USART4_RX */
 #define UART_RX_GPIO_FUNC               (GPIO_FUNC_5_USART)
 
-#define UART_TX_PORT                    (GPIO_PORT_1)
-#define UART_TX_PIN                     (GPIO_PIN_2)      /* P12: USART2_TX */
+#define UART_TX_PORT                    (GPIO_PORT_7)
+#define UART_TX_PIN                     (GPIO_PIN_0)      /* P70: USART4_TX */
 #define UART_TX_GPIO_FUNC               (GPIO_FUNC_5_USART)
 
 /* UART unit definition */
-#define UART_UNIT                       (M4_USART2)
+#define UART_UNIT                       (M4_USART4)
 
 /* Function clock gate definition  */
-#define FUNCTION_CLK_GATE               (CLK_FCG_UART2)
+#define FUNCTION_CLK_GATE               (CLK_FCG_UART4)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')

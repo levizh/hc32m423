@@ -92,30 +92,30 @@ typedef struct
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
 /* Key Port/Pin definition */
-#define KEY_PORT                        (GPIO_PORT_2)
-#define KEY_PIN                         (GPIO_PIN_2)
+#define KEY_PORT                        (GPIO_PORT_D)
+#define KEY_PIN                         (GPIO_PIN_7)
 
 /* Red LED Port/Pin definition */
-#define LED_R_PORT                      (GPIO_PORT_0)
-#define LED_R_PIN                       (GPIO_PIN_0)
+#define LED_R_PORT                      (GPIO_PORT_A)
+#define LED_R_PIN                       (GPIO_PIN_4)
 #define LED_R_ON()                      (GPIO_ResetPins(LED_R_PORT, LED_R_PIN))
 
 /* Green LED Port/Pin definition */
-#define LED_G_PORT                      (GPIO_PORT_7)
-#define LED_G_PIN                       (GPIO_PIN_0)
+#define LED_G_PORT                      (GPIO_PORT_A)
+#define LED_G_PIN                       (GPIO_PIN_5)
 #define LED_G_ON()                      (GPIO_ResetPins(LED_G_PORT, LED_G_PIN))
 
 /* CLKSYNC CK/RX/TX Port/Pin definition */
-#define CLKSYNC_CK_PORT                 (GPIO_PORT_1)
-#define CLKSYNC_CK_PIN                  (GPIO_PIN_0)        /* P10: USART2_CK */
+#define CLKSYNC_CK_PORT                 (GPIO_PORT_B)
+#define CLKSYNC_CK_PIN                  (GPIO_PIN_7)      /* PB7: USART2_CK */
 #define CLKSYNC_CK_GPIO_FUNC            (GPIO_FUNC_5_USART)
 
-#define CLKSYNC_RX_PORT                 (GPIO_PORT_1)
-#define CLKSYNC_RX_PIN                  (GPIO_PIN_1)        /* P11: USART2_RX */
+#define CLKSYNC_RX_PORT                 (GPIO_PORT_B)
+#define CLKSYNC_RX_PIN                  (GPIO_PIN_6)      /* PB6: USART2_RX */
 #define CLKSYNC_RX_GPIO_FUNC            (GPIO_FUNC_5_USART)
 
-#define CLKSYNC_TX_PORT                 (GPIO_PORT_1)
-#define CLKSYNC_TX_PIN                  (GPIO_PIN_2)        /* P12: USART2_TX */
+#define CLKSYNC_TX_PORT                 (GPIO_PORT_B)
+#define CLKSYNC_TX_PIN                  (GPIO_PIN_5)      /* PB5: USART2_TX */
 #define CLKSYNC_TX_GPIO_FUNC            (GPIO_FUNC_5_USART)
 
 /* UART unit definition */
@@ -185,7 +185,7 @@ static void LedConfig(void)
 {
     stc_gpio_init_t stcGpioInit = {0};
 
-    stcGpioInit.u16PinMode = PIN_MODE_OUT;
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;
     stcGpioInit.u16PinState = PIN_STATE_SET;
     GPIO_Init(LED_G_PORT, LED_G_PIN, &stcGpioInit);
     GPIO_Init(LED_R_PORT, LED_R_PIN, &stcGpioInit);
@@ -414,7 +414,7 @@ int32_t main(void)
     /* Enable RX/TX function */
     USART_FuncCmd(CLKSYNC_UNIT, (USART_RX | USART_TX), Enable);
 
-    /* User key : SW2 */
+    /* User key */
     while (Pin_Reset != GPIO_ReadInputPortPin(KEY_PORT, KEY_PIN))
     {
         ;
