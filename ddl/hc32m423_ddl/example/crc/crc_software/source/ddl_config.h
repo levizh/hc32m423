@@ -96,6 +96,7 @@ extern "C"
 #define DDL_DMA_ENABLE                              (DDL_OFF)
 #define DDL_EFM_ENABLE                              (DDL_OFF)
 #define DDL_EXINT_NMI_SWI_ENABLE                    (DDL_OFF)
+#define DDL_FCM_ENABLE                              (DDL_OFF)
 #define DDL_GPIO_ENABLE                             (DDL_ON)
 #define DDL_I2C_ENABLE                              (DDL_OFF)
 #define DDL_INTERRUPTS_ENABLE                       (DDL_OFF)

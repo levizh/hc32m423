@@ -136,6 +136,10 @@ extern "C"
     #include "hc32m423_emb.h"
 #endif /* DDL_EMB_ENABLE */
 
+#if (DDL_FCM_ENABLE == DDL_ON)
+    #include "hc32m423_fcm.h"
+#endif /* DDL_FCM_ENABLE */
+
 #if (DDL_GPIO_ENABLE == DDL_ON)
     #include "hc32m423_gpio.h"
 #endif /* DDL_GPIO_ENABLE */
