@@ -91,13 +91,13 @@ extern "C"
 typedef struct
 {
     uint32_t    u32PwmWLvl;                 /*!< Enable or disable EMB detect Timer4 PWM W channel polarity level
-                                                 This parameter can be a value of @ref EMB_Ground0_Timer4_PWMW_Level */
+                                                 This parameter can be a value of @ref EMB_Group0_Detect_Timer4_PWMW_Level */
 
     uint32_t    u32PwmVLvl;                 /*!< Enable or disable EMB detect Timer4 PWM V channel polarity level
-                                                 This parameter can be a value of @ref EMB_Ground0_Timer4_PWMV_Level */
+                                                 This parameter can be a value of @ref EMB_Group0_Detect_Timer4_PWMV_Level */
 
     uint32_t    u32PwmULvl;                 /*!< Enable or disable EMB detect Timer4 PWM U channel polarity level
-                                                 This parameter can be a value of @ref EMB_Ground0_Timer4_PWMU_Level */
+                                                 This parameter can be a value of @ref EMB_Group0_Detect_Timer4_PWMU_Level */
 } stc_emb_timer4_pwm_level_t;
 
 /**
@@ -134,7 +134,7 @@ typedef struct
 } stc_emb_ctrl_port_t;
 
 /**
- * @brief EMB ground0 Timer4 initialization configuration
+ * @brief EMB group0 Timer4 initialization configuration
  */
 typedef struct
 {
@@ -161,10 +161,10 @@ typedef struct
 
     stc_emb_ctrl_port_t     stcEmbIn3;      /*!< EMB detect port EMBIN1 function
                                                  This parameter details refer @ref stc_emb_ctrl_port_t structure */
-} stc_emb_ground0_timer4_init_t;
+} stc_emb_group0_timer4_init_t;
 
 /**
- * @brief EMB ground1 TimerB initialization configuration
+ * @brief EMB group1 TimerB initialization configuration
  */
 typedef struct
 {
@@ -188,7 +188,7 @@ typedef struct
 
     stc_emb_ctrl_port_t     stcEmbIn3;      /*!< EMB detect port EMBIN1 function
                                                  This parameter details refer @ref stc_emb_ctrl_port_t structure */
-} stc_emb_ground1_timerb_init_t;
+} stc_emb_group1_timerb_init_t;
 
 /**
  * @}
@@ -379,7 +379,7 @@ typedef struct
  */
 
 /**
- * @defgroup EMB_Ground0_Detect_Timer4_PWMU_Level EMB Ground0 Detect Timer4 PWMU Level
+ * @defgroup EMB_Group0_Detect_Timer4_PWMU_Level EMB Group0 Detect Timer4 PWMU Level
  * @{
  */
 #define EMB_DETECT_TIMER4_PWMU_LEVEL_LOW        ((uint32_t)0UL)
@@ -389,7 +389,7 @@ typedef struct
  */
 
 /**
- * @defgroup EMB_Ground0_Detect_Timer4_PWMV_Level EMB Ground0 Detect Timer4 PWMV Level
+ * @defgroup EMB_Group0_Detect_Timer4_PWMV_Level EMB Group0 Detect Timer4 PWMV Level
  * @{
  */
 #define EMB_DETECT_TIMER4_PWMV_LEVEL_LOW        ((uint32_t)0UL)
@@ -399,7 +399,7 @@ typedef struct
  */
 
 /**
- * @defgroup EMB_Ground0_Detect_Timer4_PWMW_Level EMB Ground0 Detect Timer4 PWMW Level
+ * @defgroup EMB_Group0_Detect_Timer4_PWMW_Level EMB Group0 Detect Timer4 PWMW Level
  * @{
  */
 #define EMB_DETECT_TIMER4_PWMW_LEVEL_LOW        ((uint32_t)0UL)
@@ -409,7 +409,7 @@ typedef struct
  */
 
 /**
- * @defgroup EMB_Ground1_Timerb_PWM_Output_State EMB Ground1 Timerb PWM Output State
+ * @defgroup EMB_Group1_Timerb_PWM_Output_State EMB Group1 Timerb PWM Output State
  * @{
  */
 #define EMB_SET_TIMERB_PWM_OUTPUT_NORMAL        ((uint32_t)0UL)     /*!< TIMB_1_PWMn(n=1~4) output normal */
@@ -463,24 +463,19 @@ typedef struct
 /*******************************************************************************
   Global function prototypes (definition in C source)
  ******************************************************************************/
-/**
- * @addtogroup EMB_Global_Functions EMB Global Functions
- * @{
- */
-en_result_t EMB_Group0Timer4Init(const stc_emb_ground0_timer4_init_t *pstcInit);
-en_result_t EMB_Ground0Timer4StructInit(stc_emb_ground0_timer4_init_t *pstcInit);
-en_result_t EMB_Group1TimerbInit(const stc_emb_ground1_timerb_init_t *pstcInit);
-en_result_t EMB_Ground1TimerbStructInit(stc_emb_ground1_timerb_init_t *pstcInit);
-en_result_t EMB_DeInit(uint32_t u32Ground);
-
+en_result_t EMB_Group0Timer4Init(const stc_emb_group0_timer4_init_t *pstcInit);
+en_result_t EMB_Ground0Timer4StructInit(stc_emb_group0_timer4_init_t *pstcInit);
+en_result_t EMB_Group1TimerbInit(const stc_emb_group1_timerb_init_t *pstcInit);
+en_result_t EMB_Ground1TimerbStructInit(stc_emb_group1_timerb_init_t *pstcInit);
+en_result_t EMB_DeInit(uint32_t u32Group);
 void EMB_SetDetectTimer4PwmLevel(stc_emb_timer4_pwm_level_t stcPwmLevel);
 void EMB_SetTimerbOutputState(uint32_t u32OutputState);
-void EMB_IntCmd(uint32_t u32Ground,
+void EMB_IntCmd(uint32_t u32Group,
                     uint32_t u32IntSource,
                     en_functional_state_t enNewSta);
-en_flag_status_t EMB_GetStatus(uint32_t u32Ground, uint32_t u32Status);
-void EMB_ClearStatus(uint32_t u32Ground, uint32_t u32Status);
-void EMB_SwBrake(uint32_t u32Ground, en_functional_state_t enNewSta);
+en_flag_status_t EMB_GetStatus(uint32_t u32Group, uint32_t u32Status);
+void EMB_ClearStatus(uint32_t u32Group, uint32_t u32Status);
+void EMB_SwBrake(uint32_t u32Group, en_functional_state_t enNewSta);
 /**
  * @}
  */

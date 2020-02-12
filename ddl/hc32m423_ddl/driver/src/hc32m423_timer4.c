@@ -2132,8 +2132,8 @@ void TIMER4_PWM_SetPortEnBitEffectTime(uint32_t u32EffectTime)
  *           @arg TIMER4_PWM_PORT_OUTPUT_HIGH:  TIM4_<t>_Oxy output high level
  * @retval None
  */
-void TIMER4_PWM_SetPortOutputState(uint32_t u32PwmPort,
-                                                uint32_t u32State)
+void TIMER4_PWM_SetOutputForbidState(uint32_t u32PwmPort,
+                                                    uint32_t u32State)
 {
     DDL_ASSERT(IS_VALID_TIMER4_PWM_PORT(u32PwmPort));
     DDL_ASSERT(IS_VALID_TIMER4_PWM_PORT_OUTPUT_STATE(u32State));

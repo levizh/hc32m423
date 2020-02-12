@@ -101,8 +101,8 @@ typedef struct
 #define TIMER4_CNT_CYCLE_VAL            (SystemCoreClock/512UL/2UL)    /* 500 ms */
 
 /* Key Port/Pin definition */
-#define KEY_PORT                        (GPIO_PORT_2)
-#define KEY_PIN                         (GPIO_PIN_1)
+#define KEY_PORT                        (GPIO_PORT_D)
+#define KEY_PIN                         (GPIO_PIN_7)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -229,14 +229,18 @@ static void Timer4PwmConfig(void)
     TIMER4_OCO_SetLowChCompareMode(TIMER4_OCO_UL, &stcLowChCmpMode);  /* Set OCO low channel compare mode */
 
     /* Initialize PWM I/O */
-    GPIO_SetFunc(GPIO_PORT_6, GPIO_PIN_1, GPIO_FUNC_4_TIM4);
-    GPIO_SetFunc(GPIO_PORT_6, GPIO_PIN_0, GPIO_FUNC_2_TIM4);
+    GPIO_SetFunc(GPIO_PORT_7, GPIO_PIN_1, GPIO_FUNC_2_TIM4);
+    GPIO_SetFunc(GPIO_PORT_7, GPIO_PIN_4, GPIO_FUNC_2_TIM4);
 
     /* Initialize Timer4 PWM */
     TIMER4_PWM_StructInit(&stcTimer4PwmInit);
     stcTimer4PwmInit.enRtIntMaskCmd = Enable;
     stcTimer4PwmInit.u16PwmOutputPolarity = TIMER4_PWM_OP_OXH_HOLD_OXL_HOLD;
     TIMER4_PWM_Init(TIMER4_PWM_U, &stcTimer4PwmInit);
+
+    /* Configure Timer4 EMB. */
+    TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUH, TIMER4_PWM_PORT_OUTPUT_LOW);
+    TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUL, TIMER4_PWM_PORT_OUTPUT_LOW);
 }
 
 /**
@@ -246,7 +250,7 @@ static void Timer4PwmConfig(void)
  */
 int32_t main(void)
 {
-    stc_key_t stcKeySw2 = {
+    stc_key_t stcKeySw = {
         .u8Port = KEY_PORT,
         .u8Pin = KEY_PIN,
         .enPressPinState = Pin_Reset,
@@ -261,15 +265,12 @@ int32_t main(void)
     /* Configure Timer4 PWM. */
     Timer4PwmConfig();
 
-    /* Configure Timer4 EMB. */
-    TIMER4_EMB_SetPwmPortPolarity(TIMER4_EMB_TRIG_PWM_OP_LOW);
-
     /* Start TIMER4 counter. */
     TIMER4_CNT_Start();
 
     while (1U)
     {
-        while (KeyRelease != KeyGetState(&stcKeySw2))
+        while (KeyRelease != KeyGetState(&stcKeySw))
         {
             ;
         }
@@ -277,7 +278,7 @@ int32_t main(void)
         /* Software start brake signal */
         EMB_SwBrake(Enable);
 
-        while (KeyRelease != KeyGetState(&stcKeySw2))
+        while (KeyRelease != KeyGetState(&stcKeySw))
         {
             ;
         }

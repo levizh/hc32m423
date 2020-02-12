@@ -986,6 +986,7 @@ __STATIC_INLINE void TIMER4_PWM_DisableMasterOutput(void)
     bM4_TMR4->PSCR_b.MOE = 1UL;
 }
 
+/* Initialization and configuration Timer4 counter functions */
 en_result_t TIMER4_CNT_Init(const stc_timer4_cnt_init_t *pstcInit);
 en_result_t TIMER4_CNT_StructInit(stc_timer4_cnt_init_t *pstcInit);
 en_result_t TIMER4_CNT_DeInit(void);
@@ -997,6 +998,8 @@ void TIMER4_CNT_SetIntMaskTimes(uint16_t u16IntSource,
 uint16_t TIMER4_CNT_GetIntMaskTimes(uint16_t u16IntSource);
 uint16_t TIMER4_CNT_GetIntMaskCurrenTimes(uint16_t u16IntSource);
 void TIMER4_CNT_SetCntDirSigOutput(uint16_t u16CntDirSig);
+
+/* Initialization and configuration Timer4 OCO functions */
 en_result_t TIMER4_OCO_Init(uint32_t u32Ch,
                                 const stc_timer4_oco_init_t *pstcInit);
 en_result_t TIMER4_OCO_StructInit(stc_timer4_oco_init_t *pstcInit);
@@ -1028,6 +1031,8 @@ en_result_t TIMER4_OCO_SetOcoInvalidOp(uint32_t u32Ch,
 uint16_t TIMER4_OCO_GetOutputPolarity(uint32_t u32Ch);
 void TIMER4_OCO_SetOccrVal(uint32_t u32Ch, uint16_t u16OccrVal);
 uint16_t TIMER4_OCO_GetOccrVal(uint32_t u32Ch);
+
+/* Initialization and configuration Timer4 PWM functions */
 en_result_t TIMER4_PWM_Init(uint32_t u32Ch,
                                 const stc_timer4_pwm_init_t *pstcInit);
 en_result_t TIMER4_PWM_StructInit(stc_timer4_pwm_init_t *pstcInit);
@@ -1051,6 +1056,11 @@ en_result_t TIMER4_PWM_SetFilterCountValue(uint32_t u32Ch,
                                                         uint16_t u16Count);
 en_result_t TIMER4_PWM_PortOutputCmd(uint32_t u32PwmPort,
                                                 en_functional_state_t enNewSta);
+void TIMER4_PWM_SetPortEnBitEffectTime(uint32_t u32EffectTime);
+void TIMER4_PWM_SetOutputForbidState(uint32_t u32PwmPort,
+                                                    uint32_t u32State);
+
+/* Initialization and configuration Timer4 SEVT functions */
 en_result_t TIMER4_SEVT_Init(uint32_t u32Ch,
                                 const stc_timer4_sevt_init_t *pstcInit);
 en_result_t TIMER4_SEVT_StructInit(stc_timer4_sevt_init_t *pstcInit);

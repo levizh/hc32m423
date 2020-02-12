@@ -87,7 +87,7 @@
  * @{
  */
 
-#define IS_VALID_EMB_GROUND(x)                                                 \
+#define IS_VALID_EMB_GROUP(x)                                                  \
 (   ((x) == EMB_GROUP0_TMR4)                    ||                             \
     ((x) == EMB_GROUP1_TMRB))
 
@@ -207,26 +207,26 @@
  */
 
 /**
- * @defgroup EMB_Groundx_Register_Base_Address EMB Groundx Register Base Address(x = 0 ~ 1)
- * @brief Get the specified EMB ground register base address
+ * @defgroup EMB_Groupx_Register_Base_Address EMB Groupx Register Base Address(x = 0 ~ 1)
+ * @brief Get the specified EMB group register base address
  * @{
  */
-#define EMB_GROUNDx_BASE_ADDRESS(__GROUND__)    ((uint32_t)M4_EMB + ((uint32_t)(__GROUND__))*0x20UL)
+#define EMB_GROUPx_BASE_ADDRESS(__GROUP__)    ((uint32_t)M4_EMB + ((uint32_t)(__GROUP__))*0x20UL)
 /**
  * @}
  */
 
 /**
- * @defgroup EMB_Groundx_Register EMB Groundx Register (x = 0 ~ 1)
- * @brief Get the specified EMB ground register
+ * @defgroup EMB_Groupx_Register EMB Groupx Register (x = 0 ~ 1)
+ * @brief Get the specified EMB group register
  * @{
  */
-#define EMB_CTLx(__GROUND__)        ((volatile uint32_t *)(EMB_GROUNDx_BASE_ADDRESS(__GROUND__) + 0x00UL))
-#define EMB_PWMLVx(__GROUND__)      ((volatile uint32_t *)(EMB_GROUNDx_BASE_ADDRESS(__GROUND__) + 0x04UL))
-#define EMB_SOEx(__GROUND__)        ((volatile uint32_t *)(EMB_GROUNDx_BASE_ADDRESS(__GROUND__) + 0x08UL))
-#define EMB_STATx(__GROUND__)       ((volatile uint32_t *)(EMB_GROUNDx_BASE_ADDRESS(__GROUND__) + 0x0CUL))
-#define EMB_STATCLRx(__GROUND__)    ((volatile uint32_t *)(EMB_GROUNDx_BASE_ADDRESS(__GROUND__) + 0x10UL))
-#define EMB_INTENx(__GROUND__)      ((volatile uint32_t *)(EMB_GROUNDx_BASE_ADDRESS(__GROUND__) + 0x14UL))
+#define EMB_CTLx(__GROUP__)        ((volatile uint32_t *)(EMB_GROUPx_BASE_ADDRESS(__GROUP__) + 0x00UL))
+#define EMB_PWMLVx(__GROUP__)      ((volatile uint32_t *)(EMB_GROUPx_BASE_ADDRESS(__GROUP__) + 0x04UL))
+#define EMB_SOEx(__GROUP__)        ((volatile uint32_t *)(EMB_GROUPx_BASE_ADDRESS(__GROUP__) + 0x08UL))
+#define EMB_STATx(__GROUP__)       ((volatile uint32_t *)(EMB_GROUPx_BASE_ADDRESS(__GROUP__) + 0x0CUL))
+#define EMB_STATCLRx(__GROUP__)    ((volatile uint32_t *)(EMB_GROUPx_BASE_ADDRESS(__GROUP__) + 0x10UL))
+#define EMB_INTENx(__GROUP__)      ((volatile uint32_t *)(EMB_GROUPx_BASE_ADDRESS(__GROUP__) + 0x14UL))
 /**
  * @}
  */
@@ -257,13 +257,13 @@
  */
 
 /**
- * @brief  Initialize EMB ground0.
- * @param  [in] pstcInit                Pointer to a @ref stc_emb_ground0_timer4_init_t structure
+ * @brief  Initialize EMB group0.
+ * @param  [in] pstcInit                Pointer to a @ref stc_emb_group0_timer4_init_t structure
  * @retval An en_result_t enumeration value:
  *           - Ok: Initialize successfully
  *           - ErrorInvalidParameter: pstcInit = NULL
  */
-en_result_t EMB_Group0Timer4Init(const stc_emb_ground0_timer4_init_t *pstcInit)
+en_result_t EMB_Group0Timer4Init(const stc_emb_group0_timer4_init_t *pstcInit)
 {
     uint32_t u32Ctl = 0UL;
     en_result_t enRet = ErrorInvalidParameter;
@@ -319,13 +319,13 @@ en_result_t EMB_Group0Timer4Init(const stc_emb_ground0_timer4_init_t *pstcInit)
 }
 
 /**
- * @brief  Set the fields of structure stc_emb_ground0_timer4_init_t to default values
- * @param  [out] pstcInit               Pointer to a @ref stc_emb_ground0_timer4_init_t structure (M4_EMB unit function configuration data structure)
+ * @brief  Set the fields of structure stc_emb_group0_timer4_init_t to default values
+ * @param  [out] pstcInit               Pointer to a @ref stc_emb_group0_timer4_init_t structure (M4_EMB unit function configuration data structure)
  * @retval An en_result_t enumeration value:
  *           - Ok: Initialize successfully
  *           - ErrorInvalidParameter: pstcInit = NULL
  */
-en_result_t EMB_Ground0Timer4StructInit(stc_emb_ground0_timer4_init_t *pstcInit)
+en_result_t EMB_Ground0Timer4StructInit(stc_emb_group0_timer4_init_t *pstcInit)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -361,13 +361,13 @@ en_result_t EMB_Ground0Timer4StructInit(stc_emb_ground0_timer4_init_t *pstcInit)
 }
 
 /**
- * @brief  Initialize EMB ground1.
- * @param  [in] pstcInit                Pointer to a @ref stc_emb_ground1_timerb_init_t structure
+ * @brief  Initialize EMB group1.
+ * @param  [in] pstcInit                Pointer to a @ref stc_emb_group1_timerb_init_t structure
  * @retval An en_result_t enumeration value:
  *           - Ok: Initialize successfully
  *           - ErrorInvalidParameter: pstcInit = NULL
  */
-en_result_t EMB_Group1TimerbInit(const stc_emb_ground1_timerb_init_t *pstcInit)
+en_result_t EMB_Group1TimerbInit(const stc_emb_group1_timerb_init_t *pstcInit)
 {
     uint32_t u32Ctl = 0UL;
     en_result_t enRet = ErrorInvalidParameter;
@@ -417,13 +417,13 @@ en_result_t EMB_Group1TimerbInit(const stc_emb_ground1_timerb_init_t *pstcInit)
 }
 
 /**
- * @brief  Set the fields of structure stc_emb_ground1_timerb_init_t to default values
- * @param  [out] pstcInit               Pointer to a @ref stc_emb_ground1_timerb_init_t structure (M4_EMB unit function configuration data structure)
+ * @brief  Set the fields of structure stc_emb_group1_timerb_init_t to default values
+ * @param  [out] pstcInit               Pointer to a @ref stc_emb_group1_timerb_init_t structure (M4_EMB unit function configuration data structure)
  * @retval An en_result_t enumeration value:
  *           - Ok: Initialize successfully
  *           - ErrorInvalidParameter: pstcInit = NULL
  */
-en_result_t EMB_Ground1TimerbStructInit(stc_emb_ground1_timerb_init_t *pstcInit)
+en_result_t EMB_Ground1TimerbStructInit(stc_emb_group1_timerb_init_t *pstcInit)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -456,20 +456,20 @@ en_result_t EMB_Ground1TimerbStructInit(stc_emb_ground1_timerb_init_t *pstcInit)
 
 /**
  * @brief  De-Initialize EMB function
- * @param  [in] u32Ground               EMB ground
+ * @param  [in] u32Group                EMB group
  *         This parameter can be one of the following values:
- *           @arg EMB_GROUP0_TMR4:      EMB ground 0 for Timer4
- *           @arg EMB_GROUP1_TMRB:      EMB ground 1 for TimerB
+ *           @arg EMB_GROUP0_TMR4:      EMB group 0 for Timer4
+ *           @arg EMB_GROUP1_TMRB:      EMB group 1 for TimerB
  * @retval An en_result_t enumeration value:
  *           - Ok: De-Initialize success
  */
-en_result_t EMB_DeInit(uint32_t u32Ground)
+en_result_t EMB_DeInit(uint32_t u32Group)
 {
-    __IO uint32_t *EMB_SOE = EMB_SOEx(u32Ground);
-    __IO uint32_t *EMB_INTEN = EMB_INTENx(u32Ground);
-    __IO uint32_t *EMB_STATCLR = EMB_STATCLRx(u32Ground);
+    __IO uint32_t *EMB_SOE = EMB_SOEx(u32Group);
+    __IO uint32_t *EMB_INTEN = EMB_INTENx(u32Group);
+    __IO uint32_t *EMB_STATCLR = EMB_STATCLRx(u32Group);
 
-    DDL_ASSERT(IS_VALID_EMB_GROUND(u32Ground));
+    DDL_ASSERT(IS_VALID_EMB_GROUP(u32Group));
 
     /* Configures the registers to reset value. */
     WRITE_REG32(*EMB_STATCLR, 0x0FUL);
@@ -516,10 +516,10 @@ void EMB_SetTimerbOutputState(uint32_t u32OutputState)
 
 /**
  * @brief  Set the EMB interrupt function
- * @param  [in] u32Ground               EMB ground
+ * @param  [in] u32Group                EMB group
  *         This parameter can be one of the following values:
- *           @arg EMB_GROUP0_TMR4:      EMB ground 0 for Timer4
- *           @arg EMB_GROUP1_TMRB:      EMB ground 1 for TimerB
+ *           @arg EMB_GROUP0_TMR4:      EMB group 0 for Timer4
+ *           @arg EMB_GROUP1_TMRB:      EMB group 1 for TimerB
  * @param  [in] u32IntSource            EMB interrupt source
  *         This parameter can be one of the following values:
  *           @arg EMB_INT_PWM:          PWM same phase trigger stop PWM
@@ -532,14 +532,14 @@ void EMB_SetTimerbOutputState(uint32_t u32OutputState)
  *           @arg  This parameter can be: Enable or Disable
  * @retval None
  */
-void EMB_IntCmd(uint32_t u32Ground,
+void EMB_IntCmd(uint32_t u32Group,
                     uint32_t u32IntSource,
                     en_functional_state_t enNewSta)
 {
-    __IO uint32_t *EMB_INTEN = EMB_INTENx(u32Ground);
+    __IO uint32_t *EMB_INTEN = EMB_INTENx(u32Group);
 
     /* Check parameters */
-    DDL_ASSERT(IS_VALID_EMB_GROUND(u32Ground));
+    DDL_ASSERT(IS_VALID_EMB_GROUP(u32Group));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
     DDL_ASSERT(IS_VALID_EMB_INT(u32IntSource));
 
@@ -548,10 +548,10 @@ void EMB_IntCmd(uint32_t u32Ground,
 
 /**
  * @brief  Get EMB status
- * @param  [in] u32Ground               EMB ground
+ * @param  [in] u32Group                EMB group
  *         This parameter can be one of the following values:
- *           @arg EMB_GROUP0_TMR4:      EMB ground 0 for Timer4
- *           @arg EMB_GROUP1_TMRB:      EMB ground 1 for TimerB
+ *           @arg EMB_GROUP0_TMR4:      EMB group 0 for Timer4
+ *           @arg EMB_GROUP1_TMRB:      EMB group 1 for TimerB
  * @param  [in] u32Status               EMB flag
  *         This parameter can be one of the following values:
  *           @arg EMB_FLAG_PWM:  PWM same phase trigger stop PWM
@@ -568,12 +568,12 @@ void EMB_IntCmd(uint32_t u32Ground,
  *           - Set: Flag is set
  *           - Reset: Flag is reset
  */
-en_flag_status_t EMB_GetStatus(uint32_t u32Ground, uint32_t u32Status)
+en_flag_status_t EMB_GetStatus(uint32_t u32Group, uint32_t u32Status)
 {
-    __IO uint32_t *EMB_STAT = EMB_STATx(u32Ground);
+    __IO uint32_t *EMB_STAT = EMB_STATx(u32Group);
 
     /* Check parameters */
-    DDL_ASSERT(IS_VALID_EMB_GROUND(u32Status));
+    DDL_ASSERT(IS_VALID_EMB_GROUP(u32Group));
     DDL_ASSERT(IS_VALID_EMB_FLAG(u32Status));
 
     return READ_REG32_BIT(*EMB_STAT, u32Status) ? Set : Reset;
@@ -581,10 +581,10 @@ en_flag_status_t EMB_GetStatus(uint32_t u32Ground, uint32_t u32Status)
 
 /**
  * @brief  Clear EMB status
- * @param  [in] u32Ground               EMB ground
+ * @param  [in] u32Group                EMB group
  *         This parameter can be one of the following values:
- *           @arg EMB_GROUP0_TMR4:      EMB ground 0 for Timer4
- *           @arg EMB_GROUP1_TMRB:      EMB ground 1 for TimerB
+ *           @arg EMB_GROUP0_TMR4:      EMB group 0 for Timer4
+ *           @arg EMB_GROUP1_TMRB:      EMB group 1 for TimerB
  * @param  [in] u32Status           EMB status
  *         This parameter can be one of the following values:
  *           @arg EMB_FLAG_PWM:  PWM same phase trigger stop PWM
@@ -595,12 +595,12 @@ en_flag_status_t EMB_GetStatus(uint32_t u32Ground, uint32_t u32Status)
  *           @arg EMB_FLAG_PORT_EMBIN3: Port EMB_IN1 input trigger stop PWM
  * @retval None
  */
-void EMB_ClearStatus(uint32_t u32Ground, uint32_t u32Status)
+void EMB_ClearStatus(uint32_t u32Group, uint32_t u32Status)
 {
-    __IO uint32_t *EMB_STAT = EMB_STATx(u32Ground);
+    __IO uint32_t *EMB_STAT = EMB_STATx(u32Group);
 
     /* Check parameters */
-    DDL_ASSERT(IS_VALID_EMB_GROUND(u32Ground));
+    DDL_ASSERT(IS_VALID_EMB_GROUP(u32Group));
     DDL_ASSERT(IS_VALID_EMB_FLAG(u32Status));
 
     SET_REG32_BIT(*EMB_STAT, u32Status);
@@ -608,21 +608,21 @@ void EMB_ClearStatus(uint32_t u32Ground, uint32_t u32Status)
 
 /**
  * @brief  EMB software brake
- * @param  [in] u32Ground               EMB ground
+ * @param  [in] u32Group                EMB group
  *         This parameter can be one of the following values:
- *           @arg EMB_GROUP0_TMR4:      EMB ground 0 for Timer4
- *           @arg EMB_GROUP1_TMRB:      EMB ground 1 for TimerB
+ *           @arg EMB_GROUP0_TMR4:      EMB group 0 for Timer4
+ *           @arg EMB_GROUP1_TMRB:      EMB group 1 for TimerB
  * @param  [in] enNewSta                The function new state
  *           @arg  This parameter can be: Enable or Disable
  * @retval None
  */
-void EMB_SwBrake(uint32_t u32Ground, en_functional_state_t enNewSta)
+void EMB_SwBrake(uint32_t u32Group, en_functional_state_t enNewSta)
 {
     /* Check parameters */
-    DDL_ASSERT(IS_VALID_EMB_GROUND(u32Ground));
+    DDL_ASSERT(IS_VALID_EMB_GROUP(u32Group));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
 
-    if (EMB_GROUP0_TMR4 == u32Ground)
+    if (EMB_GROUP0_TMR4 == u32Group)
     {
         WRITE_REG32(bM4_EMB->SOE0_b.SOE, enNewSta);
     }

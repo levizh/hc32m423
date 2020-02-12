@@ -101,8 +101,8 @@ typedef struct
 #define TIMER4_CNT_CYCLE_VAL            (SystemCoreClock/512UL/2UL)    /* 500 ms */
 
 /* Key Port/Pin definition */
-#define KEY_PORT                        (GPIO_PORT_2)
-#define KEY_PIN                         (GPIO_PIN_1)
+#define KEY_PORT                        (GPIO_PORT_D)
+#define KEY_PIN                         (GPIO_PIN_7)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -121,7 +121,7 @@ static void EmbIrqCallback(void);
  ******************************************************************************/
 static __IO uint8_t m_u8EmbFlag = 0U;
 
-static stc_key_t m_stcKeySw2 = {
+static stc_key_t m_stcKeySw = {
     .u8Port = KEY_PORT,
     .u8Pin = KEY_PIN,
     .enPressPinState = Pin_Reset,
@@ -237,14 +237,18 @@ static void Timer4PwmConfig(void)
     TIMER4_OCO_SetLowChCompareMode(TIMER4_OCO_UL, &stcLowChCmpMode);  /* Set OCO low channel compare mode */
 
     /* Initialize PWM I/O */
-    GPIO_SetFunc(GPIO_PORT_6, GPIO_PIN_1, GPIO_FUNC_4_TIM4);
-    GPIO_SetFunc(GPIO_PORT_6, GPIO_PIN_0, GPIO_FUNC_2_TIM4);
+    GPIO_SetFunc(GPIO_PORT_7, GPIO_PIN_1, GPIO_FUNC_2_TIM4);
+    GPIO_SetFunc(GPIO_PORT_7, GPIO_PIN_4, GPIO_FUNC_2_TIM4);
 
     /* Initialize Timer4 PWM */
     TIMER4_PWM_StructInit(&stcTimer4PwmInit);
     stcTimer4PwmInit.enRtIntMaskCmd = Enable;
-    stcTimer4PwmInit.u16PwmOutputPolarity = TIMER4_PWM_OP_OXH_HOLD_OXL_INVERT;
+    stcTimer4PwmInit.u16PwmOutputPolarity = TIMER4_PWM_OP_OXH_HOLD_OXL_HOLD;
     TIMER4_PWM_Init(TIMER4_PWM_U, &stcTimer4PwmInit);
+
+    /* Configure Timer4 EMB. */
+    TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUH, TIMER4_PWM_PORT_OUTPUT_LOW);
+    TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUL, TIMER4_PWM_PORT_OUTPUT_LOW);
 }
 
 /**
@@ -258,16 +262,18 @@ static void EmbIrqCallback(void)
     {
         m_u8EmbFlag = 1U;
 
-        while (KeyRelease != KeyGetState(&m_stcKeySw2))
+        while (KeyRelease != KeyGetState(&m_stcKeySw))
         {
             ;
         }
 
         TIMER4_PWM_SetOutputPolarity(TIMER4_PWM_U, TIMER4_PWM_OP_OXH_HOLD_OXL_INVERT);
-        TIMER4_EMB_SetPwmPortPolarity(TIMER4_EMB_TRIG_PWM_OP_NORMAL);
+        TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUH, TIMER4_PWM_PORT_OUTPUT_NORMAL);
+        TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUL, TIMER4_PWM_PORT_OUTPUT_NORMAL);
 
         EMB_ClearStatus(EMB_FLAG_PWM);  /* Clear PWM Brake */
-        TIMER4_EMB_SetPwmPortPolarity(TIMER4_EMB_TRIG_PWM_OP_LOW);
+        TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUH, TIMER4_PWM_PORT_OUTPUT_LOW);
+        TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUL, TIMER4_PWM_PORT_OUTPUT_LOW);
     }
 }
 
@@ -279,7 +285,7 @@ static void EmbIrqCallback(void)
 int32_t main(void)
 {
     stc_irq_regi_config_t stcIrqRegiConf;
-    stc_emb_ctrl_timer4_init_t stcEmbInit;
+    stc_emb_group0_timer4_init_t stcEmbInit;
     stc_emb_timer4_pwm_level_t stcPwmLevel;
 
     /* Configure system clock. */
@@ -292,27 +298,29 @@ int32_t main(void)
     Timer4PwmConfig();
 
     /* Configure Timer4 EMB. */
-    TIMER4_EMB_SetPwmPortPolarity(TIMER4_EMB_TRIG_PWM_OP_LOW);
+    TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUH, TIMER4_PWM_PORT_OUTPUT_LOW);
+    TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUL, TIMER4_PWM_PORT_OUTPUT_LOW);
 
     /* Configure EMB. */
-    EMB_StructInit(&stcEmbInit);
-    stcEmbInit.enTimer4PwmUCmd = Enable;
-    EMB_Init(&stcEmbInit);
+    EMB_Group0Timer4StructInit(&stcEmbInit);
+    stcEmbInit.stcTimer4.u32Timer4PwmUEnable = Enable;
+    EMB_Group0Timer4Init(&stcEmbInit);
+    EMB_IntCmd(EMB_GROUP0_TMR4, EMB_INT_PWM, Enable);
 
     /* EMB detect Timer4 PWM U channel high level */
-    stcPwmLevel.enPwmUHighLvl = Enable;
-    stcPwmLevel.enPwmVHighLvl = Disable;
-    stcPwmLevel.enPwmWHighLvl = Disable;
-    EMB_SetDetectPwmLevel(stcPwmLevel);
+    stcPwmLevel.u32PwmULvl = EMB_DETECT_TIMER4_PWMU_LEVEL_HIGH;
+    stcPwmLevel.u32PwmVLvl = EMB_DETECT_TIMER4_PWMV_LEVEL_LOW;
+    stcPwmLevel.u32PwmWLvl = EMB_DETECT_TIMER4_PWMW_LEVEL_LOW;
+    EMB_SetDetectTimer4PwmLevel(stc_emb_timer4_pwm_level_t stcPwmLevel);
 
     /* Enablle EMB PWM interrupt */
     EMB_IntCmd(EMB_INT_PWM, Enable);
 
     /* Register IRQ handler && configure NVIC. */
-    stcIrqRegiConf.enIRQn = Int014_IRQn;
-    stcIrqRegiConf.enIntSrc = INT_EMB_GR;
+    stcIrqRegiConf.enIRQn = Int000_IRQn;
+    stcIrqRegiConf.enIntSrc = INT_EMB_GR0;
     stcIrqRegiConf.pfnCallback = &EmbIrqCallback;
-    INTC_IrqRegistration(&stcIrqRegiConf);
+    INTC_IrqSignIn(&stcIrqRegiConf);
     NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
     NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIORITY_03);
     NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
@@ -323,7 +331,7 @@ int32_t main(void)
     while (1U)
     {
         /* Wait key release */
-        while (KeyRelease != KeyGetState(&m_stcKeySw2))
+        while (KeyRelease != KeyGetState(&m_stcKeySw))
         {
             ;
         }
