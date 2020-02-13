@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-08       Chengy          First version
+   2020-02-05       Chengy          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -90,7 +90,9 @@
 /* Parameter valid check for DMA Channel. */
 #define IS_VALID_DMA_CH(x)                                                     \
 (       ((x) == DMA_CHANNEL_0)                  ||                             \
-        ((x) == DMA_CHANNEL_1))
+        ((x) == DMA_CHANNEL_1)                  ||                             \
+        ((x) == DMA_CHANNEL_2)                  ||                             \
+        ((x) == DMA_CHANNEL_3))
 
 /* Parameter valid check for DMA transfer data width. */
 #define IS_VALID_DMA_TRN_WIDTH(x)                                              \
@@ -114,6 +116,11 @@
 #define IS_VALID_DMA_LLP_MODE(x)                                               \
 (       ((x) == DMA_LLP_RUN)                    ||                             \
         ((x) == DMA_LLP_WAIT))
+
+/* Parameter valid check for DMA link-list-pointer descriptor base address mode. */
+#define IS_VALID_DMA_LLP_ADDR_MD(x)                                            \
+(       ((x) == DMA_LLP_ADDR_ROM)               ||                             \
+        ((x) == DMA_LLP_ADDR_SRAM1))
 
 /* Parameter valid check for DMA source & destination address repeat selection. */
 #define IS_VALID_DMA_RPT_SEL(x)                                                \
@@ -149,6 +156,8 @@
 #define IS_VALID_DMA_STATUS(x)                                                 \
 (       ((x) == DMA_STATUS_CH0BUSY)             ||                             \
         ((x) == DMA_STATUS_CH1BUSY)             ||                             \
+        ((x) == DMA_STATUS_CH2BUSY)             ||                             \
+        ((x) == DMA_STATUS_CH3BUSY)             ||                             \
         ((x) == DMA_STATUS_DMABUSY))
 /**
  * @}
@@ -189,39 +198,39 @@ void DMA_Cmd(en_functional_state_t enNewState)
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
     /* Enable or Disable DMA */
-    MODIFY_REG(M0P_DMA->EN, DMA_EN_EN, enNewState);
+    MODIFY_REG(M4_DMA->EN, DMA_EN_EN, enNewState);
 }
 
 /**
  * @brief  Enable the specified DAM channel.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @retval None
  */
 void DMA_ChannelEnable(uint8_t u8Ch)
 {
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
 
-    M0P_DMA->CHEN = 1UL << u8Ch;
+    M4_DMA->CHEN = 1UL << u8Ch;
 }
 
 /**
  * @brief  Disable the specified DAM channel.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @retval None
  */
 void DMA_ChannelDisable(uint8_t u8Ch)
 {
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
 
-    M0P_DMA->CHENCLR = 1UL << u8Ch;
+    M4_DMA->CHENCLR = 1UL << u8Ch;
 }
 
 /**
  * @brief  Enable or disable the specified DMA error interrupt.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  enNewState           The function new state.
  *           @arg  This parameter can be: Enable or Disable.
  * @param  u32Irq               The specified DMA interrupt.
@@ -238,10 +247,10 @@ void DMA_ErrIrqCmd(uint8_t u8Ch, uint32_t u32Irq, en_functional_state_t enNewSta
     switch (enNewState)
     {
         case Enable:
-            CLEAR_BIT(M0P_DMA->INTMASK0, u32Irq << u8Ch);
+            CLEAR_BIT(M4_DMA->INTMASK0, u32Irq << u8Ch);
             break;
         case Disable:
-            SET_BIT(M0P_DMA->INTMASK0, u32Irq << u8Ch);
+            SET_BIT(M4_DMA->INTMASK0, u32Irq << u8Ch);
             break;
         default:
             break;
@@ -251,7 +260,7 @@ void DMA_ErrIrqCmd(uint8_t u8Ch, uint32_t u32Irq, en_functional_state_t enNewSta
 /**
  * @brief  Enable or disable the specified DMA complete interrupt.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  enNewState           The function new state.
  *           @arg  This parameter can be: Enable or Disable.
  * @param  u32Irq               The specified DMA interrupt.
@@ -268,10 +277,10 @@ void DMA_CplIrqCmd(uint8_t u8Ch, uint32_t u32Irq, en_functional_state_t enNewSta
     switch (enNewState)
     {
         case Enable:
-            CLEAR_BIT(M0P_DMA->INTMASK1, u32Irq << u8Ch);
+            CLEAR_BIT(M4_DMA->INTMASK1, u32Irq << u8Ch);
             break;
         case Disable:
-            SET_BIT(M0P_DMA->INTMASK1, u32Irq << u8Ch);
+            SET_BIT(M4_DMA->INTMASK1, u32Irq << u8Ch);
             break;
         default:
             break;
@@ -280,7 +289,7 @@ void DMA_CplIrqCmd(uint8_t u8Ch, uint32_t u32Irq, en_functional_state_t enNewSta
 /**
  * @brief  The configuration of the specified DAM channel.
  * @param  u8Ch                  The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  pstcChCfg             The configuration pointer.
  *           @arg u32DataWidth   The DMA transfer data width.
  *           @arg u32BlockSize   The DMA block size.
@@ -299,25 +308,25 @@ void DMA_ChannelCfg(uint8_t u8Ch, const stc_dma_ch_cfg_t* pstcChCfg)
     DDL_ASSERT(IS_VALID_DMA_DADDR_MODE(pstcChCfg->u32DesInc));
 
     /* Set data width, transfer count, block size. */
-    MODIFY_REG(DMA_CH_REG(M0P_DMA->CH0CTL0, u8Ch),
+    MODIFY_REG(DMA_CH_REG(M4_DMA->CH0CTL0, u8Ch),
                DMA_CH0CTL0_BLKSIZE | DMA_CH0CTL0_CNT |DMA_CH0CTL0_HSIZE,
                pstcChCfg->u32BlockSize |
                (pstcChCfg->u32TransferCnt << DMA_CH0CTL0_CNT_POS) |
                pstcChCfg->u32DataWidth);
     /* Set source & destination address increment mode */
-    MODIFY_REG(DMA_CH_REG(M0P_DMA->CH0CTL1, u8Ch),
+    MODIFY_REG(DMA_CH_REG(M4_DMA->CH0CTL1, u8Ch),
                DMA_CH0CTL1_SINC | DMA_CH0CTL1_DINC,
                pstcChCfg->u32SrcInc | pstcChCfg->u32DesInc);
     /* Set source address. */
-    WRITE_REG(DMA_CH_REG(M0P_DMA->SAR0, u8Ch), pstcChCfg->u32SrcAddr);
+    WRITE_REG(DMA_CH_REG(M4_DMA->SAR0, u8Ch), pstcChCfg->u32SrcAddr);
     /* Set destination address. */
-    WRITE_REG(DMA_CH_REG(M0P_DMA->DAR0, u8Ch), pstcChCfg->u32DesAddr);
+    WRITE_REG(DMA_CH_REG(M4_DMA->DAR0, u8Ch), pstcChCfg->u32DesAddr);
 }
 
 /**
  * @brief  Initialize the DMA repeat transfer.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  u32Cnt               The specified repeat count
  * @param  u32RptSel
  *           @arg DMA_RPTNSSEL_SRCRPT
@@ -330,7 +339,7 @@ void DMA_RepeatInit(uint8_t u8Ch, uint32_t u32RptSel, uint32_t u32Cnt)
     DDL_ASSERT(IS_VALID_DMA_RPT_SEL(u32RptSel));
 
     /* Set repeat selection & repeat count, and enable repeat transfer */
-    MODIFY_REG(DMA_CH_REG(M0P_DMA->CH0CTL1, u8Ch),
+    MODIFY_REG(DMA_CH_REG(M4_DMA->CH0CTL1, u8Ch),
                DMA_CH0CTL1_RPTNSEN | DMA_CH0CTL1_RPTNSSEL | DMA_CH0CTL1_RPTNSCNT,
                DMA_RPTNSSEL_ENABLE | u32RptSel | u32Cnt << DMA_CH0CTL1_RPTNSCNT_POS);
 }
@@ -338,7 +347,7 @@ void DMA_RepeatInit(uint8_t u8Ch, uint32_t u32RptSel, uint32_t u32Cnt)
 /**
  * @brief  Initialize the DMA non_sequence transfer.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  u32Offset             The specified offset
  * @param  u32Cnt                The specified non_sequence count.
  * @param  u32NSeqSel
@@ -352,16 +361,44 @@ void DMA_NonSeqInit(uint8_t u8Ch, uint32_t u32NSeqSel, uint32_t u32Offset, uint3
     DDL_ASSERT(IS_VALID_DMA_NSEQ_SEL(u32NSeqSel));
 
     /* Set non_sequence selection & offset, and enable non_sequence transfer */
-    MODIFY_REG(DMA_CH_REG(M0P_DMA->CH0CTL1, u8Ch),
+    MODIFY_REG(DMA_CH_REG(M4_DMA->CH0CTL1, u8Ch),
                DMA_CH0CTL1_RPTNSEN | DMA_CH0CTL1_RPTNSSEL | DMA_CH0CTL1_RPTNSCNT | DMA_CH0CTL1_OFFSET,
                DMA_RPTNSSEL_ENABLE | u32NSeqSel | u32Cnt << DMA_CH0CTL1_RPTNSCNT_POS |
                u32Offset << DMA_CH0CTL1_OFFSET_POS);
 }
 
 /**
+ * @brief  Configure the DMA LLP(link listed pointer) descriptor base address.
+ * @param  u8Ch                 The specified DMA channel.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
+ * @param  u32LLpAddrMd         The specified the DMA llp address mode.
+ *           @arg DMA_LLP_ADDR_SRAM1
+ *           @arg DMA_LLP_ADDR_ROM
+ * @param  u32Addr               The specified the descriptor base address.
+ * @retval None
+ */
+void DMA_LlpCfg(uint_t u8Ch, uint32_t u32LLpAddrMd, uint32_t u32Addr)
+{
+    DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
+    DDL_ASSERT(IS_VALID_DMA_LLP_ADDR_MD(u32LLpAddrMd));
+
+    MODIFY_REG(DMA_CH_REG(M4_DMA->CH0CTL1, u8Ch), DMA_CH0CTL1_LLPSEL, u32LLpAddrMd);
+
+    if(DMA_LLP_ADDR_ROM == u32LLpAddrMd)
+    {
+        MODIFY_REG(M4_DMA->ROM_LLP, DMA_ROM_LLP_LLP, u32Addr << DMA_ROM_LLP_LLP_POS);
+    }
+    else
+    {
+        MODIFY_REG(M4_DMA->RAM_LLP, DMA_RAM_LLP_LLP, u32Addr << DMA_RAM_LLP_LLP_POS);
+    }
+    
+}
+
+/**
  * @brief  Initialize the DMA LLP(link listed pointer) transfer.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  u32LlpRun            The specified the DMA llp transfer mode.
  *           @arg DMA_LLP_RUN
  *           @arg DMA_LLP_WAIT
@@ -374,7 +411,7 @@ void DMA_LlpInit(uint8_t u8Ch, uint32_t u32LlpRun, uint32_t u32Llp)
     DDL_ASSERT(IS_VALID_DMA_LLP_MODE(u32LlpRun));
 
     /* Set llp mode & next descriptor address, and enable llp transfer */
-    MODIFY_REG(DMA_CH_REG(M0P_DMA->CH0CTL0, u8Ch),
+    MODIFY_REG(DMA_CH_REG(M4_DMA->CH0CTL0, u8Ch),
                DMA_LLP_ENABLE | DMA_CH0CTL0_LLPRUN | DMA_CH0CTL0_LLP,
                DMA_LLP_ENABLE | u32LlpRun | u32Llp << (DMA_CH0CTL0_LLP_POS - 2UL));
 }
@@ -382,7 +419,7 @@ void DMA_LlpInit(uint8_t u8Ch, uint32_t u32LlpRun, uint32_t u32Llp)
 /**
  * @brief  Set the source address of the specified ADM channel.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  u32Address           The specified source address.
  * @retval None
  */
@@ -391,13 +428,13 @@ void DMA_SetSrcAddress(uint8_t u8Ch, uint32_t u32Address)
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
 
     /* Set source address. */
-    WRITE_REG(DMA_CH_REG(M0P_DMA->SAR0, u8Ch), u32Address);
+    WRITE_REG(DMA_CH_REG(M4_DMA->SAR0, u8Ch), u32Address);
 }
 
 /**
  * @brief  Set the destination address of the specified DMA channel.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  u32Address           The specified destination address.
  * @retval None
  */
@@ -406,13 +443,13 @@ void DMA_SetDesAddress(uint8_t u8Ch, uint32_t u32Address)
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
 
     /* Set destination address. */
-    WRITE_REG(DMA_CH_REG(M0P_DMA->DAR0, u8Ch), u32Address);
+    WRITE_REG(DMA_CH_REG(M4_DMA->DAR0, u8Ch), u32Address);
 }
 
 /**
  * @brief  Set the block size of the specified DMA channel.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  u8BlkSize           The specified block size.
  * @retval None
  */
@@ -421,13 +458,13 @@ void DMA_SetBlockSize(uint8_t u8Ch, uint8_t u8BlkSize)
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
 
     /* Set block size. */
-    MODIFY_REG(DMA_CH_REG(M0P_DMA->CH0CTL0, u8Ch), DMA_CH0CTL0_BLKSIZE, u8BlkSize);
+    MODIFY_REG(DMA_CH_REG(M4_DMA->CH0CTL0, u8Ch), DMA_CH0CTL0_BLKSIZE, u8BlkSize);
 }
 
 /**
  * @brief  Set the transfer count of the specified DMA channel.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  u8Cnt                The specified transfer count.
  * @retval None
  */
@@ -436,7 +473,7 @@ void DMA_SetTransferCnt(uint8_t u8Ch, uint8_t u8Cnt)
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
 
     /* Set transfer count. */
-    MODIFY_REG(DMA_CH_REG(M0P_DMA->CH0CTL0, u8Ch),
+    MODIFY_REG(DMA_CH_REG(M4_DMA->CH0CTL0, u8Ch),
                DMA_CH0CTL0_CNT,
                (uint32_t)u8Cnt << DMA_CH0CTL0_CNT_POS);
 }
@@ -444,7 +481,7 @@ void DMA_SetTransferCnt(uint8_t u8Ch, uint8_t u8Cnt)
 /**
  * @brief  Set the DMA trigger source.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  enSrc                The DMA trigger source.
  * @retval None
  */
@@ -455,10 +492,16 @@ void DMA_SetTriggerSrc( uint8_t u8Ch, en_event_src_t enSrc)
     switch (u8Ch)
     {
         case DMA_CHANNEL_0:
-            WRITE_REG(M0P_AOS->DMA0_TRGSEL, enSrc);
+            WRITE_REG(M4_AOS->DMA0_TRGSEL, enSrc);
             break;
         case DMA_CHANNEL_1:
-            WRITE_REG(M0P_AOS->DMA1_TRGSEL, enSrc);
+            WRITE_REG(M4_AOS->DMA1_TRGSEL, enSrc);
+            break;
+        case DMA_CHANNEL_2:
+            WRITE_REG(M4_AOS->DMA2_TRGSEL, enSrc);
+            break;
+        case DMA_CHANNEL_3:
+            WRITE_REG(M4_AOS->DMA3_TRGSEL, enSrc);
             break;
     }
 }
@@ -466,7 +509,7 @@ void DMA_SetTriggerSrc( uint8_t u8Ch, en_event_src_t enSrc)
 /**
  * @brief  Get the DMA error flag.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  u32Flag              The DMA error flag.
  *           @arg DMA_FLAG_REQERR
  *           @arg DMA_FLAG_TRERR
@@ -479,7 +522,7 @@ en_flag_status_t DMA_GetErrFlag(uint8_t u8Ch, uint32_t u32Flag)
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
     DDL_ASSERT(IS_VALID_DMA_ERR_FLAG(u32Flag));
 
-    u32FlagState = M0P_DMA->INTSTAT0 & (u32Flag << (uint32_t)u8Ch);
+    u32FlagState = M4_DMA->INTSTAT0 & (u32Flag << (uint32_t)u8Ch);
 
     return ((u32FlagState == 0UL) ? Reset : Set);
 }
@@ -487,7 +530,7 @@ en_flag_status_t DMA_GetErrFlag(uint8_t u8Ch, uint32_t u32Flag)
 /**
  * @brief  Get the DMA complete flag.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  u32Flag              The DMA complete flag.
  *           @arg DMA_FLAG_BTC
  *           @arg DMA_FLAG_TC
@@ -500,7 +543,7 @@ en_flag_status_t DMA_GetCplFlag(uint8_t u8Ch, uint32_t u32Flag)
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
     DDL_ASSERT(IS_VALID_DMA_CPL_FLAG(u32Flag));
 
-    u32FlagState = M0P_DMA->INTSTAT1 & (u32Flag << (uint32_t)u8Ch);
+    u32FlagState = M4_DMA->INTSTAT1 & (u32Flag << (uint32_t)u8Ch);
 
     return ((u32FlagState == 0UL) ? Reset : Set);
 }
@@ -508,7 +551,7 @@ en_flag_status_t DMA_GetCplFlag(uint8_t u8Ch, uint32_t u32Flag)
 /**
  * @brief  Clear the DMA error flag.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  u32Flag              The DMA error flag.
  *           @arg DMA_FLAG_REQERR
  *           @arg DMA_FLAG_TRERR
@@ -519,13 +562,13 @@ void DMA_ClearErrFlag(uint8_t u8Ch, uint32_t u32Flag)
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
     DDL_ASSERT(IS_VALID_DMA_ERR_FLAG(u32Flag));
 
-    SET_BIT(M0P_DMA->INTCLR1, (u32Flag << u8Ch));
+    SET_BIT(M4_DMA->INTCLR0, (u32Flag << u8Ch));
 }
 
 /**
  * @brief  Clear the DMA complete flag.
  * @param  u8Ch                 The specified DMA channel.
- *           @arg  This parameter can be: DMA_CHANNEL_0 or DMA_CHANNEL_1.
+ *           @arg  This parameter can be: DMA_CHANNEL_0 ~ DMA_CHANNEL_3.
  * @param  u32Flag              The DMA complete flag.
  *           @arg DMA_FLAG_BTC
  *           @arg DMA_FLAG_TC
@@ -536,7 +579,7 @@ void DMA_ClearCplFlag(uint8_t u8Ch, uint32_t u32Flag)
     DDL_ASSERT(IS_VALID_DMA_CH(u8Ch));
     DDL_ASSERT(IS_VALID_DMA_CPL_FLAG(u32Flag));
 
-    SET_BIT(M0P_DMA->INTCLR1, (u32Flag << u8Ch));
+    SET_BIT(M4_DMA->INTCLR1, (u32Flag << u8Ch));
 }
 
 /**
@@ -544,6 +587,8 @@ void DMA_ClearCplFlag(uint8_t u8Ch, uint32_t u32Flag)
  * @param  u32Status            The specified DMA and DMA channel status.
  *           @arg DMA_STATUS_CH0BUSY
  *           @arg DMA_STATUS_CH1BUSY
+ *           @arg DMA_STATUS_CH2BUSY
+ *           @arg DMA_STATUS_CH3BUSY
  *           @arg DMA_STATUS_DMABUSY
  * @retval en_flag_status_t
  */
@@ -553,7 +598,7 @@ en_flag_status_t DMA_GetStatus(uint32_t u32Status)
 
     DDL_ASSERT(IS_VALID_DMA_STATUS(u32Status));
 
-    u32Stat = M0P_DMA->CHSTAT & (u32Status);
+    u32Stat = M4_DMA->CHSTAT & (u32Status);
 
     return ((u32Stat == 0UL) ? Reset : Set);
 }

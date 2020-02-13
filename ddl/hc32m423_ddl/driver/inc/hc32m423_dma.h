@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-08       Chengy          First version
+   2020-02-05       Chengy          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -116,16 +116,8 @@ typedef struct
 {
     uint32_t SARx;                              /*!< DMA source address register.       */
     uint32_t DARx;                              /*!< DMA destination address register.  */
-    union
-    {
-        uint32_t CHxCTL0;
-        stc_dma_ch0ctl0_field_t CHxCTL0_f;      /*!< DMA data control register.         */
-    };
-    union
-    {
-        uint32_t CHxCTL1;
-        stc_dma_ch0ctl1_field_t CHxCTL1_f;      /*!< DMA channel control register.      */
-    };
+    uint32_t CHxCTL0;                           /*!< DMA data control register.         */
+    uint32_t CHxCTL1;                           /*!< DMA channel control register.      */                        
 } stc_dma_llp_descriptor_t;
 
 /**
@@ -156,6 +148,8 @@ typedef struct
  */
 #define DMA_CHANNEL_0               (0x00U)       /*!< DMA Channel 0              */
 #define DMA_CHANNEL_1               (0x01U)       /*!< DMA Channel 1              */
+#define DMA_CHANNEL_2               (0x02U)       /*!< DMA Channel 2              */
+#define DMA_CHANNEL_3               (0x03U)       /*!< DMA Channel 3              */
 /**
  * @}
  */
@@ -190,6 +184,8 @@ typedef struct
  */
 #define DMA_STATUS_CH0BUSY          (DMA_CHSTAT_CHACT_0)      /*!< DMA channel 0 busy status       */
 #define DMA_STATUS_CH1BUSY          (DMA_CHSTAT_CHACT_1)      /*!< DMA channel 1 busy status       */
+#define DMA_STATUS_CH2BUSY          (DMA_CHSTAT_CHACT_2)      /*!< DMA channel 2 busy status       */
+#define DMA_STATUS_CH3BUSY          (DMA_CHSTAT_CHACT_3)      /*!< DMA channel 3 busy status       */
 #define DMA_STATUS_DMABUSY          (DMA_CHSTAT_DMAACT)       /*!< DMA busy status                 */
 /**
  * @}
@@ -207,21 +203,31 @@ typedef struct
  */
 
 /**
- * @defgroup DMA_Llp_En DMA LLP(linked list pinter) enable or disable
+ * @defgroup DMA_Llp_En DMA LLP(linked list pointer) enable or disable
  * @{
  */
-#define DMA_LLP_ENABLE              (DMA_CH0CTL0_LLPEN)       /*!< DMA LLP(linked list pinter) enable     */
-#define DMA_LLP_DISABLE             ((uint32_t)0x00000000UL)   /*!< DMA LLP(linked list pinter) disable    */
+#define DMA_LLP_ENABLE              (DMA_CH0CTL0_LLPEN)       /*!< DMA LLP(linked list pointer) enable     */
+#define DMA_LLP_DISABLE             ((uint32_t)0x00000000UL)   /*!< DMA LLP(linked list pointer) disable    */
 /**
  * @}
  */
 
 /**
- * @defgroup DMA_Llp_Mode DMA linked list pinter mode while transferring complete
+ * @defgroup DMA_Llp_Mode DMA linked list pointer mode while transferring complete
  * @{
  */
 #define DMA_LLP_RUN                 (DMA_CH0CTL0_LLPRUN)      /*!< DMA Llp run right now while transfering complete     */
-#define DMA_LLP_WAIT                ((uint32_t)0x00000000UL)   /*!< DMA Llp wait next request while transfering complete */
+#define DMA_LLP_WAIT                ((uint32_t)0x00000000UL)  /*!< DMA Llp wait next request while transfering complete */
+/**
+ * @}
+ */
+
+/**
+ * @defgroup DMA_Llp_Addr_Mode DMA linked list pointer descriptor base address mode.
+ * @{
+ */
+#define DMA_LLP_ADDR_ROM            (DMA_CH0CTL1_LLPSEL)     /*!< DMA Llp descriptor base address at rom        */        
+#define DMA_LLP_ADDR_SRAM1          ((uint32_t)0x00000000UL) /*!< DMA Llp descriptor base address at sram1      */
 /**
  * @}
  */
