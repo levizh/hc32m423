@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file  emb/emb_osc_brake_timer4/source/ddl_config.h
+ * @file  emb/emb_sw_brake_timer4/source/ddl_config.h
  * @brief This file contains HC32 Series Device Driver Library usage management.
  @verbatim
    Change Logs:
@@ -106,9 +106,9 @@ extern "C"
 #define DDL_SWDT_ENABLE                             (DDL_OFF)
 #define DDL_TIMER0_ENABLE                           (DDL_OFF)
 #define DDL_TIMER2_ENABLE                           (DDL_OFF)
-#define DDL_TIMER4_ENABLE                           (DDL_ON)
+#define DDL_TIMER4_ENABLE                           (DDL_OFF)
 #define DDL_TIMERA_ENABLE                           (DDL_OFF)
-#define DDL_TIMERB_ENABLE                           (DDL_OFF)
+#define DDL_TIMERB_ENABLE                           (DDL_ON)
 #define DDL_USART_ENABLE                            (DDL_OFF)
 #define DDL_WDT_ENABLE                              (DDL_OFF)
 

@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file  emb/emb_osc_brake_timer4/source/ddl_config.h
+ * @file  emb/emb_cmp_brake_timer4/source/ddl_config.h
  * @brief This file contains HC32 Series Device Driver Library usage management.
  @verbatim
    Change Logs:
@@ -88,7 +88,7 @@ extern "C"
 #define DDL_PRINT_ENABLE                            (DDL_OFF)
 #define DDL_ADC_ENABLE                              (DDL_OFF)
 #define DDL_CLK_ENABLE                              (DDL_ON)
-#define DDL_CMP_ENABLE                              (DDL_OFF)
+#define DDL_CMP_ENABLE                              (DDL_ON)
 #define DDL_CRC_ENABLE                              (DDL_OFF)
 #define DDL_CTC_ENABLE                              (DDL_OFF)
 #define DDL_DCU_ENABLE                              (DDL_OFF)
@@ -100,15 +100,15 @@ extern "C"
 #define DDL_GPIO_ENABLE                             (DDL_ON)
 #define DDL_I2C_ENABLE                              (DDL_OFF)
 #define DDL_INTERRUPTS_ENABLE                       (DDL_ON)
-#define DDL_PWC_ENABLE                              (DDL_OFF)
+#define DDL_PWC_ENABLE                              (DDL_ON)
 #define DDL_RMU_ENABLE                              (DDL_OFF)
 #define DDL_SPI_ENABLE                              (DDL_OFF)
 #define DDL_SWDT_ENABLE                             (DDL_OFF)
 #define DDL_TIMER0_ENABLE                           (DDL_OFF)
 #define DDL_TIMER2_ENABLE                           (DDL_OFF)
-#define DDL_TIMER4_ENABLE                           (DDL_ON)
+#define DDL_TIMER4_ENABLE                           (DDL_OFF)
 #define DDL_TIMERA_ENABLE                           (DDL_OFF)
-#define DDL_TIMERB_ENABLE                           (DDL_OFF)
+#define DDL_TIMERB_ENABLE                           (DDL_ON)
 #define DDL_USART_ENABLE                            (DDL_OFF)
 #define DDL_WDT_ENABLE                              (DDL_OFF)
 

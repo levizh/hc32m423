@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-02       Hongjh          First version
+   2020-02-13       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -275,7 +275,7 @@ static void EmbIrqCallback(void)
         .enPressPinState = Pin_Reset,
     };
 
-    if(Set == EMB_GetStatus(EMB_FLAG_OSC))
+    if(Set == EMB_GetStatus(EMB_GROUP0_TMR4, EMB_FLAG_OSC))
     {
         while (KeyRelease != KeyGetState(&stcKeySw))
         {
@@ -283,12 +283,12 @@ static void EmbIrqCallback(void)
         }
 
         CLK_ClearXtalStdFlag();
-        EMB_ClearStatus(EMB_FLAG_OSC);  /* Clear OSC Brake */
+        EMB_ClearStatus(EMB_GROUP0_TMR4, EMB_FLAG_OSC);  /* Clear OSC Brake */
     }
 }
 
 /**
- * @brief  Main function of EMB OSC failure brake
+ * @brief  Main function of EMB OSC failure brake Timer4
  * @param  None
  * @retval int32_t return value, if needed
  */
@@ -310,9 +310,7 @@ int32_t main(void)
     EMB_Group0Timer4StructInit(&stcEmbInit);
     stcEmbInit.u32OscEnable = Enable;
     EMB_Group0Timer4Init(&stcEmbInit);
-    EMB_IntCmd(EMB_GROUP0_TMR4, EMB_INT_CMP, Enable);
-
-    EMB_IntCmd(EMB_INT_OSC, Enable);
+    EMB_IntCmd(EMB_GROUP0_TMR4, EMB_INT_OSC, Enable);
 
     /* Register IRQ handler && configure NVIC. */
     stcIrqRegiConf.enIRQn = Int000_IRQn;

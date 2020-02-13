@@ -325,7 +325,7 @@ en_result_t EMB_Group0Timer4Init(const stc_emb_group0_timer4_init_t *pstcInit)
  *           - Ok: Initialize successfully
  *           - ErrorInvalidParameter: pstcInit = NULL
  */
-en_result_t EMB_Ground0Timer4StructInit(stc_emb_group0_timer4_init_t *pstcInit)
+en_result_t EMB_Group0Timer4StructInit(stc_emb_group0_timer4_init_t *pstcInit)
 {
     en_result_t enRet = ErrorInvalidParameter;
 
@@ -423,7 +423,7 @@ en_result_t EMB_Group1TimerbInit(const stc_emb_group1_timerb_init_t *pstcInit)
  *           - Ok: Initialize successfully
  *           - ErrorInvalidParameter: pstcInit = NULL
  */
-en_result_t EMB_Ground1TimerbStructInit(stc_emb_group1_timerb_init_t *pstcInit)
+en_result_t EMB_Group1TimerbStructInit(stc_emb_group1_timerb_init_t *pstcInit)
 {
     en_result_t enRet = ErrorInvalidParameter;
 

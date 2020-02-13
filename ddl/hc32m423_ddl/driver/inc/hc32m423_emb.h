@@ -464,9 +464,9 @@ typedef struct
   Global function prototypes (definition in C source)
  ******************************************************************************/
 en_result_t EMB_Group0Timer4Init(const stc_emb_group0_timer4_init_t *pstcInit);
-en_result_t EMB_Ground0Timer4StructInit(stc_emb_group0_timer4_init_t *pstcInit);
+en_result_t EMB_Group0Timer4StructInit(stc_emb_group0_timer4_init_t *pstcInit);
 en_result_t EMB_Group1TimerbInit(const stc_emb_group1_timerb_init_t *pstcInit);
-en_result_t EMB_Ground1TimerbStructInit(stc_emb_group1_timerb_init_t *pstcInit);
+en_result_t EMB_Group1TimerbStructInit(stc_emb_group1_timerb_init_t *pstcInit);
 en_result_t EMB_DeInit(uint32_t u32Group);
 void EMB_SetDetectTimer4PwmLevel(stc_emb_timer4_pwm_level_t stcPwmLevel);
 void EMB_SetTimerbOutputState(uint32_t u32OutputState);

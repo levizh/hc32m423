@@ -6,7 +6,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2019-07-02       Hongjh          First version
+   2020-02-13       Hongjh          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -258,7 +258,7 @@ static void Timer4PwmConfig(void)
  */
 static void EmbIrqCallback(void)
 {
-    if(Set == EMB_GetStatus(EMB_FLAG_PWM))
+    if(Set == EMB_GetStatus(EMB_GROUP0_TMR4, EMB_FLAG_PWM))
     {
         m_u8EmbFlag = 1U;
 
@@ -271,7 +271,7 @@ static void EmbIrqCallback(void)
         TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUH, TIMER4_PWM_PORT_OUTPUT_NORMAL);
         TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUL, TIMER4_PWM_PORT_OUTPUT_NORMAL);
 
-        EMB_ClearStatus(EMB_FLAG_PWM);  /* Clear PWM Brake */
+        EMB_ClearStatus(EMB_GROUP0_TMR4, EMB_FLAG_PWM);  /* Clear PWM Brake */
         TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUH, TIMER4_PWM_PORT_OUTPUT_LOW);
         TIMER4_PWM_SetOutputForbidState(TIMER4_PWM_PORT_OUL, TIMER4_PWM_PORT_OUTPUT_LOW);
     }
@@ -312,9 +312,6 @@ int32_t main(void)
     stcPwmLevel.u32PwmVLvl = EMB_DETECT_TIMER4_PWMV_LEVEL_LOW;
     stcPwmLevel.u32PwmWLvl = EMB_DETECT_TIMER4_PWMW_LEVEL_LOW;
     EMB_SetDetectTimer4PwmLevel(stc_emb_timer4_pwm_level_t stcPwmLevel);
-
-    /* Enablle EMB PWM interrupt */
-    EMB_IntCmd(EMB_INT_PWM, Enable);
 
     /* Register IRQ handler && configure NVIC. */
     stcIrqRegiConf.enIRQn = Int000_IRQn;
