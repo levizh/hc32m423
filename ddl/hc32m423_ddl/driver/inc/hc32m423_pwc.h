@@ -92,38 +92,37 @@ typedef struct
 {
     uint8_t             u8HPorSel;      /*!< Specifies the high POR(power on reset) on or off while stop mode.      */
     uint8_t             u8HrcSel;       /*!< Specifies the system clock while awake from stop mode.                 */
-} stc_pwc_stop_cfg_t;
+} stc_pwc_stop_mode_t;
 
 /**
- * @brief PWC power monitor init
+ * @brief PWC LVD initialization structure definition
  */
 typedef struct
 {
-    uint8_t             u8PwrMonEn;     /*!< Specifies the power monitor on or off.             */
-    uint8_t             u8PwrMonSel;    /*!< Specifies the power monitor reference voltage.     */
-} stc_pwc_pwrmon_init_t;
+    uint32_t u32ExInputEn;              /*!< Specifies the validity of the PWC LVD external input (Only for LVD2).
+                                             This parameter can be a value of @ref PWC_LVD_External_Input */
+    uint32_t u32DetectEdge;             /*!< Specifies the PWC LVD detect VCC across the edge of LVD.
+                                             This parameter can be a value of @ref PWC_LVD_Detect_Edge */
+    uint32_t u32VoltageThreshold;       /*!< Specifies the PWC LVD detect voltage threshole.
+                                             This parameter can be a value of @ref PWC_LVD_Voltage_Threshold */
+    uint32_t u32Filter;                 /*!< Specifies the PWC LVD filter.
+                                             This parameter can be a value of @ref PWC_LVD_Filter */
+    uint32_t u32TrigEvent;              /*!< Specifies the PWC LVD trigger event.
+                                             This parameter can be a value of @ref PWC_LVD_Trigger_Event */
+    uint32_t u32ComparerOutputEn;       /*!< Specifies the validity of the PWC LVD comparer output.
+                                             This parameter can be a value of @ref PWC_LVD_Comparer_Output */
+} stc_pwc_lvd_init_t;
+
 
 /**
- * @brief PWC LVD config
+ * @brief PWC LVD Unit
  */
-typedef struct
+typedef enum
 {
-    uint16_t            u16IRDIS;       /*!< Specifies interrupt/reset on or off.           */
-    uint16_t            u16IRSel;       /*!< Specifies interrupt or reset.                  */
-    uint16_t            u16NMISel;      /*!< Specifies the NMI maskable or non_maskable.    */
-    uint16_t            u16Level;       /*!< Specifies the LVD level.                       */
-    uint16_t            u16DFDIS;       /*!< Specifies the digital filter on or off.        */
-    uint16_t            u16DFSel;       /*!< Specifies the digital filter sample ability.   */
-} stc_pwc_lvd_cfg_t;
-
-/**
- * @brief PWC Ram Init
- */
-typedef struct
-{
-    uint8_t             u8ParityRstEn;  /*!< Specifies the parity check reset on or off.    */
-    uint8_t             u8ProtectArea;  /*!< Specifies the ram protect area.                */
-} stc_pwc_ram_init_t;
+    PWC_LVD0 = 0x04U,                   /*!< PWC LVD unit 0 (LVD0) */
+    PWC_LVD1 = 0x00U,                   /*!< PWC LVD unit 1 (LVD1) */
+    PWC_LVD2 = 0x01U,                   /*!< PWC LVD unit 2 (LVD2) */
+} en_pwc_lvd_unit_t;
 
 /**
  * @}
@@ -138,7 +137,7 @@ typedef struct
  */
 
 /**
- * @defgroup PWC_HPOR_config PWC High POR(power on reset) Config
+ * @defgroup PWC_HPOR_Config PWC High POR(power on reset) Config
  * @{
  */
 #define PWC_HPOR_ON                 (0x00U)                   /*!< High POR is valid while in stop mode   */
@@ -148,31 +147,11 @@ typedef struct
  */
 
 /**
- * @defgroup PWC_CKSHRC_config PWC Clock Config
+ * @defgroup PWC_CKSHRC_Config PWC Clock Config
  * @{
  */
 #define PWC_SYSCLK_FIX              (0x00U)               /*!< System clock is fixed after stop mode awake              */
 #define PWC_SYSCLK_HRCDIVX          (PWC_STPMCR_CKSHRC)   /*!< System clock is n divided of HRC after stop mode awake */
-/**
- * @}
- */
-
-/**
- * @defgroup PWC_PWMON_config PWC Power Monitor Config
- * @{
- */
-#define PWC_PWRMON_ON                (PWC_PWRC_PWMONE)
-#define PWC_PWRMON_OFF               (0x00U)
-/**
- * @}
- */
-
-/**
- * @defgroup PWC_PWMON_Selection PWC Power Monitor Selection
- * @{
- */
-#define PWC_PWRMON_VINREF           (0x00U)                /*!< Internal reference voltage */
-#define PWC_PWRMON_VOTS             (PWC_PWRC_PWMONSEL)   /*!< temperature sensor voltage */
 /**
  * @}
  */
@@ -187,149 +166,124 @@ typedef struct
  * @}
  */
 
+
 /**
- * @defgroup PWC_LVD_config PWC LVD Config
+ * @defgroup PWC_LDO_Flag PWC LDO Flag
  * @{
  */
-#define PWC_LVD_ON                  (0x0000U)
-#define PWC_LVD_OFF                 (EFM_LVDICGCR_LVDDIS)
+#define PWC_FLAG_LDO_PLL                        (PWR_PWRC_PLLPWRDY)   /*!< PLL LDO ready flag */
+#define PWC_FLAG_LDO_HRC                        (PWR_PWRC_HRCPWRDY)   /*!< HRC LDO ready flag */
 /**
  * @}
  */
 
 /**
- * @defgroup PWC_LVD_IR_Config PWC LVD Interrupt Config
+ * @defgroup PWC_Power_Monitor PWC Power Monitor
  * @{
  */
-#define PWC_LVD_IR_ON               (0x0000U)
-#define PWC_LVD_IR_OFF              (EFM_LVDICGCR_LVDDIS)
+#define PWC_POWER_MONITOR_DISABLE               ((uint8_t)0x00U)                                        /*!< Disable power monitor */
+#define PWC_POWER_MONITOR_INTERNAL_REF_VOL      (PWR_PWRMONR_PWMONE)                                    /*!< Monitor internal reference voltage of power supply */
+#define PWC_POWER_MONITOR_TEMP_SENSOR_VOL       ((uint8_t)(PWR_PWRMONR_PWMONE | PWR_PWRMONR_PWMONSEL))  /*!< Monitor temperature sensor voltage */
 /**
  * @}
  */
 
 /**
- * @defgroup PWC_LVD_Mode_selection PWC_LVD_Mode_selection interrupt or reset
+ * @defgroup PWC_LVD_External_Input PWC LVD External Input
  * @{
  */
-#define PWC_LVD_INT                 (0x0000U)
-#define PWC_LVD_RST                 (EFM_LVDICGCR_IRS)
+#define PWC_LVD_EX_INPUT_DISABLE                ((uint32_t)0x00000000UL)
+#define PWC_LVD_EX_INPUT_ENABLE                 (PWR_LVDCR0_EXVCCINEN)
 /**
  * @}
  */
 
 /**
- * @defgroup PWC_LVD_Int_Mode_selection PWC_LVD_nt_IMode_selection maskable or non_maskable
+ * @defgroup PWC_LVD_Detect_Edge PWC LVD Detect Edge
  * @{
  */
-#define PWC_LVD_INT_MASK            (0x0000U)
-#define PWC_LVD_INT_NONMASK         (EFM_LVDICGCR_NMIS)
+#define PWC_LVD_DETECT_EDGE_RISING              ((uint32_t)0x00000000UL)     /*!< Detect VCC rising passing through LVD */
+#define PWC_LVD_DETECT_EDGE_FALLING             (PWR_LVDCR0_L1IEGS_0)       /*!< Detect VCC falling passing through LVD */
+#define PWC_LVD_DETECT_EDGE_RISING_FALLING      (PWR_LVDCR0_L1IEGS_1)       /*!< Detect VCC rising or falling passing through LVD */
 /**
  * @}
  */
 
 /**
- * @defgroup PWC_LVD_detection_level PWC LVD Detection Level
+ * @defgroup PWC_LVD_Voltage_Threshold PWC LVD Voltage Threshold
+ * @note The parameter PWC_LVD_VOL_EX_INPUT only LVD2 is valid
  * @{
  */
-#define PWC_LVD_LEVEL0              (0x0000U)    /*!< Specifies the voltage range 3.98V~4.06V.    */
-#define PWC_LVD_LEVEL1              (0x0100U)    /*!< Specifies the voltage range 3.67V~3.75V.    */
-#define PWC_LVD_LEVEL2              (0x0200U)    /*!< Specifies the voltage range 3.06V~3.13V.    */
-#define PWC_LVD_LEVEL3              (0x0300U)    /*!< Specifies the voltage range 2.96V~3.02V.    */
-#define PWC_LVD_LEVEL4              (0x0400U)    /*!< Specifies the voltage range 2.86V~2.92V.    */
-#define PWC_LVD_LEVEL5              (0x0500U)    /*!< Specifies the voltage range 2.75V~2.81V.    */
-#define PWC_LVD_LEVEL6              (0x0600U)    /*!< Specifies the voltage range 2.65V~2.71V.    */
-#define PWC_LVD_LEVEL7              (0x0700U)    /*!< Specifies the voltage range 2.55V~2.61V.    */
-#define PWC_LVD_LEVEL8              (0x0800U)    /*!< Specifies the voltage range 2.45V~2.50V.    */
-#define PWC_LVD_LEVEL9              (0x0900U)    /*!< Specifies the voltage range 2.04V~2.09V.    */
-#define PWC_LVD_LEVEL10             (0x0A00U)    /*!< Specifies the voltage range 1.94V~1.98V.    */
-#define PWC_LVD_LEVEL11             (0x0B00U)    /*!< Specifies the voltage range 1.84V~1.88V.    */
-#define PWC_LVD_INP                 (0x0E00U)    /*!< Specifies the external reference voltage.   */
+#define PWC_LVD_VOL_BELOW4P29_OR_ABOVE4P39      ((uint32_t)0x00000000UL)                                                         /*!< LVD voltage threshold less than 4.29 or higher than 4.39 */
+#define PWC_LVD_VOL_BELOW4P14_OR_ABOVE4P23      (PWR_LVDCR0_L1LVL_0)                                                            /*!< LVD voltage threshold less than 4.14 or higher than 4.23 */
+#define PWC_LVD_VOL_BELOW4P02_OR_ABOVE4P14      (PWR_LVDCR0_L1LVL_1)                                                            /*!< LVD voltage threshold less than 4.02 or higher than 4.14 */
+#define PWC_LVD_VOL_BELOW3P84_OR_ABOVE3P96      ((uint32_t)(PWR_LVDCR0_L1LVL_1 | PWR_LVDCR0_L1LVL_0))                            /*!< LVD voltage threshold less than 3.84 or higher than 3.96 */
+#define PWC_LVD_VOL_BELOW3P10_OR_ABOVE3P20      (PWR_LVDCR0_L1LVL_2)                                                            /*!< LVD voltage threshold less than 3.10 or higher than 3.20 */
+#define PWC_LVD_VOL_BELOW3P00_OR_ABOVE3P09      ((uint32_t)(PWR_LVDCR0_L1LVL_2 | PWR_LVDCR0_L1LVL_0))                            /*!< LVD voltage threshold less than 3.00 or higher than 3.09 */
+#define PWC_LVD_VOL_BELOW2P90_OR_ABOVE2P99      ((uint32_t)(PWR_LVDCR0_L1LVL_2 | PWR_LVDCR0_L1LVL_1))                            /*!< LVD voltage threshold less than 2.90 or higher than 2.99 */
+#define PWC_LVD_VOL_BELOW2P79_OR_ABOVE2P87      ((uint32_t)(PWR_LVDCR0_L1LVL_2 | PWR_LVDCR0_L1LVL_1 | PWR_LVDCR0_L1LVL_0))       /*!< LVD voltage threshold less than 2.79 or higher than 2.87 */
+#define PWC_LVD_VOL_BELOW2P68_OR_ABOVE2P75      (PWR_LVDCR0_L1LVL_3)                                                            /*!< LVD voltage threshold less than 2.68 or higher than 2.75 */
+#define PWC_LVD_VOL_BELOW2P34_OR_ABOVE2P41      ((uint32_t)(PWR_LVDCR0_L1LVL_3 | PWR_LVDCR0_L1LVL_0))                            /*!< LVD voltage threshold less than 2.34 or higher than 2.41 */
+#define PWC_LVD_VOL_BELOW2P14_OR_ABOVE2P21      ((uint32_t)(PWR_LVDCR0_L1LVL_3 | PWR_LVDCR0_L1LVL_1))                            /*!< LVD voltage threshold less than 2.14 or higher than 2.21 */
+#define PWC_LVD_VOL_BELOW1P94_OR_ABOVE2P01      ((uint32_t)(PWR_LVDCR0_L1LVL_3 | PWR_LVDCR0_L1LVL_1 | PWR_LVDCR0_L1LVL_0))       /*!< LVD voltage threshold less than 1.94 or higher than 2.01 */
+#define PWC_LVD_VOL_BELOW1P84_OR_ABOVE1P90      ((uint32_t)(PWR_LVDCR0_L1LVL_3 | PWR_LVDCR0_L1LVL_2))                            /*!< LVD voltage threshold less than 1.84 or higher than 1.90 */
+#define PWC_LVD_VOL_EX_INPUT                    ((uint32_t)(PWR_LVDCR0_L1LVL_3 | PWR_LVDCR0_L1LVL_2 | PWR_LVDCR0_L1LVL_1))       /*!< LVD use external input reference voltage */
 /**
  * @}
  */
 
 /**
- * @defgroup PWC_LVD_DF_config PWC_LVD_DF_config LVD digital filter on or off
+ * @defgroup PWC_LVD_Filter PWC LVD Filter
  * @{
  */
-#define PWC_LVD_DF_ON               (0x0000U)
-#define PWC_LVD_DF_OFF              (EFM_LVDICGCR_DFDIS)
+#define PWC_LVD_FILTER_DISABLE                  (PWR_LVDCR0_L1NFDIS)        /*!< Disable filter */
+#define PWC_LVD_FILTER_CLK_LRC_0P25             ((uint32_t)0x00000000UL)     /*!< 0.25 LRC cycle */
+#define PWC_LVD_FILTER_CLK_LRC_0P5              (PWR_LVDCR0_L1NFS_0)        /*!< 0.5 LRC cycle  */
+#define PWC_LVD_FILTER_CLK_LRC_DIV1             (PWR_LVDCR0_L1NFS_1)        /*!< LRC division 1 */
+#define PWC_LVD_FILTER_CLK_LRC_DIV2             (PWR_LVDCR0_L1NFS)          /*!< LRC division 2 */
 /**
  * @}
  */
 
 /**
- * @defgroup PWC_LVD_DFS_selection PWC_LVD_DFS_selection LVD digital filter sample ability
- * @note     modified this value must when PWC_LVD_DF_OFF
+ * @defgroup PWC_LVD_Trigger_Event PWC LVD Trigger Event
  * @{
  */
-#define PWC_LVD_DFS_2               (0x0000U)     /*!< 2 LRC cycle    */
-#define PWC_LVD_DFS_4               (0x0001U)     /*!< 4 LRC cycle    */
-#define PWC_LVD_DFS_8               (0x0002U)     /*!< 8 LRC cycle    */
-#define PWC_LVD_DFS_16              (0x0003U)     /*!< 16 LRC cycle   */
+#define PWC_LVD_TRIG_DISABLE                    ((uint32_t)0x00000000UL)                             /*!< Disable trigger event */
+#define PWC_LVD_TRIG_RESET                      ((uint32_t)(PWR_LVDCR0_L1IRE | PWR_LVDCR0_L1IRS))    /*!< An LVD reset occurs when passing through LVD On the way down */
+#define PWC_LVD_TRIG_NMI_INTERRUPT              ((uint32_t)(PWR_LVDCR0_L1IRE | PWR_LVDCR0_L1NMIS))   /*!< An LVD NMI interrupt occurs when passing through LVD */
+#define PWC_LVD_TRIG_MI_INTERRUPT               ((uint32_t)PWR_LVDCR0_L1IRE)                         /*!< An LVD maskable interrupt occurs when passing through LVD */
 /**
  * @}
  */
 
 /**
- * @defgroup PWC_LVD_CMP_config PWC LVD Compare Config
- * @note while PWC_LVD_OFF(LVDICGCR.LVDDIS = 1), this value is fixed as PWC_LVD_CMP_OFF.
+ * @defgroup PWC_LVD_Comparer_Output PWC LVD Comparer Output
  * @{
  */
-#define PWC_LVD_CMP_ON              (PWC_LVDCSR_CMPOE)
-#define PWC_LVD_CMP_OFF             (0x00U)
+#define PWC_LVD_COMPARER_OUTPUT_DISABLE         ((uint32_t)0x00000000UL)
+#define PWC_LVD_COMPARER_OUTPUT_ENABLE          (PWR_LVDCR0_L1CMPOE)
 /**
  * @}
  */
 
 /**
- * @defgroup PWC_LVD_FLAG PWC LVD Flag
+ * @defgroup PWC_LVD_Compare_Result PWC LVD Compare Result
  * @{
  */
-#define PWC_LVD_FLAG_DET            (PWC_LVDCSR_DETF)     /*!< VDD = VLVD or LVDINP = VInref  */
-#define PWC_LVD_FLAG_LVI            (PWC_LVDCSR_LVIF)     /*!< VCC < VLVD                     */
+#define PWC_LVD_COMPARE_VCC_LESS_LVD            ((uint8_t)0x00U)            /*!< VCC < VLVD */
+#define PWC_LVD_COMPARE_VCC_GREATER_LVD         (PWR_LVDCSR1_L1MON)         /*!< VCC = VLVD or LVD is invalid */
 /**
  * @}
  */
 
 /**
- * @defgroup PWC_LVD_EXVCC_config PWC LVD External VCC Config
+ * @defgroup PWC_Ram_Parity_Flag PWC Ram Parity Flag
  * @{
  */
-#define PWC_LVD_EXVCC_ON            (PWC_LVDCSR_EXVCCINEN)
-#define PWC_LVD_EXVCC_OFF           (0x00U)
-/**
- * @}
- */
-
-/**
- * @defgroup PWC_DBGC_config PWC Debug Config
- * @{
- */
-#define PWC_DBGC_ON                 (PWC_DBGC_DBGEN)
-#define PWC_DBGC_OFF                (0x00U)
-/**
- * @}
- */
-
-/**
- * @defgroup PWC_Ram_Parity_Rst_En PWC ram parity check reset on or off
- * @{
- */
-#define PWC_RAM_PARITY_RST_ON       (0x00U)
-#define PWC_RAM_PARITY_RST_OFF      (PWC_RAMCR_RPEF)
-/**
- * @}
- */
-
-/**
- * @defgroup PWC_Ram_PRTA_Sel PWC ram protect area selection
- * @{
- */
-#define PWC_RAM_PRTA_NONE           (0x00U)
-#define PWC_RAM_PRTA_128            (0x01U)
-#define PWC_RAM_PRTA_256            (0x02U)
-#define PWC_RAM_PRTA_512            (0x03U)
+#define PWC_FLAG_CACHE_PARITY_ERR               (PWR_RAMCR_CRPEF)       /*!< Cache Ram parity error flag */
+#define PWC_FLAG_HRAM_PARITY_ERR                (PWR_RAMCR_HRPEF)       /*!< High RAM parity error flag  */
+#define PWC_FLAG_RAM_PARITY_ERR                 (PWR_RAMCR_SRPEF)       /*!< RAM parity error flag       */
 /**
  * @}
  */
@@ -338,17 +292,18 @@ typedef struct
  * @}
  */
 
-
 /**
- * @defgroup PWC_REG_Write_Configuration PWC register write Configuration
+ * @defgroup PWC_Write_Protect_Configuration PWC Write Protect Configuration
  * @{
  */
-#define PWC_REG_WRITE_ENABLE()          (M0P_PWC->FPRC = 0xa502U)
-#define PWC_REG_WRITE_DISABLE()         (M0P_PWC->FPRC = 0xa500U)
+#define PWC_CLK_REG_WRITE_DISABLE()             (M4_PWR->FPRC = 0xA500U)
+#define PWC_CLK_REG_WRITE_ENABLE()              (M4_PWR->FPRC = 0xA501U)
 
-#define PWC_LVD_REG_WRITE_ENABLE()      (M0P_PWC->FPRC = 0xa508U)
-#define PWC_LVD_REG_WRITE_DISABLE()     (M0P_PWC->FPRC = 0xa500U)
+#define PWC_POWER_REG_WRITE_DISABLE()           (M4_PWR->FPRC = 0xA500U)
+#define PWC_POWER_REG_WRITE_ENABLE()            (M4_PWR->FPRC = 0xA502U)
 
+#define PWC_LVD_REG_WRITE_DISABLE()             (M4_PWR->FPRC = 0xA500U)
+#define PWC_LVD_REG_WRITE_ENABLE()              (M4_PWR->FPRC = 0xA508U)
 /**
  * @}
  */
@@ -367,26 +322,30 @@ typedef struct
 void PWC_EnterStopMode(void);
 void PWC_EnterSleepMode(void);
 
-en_result_t PWC_StopStructInit(stc_pwc_stop_cfg_t* pstcStopCfg);
-en_result_t PWC_StopMdConfig(const stc_pwc_stop_cfg_t* pstcStopCfg);
-
 void PWC_HighSpeedToLowSpeed(void);
 void PWC_LowSpeedToHighSpeed(void);
 
-en_result_t PWC_PwrMonStructInit(stc_pwc_pwrmon_init_t* pstcPwrMonInit);
-en_result_t PWC_PwrMonInit(const stc_pwc_pwrmon_init_t* pstcPwrMonInit);
+en_result_t PWC_StopStructInit(stc_pwc_stop_mode_t* pstcStopCfg);
+en_result_t PWC_StopMdConfig(const stc_pwc_stop_mode_t* pstcStopCfg);
 
-en_result_t PWC_LvdStructInit(stc_pwc_lvd_cfg_t* pstcLvdCfg);
-en_result_t PWC_LvdConfig(const stc_pwc_lvd_cfg_t* pstcLvdCfg);
-void PWC_LvdCmd(en_functional_state_t enNewState);
-void PWC_LvdCmpOutputCmd(en_functional_state_t enNewState);
-void PWC_LvdExRefVolCmd(en_functional_state_t enNewState);
-en_flag_status_t PWC_GetLvdFlag(uint8_t u8Flag);
-void PWC_ClearLvdDetFlag(void);
 
-en_result_t PWC_RamStructInit(stc_pwc_ram_init_t *pstcRamInit);
-en_result_t PWC_RamInit(const stc_pwc_ram_init_t *pstcRamInit);
-en_flag_status_t PWC_GetRamFlag(void);;
+en_flag_status_t PWC_GetLdoFlag(uint16_t u16Flag);
+void PWC_SetPowerMonitor(uint8_t u8CfgVal);
+
+en_result_t PWC_LVD_DeInit(uint8_t u8Unit);
+en_result_t PWC_LVD_Init(uint8_t u8Unit, const stc_pwc_lvd_init_t* pstcLvdInit);
+en_result_t PWC_LVD_StructInit(stc_pwc_lvd_init_t* pstcLvdInit);
+void PWC_LVD_Cmd(uint8_t u8Unit, en_functional_state_t enNewState);
+void PWC_LVD_CmpOutputCmd(uint8_t u8Unit, en_functional_state_t enNewState);
+void PWC_LVD_TrigEventCmd(uint8_t u8Unit, en_functional_state_t enNewState);
+en_result_t PWC_LVD_SetVolThreshold(uint8_t u8Unit, uint32_t u32VolThreshold);
+uint8_t PWC_LVD_GetCmpResult(uint8_t u8Unit);
+en_flag_status_t PWC_LVD_GetDetectFlag(uint8_t u8Unit);
+void PWC_LVD_CleaDetectFlag(uint8_t u8Unit);
+
+void PWC_RamParityErrResetCmd(en_functional_state_t enNewState);
+en_flag_status_t PWC_GetRamParityFlag(uint8_t u8Flag);
+void PWC_ClearRamParityFlag(uint8_t u8Flag);
 
 void PWC_DebugCmd(en_functional_state_t enNewState);
 /**
