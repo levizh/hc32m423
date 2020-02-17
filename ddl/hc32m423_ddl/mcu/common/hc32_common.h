@@ -273,9 +273,9 @@ typedef enum
 #define READ_REG16(REG)                 ((uint16_t)(REG))
 #define READ_REG32(REG)                 ((uint32_t)(REG))
 
-#define MODIFY_REG8(REGS, CLEARMASK, SETMASK)   (WRITE_REG((REGS), (((READ_REG((REGS))) & ((uint8_t)(~(CLEARMASK)))) | ((uint8_t)(SETMASK)))))
-#define MODIFY_REG16(REGS, CLEARMASK, SETMASK)  (WRITE_REG((REGS), (((READ_REG((REGS))) & ((uint16_t)(~(CLEARMASK)))) | ((uint16_t)(SETMASK)))))
-#define MODIFY_REG32(REGS, CLEARMASK, SETMASK)  (WRITE_REG((REGS), (((READ_REG((REGS))) & ((uint32_t)(~(CLEARMASK)))) | ((uint32_t)(SETMASK)))))
+#define MODIFY_REG8(REGS, CLEARMASK, SETMASK)   (WRITE_REG8((REGS), (((READ_REG8((REGS))) & ((uint8_t)(~(CLEARMASK)))) | ((uint8_t)(SETMASK)))))
+#define MODIFY_REG16(REGS, CLEARMASK, SETMASK)  (WRITE_REG16((REGS), (((READ_REG16((REGS))) & ((uint16_t)(~(CLEARMASK)))) | ((uint16_t)(SETMASK)))))
+#define MODIFY_REG32(REGS, CLEARMASK, SETMASK)  (WRITE_REG32((REGS), (((READ_REG32((REGS))) & ((uint32_t)(~(CLEARMASK)))) | ((uint32_t)(SETMASK)))))
 /**
  * @}
  */
