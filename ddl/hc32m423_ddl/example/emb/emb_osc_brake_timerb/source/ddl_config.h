@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file  emb/emb_osc_brake_timer4/source/ddl_config.h
+ * @file  emb/emb_osc_brake_timerb/source/ddl_config.h
  * @brief This file contains HC32 Series Device Driver Library usage management.
  @verbatim
    Change Logs:

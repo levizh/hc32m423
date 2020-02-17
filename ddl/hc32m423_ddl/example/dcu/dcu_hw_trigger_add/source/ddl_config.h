@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file  timerb/timerb_base_timer/source/ddl_config.h
+ * @file  dcu/dcu_hw_trigger_add/source/ddl_config.h
  * @brief This file contains HC32 Series Device Driver Library usage management.
  @verbatim
    Change Logs:
