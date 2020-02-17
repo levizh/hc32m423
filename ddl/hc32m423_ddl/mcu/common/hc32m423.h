@@ -5,7 +5,7 @@
  @verbatim
    Change Logs:
    Date             Author          Notes
-   2020-02-11       levi          First version
+   2020-02-17       Levi          First version
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co.,Ltd. All rights reserved.
@@ -56,7 +56,7 @@
  **
  ** History:
  **
- **   - 2020-02-11  1.0   First version for Device Driver Library of HC32M423 series MCU.
+ **   - 2020-02-17  1.0   First version for Device Driver Library of HC32M423 series MCU.
  **
  ******************************************************************************/
 
@@ -80,133 +80,133 @@ extern "C" {
  * Interrupt Number Definition
  ******************************************************************************/
 typedef enum IRQn
-    {
-        NMI_IRQn             = -14, /*  2 Non Maskable                            */
-        HardFault_IRQn       = -13, /*  3 Hard Fault                              */
-        MemManageFault_IRQn  = -12, /*  4 MemManage Fault                         */
-        BusFault_IRQn        = -11, /*  5 Bus Fault                               */
-        UsageFault_IRQn      = -10, /*  6 Usage Fault                             */
-        SVC_IRQn             = -5,  /* 11 SVCall                                  */
-        DebugMonitor_IRQn    = -4,  /* 12 DebugMonitor                            */
-        PendSV_IRQn          = -2,  /* 14 Pend SV                                 */
-        SysTick_IRQn         = -1,  /* 15 System Tick                             */
-        Int000_IRQn          = 0,
-        Int001_IRQn          = 1,
-        Int002_IRQn          = 2,
-        Int003_IRQn          = 3,
-        Int004_IRQn          = 4,
-        Int005_IRQn          = 5,
-        Int006_IRQn          = 6,
-        Int007_IRQn          = 7,
-        ExInt0_IRQn          = 8,
-        ExInt1_IRQn          = 9,
-        ExInt2_IRQn          = 10,
-        ExInt3_IRQn          = 11,
-        ExInt4_IRQn          = 12,
-        ExInt5_IRQn          = 13,
-        ExInt6_IRQn          = 14,
-        ExInt7_IRQn          = 15,
-        SwInt0_IRQn          = 0,
-        SwInt1_IRQn          = 1,
-        SwInt2_IRQn          = 2,
-        SwInt3_IRQn          = 3,
-        SwInt4_IRQn          = 4,
-        SwInt5_IRQn          = 5,
-        SwInt6_IRQn          = 6,
-        SwInt7_IRQn          = 7,
-        SwInt8_IRQn          = 8,
-        SwInt9_IRQn          = 9,
-        SwInt10_IRQn         = 10,
-        SwInt11_IRQn         = 11,
-        SwInt12_IRQn         = 12,
-        SwInt13_IRQn         = 13,
-        SwInt14_IRQn         = 14,
-        SwInt15_IRQn         = 15,
-        DmacTC0_IRQn         = 16,
-        DmacTC1_IRQn         = 17,
-        DmacTC2_IRQn         = 18,
-        DmacTC3_IRQn         = 19,
-        DmacBTC0_IRQn        = 20,
-        DmacBTC1_IRQn        = 21,
-        DmacBTC2_IRQn        = 22,
-        DmacBTC3_IRQn        = 23,
-        DmacErr_IRQn         = 24,
-        EfmErr_IRQn          = 25,
-        EfmReadCol_IRQn      = 26,
-        EfmOpEnd_IRQn        = 27,
-        Dcu_IRQn             = 28,
-        Tmr01GCMA_IRQn       = 29,
-        Tmr01GCMB_IRQn       = 30,
-        Tmr02GCMA_IRQn       = 31,
-        Tmr02GCMB_IRQn       = 32,
-        XtalStop_IRQn        = 33,
-        Swdt_IRQn            = 34,
-        TmrA1OVF_IRQn        = 35,
-        TmrA1UDF_IRQn        = 36,
-        TmrA1CMP_IRQn        = 37,
-        TmrA2OVF_IRQn        = 38,
-        TmrA2UDF_IRQn        = 39,
-        TmrA2CMP_IRQn        = 40,
-        TmrA3OVF_IRQn        = 41,
-        TmrA3UDF_IRQn        = 42,
-        TmrA3CMP_IRQn        = 43,
-        TmrA4OVF_IRQn        = 44,
-        TmrA4UDF_IRQn        = 45,
-        TmrA4CMP_IRQn        = 46,
-        TmrBOVF_IRQn         = 47,
-        TmrBUDF_IRQn         = 48,
-        TmrBCMP_IRQn         = 49,
-        Usart1EI_IRQn        = 50,
-        Usart1RI_IRQn        = 51,
-        Usart1TI_IRQn        = 52,
-        Usart1TCI_IRQn       = 53,
-        Usart2EI_IRQn        = 54,
-        Usart2RI_IRQn        = 55,
-        Usart2TI_IRQn        = 56,
-        Usart2TCI_IRQn       = 57,
-        Usart3EI_IRQn        = 58,
-        Usart3RI_IRQn        = 59,
-        Usart3TI_IRQn        = 60,
-        Usart3TCI_IRQn       = 61,
-        Usart4EI_IRQn        = 62,
-        Usart4RI_IRQn        = 63,
-        Usart4TI_IRQn        = 64,
-        Usart4TCI_IRQn       = 65,
-        SpiSRRI_IRQn         = 66,
-        SpiSRTI_IRQn         = 67,
-        SpiSpiI_IRQn         = 68,
-        SpiSPEI_IRQn         = 69,
-        Tmr4GCMUH_IRQn       = 70,
-        Tmr4GCMUL_IRQn       = 71,
-        Tmr4GCMVH_IRQn       = 72,
-        Tmr4GCMVL_IRQn       = 73,
-        Tmr4GCMWH_IRQn       = 74,
-        Tmr4GCMWL_IRQn       = 75,
-        Tmr4OVF_IRQn         = 76,
-        Tmr4UDF_IRQn         = 77,
-        Tmr4RLOU_IRQn        = 78,
-        Tmr4RLOV_IRQn        = 79,
-        Tmr4RLOW_IRQn        = 80,
-        EmbGR0_IRQn          = 81,
-        Acmp1_IRQn           = 82,
-        Acmp2_IRQn           = 83,
-        Acmp3_IRQn           = 84,
-        I2cRXI_IRQn          = 85,
-        I2cTXI_IRQn          = 86,
-        I2cTEI_IRQn          = 87,
-        I2cEEI_IRQn          = 88,
-        Usart1WUPI_IRQn      = 89,
-        Lvd1_IRQn            = 90,
-        Lvd2_IRQn            = 91,
-        FCMFERRI_IRQn        = 92,
-        FCMMENDI_IRQn        = 93,
-        FCMCOVFI_IRQn        = 94,
-        Wdt_IRQn             = 95,
-        CtcErr_IRQn          = 96,
-        AdcEOCA_IRQn         = 97,
-        AdcEOCB_IRQn         = 98,
-        AdcCHCMP_IRQn        = 99,
-        AdcSEQCMP_IRQn       = 100,
+{
+        NMI_IRQn            = -14,  /* Non Maskable                             */
+        HardFault_IRQn      = -13,  /* Hard Fault                               */
+        MemManageFault_IRQn = -12,  /* MemManage Fault                          */
+        BusFault_IRQn       = -11,  /* Bus Fault                                */
+        UsageFault_IRQn     = -10,  /* Usage Fault                              */
+        SVC_IRQn            = -5,   /* SVCall                                   */
+        DebugMonitor_IRQn   = -4,   /* DebugMonitor                             */
+        PendSV_IRQn         = -2,   /* Pend SV                                  */
+        SysTick_IRQn        = -1,   /* System Tick                              */
+        Int000_IRQn         = 0,
+        Int001_IRQn         = 1,
+        Int002_IRQn         = 2,
+        Int003_IRQn         = 3,
+        Int004_IRQn         = 4,
+        Int005_IRQn         = 5,
+        Int006_IRQn         = 6,
+        Int007_IRQn         = 7,
+        ExInt0_IRQn         = 8,
+        ExInt1_IRQn         = 9,
+        ExInt2_IRQn         = 10,
+        ExInt3_IRQn         = 11,
+        ExInt4_IRQn         = 12,
+        ExInt5_IRQn         = 13,
+        ExInt6_IRQn         = 14,
+        ExInt7_IRQn         = 15,
+        SwInt0_IRQn         = 0,
+        SwInt1_IRQn         = 1,
+        SwInt2_IRQn         = 2,
+        SwInt3_IRQn         = 3,
+        SwInt4_IRQn         = 4,
+        SwInt5_IRQn         = 5,
+        SwInt6_IRQn         = 6,
+        SwInt7_IRQn         = 7,
+        SwInt8_IRQn         = 8,
+        SwInt9_IRQn         = 9,
+        SwInt10_IRQn        = 10,
+        SwInt11_IRQn        = 11,
+        SwInt12_IRQn        = 12,
+        SwInt13_IRQn        = 13,
+        SwInt14_IRQn        = 14,
+        SwInt15_IRQn        = 15,
+        DmacTC0_IRQn        = 16,
+        DmacTC1_IRQn        = 17,
+        DmacTC2_IRQn        = 18,
+        DmacTC3_IRQn        = 19,
+        DmacBTC0_IRQn       = 20,
+        DmacBTC1_IRQn       = 21,
+        DmacBTC2_IRQn       = 22,
+        DmacBTC3_IRQn       = 23,
+        DmacErr_IRQn        = 24,
+        EfmErr_IRQn         = 25,
+        EfmReadCol_IRQn     = 26,
+        EfmOpEnd_IRQn       = 27,
+        Dcu_IRQn            = 28,
+        Tmr01GCMA_IRQn      = 29,
+        Tmr01GCMB_IRQn      = 30,
+        Tmr02GCMA_IRQn      = 31,
+        Tmr02GCMB_IRQn      = 32,
+        XtalStop_IRQn       = 33,
+        Swdt_IRQn           = 34,
+        TmrA1OVF_IRQn       = 35,
+        TmrA1UDF_IRQn       = 36,
+        TmrA1CMP_IRQn       = 37,
+        TmrA2OVF_IRQn       = 38,
+        TmrA2UDF_IRQn       = 39,
+        TmrA2CMP_IRQn       = 40,
+        TmrA3OVF_IRQn       = 41,
+        TmrA3UDF_IRQn       = 42,
+        TmrA3CMP_IRQn       = 43,
+        TmrA4OVF_IRQn       = 44,
+        TmrA4UDF_IRQn       = 45,
+        TmrA4CMP_IRQn       = 46,
+        TmrBOVF_IRQn        = 47,
+        TmrBUDF_IRQn        = 48,
+        TmrBCMP_IRQn        = 49,
+        Usart1EI_IRQn       = 50,
+        Usart1RI_IRQn       = 51,
+        Usart1TI_IRQn       = 52,
+        Usart1TCI_IRQn      = 53,
+        Usart2EI_IRQn       = 54,
+        Usart2RI_IRQn       = 55,
+        Usart2TI_IRQn       = 56,
+        Usart2TCI_IRQn      = 57,
+        Usart3EI_IRQn       = 58,
+        Usart3RI_IRQn       = 59,
+        Usart3TI_IRQn       = 60,
+        Usart3TCI_IRQn      = 61,
+        Usart4EI_IRQn       = 62,
+        Usart4RI_IRQn       = 63,
+        Usart4TI_IRQn       = 64,
+        Usart4TCI_IRQn      = 65,
+        SpiSRRI_IRQn        = 66,
+        SpiSRTI_IRQn        = 67,
+        SpiSpiI_IRQn        = 68,
+        SpiSPEI_IRQn        = 69,
+        Tmr4GCMUH_IRQn      = 70,
+        Tmr4GCMUL_IRQn      = 71,
+        Tmr4GCMVH_IRQn      = 72,
+        Tmr4GCMVL_IRQn      = 73,
+        Tmr4GCMWH_IRQn      = 74,
+        Tmr4GCMWL_IRQn      = 75,
+        Tmr4OVF_IRQn        = 76,
+        Tmr4UDF_IRQn        = 77,
+        Tmr4RLOU_IRQn       = 78,
+        Tmr4RLOV_IRQn       = 79,
+        Tmr4RLOW_IRQn       = 80,
+        EmbGR0_IRQn         = 81,
+        Acmp1_IRQn          = 82,
+        Acmp2_IRQn          = 83,
+        Acmp3_IRQn          = 84,
+        I2cRXI_IRQn         = 85,
+        I2cTXI_IRQn         = 86,
+        I2cTEI_IRQn         = 87,
+        I2cEEI_IRQn         = 88,
+        Usart1WUPI_IRQn     = 89,
+        Lvd1_IRQn           = 90,
+        Lvd2_IRQn           = 91,
+        FCMFERRI_IRQn       = 92,
+        FCMMENDI_IRQn       = 93,
+        FCMCOVFI_IRQn       = 94,
+        Wdt_IRQn            = 95,
+        CtcErr_IRQn         = 96,
+        AdcEOCA_IRQn        = 97,
+        AdcEOCB_IRQn        = 98,
+        AdcCHCMP_IRQn       = 99,
+        AdcSEQCMP_IRQn      = 100,
 
 } IRQn_Type;
 
@@ -219,134 +219,134 @@ typedef enum IRQn
  ******************************************************************************/
 typedef enum en_event_src
 {
-        EVT_SWI_IRQ0             = 0u,
-        EVT_SWI_IRQ1             = 1u,
-        EVT_SWI_IRQ2             = 2u,
-        EVT_SWI_IRQ3             = 3u,
-        EVT_SWI_IRQ4             = 4u,
-        EVT_SWI_IRQ5             = 5u,
-        EVT_SWI_IRQ6             = 6u,
-        EVT_SWI_IRQ7             = 7u,
-        EVT_SWI_IRQ8             = 8u,
-        EVT_SWI_IRQ9             = 9u,
-        EVT_SWI_IRQ10            = 10u,
-        EVT_SWI_IRQ11            = 11u,
-        EVT_SWI_IRQ12            = 12u,
-        EVT_SWI_IRQ13            = 13u,
-        EVT_SWI_IRQ14            = 14u,
-        EVT_SWI_IRQ15            = 15u,
+        EVT_SWI_IRQ0        = 0,
+        EVT_SWI_IRQ1        = 1,
+        EVT_SWI_IRQ2        = 2,
+        EVT_SWI_IRQ3        = 3,
+        EVT_SWI_IRQ4        = 4,
+        EVT_SWI_IRQ5        = 5,
+        EVT_SWI_IRQ6        = 6,
+        EVT_SWI_IRQ7        = 7,
+        EVT_SWI_IRQ8        = 8,
+        EVT_SWI_IRQ9        = 9,
+        EVT_SWI_IRQ10       = 10,
+        EVT_SWI_IRQ11       = 11,
+        EVT_SWI_IRQ12       = 12,
+        EVT_SWI_IRQ13       = 13,
+        EVT_SWI_IRQ14       = 14,
+        EVT_SWI_IRQ15       = 15,
 
-        /* External Interrupt  */
-        EVT_PORT_EIRQ0           = 0u,
-        EVT_PORT_EIRQ1           = 1u,
-        EVT_PORT_EIRQ2           = 2u,
-        EVT_PORT_EIRQ3           = 3u,
-        EVT_PORT_EIRQ4           = 4u,
-        EVT_PORT_EIRQ5           = 5u,
-        EVT_PORT_EIRQ6           = 6u,
-        EVT_PORT_EIRQ7           = 7u,
+        /* External Interrupt */
+        EVT_PORT_EIRQ0      = 0,
+        EVT_PORT_EIRQ1      = 1,
+        EVT_PORT_EIRQ2      = 2,
+        EVT_PORT_EIRQ3      = 3,
+        EVT_PORT_EIRQ4      = 4,
+        EVT_PORT_EIRQ5      = 5,
+        EVT_PORT_EIRQ6      = 6,
+        EVT_PORT_EIRQ7      = 7,
 
         /*  DMA  */
-        EVT_DMA_TC0             = 32u,
-        EVT_DMA_TC1             = 33u,
-        EVT_DMA_TC2             = 34u,
-        EVT_DMA_TC3             = 35u,
+        EVT_DMA_TC0         = 32,
+        EVT_DMA_TC1         = 33,
+        EVT_DMA_TC2         = 34,
+        EVT_DMA_TC3         = 35,
 
-        EVT_DMA_BTC0            = 40u,
-        EVT_DMA_BTC1            = 41u,
-        EVT_DMA_BTC2            = 42u,
-        EVT_DMA_BTC3            = 43u,
+        EVT_DMA_BTC0        = 40,
+        EVT_DMA_BTC1        = 41,
+        EVT_DMA_BTC2        = 42,
+        EVT_DMA_BTC3        = 43,
 
-        /*  EFM  */
-        EVT_EFM_OPTEND          = 52u,
+        /* EFM  */
+        EVT_EFM_OPTEND      = 52,
 
-        /*  DCU  */
-        EVT_DCU                 = 55u,
+        /* DCU  */
+        EVT_DCU             = 55,
 
-        /*  TMR0  */
-        EVT_TMR01_GCMA          = 64u,
-        EVT_TMR01_GCMB          = 65u,
-        EVT_TMR02_GCMA          = 66u,
-        EVT_TMR02_GCMB          = 67u,
+        /* TMR0  */
+        EVT_TMR01_GCMA      = 64,
+        EVT_TMR01_GCMB      = 65,
+        EVT_TMR02_GCMA      = 66,
+        EVT_TMR02_GCMB      = 67,
 
         /* TMRA */
-        EVT_TMRA1_OVF           = 256u,
-        EVT_TMRA1_UDF           = 257u,
-        EVT_TMRA1_CMP           = 258u,
-        EVT_TMRA2_OVF           = 259u,
-        EVT_TMRA2_UDF           = 260u,
-        EVT_TMRA2_CMP           = 261u,
-        EVT_TMRA3_OVF           = 262u,
-        EVT_TMRA3_UDF           = 263u,
-        EVT_TMRA3_CMP           = 264u,
-        EVT_TMRA4_OVF           = 265u,
-        EVT_TMRA4_UDF           = 266u,
-        EVT_TMRA4_CMP           = 267u,
+        EVT_TMRA1_OVF       = 256,
+        EVT_TMRA1_UDF       = 257,
+        EVT_TMRA1_CMP       = 258,
+        EVT_TMRA2_OVF       = 259,
+        EVT_TMRA2_UDF       = 260,
+        EVT_TMRA2_CMP       = 261,
+        EVT_TMRA3_OVF       = 262,
+        EVT_TMRA3_UDF       = 263,
+        EVT_TMRA3_CMP       = 264,
+        EVT_TMRA4_OVF       = 265,
+        EVT_TMRA4_UDF       = 266,
+        EVT_TMRA4_CMP       = 267,
 
         /* TMRB */
-        EVT_TMRB_OVF            = 274u,
-        EVT_TMRB_UDF            = 275u,
-        EVT_TMRB_CMP            = 276u,
+        EVT_TMRB_OVF        = 274,
+        EVT_TMRB_UDF        = 275,
+        EVT_TMRB_CMP        = 276,
 
         /* USART */
-        EVT_USART1_EI           = 278u,
-        EVT_USART1_RI           = 279u,
-        EVT_USART1_TI           = 280u,
-        EVT_USART1_TCI          = 281u,
-        EVT_USART2_EI           = 283u,
-        EVT_USART2_RI           = 284u,
-        EVT_USART2_TI           = 285u,
-        EVT_USART2_TCI          = 286u,
-        EVT_USART3_EI           = 288u,
-        EVT_USART3_RI           = 289u,
-        EVT_USART3_TI           = 290u,
-        EVT_USART3_TCI          = 291u,
-        EVT_USART4_EI           = 293u,
-        EVT_USART4_RI           = 294u,
-        EVT_USART4_TI           = 295u,
-        EVT_USART4_TCI          = 296u,
+        EVT_USART1_EI       = 278,
+        EVT_USART1_RI       = 279,
+        EVT_USART1_TI       = 280,
+        EVT_USART1_TCI      = 281,
+        EVT_USART2_EI       = 283,
+        EVT_USART2_RI       = 284,
+        EVT_USART2_TI       = 285,
+        EVT_USART2_TCI      = 286,
+        EVT_USART3_EI       = 288,
+        EVT_USART3_RI       = 289,
+        EVT_USART3_TI       = 290,
+        EVT_USART3_TCI      = 291,
+        EVT_USART4_EI       = 293,
+        EVT_USART4_RI       = 294,
+        EVT_USART4_TI       = 295,
+        EVT_USART4_TCI      = 296,
 
         /* SPI */
-        EVT_SPI_SRRI            = 299u,
-        EVT_SPI_SRTI            = 300u,
-        EVT_SPI_SPII            = 301u,
-        EVT_SPI_SPEI            = 302u,
-        EVT_SPI_SPTEND          = 303u,
+        EVT_SPI_SRRI        = 299,
+        EVT_SPI_SRTI        = 300,
+        EVT_SPI_SPII        = 301,
+        EVT_SPI_SPEI        = 302,
+        EVT_SPI_SPTEND      = 303,
 
         /* AOS */
-        EVT_AOS_STRG            = 319u,
+        EVT_AOS_STRG        = 319,
 
         /* TMR4 */
-        EVT_TMR4_SCMUH          = 368u,
-        EVT_TMR4_SCMUL          = 369u,
-        EVT_TMR4_SCMVH          = 370u,
-        EVT_TMR4_SCMVL          = 371u,
-        EVT_TMR4_SCMWH          = 372u,
-        EVT_TMR4_SCMWL          = 373u,
+        EVT_TMR4_SCMUH      = 368,
+        EVT_TMR4_SCMUL      = 369,
+        EVT_TMR4_SCMVH      = 370,
+        EVT_TMR4_SCMVL      = 371,
+        EVT_TMR4_SCMWH      = 372,
+        EVT_TMR4_SCMWL      = 373,
 
         /* ACMP */
-        EVT_ACMP1               = 416u,
-        EVT_ACMP2               = 417u,
-        EVT_ACMP3               = 418u,
+        EVT_ACMP1           = 416,
+        EVT_ACMP2           = 417,
+        EVT_ACMP3           = 418,
 
         /* I2C */
-        EVT_I2C_RXI             = 420u,
-        EVT_I2C_TXI             = 421u,
-        EVT_I2C_TEI             = 422u,
-        EVT_I2C_EE1             = 423u,
+        EVT_I2C_RXI         = 420,
+        EVT_I2C_TXI         = 421,
+        EVT_I2C_TEI         = 422,
+        EVT_I2C_EE1         = 423,
 
         /* LVD */
-        EVT_LVD1                = 433u,
-        EVT_LVD2                = 434u,
+        EVT_LVD1            = 433,
+        EVT_LVD2            = 434,
 
         /* WDT */
-        EVT_WDT_REFUDF          = 439u,
+        EVT_WDT_REFUDF      = 439,
 
         /* ADC */
-        EVT_ADC_EOCA            = 448u,
-        EVT_ADC_EOCB            = 449u,
-        EVT_ADC_CHCMP           = 450u,
-        EVT_ADC_SEQCMP              = 451u,
+        EVT_ADC_EOCA        = 448,
+        EVT_ADC_EOCB        = 449,
+        EVT_ADC_CHCMP       = 450,
+        EVT_ADC_SEQCMP      = 451,
 } en_event_src_t;
 
 /**
@@ -355,158 +355,158 @@ typedef enum en_event_src
  ******************************************************************************/
 typedef enum en_int_src
 {
-        INT_SWI_IRQ0             = 0u,
-        INT_SWI_IRQ1             = 1u,
-        INT_SWI_IRQ2             = 2u,
-        INT_SWI_IRQ3             = 3u,
-        INT_SWI_IRQ4             = 4u,
-        INT_SWI_IRQ5             = 5u,
-        INT_SWI_IRQ6             = 6u,
-        INT_SWI_IRQ7             = 7u,
-        INT_SWI_IRQ8             = 8u,
-        INT_SWI_IRQ9             = 9u,
-        INT_SWI_IRQ10            = 10u,
-        INT_SWI_IRQ11            = 11u,
-        INT_SWI_IRQ12            = 12u,
-        INT_SWI_IRQ13            = 13u,
-        INT_SWI_IRQ14            = 14u,
-        INT_SWI_IRQ15            = 15u,
+        INT_SWI_IRQ0        = 0,
+        INT_SWI_IRQ1        = 1,
+        INT_SWI_IRQ2        = 2,
+        INT_SWI_IRQ3        = 3,
+        INT_SWI_IRQ4        = 4,
+        INT_SWI_IRQ5        = 5,
+        INT_SWI_IRQ6        = 6,
+        INT_SWI_IRQ7        = 7,
+        INT_SWI_IRQ8        = 8,
+        INT_SWI_IRQ9        = 9,
+        INT_SWI_IRQ10       = 10,
+        INT_SWI_IRQ11       = 11,
+        INT_SWI_IRQ12       = 12,
+        INT_SWI_IRQ13       = 13,
+        INT_SWI_IRQ14       = 14,
+        INT_SWI_IRQ15       = 15,
 
-        /* External Interrupt  */
-        INT_PORT_EIRQ0           = 0u,
-        INT_PORT_EIRQ1           = 1u,
-        INT_PORT_EIRQ2           = 2u,
-        INT_PORT_EIRQ3           = 3u,
-        INT_PORT_EIRQ4           = 4u,
-        INT_PORT_EIRQ5           = 5u,
-        INT_PORT_EIRQ6           = 6u,
-        INT_PORT_EIRQ7           = 7u,
+        /* External Interrupt */
+        INT_PORT_EIRQ0      = 0,
+        INT_PORT_EIRQ1      = 1,
+        INT_PORT_EIRQ2      = 2,
+        INT_PORT_EIRQ3      = 3,
+        INT_PORT_EIRQ4      = 4,
+        INT_PORT_EIRQ5      = 5,
+        INT_PORT_EIRQ6      = 6,
+        INT_PORT_EIRQ7      = 7,
 
-        /*  DMA  */
-        INT_DMA_TC0             = 32u,
-        INT_DMA_TC1             = 33u,
-        INT_DMA_TC2             = 34u,
-        INT_DMA_TC3             = 35u,
+        /* DMA */
+        INT_DMA_TC0         = 32,
+        INT_DMA_TC1         = 33,
+        INT_DMA_TC2         = 34,
+        INT_DMA_TC3         = 35,
 
-        INT_DMA_BTC0            = 40u,
-        INT_DMA_BTC1            = 41u,
-        INT_DMA_BTC2            = 42u,
-        INT_DMA_BTC3            = 43u,
-        INT_DMA_ERR             = 48u,
+        INT_DMA_BTC0        = 40,
+        INT_DMA_BTC1        = 41,
+        INT_DMA_BTC2        = 42,
+        INT_DMA_BTC3        = 43,
+        INT_DMA_ERR         = 48,
 
-        /*  EFM  */
-        INT_EFM_PEERR           = 50u,
-        INT_EFM_COLERR          = 51u,
-        INT_EFM_OPTEND          = 52u,
+        /* EFM */
+        INT_EFM_PEERR       = 50,
+        INT_EFM_COLERR      = 51,
+        INT_EFM_OPTEND      = 52,
 
-        /*  DCU  */
-        INT_DCU                 = 55u,
+        /* DCU */
+        INT_DCU             = 55,
 
-        /*  TMR0  */
-        INT_TMR01_GCMA          = 64u,
-        INT_TMR01_GCMB          = 65u,
-        INT_TMR02_GCMA          = 66u,
-        INT_TMR02_GCMB          = 67u,
+        /* TMR0 */
+        INT_TMR01_GCMA      = 64,
+        INT_TMR01_GCMB      = 65,
+        INT_TMR02_GCMA      = 66,
+        INT_TMR02_GCMB      = 67,
 
         /* XTAL */
-        INT_XTAL_STOP           = 85u,
+        INT_XTAL_STOP       = 85,
 
         /* SWDT */
-        INT_SWDT_REFUDF         = 87u,
+        INT_SWDT_REFUDF     = 87,
 
         /* TMRA */
-        INT_TMRA1_OVF           = 256u,
-        INT_TMRA1_UDF           = 257u,
-        INT_TMRA1_CMP           = 258u,
-        INT_TMRA2_OVF           = 259u,
-        INT_TMRA2_UDF           = 260u,
-        INT_TMRA2_CMP           = 261u,
-        INT_TMRA3_OVF           = 262u,
-        INT_TMRA3_UDF           = 263u,
-        INT_TMRA3_CMP           = 264u,
-        INT_TMRA4_OVF           = 265u,
-        INT_TMRA4_UDF           = 266u,
-        INT_TMRA4_CMP           = 267u,
+        INT_TMRA1_OVF       = 256,
+        INT_TMRA1_UDF       = 257,
+        INT_TMRA1_CMP       = 258,
+        INT_TMRA2_OVF       = 259,
+        INT_TMRA2_UDF       = 260,
+        INT_TMRA2_CMP       = 261,
+        INT_TMRA3_OVF       = 262,
+        INT_TMRA3_UDF       = 263,
+        INT_TMRA3_CMP       = 264,
+        INT_TMRA4_OVF       = 265,
+        INT_TMRA4_UDF       = 266,
+        INT_TMRA4_CMP       = 267,
 
         /* TMRB */
-        INT_TMRB_OVF            = 274u,
-        INT_TMRB_UDF            = 275u,
-        INT_TMRB_CMP            = 276u,
+        INT_TMRB_OVF        = 274,
+        INT_TMRB_UDF        = 275,
+        INT_TMRB_CMP        = 276,
 
         /* USART */
-        INT_USART1_EI           = 278u,
-        INT_USART1_RI           = 279u,
-        INT_USART1_TI           = 280u,
-        INT_USART1_TCI          = 281u,
-        INT_USART2_EI           = 283u,
-        INT_USART2_RI           = 284u,
-        INT_USART2_TI           = 285u,
-        INT_USART2_TCI          = 286u,
-        INT_USART3_EI           = 288u,
-        INT_USART3_RI           = 289u,
-        INT_USART3_TI           = 290u,
-        INT_USART3_TCI          = 291u,
-        INT_USART4_EI           = 293u,
-        INT_USART4_RI           = 294u,
-        INT_USART4_TI           = 295u,
-        INT_USART4_TCI          = 296u,
+        INT_USART1_EI       = 278,
+        INT_USART1_RI       = 279,
+        INT_USART1_TI       = 280,
+        INT_USART1_TCI      = 281,
+        INT_USART2_EI       = 283,
+        INT_USART2_RI       = 284,
+        INT_USART2_TI       = 285,
+        INT_USART2_TCI      = 286,
+        INT_USART3_EI       = 288,
+        INT_USART3_RI       = 289,
+        INT_USART3_TI       = 290,
+        INT_USART3_TCI      = 291,
+        INT_USART4_EI       = 293,
+        INT_USART4_RI       = 294,
+        INT_USART4_TI       = 295,
+        INT_USART4_TCI      = 296,
 
         /* SPI */
-        INT_SPI_SRRI            = 299u,
-        INT_SPI_SRTI            = 300u,
-        INT_SPI_SPII            = 301u,
-        INT_SPI_SPEI            = 302u,
+        INT_SPI_SRRI        = 299,
+        INT_SPI_SRTI        = 300,
+        INT_SPI_SPII        = 301,
+        INT_SPI_SPEI        = 302,
 
         /* TMR4 */
-        INT_TMR4_GCMUH          = 320u,
-        INT_TMR4_GCMUL          = 321u,
-        INT_TMR4_GCMVH          = 322u,
-        INT_TMR4_GCMVL          = 323u,
-        INT_TMR4_GCMWH          = 324u,
-        INT_TMR4_GCMWL          = 325u,
-        INT_TMR4_GOVF           = 326u,
-        INT_TMR4_GUDF           = 327u,
-        INT_TMR4_RLOU           = 328u,
-        INT_TMR4_RLOV           = 329u,
-        INT_TMR4_RLOW           = 330u,
+        INT_TMR4_GCMUH      = 320,
+        INT_TMR4_GCMUL      = 321,
+        INT_TMR4_GCMVH      = 322,
+        INT_TMR4_GCMVL      = 323,
+        INT_TMR4_GCMWH      = 324,
+        INT_TMR4_GCMWL      = 325,
+        INT_TMR4_GOVF       = 326,
+        INT_TMR4_GUDF       = 327,
+        INT_TMR4_RLOU       = 328,
+        INT_TMR4_RLOV       = 329,
+        INT_TMR4_RLOW       = 330,
 
         /* EMB */
-        INT_EMB_GR0             = 390u,
+        INT_EMB_GR0         = 390,
 
         /* ACMP */
-        INT_ACMP1               = 416u,
-        INT_ACMP2               = 417u,
-        INT_ACMP3               = 418u,
+        INT_ACMP1           = 416,
+        INT_ACMP2           = 417,
+        INT_ACMP3           = 418,
 
         /* I2C */
-        INT_I2C_RXI             = 420u,
-        INT_I2C_TXI             = 421u,
-        INT_I2C_TEI             = 422u,
-        INT_I2C_EE1             = 423u,
+        INT_I2C_RXI         = 420,
+        INT_I2C_TXI         = 421,
+        INT_I2C_TEI         = 422,
+        INT_I2C_EE1         = 423,
 
         /* USART1 wakeup */
-        INT_USART1_WUPI         = 432u,
+        INT_USART1_WUPI     = 432,
 
         /* LVD */
-        INT_LVD1                = 433u,
-        INT_LVD2                = 434u,
+        INT_LVD1            = 433,
+        INT_LVD2            = 434,
 
         /* FCM */
-        INT_FCMFERRI            = 436u,
-        INT_FCMMENDI            = 437u,
-        INT_FCMCOVFI            = 438u,
+        INT_FCMFERRI        = 436,
+        INT_FCMMENDI        = 437,
+        INT_FCMCOVFI        = 438,
 
         /* WDT */
-        INT_WDT_REFUDF          = 439u,
+        INT_WDT_REFUDF      = 439,
 
         /* CTC */
-        INT_CTC_ERR             = 440u,
+        INT_CTC_ERR         = 440,
 
         /* ADC */
-        INT_ADC_EOCA            = 448u,
-        INT_ADC_EOCB            = 449u,
-        INT_ADC_CHCMP           = 450u,
-        INT_ADC_SEQCMP          = 451u,
+        INT_ADC_EOCA        = 448,
+        INT_ADC_EOCB        = 449,
+        INT_ADC_CHCMP       = 450,
+        INT_ADC_SEQCMP      = 451,
 } en_int_src_t;
 
 #if defined ( __CC_ARM   )
@@ -1221,7 +1221,7 @@ typedef struct
 } M4_INTC_TypeDef;
 
 /**
- * @brief PWR
+ * @brief PWC
  */
 typedef struct
 {
@@ -1241,7 +1241,7 @@ typedef struct
     __IO uint16_t DBGC;
     uint8_t RESERVED6[190];
     __IO uint16_t RSTF0;
-} M4_PWR_TypeDef;
+} M4_PWC_TypeDef;
 
 /**
  * @brief RMU
@@ -1520,7 +1520,7 @@ typedef struct
 #define M4_I2C                               ((M4_I2C_TypeDef *)0x4004E000UL)
 #define M4_ICG                               ((M4_ICG_TypeDef *)0x00000240UL)
 #define M4_INTC                              ((M4_INTC_TypeDef *)0x40051000UL)
-#define M4_PWR                               ((M4_PWR_TypeDef *)0x40054000UL)
+#define M4_PWC                               ((M4_PWC_TypeDef *)0x40054000UL)
 #define M4_RMU                               ((M4_RMU_TypeDef *)0x40054100UL)
 #define M4_SPI                               ((M4_SPI_TypeDef *)0x4001C000UL)
 #define M4_SWDT                              ((M4_SWDT_TypeDef *)0x40049400UL)
@@ -3577,20 +3577,20 @@ typedef struct
 /*  Bit definition for GPIO_PODR register  */
 #define GPIO_PODR_POUT0_POS                            (0U)
 #define GPIO_PODR_POUT0                                ((uint8_t)0x01U)
-#define GPIO_PODR_POUTE1_POS                           (1U)
-#define GPIO_PODR_POUTE1                               ((uint8_t)0x02U)
-#define GPIO_PODR_POUTE2_POS                           (2U)
-#define GPIO_PODR_POUTE2                               ((uint8_t)0x04U)
-#define GPIO_PODR_POUTE3_POS                           (3U)
-#define GPIO_PODR_POUTE3                               ((uint8_t)0x08U)
-#define GPIO_PODR_POUTE4_POS                           (4U)
-#define GPIO_PODR_POUTE4                               ((uint8_t)0x10U)
-#define GPIO_PODR_POUTE5_POS                           (5U)
-#define GPIO_PODR_POUTE5                               ((uint8_t)0x20U)
-#define GPIO_PODR_POUTE6_POS                           (6U)
-#define GPIO_PODR_POUTE6                               ((uint8_t)0x40U)
-#define GPIO_PODR_POUTE7_POS                           (7U)
-#define GPIO_PODR_POUTE7                               ((uint8_t)0x80U)
+#define GPIO_PODR_POUT1_POS                            (1U)
+#define GPIO_PODR_POUT1                                ((uint8_t)0x02U)
+#define GPIO_PODR_POUT2_POS                            (2U)
+#define GPIO_PODR_POUT2                                ((uint8_t)0x04U)
+#define GPIO_PODR_POUT3_POS                            (3U)
+#define GPIO_PODR_POUT3                                ((uint8_t)0x08U)
+#define GPIO_PODR_POUT4_POS                            (4U)
+#define GPIO_PODR_POUT4                                ((uint8_t)0x10U)
+#define GPIO_PODR_POUT5_POS                            (5U)
+#define GPIO_PODR_POUT5                                ((uint8_t)0x20U)
+#define GPIO_PODR_POUT6_POS                            (6U)
+#define GPIO_PODR_POUT6                                ((uint8_t)0x40U)
+#define GPIO_PODR_POUT7_POS                            (7U)
+#define GPIO_PODR_POUT7                                ((uint8_t)0x80U)
 
 /*  Bit definition for GPIO_POER register  */
 #define GPIO_POER_POUTE0_POS                           (0U)
@@ -4308,197 +4308,197 @@ typedef struct
 
 
 /*******************************************************************************
-                Bit definition for Peripheral PWR
+                Bit definition for Peripheral PWC
 *******************************************************************************/
-/*  Bit definition for PWR_STPMCR register  */
-#define PWR_STPMCR_FLNWT_POS                           (0U)
-#define PWR_STPMCR_FLNWT                               ((uint8_t)0x01U)
-#define PWR_STPMCR_CKSMRC_POS                          (1U)
-#define PWR_STPMCR_CKSMRC                              ((uint8_t)0x02U)
-#define PWR_STPMCR_HAPORDIS_POS                        (3U)
-#define PWR_STPMCR_HAPORDIS                            ((uint8_t)0x08U)
-#define PWR_STPMCR_STPDAS_POS                          (6U)
-#define PWR_STPMCR_STPDAS                              ((uint8_t)0x40U)
-#define PWR_STPMCR_STOP_POS                            (7U)
-#define PWR_STPMCR_STOP                                ((uint8_t)0x80U)
+/*  Bit definition for PWC_STPMCR register  */
+#define PWC_STPMCR_FLNWT_POS                           (0U)
+#define PWC_STPMCR_FLNWT                               ((uint8_t)0x01U)
+#define PWC_STPMCR_CKSMRC_POS                          (1U)
+#define PWC_STPMCR_CKSMRC                              ((uint8_t)0x02U)
+#define PWC_STPMCR_HAPORDIS_POS                        (3U)
+#define PWC_STPMCR_HAPORDIS                            ((uint8_t)0x08U)
+#define PWC_STPMCR_STPDAS_POS                          (6U)
+#define PWC_STPMCR_STPDAS                              ((uint8_t)0x40U)
+#define PWC_STPMCR_STOP_POS                            (7U)
+#define PWC_STPMCR_STOP                                ((uint8_t)0x80U)
 
-/*  Bit definition for PWR_PWRC register  */
-#define PWR_PWRC_PWDRV_POS                             (0U)
-#define PWR_PWRC_PWDRV                                 ((uint16_t)0x003FU)
-#define PWR_PWRC_PWDRV_0                               ((uint16_t)0x0001U)
-#define PWR_PWRC_PWDRV_1                               ((uint16_t)0x0002U)
-#define PWR_PWRC_PWDRV_2                               ((uint16_t)0x0004U)
-#define PWR_PWRC_PWDRV_3                               ((uint16_t)0x0008U)
-#define PWR_PWRC_PWDRV_4                               ((uint16_t)0x0010U)
-#define PWR_PWRC_PWDRV_5                               ((uint16_t)0x0020U)
-#define PWR_PWRC_ACTV_POS                              (6U)
-#define PWR_PWRC_ACTV                                  ((uint16_t)0x0040U)
-#define PWR_PWRC_DVS_POS                               (7U)
-#define PWR_PWRC_DVS                                   ((uint16_t)0x0080U)
-#define PWR_PWRC_VHRCE_POS                             (8U)
-#define PWR_PWRC_VHRCE                                 ((uint16_t)0x0100U)
-#define PWR_PWRC_VPLLE_POS                             (9U)
-#define PWR_PWRC_VPLLE                                 ((uint16_t)0x0200U)
-#define PWR_PWRC_HCHDTDIS_POS                          (10U)
-#define PWR_PWRC_HCHDTDIS                              ((uint16_t)0x0400U)
-#define PWR_PWRC_PLHDTDIS_POS                          (11U)
-#define PWR_PWRC_PLHDTDIS                              ((uint16_t)0x0800U)
-#define PWR_PWRC_HDTDIS_POS                            (12U)
-#define PWR_PWRC_HDTDIS                                ((uint16_t)0x1000U)
-#define PWR_PWRC_HRCPWRDY_POS                          (13U)
-#define PWR_PWRC_HRCPWRDY                              ((uint16_t)0x2000U)
-#define PWR_PWRC_PLLPWRDY_POS                          (14U)
-#define PWR_PWRC_PLLPWRDY                              ((uint16_t)0x4000U)
+/*  Bit definition for PWC_PWRC register  */
+#define PWC_PWRC_PWDRV_POS                             (0U)
+#define PWC_PWRC_PWDRV                                 ((uint16_t)0x003FU)
+#define PWC_PWRC_PWDRV_0                               ((uint16_t)0x0001U)
+#define PWC_PWRC_PWDRV_1                               ((uint16_t)0x0002U)
+#define PWC_PWRC_PWDRV_2                               ((uint16_t)0x0004U)
+#define PWC_PWRC_PWDRV_3                               ((uint16_t)0x0008U)
+#define PWC_PWRC_PWDRV_4                               ((uint16_t)0x0010U)
+#define PWC_PWRC_PWDRV_5                               ((uint16_t)0x0020U)
+#define PWC_PWRC_ACTV_POS                              (6U)
+#define PWC_PWRC_ACTV                                  ((uint16_t)0x0040U)
+#define PWC_PWRC_DVS_POS                               (7U)
+#define PWC_PWRC_DVS                                   ((uint16_t)0x0080U)
+#define PWC_PWRC_VHRCE_POS                             (8U)
+#define PWC_PWRC_VHRCE                                 ((uint16_t)0x0100U)
+#define PWC_PWRC_VPLLE_POS                             (9U)
+#define PWC_PWRC_VPLLE                                 ((uint16_t)0x0200U)
+#define PWC_PWRC_HCHDTDIS_POS                          (10U)
+#define PWC_PWRC_HCHDTDIS                              ((uint16_t)0x0400U)
+#define PWC_PWRC_PLHDTDIS_POS                          (11U)
+#define PWC_PWRC_PLHDTDIS                              ((uint16_t)0x0800U)
+#define PWC_PWRC_HDTDIS_POS                            (12U)
+#define PWC_PWRC_HDTDIS                                ((uint16_t)0x1000U)
+#define PWC_PWRC_HRCPWRDY_POS                          (13U)
+#define PWC_PWRC_HRCPWRDY                              ((uint16_t)0x2000U)
+#define PWC_PWRC_PLLPWRDY_POS                          (14U)
+#define PWC_PWRC_PLLPWRDY                              ((uint16_t)0x4000U)
 
-/*  Bit definition for PWR_PWRMONR register  */
-#define PWR_PWRMONR_PWMONSEL_POS                       (0U)
-#define PWR_PWRMONR_PWMONSEL                           ((uint8_t)0x01U)
-#define PWR_PWRMONR_PWMONE_POS                         (1U)
-#define PWR_PWRMONR_PWMONE                             ((uint8_t)0x02U)
+/*  Bit definition for PWC_PWRMONR register  */
+#define PWC_PWRMONR_PWMONSEL_POS                       (0U)
+#define PWC_PWRMONR_PWMONSEL                           ((uint8_t)0x01U)
+#define PWC_PWRMONR_PWMONE_POS                         (1U)
+#define PWC_PWRMONR_PWMONE                             ((uint8_t)0x02U)
 
-/*  Bit definition for PWR_RAMCR register  */
-#define PWR_RAMCR_RPERDIS_POS                          (4U)
-#define PWR_RAMCR_RPERDIS                              ((uint8_t)0x10U)
-#define PWR_RAMCR_SRPEF_POS                            (5U)
-#define PWR_RAMCR_SRPEF                                ((uint8_t)0x20U)
-#define PWR_RAMCR_HRPEF_POS                            (6U)
-#define PWR_RAMCR_HRPEF                                ((uint8_t)0x40U)
-#define PWR_RAMCR_CRPEF_POS                            (7U)
-#define PWR_RAMCR_CRPEF                                ((uint8_t)0x80U)
+/*  Bit definition for PWC_RAMCR register  */
+#define PWC_RAMCR_RPERDIS_POS                          (4U)
+#define PWC_RAMCR_RPERDIS                              ((uint8_t)0x10U)
+#define PWC_RAMCR_SRPEF_POS                            (5U)
+#define PWC_RAMCR_SRPEF                                ((uint8_t)0x20U)
+#define PWC_RAMCR_HRPEF_POS                            (6U)
+#define PWC_RAMCR_HRPEF                                ((uint8_t)0x40U)
+#define PWC_RAMCR_CRPEF_POS                            (7U)
+#define PWC_RAMCR_CRPEF                                ((uint8_t)0x80U)
 
-/*  Bit definition for PWR_LVDCR0 register  */
-#define PWR_LVDCR0_L1IEGS_POS                          (2U)
-#define PWR_LVDCR0_L1IEGS                              ((uint32_t)0x0000000CU)
-#define PWR_LVDCR0_L1IEGS_0                            ((uint32_t)0x00000004U)
-#define PWR_LVDCR0_L1IEGS_1                            ((uint32_t)0x00000008U)
-#define PWR_LVDCR0_L1LVL_POS                           (4U)
-#define PWR_LVDCR0_L1LVL                               ((uint32_t)0x000000F0U)
-#define PWR_LVDCR0_L1LVL_0                             ((uint32_t)0x00000010U)
-#define PWR_LVDCR0_L1LVL_1                             ((uint32_t)0x00000020U)
-#define PWR_LVDCR0_L1LVL_2                             ((uint32_t)0x00000040U)
-#define PWR_LVDCR0_L1LVL_3                             ((uint32_t)0x00000080U)
-#define PWR_LVDCR0_L1NFS_POS                           (8U)
-#define PWR_LVDCR0_L1NFS                               ((uint32_t)0x00000300U)
-#define PWR_LVDCR0_L1NFS_0                             ((uint32_t)0x00000100U)
-#define PWR_LVDCR0_L1NFS_1                             ((uint32_t)0x00000200U)
-#define PWR_LVDCR0_L1NFDIS_POS                         (10U)
-#define PWR_LVDCR0_L1NFDIS                             ((uint32_t)0x00000400U)
-#define PWR_LVDCR0_L1NMIS_POS                          (11U)
-#define PWR_LVDCR0_L1NMIS                              ((uint32_t)0x00000800U)
-#define PWR_LVDCR0_L1IRS_POS                           (12U)
-#define PWR_LVDCR0_L1IRS                               ((uint32_t)0x00001000U)
-#define PWR_LVDCR0_L1IRE_POS                           (13U)
-#define PWR_LVDCR0_L1IRE                               ((uint32_t)0x00002000U)
-#define PWR_LVDCR0_L1CMPOE_POS                         (14U)
-#define PWR_LVDCR0_L1CMPOE                             ((uint32_t)0x00004000U)
-#define PWR_LVDCR0_L1EN_POS                            (15U)
-#define PWR_LVDCR0_L1EN                                ((uint32_t)0x00008000U)
-#define PWR_LVDCR0_EXVCCINEN_POS                       (16U)
-#define PWR_LVDCR0_EXVCCINEN                           ((uint32_t)0x00010000U)
-#define PWR_LVDCR0_L2IEGS_POS                          (18U)
-#define PWR_LVDCR0_L2IEGS                              ((uint32_t)0x000C0000U)
-#define PWR_LVDCR0_L2IEGS_0                            ((uint32_t)0x00040000U)
-#define PWR_LVDCR0_L2IEGS_1                            ((uint32_t)0x00080000U)
-#define PWR_LVDCR0_L2LVL_POS                           (20U)
-#define PWR_LVDCR0_L2LVL                               ((uint32_t)0x00F00000U)
-#define PWR_LVDCR0_L2LVL_0                             ((uint32_t)0x00100000U)
-#define PWR_LVDCR0_L2LVL_1                             ((uint32_t)0x00200000U)
-#define PWR_LVDCR0_L2LVL_2                             ((uint32_t)0x00400000U)
-#define PWR_LVDCR0_L2LVL_3                             ((uint32_t)0x00800000U)
-#define PWR_LVDCR0_L2NFS_POS                           (24U)
-#define PWR_LVDCR0_L2NFS                               ((uint32_t)0x03000000U)
-#define PWR_LVDCR0_L2NFS_0                             ((uint32_t)0x01000000U)
-#define PWR_LVDCR0_L2NFS_1                             ((uint32_t)0x02000000U)
-#define PWR_LVDCR0_L2NFDIS_POS                         (26U)
-#define PWR_LVDCR0_L2NFDIS                             ((uint32_t)0x04000000U)
-#define PWR_LVDCR0_L2NMIS_POS                          (27U)
-#define PWR_LVDCR0_L2NMIS                              ((uint32_t)0x08000000U)
-#define PWR_LVDCR0_L2IRS_POS                           (28U)
-#define PWR_LVDCR0_L2IRS                               ((uint32_t)0x10000000U)
-#define PWR_LVDCR0_L2IRE_POS                           (29U)
-#define PWR_LVDCR0_L2IRE                               ((uint32_t)0x20000000U)
-#define PWR_LVDCR0_L2CMPOE_POS                         (30U)
-#define PWR_LVDCR0_L2CMPOE                             ((uint32_t)0x40000000U)
-#define PWR_LVDCR0_L2EN_POS                            (31U)
-#define PWR_LVDCR0_L2EN                                ((uint32_t)0x80000000U)
+/*  Bit definition for PWC_LVDCR0 register  */
+#define PWC_LVDCR0_L1IEGS_POS                          (2U)
+#define PWC_LVDCR0_L1IEGS                              ((uint32_t)0x0000000CU)
+#define PWC_LVDCR0_L1IEGS_0                            ((uint32_t)0x00000004U)
+#define PWC_LVDCR0_L1IEGS_1                            ((uint32_t)0x00000008U)
+#define PWC_LVDCR0_L1LVL_POS                           (4U)
+#define PWC_LVDCR0_L1LVL                               ((uint32_t)0x000000F0U)
+#define PWC_LVDCR0_L1LVL_0                             ((uint32_t)0x00000010U)
+#define PWC_LVDCR0_L1LVL_1                             ((uint32_t)0x00000020U)
+#define PWC_LVDCR0_L1LVL_2                             ((uint32_t)0x00000040U)
+#define PWC_LVDCR0_L1LVL_3                             ((uint32_t)0x00000080U)
+#define PWC_LVDCR0_L1NFS_POS                           (8U)
+#define PWC_LVDCR0_L1NFS                               ((uint32_t)0x00000300U)
+#define PWC_LVDCR0_L1NFS_0                             ((uint32_t)0x00000100U)
+#define PWC_LVDCR0_L1NFS_1                             ((uint32_t)0x00000200U)
+#define PWC_LVDCR0_L1NFDIS_POS                         (10U)
+#define PWC_LVDCR0_L1NFDIS                             ((uint32_t)0x00000400U)
+#define PWC_LVDCR0_L1NMIS_POS                          (11U)
+#define PWC_LVDCR0_L1NMIS                              ((uint32_t)0x00000800U)
+#define PWC_LVDCR0_L1IRS_POS                           (12U)
+#define PWC_LVDCR0_L1IRS                               ((uint32_t)0x00001000U)
+#define PWC_LVDCR0_L1IRE_POS                           (13U)
+#define PWC_LVDCR0_L1IRE                               ((uint32_t)0x00002000U)
+#define PWC_LVDCR0_L1CMPOE_POS                         (14U)
+#define PWC_LVDCR0_L1CMPOE                             ((uint32_t)0x00004000U)
+#define PWC_LVDCR0_L1EN_POS                            (15U)
+#define PWC_LVDCR0_L1EN                                ((uint32_t)0x00008000U)
+#define PWC_LVDCR0_EXVCCINEN_POS                       (16U)
+#define PWC_LVDCR0_EXVCCINEN                           ((uint32_t)0x00010000U)
+#define PWC_LVDCR0_L2IEGS_POS                          (18U)
+#define PWC_LVDCR0_L2IEGS                              ((uint32_t)0x000C0000U)
+#define PWC_LVDCR0_L2IEGS_0                            ((uint32_t)0x00040000U)
+#define PWC_LVDCR0_L2IEGS_1                            ((uint32_t)0x00080000U)
+#define PWC_LVDCR0_L2LVL_POS                           (20U)
+#define PWC_LVDCR0_L2LVL                               ((uint32_t)0x00F00000U)
+#define PWC_LVDCR0_L2LVL_0                             ((uint32_t)0x00100000U)
+#define PWC_LVDCR0_L2LVL_1                             ((uint32_t)0x00200000U)
+#define PWC_LVDCR0_L2LVL_2                             ((uint32_t)0x00400000U)
+#define PWC_LVDCR0_L2LVL_3                             ((uint32_t)0x00800000U)
+#define PWC_LVDCR0_L2NFS_POS                           (24U)
+#define PWC_LVDCR0_L2NFS                               ((uint32_t)0x03000000U)
+#define PWC_LVDCR0_L2NFS_0                             ((uint32_t)0x01000000U)
+#define PWC_LVDCR0_L2NFS_1                             ((uint32_t)0x02000000U)
+#define PWC_LVDCR0_L2NFDIS_POS                         (26U)
+#define PWC_LVDCR0_L2NFDIS                             ((uint32_t)0x04000000U)
+#define PWC_LVDCR0_L2NMIS_POS                          (27U)
+#define PWC_LVDCR0_L2NMIS                              ((uint32_t)0x08000000U)
+#define PWC_LVDCR0_L2IRS_POS                           (28U)
+#define PWC_LVDCR0_L2IRS                               ((uint32_t)0x10000000U)
+#define PWC_LVDCR0_L2IRE_POS                           (29U)
+#define PWC_LVDCR0_L2IRE                               ((uint32_t)0x20000000U)
+#define PWC_LVDCR0_L2CMPOE_POS                         (30U)
+#define PWC_LVDCR0_L2CMPOE                             ((uint32_t)0x40000000U)
+#define PWC_LVDCR0_L2EN_POS                            (31U)
+#define PWC_LVDCR0_L2EN                                ((uint32_t)0x80000000U)
 
-/*  Bit definition for PWR_LVDCSR1 register  */
-#define PWR_LVDCSR1_L1MON_POS                          (0U)
-#define PWR_LVDCSR1_L1MON                              ((uint8_t)0x01U)
-#define PWR_LVDCSR1_L2MON_POS                          (1U)
-#define PWR_LVDCSR1_L2MON                              ((uint8_t)0x02U)
-#define PWR_LVDCSR1_L1DETF_POS                         (2U)
-#define PWR_LVDCSR1_L1DETF                             ((uint8_t)0x04U)
-#define PWR_LVDCSR1_L2DETF_POS                         (3U)
-#define PWR_LVDCSR1_L2DETF                             ((uint8_t)0x08U)
-#define PWR_LVDCSR1_L0MON_POS                          (4U)
-#define PWR_LVDCSR1_L0MON                              ((uint8_t)0x10U)
-#define PWR_LVDCSR1_L0CMPOE_POS                        (7U)
-#define PWR_LVDCSR1_L0CMPOE                            ((uint8_t)0x80U)
+/*  Bit definition for PWC_LVDCSR1 register  */
+#define PWC_LVDCSR1_L1MON_POS                          (0U)
+#define PWC_LVDCSR1_L1MON                              ((uint8_t)0x01U)
+#define PWC_LVDCSR1_L2MON_POS                          (1U)
+#define PWC_LVDCSR1_L2MON                              ((uint8_t)0x02U)
+#define PWC_LVDCSR1_L1DETF_POS                         (2U)
+#define PWC_LVDCSR1_L1DETF                             ((uint8_t)0x04U)
+#define PWC_LVDCSR1_L2DETF_POS                         (3U)
+#define PWC_LVDCSR1_L2DETF                             ((uint8_t)0x08U)
+#define PWC_LVDCSR1_L0MON_POS                          (4U)
+#define PWC_LVDCSR1_L0MON                              ((uint8_t)0x10U)
+#define PWC_LVDCSR1_L0CMPOE_POS                        (7U)
+#define PWC_LVDCSR1_L0CMPOE                            ((uint8_t)0x80U)
 
-/*  Bit definition for PWR_FPRC register  */
-#define PWR_FPRC_CKRWE_POS                             (0U)
-#define PWR_FPRC_CKRWE                                 ((uint16_t)0x0001U)
-#define PWR_FPRC_PWRWE_POS                             (1U)
-#define PWR_FPRC_PWRWE                                 ((uint16_t)0x0002U)
-#define PWR_FPRC_FPRCB2_POS                            (2U)
-#define PWR_FPRC_FPRCB2                                ((uint16_t)0x0004U)
-#define PWR_FPRC_LVRWE_POS                             (3U)
-#define PWR_FPRC_LVRWE                                 ((uint16_t)0x0008U)
-#define PWR_FPRC_FPRCB4_POS                            (4U)
-#define PWR_FPRC_FPRCB4                                ((uint16_t)0x0010U)
-#define PWR_FPRC_FPRCB5_POS                            (5U)
-#define PWR_FPRC_FPRCB5                                ((uint16_t)0x0020U)
-#define PWR_FPRC_FPRCB6_POS                            (6U)
-#define PWR_FPRC_FPRCB6                                ((uint16_t)0x0040U)
-#define PWR_FPRC_FPRCB7_POS                            (7U)
-#define PWR_FPRC_FPRCB7                                ((uint16_t)0x0080U)
-#define PWR_FPRC_FPRCWE_POS                            (8U)
-#define PWR_FPRC_FPRCWE                                ((uint16_t)0xFF00U)
-#define PWR_FPRC_FPRCWE_0                              ((uint16_t)0x0100U)
-#define PWR_FPRC_FPRCWE_1                              ((uint16_t)0x0200U)
-#define PWR_FPRC_FPRCWE_2                              ((uint16_t)0x0400U)
-#define PWR_FPRC_FPRCWE_3                              ((uint16_t)0x0800U)
-#define PWR_FPRC_FPRCWE_4                              ((uint16_t)0x1000U)
-#define PWR_FPRC_FPRCWE_5                              ((uint16_t)0x2000U)
-#define PWR_FPRC_FPRCWE_6                              ((uint16_t)0x4000U)
-#define PWR_FPRC_FPRCWE_7                              ((uint16_t)0x8000U)
+/*  Bit definition for PWC_FPRC register  */
+#define PWC_FPRC_CKRWE_POS                             (0U)
+#define PWC_FPRC_CKRWE                                 ((uint16_t)0x0001U)
+#define PWC_FPRC_PWRWE_POS                             (1U)
+#define PWC_FPRC_PWRWE                                 ((uint16_t)0x0002U)
+#define PWC_FPRC_FPRCB2_POS                            (2U)
+#define PWC_FPRC_FPRCB2                                ((uint16_t)0x0004U)
+#define PWC_FPRC_LVRWE_POS                             (3U)
+#define PWC_FPRC_LVRWE                                 ((uint16_t)0x0008U)
+#define PWC_FPRC_FPRCB4_POS                            (4U)
+#define PWC_FPRC_FPRCB4                                ((uint16_t)0x0010U)
+#define PWC_FPRC_FPRCB5_POS                            (5U)
+#define PWC_FPRC_FPRCB5                                ((uint16_t)0x0020U)
+#define PWC_FPRC_FPRCB6_POS                            (6U)
+#define PWC_FPRC_FPRCB6                                ((uint16_t)0x0040U)
+#define PWC_FPRC_FPRCB7_POS                            (7U)
+#define PWC_FPRC_FPRCB7                                ((uint16_t)0x0080U)
+#define PWC_FPRC_FPRCWE_POS                            (8U)
+#define PWC_FPRC_FPRCWE                                ((uint16_t)0xFF00U)
+#define PWC_FPRC_FPRCWE_0                              ((uint16_t)0x0100U)
+#define PWC_FPRC_FPRCWE_1                              ((uint16_t)0x0200U)
+#define PWC_FPRC_FPRCWE_2                              ((uint16_t)0x0400U)
+#define PWC_FPRC_FPRCWE_3                              ((uint16_t)0x0800U)
+#define PWC_FPRC_FPRCWE_4                              ((uint16_t)0x1000U)
+#define PWC_FPRC_FPRCWE_5                              ((uint16_t)0x2000U)
+#define PWC_FPRC_FPRCWE_6                              ((uint16_t)0x4000U)
+#define PWC_FPRC_FPRCWE_7                              ((uint16_t)0x8000U)
 
-/*  Bit definition for PWR_DBGC register  */
-#define PWR_DBGC_DBGEN_POS                             (0U)
-#define PWR_DBGC_DBGEN                                 ((uint16_t)0x0001U)
-#define PWR_DBGC_TRSTF_POS                             (15U)
-#define PWR_DBGC_TRSTF                                 ((uint16_t)0x8000U)
+/*  Bit definition for PWC_DBGC register  */
+#define PWC_DBGC_DBGEN_POS                             (0U)
+#define PWC_DBGC_DBGEN                                 ((uint16_t)0x0001U)
+#define PWC_DBGC_TRSTF_POS                             (15U)
+#define PWC_DBGC_TRSTF                                 ((uint16_t)0x8000U)
 
-/*  Bit definition for PWR_RSTF0 register  */
-#define PWR_RSTF0_PORF_POS                             (0U)
-#define PWR_RSTF0_PORF                                 ((uint16_t)0x0001U)
-#define PWR_RSTF0_PINRF_POS                            (1U)
-#define PWR_RSTF0_PINRF                                ((uint16_t)0x0002U)
-#define PWR_RSTF0_LV0RF_POS                            (2U)
-#define PWR_RSTF0_LV0RF                                ((uint16_t)0x0004U)
-#define PWR_RSTF0_LV1RF_POS                            (3U)
-#define PWR_RSTF0_LV1RF                                ((uint16_t)0x0008U)
-#define PWR_RSTF0_LV2RF_POS                            (4U)
-#define PWR_RSTF0_LV2RF                                ((uint16_t)0x0010U)
-#define PWR_RSTF0_SWDRF_POS                            (5U)
-#define PWR_RSTF0_SWDRF                                ((uint16_t)0x0020U)
-#define PWR_RSTF0_WDRF_POS                             (6U)
-#define PWR_RSTF0_WDRF                                 ((uint16_t)0x0040U)
-#define PWR_RSTF0_CKFERF_POS                           (7U)
-#define PWR_RSTF0_CKFERF                               ((uint16_t)0x0080U)
-#define PWR_RSTF0_SWRF_POS                             (8U)
-#define PWR_RSTF0_SWRF                                 ((uint16_t)0x0100U)
-#define PWR_RSTF0_RAMPERF_POS                          (10U)
-#define PWR_RSTF0_RAMPERF                              ((uint16_t)0x0400U)
-#define PWR_RSTF0_CPULKUPRF_POS                        (12U)
-#define PWR_RSTF0_CPULKUPRF                            ((uint16_t)0x1000U)
-#define PWR_RSTF0_XTALERF_POS                          (13U)
-#define PWR_RSTF0_XTALERF                              ((uint16_t)0x2000U)
-#define PWR_RSTF0_MULTIRF_POS                          (14U)
-#define PWR_RSTF0_MULTIRF                              ((uint16_t)0x4000U)
-#define PWR_RSTF0_CLRF_POS                             (15U)
-#define PWR_RSTF0_CLRF                                 ((uint16_t)0x8000U)
+/*  Bit definition for PWC_RSTF0 register  */
+#define PWC_RSTF0_PORF_POS                             (0U)
+#define PWC_RSTF0_PORF                                 ((uint16_t)0x0001U)
+#define PWC_RSTF0_PINRF_POS                            (1U)
+#define PWC_RSTF0_PINRF                                ((uint16_t)0x0002U)
+#define PWC_RSTF0_LV0RF_POS                            (2U)
+#define PWC_RSTF0_LV0RF                                ((uint16_t)0x0004U)
+#define PWC_RSTF0_LV1RF_POS                            (3U)
+#define PWC_RSTF0_LV1RF                                ((uint16_t)0x0008U)
+#define PWC_RSTF0_LV2RF_POS                            (4U)
+#define PWC_RSTF0_LV2RF                                ((uint16_t)0x0010U)
+#define PWC_RSTF0_SWDRF_POS                            (5U)
+#define PWC_RSTF0_SWDRF                                ((uint16_t)0x0020U)
+#define PWC_RSTF0_WDRF_POS                             (6U)
+#define PWC_RSTF0_WDRF                                 ((uint16_t)0x0040U)
+#define PWC_RSTF0_CKFERF_POS                           (7U)
+#define PWC_RSTF0_CKFERF                               ((uint16_t)0x0080U)
+#define PWC_RSTF0_SWRF_POS                             (8U)
+#define PWC_RSTF0_SWRF                                 ((uint16_t)0x0100U)
+#define PWC_RSTF0_RAMPERF_POS                          (10U)
+#define PWC_RSTF0_RAMPERF                              ((uint16_t)0x0400U)
+#define PWC_RSTF0_CPULKUPRF_POS                        (12U)
+#define PWC_RSTF0_CPULKUPRF                            ((uint16_t)0x1000U)
+#define PWC_RSTF0_XTALERF_POS                          (13U)
+#define PWC_RSTF0_XTALERF                              ((uint16_t)0x2000U)
+#define PWC_RSTF0_MULTIRF_POS                          (14U)
+#define PWC_RSTF0_MULTIRF                              ((uint16_t)0x4000U)
+#define PWC_RSTF0_CLRF_POS                             (15U)
+#define PWC_RSTF0_CLRF                                 ((uint16_t)0x8000U)
 
 
 /*******************************************************************************
@@ -9727,13 +9727,13 @@ typedef struct
 typedef struct
 {
     __IO uint32_t POUT0;
-    __IO uint32_t POUTE1;
-    __IO uint32_t POUTE2;
-    __IO uint32_t POUTE3;
-    __IO uint32_t POUTE4;
-    __IO uint32_t POUTE5;
-    __IO uint32_t POUTE6;
-    __IO uint32_t POUTE7;
+    __IO uint32_t POUT1;
+    __IO uint32_t POUT2;
+    __IO uint32_t POUT3;
+    __IO uint32_t POUT4;
+    __IO uint32_t POUT5;
+    __IO uint32_t POUT6;
+    __IO uint32_t POUT7;
 } stc_gpio_podr_bit_t;
 
 typedef struct
@@ -10494,7 +10494,7 @@ typedef struct
     uint32_t RESERVED1[2];
     __IO uint32_t STPDAS;
     __IO uint32_t STOP;
-} stc_pwr_stpmcr_bit_t;
+} stc_pwc_stpmcr_bit_t;
 
 typedef struct
 {
@@ -10514,14 +10514,14 @@ typedef struct
     __IO uint32_t HRCPWRDY;
     __IO uint32_t PLLPWRDY;
     uint32_t RESERVED0[1];
-} stc_pwr_pwrc_bit_t;
+} stc_pwc_pwrc_bit_t;
 
 typedef struct
 {
     __IO uint32_t PWMONSEL;
     __IO uint32_t PWMONE;
     uint32_t RESERVED0[6];
-} stc_pwr_pwrmonr_bit_t;
+} stc_pwc_pwrmonr_bit_t;
 
 typedef struct
 {
@@ -10530,7 +10530,7 @@ typedef struct
     __IO uint32_t SRPEF;
     __IO uint32_t HRPEF;
     __IO uint32_t CRPEF;
-} stc_pwr_ramcr_bit_t;
+} stc_pwc_ramcr_bit_t;
 
 typedef struct
 {
@@ -10565,7 +10565,7 @@ typedef struct
     __IO uint32_t L2IRE;
     __IO uint32_t L2CMPOE;
     __IO uint32_t L2EN;
-} stc_pwr_lvdcr0_bit_t;
+} stc_pwc_lvdcr0_bit_t;
 
 typedef struct
 {
@@ -10576,7 +10576,7 @@ typedef struct
     __IO uint32_t L0MON;
     uint32_t RESERVED0[2];
     __IO uint32_t L0CMPOE;
-} stc_pwr_lvdcsr1_bit_t;
+} stc_pwc_lvdcsr1_bit_t;
 
 typedef struct
 {
@@ -10596,14 +10596,14 @@ typedef struct
     __IO uint32_t FPRCWE5;
     __IO uint32_t FPRCWE6;
     __IO uint32_t FPRCWE7;
-} stc_pwr_fprc_bit_t;
+} stc_pwc_fprc_bit_t;
 
 typedef struct
 {
     __IO uint32_t DBGEN;
     uint32_t RESERVED0[14];
     __IO uint32_t TRSTF;
-} stc_pwr_dbgc_bit_t;
+} stc_pwc_dbgc_bit_t;
 
 typedef struct
 {
@@ -10623,7 +10623,7 @@ typedef struct
     __IO uint32_t XTALERF;
     __IO uint32_t MULTIRF;
     __IO uint32_t CLRF;
-} stc_pwr_rstf0_bit_t;
+} stc_pwc_rstf0_bit_t;
 
 typedef struct
 {
@@ -12802,23 +12802,23 @@ typedef struct
 
 typedef struct
 {
-    stc_pwr_stpmcr_bit_t                     STPMCR_b;
+    stc_pwc_stpmcr_bit_t                     STPMCR_b;
     uint32_t                                 RESERVED0[24];
-    stc_pwr_pwrc_bit_t                       PWRC_b;
+    stc_pwc_pwrc_bit_t                       PWRC_b;
     uint32_t                                 RESERVED1[16];
-    stc_pwr_pwrmonr_bit_t                    PWRMONR_b;
+    stc_pwc_pwrmonr_bit_t                    PWRMONR_b;
     uint32_t                                 RESERVED2[24];
-    stc_pwr_ramcr_bit_t                      RAMCR_b;
+    stc_pwc_ramcr_bit_t                      RAMCR_b;
     uint32_t                                 RESERVED3[24];
-    stc_pwr_lvdcr0_bit_t                     LVDCR0_b;
-    stc_pwr_lvdcsr1_bit_t                    LVDCSR1_b;
+    stc_pwc_lvdcr0_bit_t                     LVDCR0_b;
+    stc_pwc_lvdcsr1_bit_t                    LVDCSR1_b;
     uint32_t                                 RESERVED4[88];
-    stc_pwr_fprc_bit_t                       FPRC_b;
+    stc_pwc_fprc_bit_t                       FPRC_b;
     uint32_t                                 RESERVED5[240];
-    stc_pwr_dbgc_bit_t                       DBGC_b;
+    stc_pwc_dbgc_bit_t                       DBGC_b;
     uint32_t                                 RESERVED6[1520];
-    stc_pwr_rstf0_bit_t                      RSTF0_b;
-} bM4_PWR_TypeDef;
+    stc_pwc_rstf0_bit_t                      RSTF0_b;
+} bM4_PWC_TypeDef;
 
 typedef struct
 {
@@ -13068,7 +13068,7 @@ typedef struct
 #define bM4_GPIO                             ((bM4_GPIO_TypeDef *)0x42A70000UL)
 #define bM4_I2C                              ((bM4_I2C_TypeDef *)0x429C0000UL)
 #define bM4_INTC                             ((bM4_INTC_TypeDef *)0x42A20000UL)
-#define bM4_PWR                              ((bM4_PWR_TypeDef *)0x42A80000UL)
+#define bM4_PWC                              ((bM4_PWC_TypeDef *)0x42A80000UL)
 #define bM4_RMU                              ((bM4_RMU_TypeDef *)0x42A82000UL)
 #define bM4_SPI                              ((bM4_SPI_TypeDef *)0x42380000UL)
 #define bM4_SWDT                             ((bM4_SWDT_TypeDef *)0x42928000UL)

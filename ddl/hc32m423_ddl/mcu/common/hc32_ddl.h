@@ -154,7 +154,7 @@ extern "C"
 
 #if ((DDL_INTERRUPTS_ENABLE == DDL_ON) || (DDL_EXINT_NMI_SWI_ENABLE == DDL_ON))
     #include "hc32m423_interrupts.h"
-#endif /* DDL_INTERRUPTS_ENABLE || DDL_EXINT_SWI_NMI_ENABLE */
+#endif /* DDL_INTERRUPTS_ENABLE || DDL_EXINT_NMI_SWI_ENABLE */
 
 #if (DDL_PWC_ENABLE == DDL_ON)
     #include "hc32m423_pwc.h"
