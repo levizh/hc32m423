@@ -8,6 +8,8 @@
    2019-06-28       Yangjp          First version
    2020-01-08       Wuze            Added compiler macro definitions for GCC.
    2020-01-20       Yangjp          Modify the macro definition of CLEAR_REG.
+   2020-02-17       Yangjp          Merge HC32F120, HC32F4A0, HC32M120, HC32M423
+                                    series chips.
  @endverbatim
  *******************************************************************************
  * Copyright (C) 2016, Huada Semiconductor Co., Ltd. All rights reserved.
@@ -78,7 +80,16 @@ extern "C"
 /**
  * @brief HC32 Common Device Include
  */
-#if defined(HC32M423)
+#if defined(HC32F120)
+    #include "hc32f120.h"
+    #include "system_hc32f120.h"
+#elif defined(HC32F4A0)
+    #include "hc32f4a0.h"
+    #include "system_hc32f4a0.h"
+#elif defined(HC32M120)
+    #include "hc32m120.h"
+    #include "system_hc32m120.h"
+#elif defined(HC32M423)
     #include "hc32m423.h"
     #include "system_hc32m423.h"
 #else
@@ -182,24 +193,33 @@ typedef enum
   #ifndef __NOINLINE
     #define __NOINLINE                  __attribute__((noinline))
   #endif /* __NOINLINE */
-  #ifndef __UNUSED
-    #define __UNUSED                    __attribute__((unused))
-  #endif /* __UNUSED */
   #ifndef __RAM_FUNC
     #define __RAM_FUNC                  __attribute__((long_call, section(".ramfunc")))
     /* Usage: void __RAM_FUNC foo(void) */
   #endif /* __RAM_FUNC */
 #elif defined (__ICCARM__)                /*!< IAR Compiler */
+  #ifndef __WEAKDEF
     #define __WEAKDEF                   __weak
+  #endif /* __WEAKDEF */    
+  #ifndef __ALIGN_BEGIN  
     #define __ALIGN_BEGIN               _Pragma("data_alignment=4")
+  #endif /* __ALIGN_BEGIN */
+  #ifndef __NOINLINE
     #define __NOINLINE                  _Pragma("optimize = no_inline")
-    #define __UNUSED                    __attribute__((unused))
+  #endif /* __NOINLINE */
+  #ifndef __RAM_FUNC
     #define __RAM_FUNC                  __ramfunc
+  #endif /* __RAM_FUNC */
 #elif defined (__CC_ARM)                /*!< ARM Compiler */
+  #ifndef __WEAKDEF
     #define __WEAKDEF                   __attribute__((weak))
+  #endif /* __WEAKDEF */    
+  #ifndef __ALIGN_BEGIN  
     #define __ALIGN_BEGIN               __align(4)
+  #endif /* __ALIGN_BEGIN */
+  #ifndef __NOINLINE
     #define __NOINLINE                  __attribute__((noinline))
-    #define __UNUSED                    __attribute__((unused))
+  #endif /* __NOINLINE */
     /* RAM functions are defined using the toolchain options.
     Functions that are executed in RAM should reside in a separate source module.
     Using the 'Options for File' dialog you can simply change the 'Code / Const'
@@ -217,10 +237,10 @@ typedef enum
 #define DEC2BCD(x)                      ((((x) / 10U) << 4U) + ((x) % 10U))
 
 /* BCD to decimal */
-#define BCD2DEC(x)                      ((((x) >> 4U) * 10U) + ((x) & 0x0Fu))
+#define BCD2DEC(x)                      ((((x) >> 4U) * 10U) + ((x) & 0x0FU))
 
 /* Returns the dimension of an array */
-#define ARRAY_SZ(X)                     (sizeof(X) / sizeof((X)[0]))
+#define ARRAY_SZ(x)                     (sizeof(x) / sizeof((x)[0]))
 /**
  * @}
  */
@@ -229,51 +249,30 @@ typedef enum
  * @defgroup Register_Macro_Definitions Register Macro Definitions
  * @{
  */
-#define SET_BIT(REG, BIT)               ((REG) |= (BIT))
-
-#define CLEAR_BIT(REG, BIT)             ((REG) &= ~(BIT))
-
-#define READ_BIT(REG, BIT)              ((REG) & (BIT))
-
-#define CLEAR_REG(REG)                  ((REG) = (0x0))
-
-#define WRITE_REG(REG, VAL)             ((REG) = (VAL))
-
-#define READ_REG(REG)                   ((REG))
-
-#define MODIFY_REG(REGS, CLEARMASK, SETMASK)    (WRITE_REG((REGS), (((READ_REG((REGS))) & (~(CLEARMASK))) | (SETMASK))))
-
-/* Specificed register bit width */
 #define SET_REG8_BIT(REG, BIT)          ((REG) |= ((uint8_t)(BIT)))
 #define SET_REG16_BIT(REG, BIT)         ((REG) |= ((uint16_t)(BIT)))
 #define SET_REG32_BIT(REG, BIT)         ((REG) |= ((uint32_t)(BIT)))
 
-/* Specificed register bit width */
 #define CLEAR_REG8_BIT(REG, BIT)        ((REG) &= ((uint8_t)(~(BIT))))
 #define CLEAR_REG16_BIT(REG, BIT)       ((REG) &= ((uint16_t)(~(BIT))))
 #define CLEAR_REG32_BIT(REG, BIT)       ((REG) &= ((uint32_t)(~(BIT))))
 
-/* Specificed register bit width */
 #define READ_REG8_BIT(REG, BIT)         ((REG) & ((uint8_t)(BIT)))
 #define READ_REG16_BIT(REG, BIT)        ((REG) & ((uint16_t)(BIT)))
 #define READ_REG32_BIT(REG, BIT)        ((REG) & ((uint32_t)(BIT)))
 
-/* Specificed register bit width */
 #define CLEAR_REG8(REG)                 ((REG) = ((uint8_t)(0U)))
 #define CLEAR_REG16(REG)                ((REG) = ((uint16_t)(0U)))
 #define CLEAR_REG32(REG)                ((REG) = ((uint32_t)(0UL)))
 
-/* Specificed register bit width */
 #define WRITE_REG8(REG, VAL)            ((REG) = ((uint8_t)(VAL)))
 #define WRITE_REG16(REG, VAL)           ((REG) = ((uint16_t)(VAL)))
 #define WRITE_REG32(REG, VAL)           ((REG) = ((uint32_t)(VAL)))
 
-/* Specificed register bit width */
 #define READ_REG8(REG)                  ((uint8_t)(REG))
 #define READ_REG16(REG)                 ((uint16_t)(REG))
 #define READ_REG32(REG)                 ((uint32_t)(REG))
 
-/* Specificed register bit width */
 #define MODIFY_REG8(REGS, CLEARMASK, SETMASK)   (WRITE_REG((REGS), (((READ_REG((REGS))) & ((uint8_t)(~(CLEARMASK)))) | ((uint8_t)(SETMASK)))))
 #define MODIFY_REG16(REGS, CLEARMASK, SETMASK)  (WRITE_REG((REGS), (((READ_REG((REGS))) & ((uint16_t)(~(CLEARMASK)))) | ((uint16_t)(SETMASK)))))
 #define MODIFY_REG32(REGS, CLEARMASK, SETMASK)  (WRITE_REG((REGS), (((READ_REG((REGS))) & ((uint32_t)(~(CLEARMASK)))) | ((uint32_t)(SETMASK)))))
