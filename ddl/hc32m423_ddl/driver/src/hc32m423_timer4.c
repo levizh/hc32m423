@@ -617,11 +617,11 @@ void TIMER4_CNT_SetIntMaskTimes(uint16_t u16IntSource,
  *           @arg TIMER4_CNT_INT_MASK_13:   CNT interrupt flag is set once for 14 every CNT counts at "0x0000" or peak (skiping 13 count)
  *           @arg TIMER4_CNT_INT_MASK_14:   CNT interrupt flag is set once for 15 every CNT counts at "0x0000" or peak (skiping 14 count)
  *           @arg TIMER4_CNT_INT_MASK_15:   CNT interrupt flag is set once for 16 every CNT counts at "0x0000" or peak (skiping 15 count)
- *           @arg TIMER4_RESULT_ERROR:      TimerB interrupt source is invalid
+ *           @arg TIMER4_RESULT_ERROR:      Timer4 interrupt source is invalid
  */
 uint16_t TIMER4_CNT_GetIntMaskTimes(uint16_t u16IntSource)
 {
-    uint16_t u16MaskTimes;
+    uint16_t u16MaskTimes = TIMER4_RESULT_ERROR;
 
     /* Check parameters */
     DDL_ASSERT(IS_VALID_TIMER4_CNT_INT(u16IntSource));
@@ -635,7 +635,6 @@ uint16_t TIMER4_CNT_GetIntMaskTimes(uint16_t u16IntSource)
             u16MaskTimes = (uint16_t)(READ_REG16_BIT(M4_TMR4->CVPR, TMR4_CVPR_PIM) >> TMR4_CVPR_PIM_POS);
             break;
         default:
-            u16MaskTimes = TIMER4_RESULT_ERROR;
             break;
     }
 
@@ -665,11 +664,11 @@ uint16_t TIMER4_CNT_GetIntMaskTimes(uint16_t u16IntSource)
  *           @arg TIMER4_CNT_INT_MASK_13:   CNT interrupt flag is set once for 14 every CNT counts at "0x0000" or peak (skiping 13 count)
  *           @arg TIMER4_CNT_INT_MASK_14:   CNT interrupt flag is set once for 15 every CNT counts at "0x0000" or peak (skiping 14 count)
  *           @arg TIMER4_CNT_INT_MASK_15:   CNT interrupt flag is set once for 16 every CNT counts at "0x0000" or peak (skiping 15 count)
- *           @arg TIMER4_RESULT_ERROR:      TimerB interrupt source is invalid
+ *           @arg TIMER4_RESULT_ERROR:      Timer4 interrupt source is invalid
  */
-uint16_t TIMER4_CNT_GetIntMaskCurrenTimes(uint16_t u16IntSource)
+uint16_t TIMER4_CNT_GetIntMaskCurrentTimes(uint16_t u16IntSource)
 {
-    uint16_t u16MaskTimes;
+    uint16_t u16MaskTimes = TIMER4_RESULT_ERROR;
 
     /* Check parameters */
     DDL_ASSERT(IS_VALID_TIMER4_CNT_INT(u16IntSource));
@@ -683,7 +682,6 @@ uint16_t TIMER4_CNT_GetIntMaskCurrenTimes(uint16_t u16IntSource)
             u16MaskTimes = (uint16_t)(READ_REG16_BIT(M4_TMR4->CVPR, TMR4_CVPR_PIC) >> TMR4_CVPR_PIC_POS);
             break;
         default:
-            u16MaskTimes = TIMER4_RESULT_ERROR;
             break;
     }
 

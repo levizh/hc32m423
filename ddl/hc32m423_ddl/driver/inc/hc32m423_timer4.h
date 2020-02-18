@@ -996,7 +996,7 @@ void TIMER4_CNT_IntCmd(uint16_t u16IntSource, en_functional_state_t enNewSta);
 void TIMER4_CNT_SetIntMaskTimes(uint16_t u16IntSource,
                                 uint16_t u16MaskTimes);
 uint16_t TIMER4_CNT_GetIntMaskTimes(uint16_t u16IntSource);
-uint16_t TIMER4_CNT_GetIntMaskCurrenTimes(uint16_t u16IntSource);
+uint16_t TIMER4_CNT_GetIntMaskCurrentTimes(uint16_t u16IntSource);
 void TIMER4_CNT_SetCntDirSigOutput(uint16_t u16CntDirSig);
 
 /* Initialization and configuration Timer4 OCO functions */
