@@ -206,10 +206,10 @@ en_result_t WDT_Init(const stc_wdt_init_t *pstcWdtInit)
         DDL_ASSERT(IS_WDT_REQUEST_TYPE(pstcWdtInit->u32RequestType));
 
         /* WDT CR Configuration(Software Start Mode) */
-        MODIFY_REG(M4_WDT->CR, WDT_CR_CLEAR_MASK,
-                   (pstcWdtInit->u32CountCycle   | pstcWdtInit->u32ClockDivision |
-                    pstcWdtInit->u32RefreshRange | pstcWdtInit->u32LPModeCountEn |
-                    pstcWdtInit->u32RequestType));
+        MODIFY_REG32(M4_WDT->CR, WDT_CR_CLEAR_MASK,
+                    (pstcWdtInit->u32CountCycle   | pstcWdtInit->u32ClockDivision |
+                     pstcWdtInit->u32RefreshRange | pstcWdtInit->u32LPModeCountEn |
+                     pstcWdtInit->u32RequestType));
     }
 
     return enRet;
@@ -223,8 +223,8 @@ en_result_t WDT_Init(const stc_wdt_init_t *pstcWdtInit)
  */
 void WDT_ReloadCounter(void)
 {
-    M4_WDT->RR = WDT_REFRESH_KEY_START;
-    M4_WDT->RR = WDT_REFRESH_KEY_END;
+    WRITE_REG32(M4_WDT->RR, WDT_REFRESH_KEY_START);
+    WRITE_REG32(M4_WDT->RR, WDT_REFRESH_KEY_END);
 }
 
 /**
@@ -244,7 +244,7 @@ en_flag_status_t WDT_GetFlag(uint32_t u32Flag)
     /* Check parameters */
     DDL_ASSERT(IS_WDT_FLAG(u32Flag));
 
-    if (Reset != (READ_BIT(M4_WDT->SR, u32Flag)))
+    if (Reset != (READ_REG32_BIT(M4_WDT->SR, u32Flag)))
     {
         enFlagSta = Set;
     }
@@ -274,8 +274,8 @@ en_result_t WDT_ClearFlag(uint32_t u32Flag)
     u32Timeout = SystemCoreClock >> 8U;
     do
     {
-        CLEAR_BIT(M4_WDT->SR, u32Flag);
-    } while ((Reset != (READ_BIT(M4_WDT->SR, u32Flag))) && (--u32Timeout));
+        CLEAR_REG32_BIT(M4_WDT->SR, u32Flag);
+    } while ((Reset != (READ_REG32_BIT(M4_WDT->SR, u32Flag))) && (--u32Timeout));
 
     if (0U == u32Timeout)
     {

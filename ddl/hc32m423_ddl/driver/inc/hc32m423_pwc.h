@@ -296,14 +296,14 @@ typedef enum
  * @defgroup PWC_Write_Protect_Configuration PWC Write Protect Configuration
  * @{
  */
-#define PWC_CLK_REG_WRITE_DISABLE()             (M4_PWR->FPRC = 0xA500U)
-#define PWC_CLK_REG_WRITE_ENABLE()              (M4_PWR->FPRC = 0xA501U)
+#define PWC_CLK_REG_WRITE_DISABLE()             (WRITE_REG16(M4_PWR->FPRC, 0xA500U))
+#define PWC_CLK_REG_WRITE_ENABLE()              (WRITE_REG16(M4_PWR->FPRC, 0xA501U))
 
-#define PWC_POWER_REG_WRITE_DISABLE()           (M4_PWR->FPRC = 0xA500U)
-#define PWC_POWER_REG_WRITE_ENABLE()            (M4_PWR->FPRC = 0xA502U)
+#define PWC_POWER_REG_WRITE_DISABLE()           (WRITE_REG16(M4_PWR->FPRC, 0xA500U))
+#define PWC_POWER_REG_WRITE_ENABLE()            (WRITE_REG16(M4_PWR->FPRC, 0xA502U))
 
-#define PWC_LVD_REG_WRITE_DISABLE()             (M4_PWR->FPRC = 0xA500U)
-#define PWC_LVD_REG_WRITE_ENABLE()              (M4_PWR->FPRC = 0xA508U)
+#define PWC_LVD_REG_WRITE_DISABLE()             (WRITE_REG16(M4_PWR->FPRC, 0xA500U))
+#define PWC_LVD_REG_WRITE_ENABLE()              (WRITE_REG16(M4_PWR->FPRC, 0xA508U))
 /**
  * @}
  */

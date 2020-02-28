@@ -122,7 +122,7 @@ extern "C"
  */
 __STATIC_INLINE uint16_t SWDT_GetCountValue(void)
 {
-    return (uint16_t)(READ_REG(M4_SWDT->SR) & SWDT_SR_CNT);
+    return (uint16_t)(READ_REG32(M4_SWDT->SR) & SWDT_SR_CNT);
 }
 
 /* Configuration function */

@@ -135,8 +135,8 @@
  */
 void SWDT_ReloadCounter(void)
 {
-    M4_SWDT->RR = SWDT_REFRESH_KEY_START;
-    M4_SWDT->RR = SWDT_REFRESH_KEY_END;
+    WRITE_REG32(M4_SWDT->RR, SWDT_REFRESH_KEY_START);
+    WRITE_REG32(M4_SWDT->RR, SWDT_REFRESH_KEY_END);
 }
 
 /**
@@ -156,7 +156,7 @@ en_flag_status_t SWDT_GetFlag(uint32_t u32Flag)
     /* Check parameters */
     DDL_ASSERT(IS_SWDT_FLAG(u32Flag));
 
-    if (Reset != (READ_BIT(M4_SWDT->SR, u32Flag)))
+    if (Reset != (READ_REG32_BIT(M4_SWDT->SR, u32Flag)))
     {
         enFlagSta = Set;
     }
@@ -186,8 +186,8 @@ en_result_t SWDT_ClearFlag(uint32_t u32Flag)
     u32Timeout = SystemCoreClock >> 8U;
     do
     {
-        CLEAR_BIT(M4_SWDT->SR, u32Flag);
-    } while ((Reset != (READ_BIT(M4_SWDT->SR, u32Flag))) && (--u32Timeout));
+        CLEAR_REG32_BIT(M4_SWDT->SR, u32Flag);
+    } while ((Reset != (READ_REG32_BIT(M4_SWDT->SR, u32Flag))) && (--u32Timeout));
 
     if (0U == u32Timeout)
     {

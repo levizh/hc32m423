@@ -623,7 +623,7 @@ typedef enum
  */
 __STATIC_INLINE void TIMERA_SetCounterTriggerSrc(en_event_src_t enEvtSrc)
 {
-    WRITE_REG(M4_AOS->TMRA0_HTSSR, enEvtSrc);
+    WRITE_REG32(M4_AOS->TMRA0_HTSSR, enEvtSrc);
 }
 
 /**
@@ -633,7 +633,7 @@ __STATIC_INLINE void TIMERA_SetCounterTriggerSrc(en_event_src_t enEvtSrc)
  */
 __STATIC_INLINE void TIMERA_SetCaptureTriggerSrc(en_event_src_t enEvtSrc)
 {
-    WRITE_REG(M4_AOS->TMRA1_HTSSR, enEvtSrc);
+    WRITE_REG32(M4_AOS->TMRA1_HTSSR, enEvtSrc);
 }
 
 /* Initialization and configuration TimerA base functions */

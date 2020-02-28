@@ -264,7 +264,7 @@ void PWC_EnterStopMode(void)
 {
     PWC_POWER_REG_WRITE_ENABLE();
 
-    SET_BIT(M4_PWC->STPMCR, PWC_STPMCR_STOP);
+    SET_REG8_BIT(M4_PWC->STPMCR, PWC_STPMCR_STOP);
 
     PWC_POWER_REG_WRITE_DISABLE();
 
@@ -296,7 +296,7 @@ void PWC_HighSpeedToLowSpeed(void)
 {
     PWC_POWER_REG_WRITE_ENABLE();
 
-    MODIFY_REG8(M4_PWC->PWRC, PWC_PWRC_PWDRV , PWC_DRV_LOW);
+    MODIFY_REG32(M4_PWC->PWRC, PWC_PWRC_PWDRV , PWC_DRV_LOW);
 
     DDL_Delay1ms(1U);
 
@@ -312,7 +312,7 @@ void PWC_LowSpeedToHighSpeed(void)
 {
     PWC_POWER_REG_WRITE_ENABLE();
 
-    MODIFY_REG8(M4_PWC->PWRC, PWC_PWRC_PWDRV , PWC_DRV_HIGH);
+    MODIFY_REG32(M4_PWC->PWRC, PWC_PWRC_PWDRV , PWC_DRV_HIGH);
 
     DDL_Delay1ms(1U);
 
@@ -403,7 +403,7 @@ en_flag_status_t PWC_GetLdoFlag(uint16_t u16Flag)
 
     /* Parameter valid check */
     DDL_ASSERT(IS_VALID_PWC_LDO_Flag(u16Flag));
-    if (Reset != (READ_BIT(M4_PWR->PWRC, u16Flag)))
+    if (Reset != (READ_REG32_BIT(M4_PWR->PWRC, u16Flag)))
     {
         enFlagSta = Set;
     }
@@ -713,7 +713,7 @@ uint8_t PWC_LVD_GetCmpResult(uint8_t u8Unit)
     /* Parameter valid check */
     DDL_ASSERT(IS_VALID_PWC_LVD_SPECIAL_UNIT(u8Unit));
 
-    if (Reset != (READ_BIT(M4_PWR->LVDCSR1, (PWR_LVDCSR1_L1MON << u8Unit))))
+    if (Reset != (READ_REG8_BIT(M4_PWR->LVDCSR1, (PWR_LVDCSR1_L1MON << u8Unit))))
     {
         u8Result = PWC_LVD_COMPARE_VCC_GREATER_LVD;
     }
@@ -739,7 +739,7 @@ en_flag_status_t PWC_LVD_GetDetectFlag(uint8_t u8Unit)
     /* Parameter valid check */
     DDL_ASSERT(IS_VALID_PWC_LVD_NORMAL_UNIT(u8Unit));
 
-    if (Reset != (READ_BIT(M4_PWR->LVDCSR1, (PWR_LVDCSR1_L1DETF << u8Unit))))
+    if (Reset != (READ_REG8_BIT(M4_PWR->LVDCSR1, (PWR_LVDCSR1_L1DETF << u8Unit))))
     {
         enFlagSta = Set;
     }
@@ -799,7 +799,7 @@ en_flag_status_t PWC_GetRamParityFlag(uint8_t u8Flag)
     /* Parameter valid check */
     DDL_ASSERT(IS_VALID_PWC_RAM_PARITY_FLAG(u8Flag));
 
-    if (Reset != (READ_BIT(M4_PWR->RAMCR, u8Flag)))
+    if (Reset != (READ_REG8_BIT(M4_PWR->RAMCR, u8Flag)))
     {
         enFlagSta = Set;
     }
