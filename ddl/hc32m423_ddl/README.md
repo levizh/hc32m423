@@ -45,4 +45,4 @@ HC32M423 Device Driver Library version log.
     </tr>
 </table>
 
-copyrigth @ 
+copyright @ 
